@@ -72,12 +72,16 @@
   <nodes xsi:type="ApplicationModel:PeripheralNode">
     <resource xsi:type="ResourceModel:Peripheral" href="HW_RESOURCES/CCU40/CCU40_0.dd#/"/>
   </nodes>
+  <nodes xsi:type="ApplicationModel:AppNode">
+    <resource xsi:type="ResourceModel:App" href="APPS/PWM_CCU4/v4_1_28/PWM_CCU4_0.app#/"/>
+  </nodes>
   <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.0" target="//@nodes.1"/>
   <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.2" target="//@nodes.0"/>
   <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.20" target="//@nodes.1"/>
   <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.20" target="//@nodes.19"/>
   <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.22" target="//@nodes.1"/>
   <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.2" target="//@nodes.19"/>
+  <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.24" target="//@nodes.22"/>
   <hwConnections href="APPS/CLOCK_XMC1/v4_0_26/CLOCK_XMC1_0.app#//@connections.0"/>
   <hwConnections href="APPS/ADC_MEASUREMENT/v4_1_24/ADC_MEASUREMENT_0.app#//@connections.0"/>
   <hwConnections href="APPS/ADC_MEASUREMENT/v4_1_24/ADC_MEASUREMENT_0.app#//@connections.1"/>
@@ -156,4 +160,8 @@
   <hwConnections href="APPS/DIGITAL_IO/v4_0_18/DIGITAL_IO_10.app#//@connections.0"/>
   <hwConnections href="APPS/DIGITAL_IO/v4_0_18/DIGITAL_IO_10.app#//@connections.1"/>
   <hwConnections href="APPS/ADC_MEASUREMENT/v4_1_24/ADC_MEASUREMENT_0.app#//@connections.52"/>
+  <hwConnections href="APPS/PWM_CCU4/v4_1_28/PWM_CCU4_0.app#//@connections.0"/>
+  <hwConnections href="APPS/PWM_CCU4/v4_1_28/PWM_CCU4_0.app#//@connections.5"/>
+  <hwConnections href="APPS/PWM_CCU4/v4_1_28/PWM_CCU4_0.app#//@connections.6"/>
+  <hwConnections href="APPS/PWM_CCU4/v4_1_28/PWM_CCU4_0.app#//@connections.7"/>
 </ApplicationModel:ApplicationData>

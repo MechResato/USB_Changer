@@ -78,12 +78,12 @@ const DIGITAL_IO_t IO_USB_OE =
   .hwctrl = XMC_GPIO_HWCTRL_DISABLED
 };
 		
-const DIGITAL_IO_t IO_LED_RELAY =
+const DIGITAL_IO_t IO_LED_R_STATUS =
 {
   .gpio_port = XMC_GPIO_PORT0,
   .gpio_pin = 6U,
   .gpio_config = {
-    .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL,
+    .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT4,
     .output_level = XMC_GPIO_OUTPUT_LEVEL_LOW,
 
   },

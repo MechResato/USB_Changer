@@ -69,7 +69,7 @@ extern const DIGITAL_IO_t IO_USB_SI;
 	
 extern const DIGITAL_IO_t IO_USB_OE; 
 	
-extern const DIGITAL_IO_t IO_LED_RELAY; 
+extern const DIGITAL_IO_t IO_LED_R_STATUS; 
 	
 extern const DIGITAL_IO_t IO_SW_USB; 
 	

@@ -1,0 +1,147 @@
+   1              	 .cpu cortex-m0
+   2              	 .fpu softvfp
+   3              	 .eabi_attribute 20,1
+   4              	 .eabi_attribute 21,1
+   5              	 .eabi_attribute 23,3
+   6              	 .eabi_attribute 24,1
+   7              	 .eabi_attribute 25,1
+   8              	 .eabi_attribute 26,1
+   9              	 .eabi_attribute 30,6
+  10              	 .eabi_attribute 34,0
+  11              	 .eabi_attribute 18,4
+  12              	 .code 16
+  13              	 .file "pwm_ccu4_conf.c"
+  14              	 .text
+  15              	.Ltext0:
+  16              	 .cfi_sections .debug_frame
+  17              	 .global PWM_CCU4_LED_STATUS_timer_handle
+  18              	 .section .rodata.PWM_CCU4_LED_STATUS_timer_handle,"a",%progbits
+  19              	 .align 2
+  22              	PWM_CCU4_LED_STATUS_timer_handle:
+  23 0000 00000000 	 .space 8
+  23      00000000 
+  24              	 .global PWM_CCU4_LED_STATUS_event0_config
+  25              	 .section .rodata.PWM_CCU4_LED_STATUS_event0_config,"a",%progbits
+  26              	 .align 2
+  29              	PWM_CCU4_LED_STATUS_event0_config:
+  30 0000 00       	 .byte 0
+  31 0001 00       	 .byte 0
+  32 0002 01       	 .byte 1
+  33 0003 00       	 .byte 0
+  34              	 .global PWM_CCU4_LED_STATUS_event1_config
+  35              	 .section .rodata.PWM_CCU4_LED_STATUS_event1_config,"a",%progbits
+  36              	 .align 2
+  39              	PWM_CCU4_LED_STATUS_event1_config:
+  40 0000 00       	 .byte 0
+  41 0001 00       	 .byte 0
+  42 0002 01       	 .byte 1
+  43 0003 00       	 .byte 0
+  44              	 .global PWM_CCU4_LED_STATUS_event2_config
+  45              	 .section .rodata.PWM_CCU4_LED_STATUS_event2_config,"a",%progbits
+  46              	 .align 2
+  49              	PWM_CCU4_LED_STATUS_event2_config:
+  50 0000 00       	 .byte 0
+  51 0001 00       	 .byte 0
+  52 0002 01       	 .byte 1
+  53 0003 00       	 .byte 0
+  54              	 .global PWM_CCU4_LED_STATUS_config_handle
+  55              	 .section .rodata.PWM_CCU4_LED_STATUS_config_handle,"a",%progbits
+  56              	 .align 2
+  59              	PWM_CCU4_LED_STATUS_config_handle:
+  60 0000 01       	 .byte 1
+  61 0001 00       	 .space 1
+  62 0002 FFF9     	 .short -1537
+  63 0004 00E6     	 .short -6656
+  64 0006 00       	 .byte 0
+  65 0007 00       	 .byte 0
+  66 0008 00       	 .byte 0
+  67 0009 00       	 .byte 0
+  68 000a 00       	 .byte 0
+  69 000b 00       	 .byte 0
+  70 000c 00       	 .byte 0
+  71 000d 00       	 .byte 0
+  72 000e 00       	 .byte 0
+  73 000f 00       	 .byte 0
+  74 0010 00       	 .byte 0
+  75 0011 00       	 .byte 0
+  76 0012 00       	 .byte 0
+  77 0013 00       	 .byte 0
+  78 0014 00000000 	 .word PWM_CCU4_LED_STATUS_event0_config
+  79 0018 00000000 	 .word PWM_CCU4_LED_STATUS_event1_config
+  80 001c 00000000 	 .word PWM_CCU4_LED_STATUS_event2_config
+  81 0020 00       	 .byte 0
+  82 0021 00       	 .byte 0
+  83 0022 00       	 .byte 0
+  84 0023 00       	 .byte 0
+  85 0024 00       	 .byte 0
+  86 0025 00       	 .byte 0
+  87 0026 00       	 .byte 0
+  88 0027 00       	 .byte 0
+  89 0028 00       	 .byte 0
+  90 0029 00       	 .byte 0
+  91 002a 00       	 .byte 0
+  92 002b 00       	 .byte 0
+  93 002c 00       	 .byte 0
+  94 002d 00       	 .byte 0
+  95 002e 00       	 .byte 0
+  96 002f 01       	 .byte 1
+  97 0030 00       	 .byte 0
+  98 0031 000000   	 .space 3
+  99 0034 00000004 	 .word 67108864
+ 100 0038 00000000 	 .word PWM_CCU4_LED_STATUS_timer_handle
+ 101 003c 00       	 .byte 0
+ 102 003d 000000   	 .space 3
+ 103 0040 00000000 	 .word 0
+ 104 0044 00       	 .byte 0
+ 105 0045 000000   	 .space 3
+ 106 0048 00000000 	 .word 0
+ 107 004c 00000000 	 .word GLOBAL_CCU4_0
+ 108              	 .global PWM_CCU4_LED_STATUS
+ 109              	 .section .data.PWM_CCU4_LED_STATUS,"aw",%progbits
+ 110              	 .align 2
+ 113              	PWM_CCU4_LED_STATUS:
+ 114 0000 00000000 	 .word PWM_CCU4_LED_STATUS_config_handle
+ 115 0004 00000448 	 .word 1208221696
+ 116 0008 00010448 	 .word 1208221952
+ 117 000c 00       	 .byte 0
+ 118 000d 00       	 .byte 0
+ 119 000e 0000     	 .space 2
+ 120 0010 01000000 	 .word 1
+ 121 0014 02000000 	 .word 2
+ 122 0018 04000000 	 .word 4
+ 123 001c 00       	 .byte 0
+ 124 001d 00000000 	 .space 7
+ 124      000000
+ 125 0024 20030000 	 .word 800
+ 126              	 .text
+ 127              	.Letext0:
+ 128              	 .file 1 "c:\\workspaces\\4.5.0\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 129              	 .file 2 "c:\\workspaces\\4.5.0\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 130              	 .file 3 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Infineon/XMC1100_series/Include/XMC1100.h"
+ 131              	 .file 4 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc_gpio.h"
+ 132              	 .file 5 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc1_gpio.h"
+ 133              	 .file 6 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc_ccu4.h"
+ 134              	 .file 7 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc1_scu.h"
+ 135              	 .file 8 "C:/Workspaces/DAVE_WS/USB_Changer/Dave/Generated/GLOBAL_CCU4/global_ccu4.h"
+ 136              	 .file 9 "../Dave/Generated/PWM_CCU4/pwm_ccu4.h"
+ 137              	 .file 10 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Include/cmsis_gcc.h"
+ 138              	 .file 11 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Infineon/XMC1100_series/Include/system_XMC1100.h"
+ 139              	 .file 12 "C:/Workspaces/DAVE_WS/USB_Changer/Dave/Generated/GLOBAL_CCU4/global_ccu4_extern.h"
+ 140              	 .file 13 "../Dave/Generated/PWM_CCU4/pwm_ccu4_conf.c"
+DEFINED SYMBOLS
+                            *ABS*:00000000 pwm_ccu4_conf.c
+    {standard input}:22     .rodata.PWM_CCU4_LED_STATUS_timer_handle:00000000 PWM_CCU4_LED_STATUS_timer_handle
+    {standard input}:19     .rodata.PWM_CCU4_LED_STATUS_timer_handle:00000000 $d
+    {standard input}:29     .rodata.PWM_CCU4_LED_STATUS_event0_config:00000000 PWM_CCU4_LED_STATUS_event0_config
+    {standard input}:26     .rodata.PWM_CCU4_LED_STATUS_event0_config:00000000 $d
+    {standard input}:39     .rodata.PWM_CCU4_LED_STATUS_event1_config:00000000 PWM_CCU4_LED_STATUS_event1_config
+    {standard input}:36     .rodata.PWM_CCU4_LED_STATUS_event1_config:00000000 $d
+    {standard input}:49     .rodata.PWM_CCU4_LED_STATUS_event2_config:00000000 PWM_CCU4_LED_STATUS_event2_config
+    {standard input}:46     .rodata.PWM_CCU4_LED_STATUS_event2_config:00000000 $d
+    {standard input}:59     .rodata.PWM_CCU4_LED_STATUS_config_handle:00000000 PWM_CCU4_LED_STATUS_config_handle
+    {standard input}:56     .rodata.PWM_CCU4_LED_STATUS_config_handle:00000000 $d
+    {standard input}:113    .data.PWM_CCU4_LED_STATUS:00000000 PWM_CCU4_LED_STATUS
+    {standard input}:110    .data.PWM_CCU4_LED_STATUS:00000000 $d
+
+UNDEFINED SYMBOLS
+GLOBAL_CCU4_0

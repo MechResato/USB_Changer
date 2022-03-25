@@ -182,8 +182,8 @@
   93 0060 002B     	 cmp r3,#0
   94 0062 06D1     	 bne .L5
   91:../Dave/Generated/DAVE.c ****   {
-  92:../Dave/Generated/DAVE.c **** 	 /**  Initialization of DIGITAL_IO APP instance IO_LED_RELAY */
-  93:../Dave/Generated/DAVE.c **** 	 init_status = (DAVE_STATUS_t)DIGITAL_IO_Init(&IO_LED_RELAY); 
+  92:../Dave/Generated/DAVE.c **** 	 /**  Initialization of DIGITAL_IO APP instance IO_LED_R_STATUS */
+  93:../Dave/Generated/DAVE.c **** 	 init_status = (DAVE_STATUS_t)DIGITAL_IO_Init(&IO_LED_R_STATUS); 
   95              	 .loc 1 93 0
   96 0064 FC1D     	 add r4,r7,#7
   97 0066 414B     	 ldr r3,.L17+16
@@ -362,13 +362,13 @@
  223 013c 002B     	 cmp r3,#0
  224 013e 06D1     	 bne .L15
  141:../Dave/Generated/DAVE.c ****   {
- 142:../Dave/Generated/DAVE.c **** 	 /**  Initialization of GLOBAL_CCU4 APP instance GLOBAL_CCU4_0 */
- 143:../Dave/Generated/DAVE.c **** 	 init_status = (DAVE_STATUS_t)GLOBAL_CCU4_Init(&GLOBAL_CCU4_0); 
+ 142:../Dave/Generated/DAVE.c **** 	 /**  Initialization of PWM_CCU4 APP instance PWM_CCU4_LED_STATUS */
+ 143:../Dave/Generated/DAVE.c **** 	 init_status = (DAVE_STATUS_t)PWM_CCU4_Init(&PWM_CCU4_LED_STATUS); 
  225              	 .loc 1 143 0
  226 0140 FC1D     	 add r4,r7,#7
  227 0142 144B     	 ldr r3,.L17+56
  228 0144 181C     	 mov r0,r3
- 229 0146 FFF7FEFF 	 bl GLOBAL_CCU4_Init
+ 229 0146 FFF7FEFF 	 bl PWM_CCU4_Init
  230 014a 031C     	 mov r3,r0
  231 014c 2370     	 strb r3,[r4]
  232              	.L15:
@@ -391,7 +391,7 @@
  246 0160 00000000 	 .word ADC_SENSOR
  247 0164 00000000 	 .word IO_USB_SI
  248 0168 00000000 	 .word IO_USB_OE
- 249 016c 00000000 	 .word IO_LED_RELAY
+ 249 016c 00000000 	 .word IO_LED_R_STATUS
  250 0170 00000000 	 .word IO_SW_USB
  251 0174 00000000 	 .word IO_SW_UP
  252 0178 00000000 	 .word IO_SW_DOWN
@@ -401,7 +401,7 @@
  256 0188 00000000 	 .word IO_LED_USB2
  257 018c 00000000 	 .word IO_LED_USB1
  258 0190 00000000 	 .word SYSTIMER_0
- 259 0194 00000000 	 .word GLOBAL_CCU4_0
+ 259 0194 00000000 	 .word PWM_CCU4_LED_STATUS
  260              	 .cfi_endproc
  261              	.LFE153:
  263              	 .text
@@ -420,14 +420,15 @@
  276              	 .file 13 "../Dave/Generated/SYSTIMER/systimer.h"
  277              	 .file 14 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc_ccu4.h"
  278              	 .file 15 "../Dave/Generated/GLOBAL_CCU4/global_ccu4.h"
- 279              	 .file 16 "../Dave/Generated/DAVE.h"
- 280              	 .file 17 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Include/cmsis_gcc.h"
- 281              	 .file 18 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Infineon/XMC1100_series/Include/system_XMC1100.h"
- 282              	 .file 19 "../Dave/Generated/CLOCK_XMC1/clock_xmc1_extern.h"
- 283              	 .file 20 "../Dave/Generated/ADC_MEASUREMENT/adc_measurement_extern.h"
- 284              	 .file 21 "../Dave/Generated/DIGITAL_IO/digital_io_extern.h"
- 285              	 .file 22 "../Dave/Generated/SYSTIMER/systimer_extern.h"
- 286              	 .file 23 "../Dave/Generated/GLOBAL_CCU4/global_ccu4_extern.h"
+ 279              	 .file 16 "../Dave/Generated/PWM_CCU4/pwm_ccu4.h"
+ 280              	 .file 17 "../Dave/Generated/DAVE.h"
+ 281              	 .file 18 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Include/cmsis_gcc.h"
+ 282              	 .file 19 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Infineon/XMC1100_series/Include/system_XMC1100.h"
+ 283              	 .file 20 "../Dave/Generated/CLOCK_XMC1/clock_xmc1_extern.h"
+ 284              	 .file 21 "../Dave/Generated/ADC_MEASUREMENT/adc_measurement_extern.h"
+ 285              	 .file 22 "../Dave/Generated/DIGITAL_IO/digital_io_extern.h"
+ 286              	 .file 23 "../Dave/Generated/SYSTIMER/systimer_extern.h"
+ 287              	 .file 24 "../Dave/Generated/PWM_CCU4/pwm_ccu4_extern.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 DAVE.c
     {standard input}:18     .text.DAVE_Init:00000000 $t
@@ -440,12 +441,12 @@ CLOCK_XMC1_Init
 ADC_MEASUREMENT_Init
 DIGITAL_IO_Init
 SYSTIMER_Init
-GLOBAL_CCU4_Init
+PWM_CCU4_Init
 CLOCK_XMC1_0
 ADC_SENSOR
 IO_USB_SI
 IO_USB_OE
-IO_LED_RELAY
+IO_LED_R_STATUS
 IO_SW_USB
 IO_SW_UP
 IO_SW_DOWN
@@ -455,4 +456,4 @@ IO_RELAY
 IO_LED_USB2
 IO_LED_USB1
 SYSTIMER_0
-GLOBAL_CCU4_0
+PWM_CCU4_LED_STATUS

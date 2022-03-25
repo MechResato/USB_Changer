@@ -38,6 +38,7 @@
             <BindMap MUri="peripheral/vadc/0/backgnd" Proxy="app/ADC_MEASUREMENT/0/hwres_adc_measurement_background"/>
             <BindMap MUri="port/p/0/pad/7" Proxy="app/DIGITAL_IO/8/hwres_port_pin"/>
             <BindMap MUri="peripheral/cpu/0/nvic/interrupt/15" Proxy="app/ADC_MEASUREMENT/0/hwres_adc_measurement_nvicnode_srcevt"/>
+            <BindMap MUri="peripheral/ccu4/0/cc4/0" Proxy="app/PWM_CCU4/0/hwres_ccu4_cc4_slice"/>
             <BindMap MUri="devicepackage/0/11" Proxy="app/DIGITAL_IO/3/__pin_hwres_port_pin"/>
             <BindMap MUri="devicepackage/0/12" Proxy="app/DIGITAL_IO/1/__pin_hwres_port_pin"/>
             <BindMap MUri="peripheral/ccu4/0/global" Proxy="app/GLOBAL_CCU4/0/hwres_peripheral_ccu4_global"/>

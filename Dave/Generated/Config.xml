@@ -77,6 +77,16 @@
                 <Type>C File</Type>
             </Source_File>
             <Source_File>
+                <File_Name>pwm_ccu4.c</File_Name>
+                <Path>\Dave\Generated\PWM_CCU4\pwm_ccu4.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>pwm_ccu4_conf.c</File_Name>
+                <Path>\Dave\Generated\PWM_CCU4\pwm_ccu4_conf.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
                 <File_Name>systimer.c</File_Name>
                 <Path>\Dave\Generated\SYSTIMER\systimer.c</Path>
                 <Type>C File</Type>
@@ -186,6 +196,21 @@
             <Header_File>
                 <File_Name>global_ccu4_extern.h</File_Name>
                 <Path>\Dave\Generated\GLOBAL_CCU4\global_ccu4_extern.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>pwm_ccu4.h</File_Name>
+                <Path>\Dave\Generated\PWM_CCU4\pwm_ccu4.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>pwm_ccu4_conf.h</File_Name>
+                <Path>\Dave\Generated\PWM_CCU4\pwm_ccu4_conf.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>pwm_ccu4_extern.h</File_Name>
+                <Path>\Dave\Generated\PWM_CCU4\pwm_ccu4_extern.h</Path>
                 <Type>H File</Type>
             </Header_File>
             <Header_File>

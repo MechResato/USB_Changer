@@ -12,6 +12,7 @@ RM := rm -rf
 -include Libraries/XMCLib/src/subdir.mk
 -include Libraries/Newlib/subdir.mk
 -include Dave/Generated/SYSTIMER/subdir.mk
+-include Dave/Generated/PWM_CCU4/subdir.mk
 -include Dave/Generated/GLOBAL_CCU4/subdir.mk
 -include Dave/Generated/GLOBAL_ADC/subdir.mk
 -include Dave/Generated/DIGITAL_IO/subdir.mk

@@ -36,12 +36,12 @@
   40 000c 09       	 .byte 9
   41 000d 00       	 .byte 0
   42 000e 0000     	 .space 2
-  43              	 .global IO_LED_RELAY
-  44              	 .section .rodata.IO_LED_RELAY,"a",%progbits
+  43              	 .global IO_LED_R_STATUS
+  44              	 .section .rodata.IO_LED_R_STATUS,"a",%progbits
   45              	 .align 2
-  48              	IO_LED_RELAY:
+  48              	IO_LED_R_STATUS:
   49 0000 00000440 	 .word 1074003968
-  50 0004 80       	 .byte -128
+  50 0004 A0       	 .byte -96
   51 0005 000000   	 .space 3
   52 0008 00000100 	 .word 65536
   53 000c 06       	 .byte 6
@@ -153,8 +153,8 @@ DEFINED SYMBOLS
     {standard input}:19     .rodata.IO_USB_SI:00000000 $d
     {standard input}:35     .rodata.IO_USB_OE:00000000 IO_USB_OE
     {standard input}:32     .rodata.IO_USB_OE:00000000 $d
-    {standard input}:48     .rodata.IO_LED_RELAY:00000000 IO_LED_RELAY
-    {standard input}:45     .rodata.IO_LED_RELAY:00000000 $d
+    {standard input}:48     .rodata.IO_LED_R_STATUS:00000000 IO_LED_R_STATUS
+    {standard input}:45     .rodata.IO_LED_R_STATUS:00000000 $d
     {standard input}:61     .rodata.IO_SW_USB:00000000 IO_SW_USB
     {standard input}:58     .rodata.IO_SW_USB:00000000 $d
     {standard input}:74     .rodata.IO_SW_UP:00000000 IO_SW_UP

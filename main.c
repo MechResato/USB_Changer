@@ -15,8 +15,10 @@
 #define ADC_THRESHOLD_INCREMENT   (ADC_THRESHOLD_MAX / 33)	// Value added/subtracted when adjusting threshold. 33 means there are 33 steps for setting thresholds
 #define RELAY_LATCHTIME_MAX       60000						// Maximum configurable time that the threshold must be exceeded to trigger a state change of the relay
 #define RELAY_LATCHTIME_INCREMENT 500						// Value added/subtracted when adjusting time
-#define LED_PULSE_SHORT 		  300						//
-#define LED_PULSE_LONG	 		  1100						//
+#define LED_PULSE_SHORT			  300						//
+#define LED_PULSE_LONG			  1100						//
+#define PWM_FULL_ON				  PWM_CCU4_SYM_DUTY_MIN
+#define PWM_FULL_OFF			  PWM_CCU4_SYM_DUTY_MAX
 
 // Dynamic settings (can be changed by user)
 uint16_t relay_threshold_latchtime = 50; // Time in ms that the threshold must stay exceeded in order to trigger a state change (=basically a filter)
@@ -32,10 +34,10 @@ USB_states USB_state;
 relay_states relay_state;
 setup_states setup_state;
 typedef enum {LED_OFF, LED_ON, LED_NUMBER} LED_patterns;
-LED_patterns led_relay_pattern = LED_OFF;
-LED_patterns led_relay_pattern_last = LED_OFF;
+LED_patterns led_status_pattern = LED_OFF;
+LED_patterns led_status_pattern_last = LED_OFF;
 uint16_t led_number = 0;
-//ToDo: implement led_relay_pattern and number. After setup return to current relay state.
+//ToDo: implement led_status_pattern and number. After setup return to current relay state.
 
 // Buttons
 typedef enum {BTNPRESS_NOT, BTNPRESS_STD, BTNPRESS_LONG} button_press_states;
@@ -73,17 +75,17 @@ void delay_ms(uint32_t ms){
 }
 
 //****************************************************************************
-// reset_relay_led - gets state of relay and sets relay led according
+// reset_status_led_to_relay_state - gets state of relay and sets relay led according
 //****************************************************************************
-void reset_relay_led(){
+void reset_status_led_to_relay_state(){
 	uint32_t state = DIGITAL_IO_GetInput(&IO_RELAY);
 	if(state == 0){
-		led_relay_pattern = LED_OFF;
-		DIGITAL_IO_SetOutputHigh(&IO_LED_RELAY);
+		led_status_pattern = LED_OFF;
+		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
 	}
 	else{
-		led_relay_pattern = LED_ON;
-		DIGITAL_IO_SetOutputLow(&IO_LED_RELAY);
+		led_status_pattern = LED_ON;
+		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
 	}
 }
 
@@ -97,37 +99,37 @@ void manage_status_led(){
 	static uint16_t led_number_state_length;
 
 	// Check target pattern an initiate
-	if(led_relay_pattern != led_relay_pattern_last){
-		switch (led_relay_pattern){
+	if(led_status_pattern != led_status_pattern_last){
+		switch (led_status_pattern){
 			case LED_OFF:
-				DIGITAL_IO_SetOutputHigh(&IO_LED_RELAY);
+				PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
 				break;
 			case LED_ON:
-				DIGITAL_IO_SetOutputLow(&IO_LED_RELAY);
+				PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
 				break;
 			case LED_NUMBER:
 				if(led_number >= 1){
 					led_number_state_timestamp = SYSTIMER_GetTime();
 					led_number_state_length = LED_PULSE_SHORT;
-					DIGITAL_IO_SetOutputHigh(&IO_LED_RELAY);
+					PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
 					led_number_state = 0;
 				}
 				break;
 		}
-		led_relay_pattern_last = led_relay_pattern;
+		led_status_pattern_last = led_status_pattern;
 	}
 
 	// Handle LED_NUMBER pattern
-	if(led_relay_pattern == LED_NUMBER){
+	if(led_status_pattern == LED_NUMBER){
 		if((SYSTIMER_GetTime() - led_number_state_timestamp) / 1000 >= led_number_state_length){
 			// Next state
 			led_number_state++;
 
 			// Check if LED must be powered on or off for this state
 			if(led_number_state % 2)
-				DIGITAL_IO_SetOutputLow(&IO_LED_RELAY);
+				PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
 			else
-				DIGITAL_IO_SetOutputHigh(&IO_LED_RELAY);
+				PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
 
 			// Detect last low phase and make it longer
 			if(led_number_state == (led_number*2))
@@ -140,7 +142,7 @@ void manage_status_led(){
 
 			// Check if LED pattern is finished
 			if(led_number_state > led_number*2){
-				//led_relay_pattern = LED_OFF;
+				//led_status_pattern = LED_OFF;
 				led_number_state = 1;
 			}
 		}
@@ -174,8 +176,8 @@ int main(void)
 	DIGITAL_IO_SetOutputHigh(&IO_LED_USB2);
 	// Disable Relay and set LED off
 	DIGITAL_IO_SetOutputLow(&IO_RELAY);
-	DIGITAL_IO_SetOutputHigh(&IO_LED_RELAY);
-	// Init next value conversion
+	PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
+	// Initialize next value conversion
 	ADC_MEASUREMENT_StartConversion(&ADC_SENSOR);
 
 	int main_loop_count = 0;
@@ -269,9 +271,6 @@ int main(void)
 				break;
 		}
 		/// - Relay handling -
-		// Get ADC value
-		//ADC_val_current = ADC_MEASUREMENT_GetDetailedResult(&ADC_SENSOR);
-
 		// Check for state change triggers based on current state
 		switch (relay_state){
 			case RELAY_LOW:
@@ -291,7 +290,7 @@ int main(void)
 					if(upperThresholdExceedDuration > relay_threshold_latchtime){
 						relay_state = RELAY_HIGH;
 						DIGITAL_IO_SetOutputHigh(&IO_RELAY);
-						reset_relay_led();
+						reset_status_led_to_relay_state();
 						ADC_val_upper_thres_exceed_timestamp = 0;
 					}
 				}
@@ -313,7 +312,7 @@ int main(void)
 					if(lowerThresholdExceedDuration > relay_threshold_latchtime){
 						relay_state = RELAY_LOW;
 						DIGITAL_IO_SetOutputLow(&IO_RELAY);
-						reset_relay_led();
+						reset_status_led_to_relay_state();
 						ADC_val_lower_thres_exceed_timestamp = 0;
 					}
 				}
@@ -331,17 +330,17 @@ int main(void)
 				// A short press of down       brings system in lower threshold setup menu
 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
 					setup_state = SETUP_TIME_TH;
-					led_relay_pattern = LED_NUMBER;
+					led_status_pattern = LED_NUMBER;
 					led_number = 1;
 				}
 				else if(buttonpress_up == BTNPRESS_STD){
 					setup_state = SETUP_UPPER_TH;
-					led_relay_pattern = LED_NUMBER;
+					led_status_pattern = LED_NUMBER;
 					led_number = 2;
 				}
 				else if(buttonpress_down == BTNPRESS_STD){
 					setup_state = SETUP_LOWER_TH;
-					led_relay_pattern = LED_NUMBER;
+					led_status_pattern = LED_NUMBER;
 					led_number = 3;
 				}
 				break;
@@ -354,7 +353,7 @@ int main(void)
 				// A short press of down       decreases the upper threshold value
 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
 					setup_state = SETUP_IDLE;
-					reset_relay_led();
+					reset_status_led_to_relay_state();
 				}
 				else if(buttonpress_up == BTNPRESS_STD){
 					ADC_upper_threshold += ADC_THRESHOLD_INCREMENT;
@@ -378,7 +377,7 @@ int main(void)
 				// A short press of down       decreases the lower threshold value
 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
 					setup_state = SETUP_IDLE;
-					reset_relay_led();
+					reset_status_led_to_relay_state();
 				}
 				else if(buttonpress_up == BTNPRESS_STD){
 					ADC_lower_threshold += ADC_THRESHOLD_INCREMENT;
@@ -398,7 +397,7 @@ int main(void)
 				// A short press of down       decreases the threshold exceed time
 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
 					setup_state = SETUP_IDLE;
-					reset_relay_led();
+					reset_status_led_to_relay_state();
 				}
 				else if(buttonpress_up == BTNPRESS_STD){
 					relay_threshold_latchtime += RELAY_LATCHTIME_INCREMENT;

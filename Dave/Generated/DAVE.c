@@ -89,8 +89,8 @@ __WEAK DAVE_STATUS_t DAVE_Init(void)
    } 
   if (init_status == DAVE_STATUS_SUCCESS)
   {
-	 /**  Initialization of DIGITAL_IO APP instance IO_LED_RELAY */
-	 init_status = (DAVE_STATUS_t)DIGITAL_IO_Init(&IO_LED_RELAY); 
+	 /**  Initialization of DIGITAL_IO APP instance IO_LED_R_STATUS */
+	 init_status = (DAVE_STATUS_t)DIGITAL_IO_Init(&IO_LED_R_STATUS); 
    } 
   if (init_status == DAVE_STATUS_SUCCESS)
   {
@@ -139,8 +139,8 @@ __WEAK DAVE_STATUS_t DAVE_Init(void)
    } 
   if (init_status == DAVE_STATUS_SUCCESS)
   {
-	 /**  Initialization of GLOBAL_CCU4 APP instance GLOBAL_CCU4_0 */
-	 init_status = (DAVE_STATUS_t)GLOBAL_CCU4_Init(&GLOBAL_CCU4_0); 
+	 /**  Initialization of PWM_CCU4 APP instance PWM_CCU4_LED_STATUS */
+	 init_status = (DAVE_STATUS_t)PWM_CCU4_Init(&PWM_CCU4_LED_STATUS); 
    }  
   return init_status;
 } /**  End of function DAVE_Init */

@@ -26,6 +26,7 @@ Dave/Generated \
 Dave/Generated/DIGITAL_IO \
 Dave/Generated/GLOBAL_ADC \
 Dave/Generated/GLOBAL_CCU4 \
+Dave/Generated/PWM_CCU4 \
 Dave/Generated/SYSTIMER \
 Libraries/Newlib \
 Libraries/XMCLib/src \
