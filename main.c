@@ -33,10 +33,12 @@ typedef enum {SETUP_IDLE, SETUP_UPPER_TH, SETUP_LOWER_TH, SETUP_TIME_TH} setup_s
 USB_states USB_state;
 relay_states relay_state;
 setup_states setup_state;
-typedef enum {LED_OFF, LED_ON, LED_NUMBER} LED_patterns;
+typedef enum {LED_OFF, LED_ON, LED_NUMBER, LED_FADE_DOWN, LED_FADE_UP} LED_patterns;
 LED_patterns led_status_pattern = LED_OFF;
 LED_patterns led_status_pattern_last = LED_OFF;
 uint16_t led_number = 0;
+uint16_t led_fadetime = 1000;
+uint16_t led_fadesteps = 100;
 //ToDo: implement led_status_pattern and number. After setup return to current relay state.
 
 // Buttons
@@ -94,9 +96,11 @@ void reset_status_led_to_relay_state(){
 //****************************************************************************
 
 void manage_status_led(){
-	static uint16_t led_number_state;
-	static uint32_t led_number_state_timestamp;
-	static uint16_t led_number_state_length;
+	static uint16_t led_pattern_state;
+	static uint32_t led_pattern_state_timestamp;
+	static uint16_t led_pattern_state_length;
+
+	static uint16_t fade_duty_step;
 
 	// Check target pattern an initiate
 	if(led_status_pattern != led_status_pattern_last){
@@ -109,10 +113,28 @@ void manage_status_led(){
 				break;
 			case LED_NUMBER:
 				if(led_number >= 1){
-					led_number_state_timestamp = SYSTIMER_GetTime();
-					led_number_state_length = LED_PULSE_SHORT;
+					led_pattern_state_timestamp = SYSTIMER_GetTime();
+					led_pattern_state_length = LED_PULSE_SHORT;
 					PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
-					led_number_state = 0;
+					led_pattern_state = 0;
+				}
+				break;
+			case LED_FADE_DOWN:
+				if(led_fadetime > 0){
+					led_pattern_state_timestamp = SYSTIMER_GetTime();
+					led_pattern_state_length = led_fadetime/led_fadesteps;
+					fade_duty_step = PWM_FULL_OFF/led_fadesteps;
+					PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
+					led_pattern_state = 0;
+				}
+				break;
+			case LED_FADE_UP:
+				if(led_fadetime > 0){
+					led_pattern_state_timestamp = SYSTIMER_GetTime();
+					led_pattern_state_length = led_fadetime/led_fadesteps;
+					fade_duty_step = PWM_FULL_OFF/led_fadesteps;
+					PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
+					led_pattern_state = 0;
 				}
 				break;
 		}
@@ -121,29 +143,65 @@ void manage_status_led(){
 
 	// Handle LED_NUMBER pattern
 	if(led_status_pattern == LED_NUMBER){
-		if((SYSTIMER_GetTime() - led_number_state_timestamp) / 1000 >= led_number_state_length){
+		if((SYSTIMER_GetTime() - led_pattern_state_timestamp) / 1000 >= led_pattern_state_length){
 			// Next state
-			led_number_state++;
+			led_pattern_state++;
 
 			// Check if LED must be powered on or off for this state
-			if(led_number_state % 2)
+			if(led_pattern_state % 2)
 				PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
 			else
 				PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
 
 			// Detect last low phase and make it longer
-			if(led_number_state == (led_number*2))
-				led_number_state_length = LED_PULSE_LONG;
+			if(led_pattern_state == (led_number*2))
+				led_pattern_state_length = LED_PULSE_LONG;
 			else
-				led_number_state_length = LED_PULSE_SHORT;
+				led_pattern_state_length = LED_PULSE_SHORT;
 
 			// Store current time
-			led_number_state_timestamp = SYSTIMER_GetTime();
+			led_pattern_state_timestamp = SYSTIMER_GetTime();
 
 			// Check if LED pattern is finished
-			if(led_number_state > led_number*2){
+			if(led_pattern_state > led_number*2){
 				//led_status_pattern = LED_OFF;
-				led_number_state = 1;
+				led_pattern_state = 1;
+			}
+		}
+	}
+
+	// Handle LED_FADE pattern
+	if(led_status_pattern == LED_FADE_DOWN){
+		if((SYSTIMER_GetTime() - led_pattern_state_timestamp) / 1000 >= led_pattern_state_length){
+			//
+			PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, (led_pattern_state*fade_duty_step) + PWM_FULL_ON);
+
+			// Store current time
+			led_pattern_state_timestamp = SYSTIMER_GetTime();
+
+			// Next state
+			led_pattern_state++;
+
+			// Check if LED pattern is finished
+			if(led_pattern_state >= led_fadesteps){
+				led_pattern_state = 0;
+			}
+		}
+	}
+	if(led_status_pattern == LED_FADE_UP){ //Todo
+		if((SYSTIMER_GetTime() - led_pattern_state_timestamp) / 1000 >= led_pattern_state_length){
+			//
+			PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF - (led_pattern_state*fade_duty_step) );
+
+			// Store current time
+			led_pattern_state_timestamp = SYSTIMER_GetTime();
+
+			// Next state
+			led_pattern_state++;
+
+			// Check if LED pattern is finished
+			if(led_pattern_state >= led_fadesteps){
+				led_pattern_state = 0;
 			}
 		}
 	}
@@ -335,13 +393,15 @@ int main(void)
 				}
 				else if(buttonpress_up == BTNPRESS_STD){
 					setup_state = SETUP_UPPER_TH;
-					led_status_pattern = LED_NUMBER;
-					led_number = 2;
+					//led_status_pattern = LED_NUMBER;
+					//led_number = 5;
+					led_status_pattern = LED_FADE_UP;
 				}
 				else if(buttonpress_down == BTNPRESS_STD){
 					setup_state = SETUP_LOWER_TH;
-					led_status_pattern = LED_NUMBER;
-					led_number = 3;
+					//led_status_pattern = LED_NUMBER;
+					//led_number = 3;
+					led_status_pattern = LED_FADE_DOWN;
 				}
 				break;
 			case SETUP_UPPER_TH:

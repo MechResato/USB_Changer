@@ -3624,86 +3624,96 @@
  369              	 .align 1
  372              	led_number:
  373 0000 0000     	 .space 2
- 374              	 .global buttonpress_usb
- 375              	 .section .bss.buttonpress_usb,"aw",%nobits
- 378              	buttonpress_usb:
- 379 0000 00       	 .space 1
- 380              	 .global buttonpress_up
- 381              	 .section .bss.buttonpress_up,"aw",%nobits
- 384              	buttonpress_up:
- 385 0000 00       	 .space 1
- 386              	 .global buttonpress_down
- 387              	 .section .bss.buttonpress_down,"aw",%nobits
- 390              	buttonpress_down:
- 391 0000 00       	 .space 1
- 392              	 .global button_usb_pressed_timestamp
- 393              	 .section .bss.button_usb_pressed_timestamp,"aw",%nobits
- 394              	 .align 2
- 397              	button_usb_pressed_timestamp:
- 398 0000 00000000 	 .space 4
- 399              	 .global button_up_pressed_timestamp
- 400              	 .section .bss.button_up_pressed_timestamp,"aw",%nobits
- 401              	 .align 2
- 404              	button_up_pressed_timestamp:
- 405 0000 00000000 	 .space 4
- 406              	 .global button_down_pressed_timestamp
- 407              	 .section .bss.button_down_pressed_timestamp,"aw",%nobits
+ 374              	 .global led_fadetime
+ 375              	 .section .data.led_fadetime,"aw",%progbits
+ 376              	 .align 1
+ 379              	led_fadetime:
+ 380 0000 E803     	 .short 1000
+ 381              	 .global led_fadesteps
+ 382              	 .section .data.led_fadesteps,"aw",%progbits
+ 383              	 .align 1
+ 386              	led_fadesteps:
+ 387 0000 6400     	 .short 100
+ 388              	 .global buttonpress_usb
+ 389              	 .section .bss.buttonpress_usb,"aw",%nobits
+ 392              	buttonpress_usb:
+ 393 0000 00       	 .space 1
+ 394              	 .global buttonpress_up
+ 395              	 .section .bss.buttonpress_up,"aw",%nobits
+ 398              	buttonpress_up:
+ 399 0000 00       	 .space 1
+ 400              	 .global buttonpress_down
+ 401              	 .section .bss.buttonpress_down,"aw",%nobits
+ 404              	buttonpress_down:
+ 405 0000 00       	 .space 1
+ 406              	 .global button_usb_pressed_timestamp
+ 407              	 .section .bss.button_usb_pressed_timestamp,"aw",%nobits
  408              	 .align 2
- 411              	button_down_pressed_timestamp:
+ 411              	button_usb_pressed_timestamp:
  412 0000 00000000 	 .space 4
- 413              	 .global button_usb_pressed_duration
- 414              	 .section .bss.button_usb_pressed_duration,"aw",%nobits
- 415              	 .align 1
- 418              	button_usb_pressed_duration:
- 419 0000 0000     	 .space 2
- 420              	 .global button_up_pressed_duration
- 421              	 .section .bss.button_up_pressed_duration,"aw",%nobits
- 422              	 .align 1
- 425              	button_up_pressed_duration:
- 426 0000 0000     	 .space 2
- 427              	 .global button_down_pressed_duration
- 428              	 .section .bss.button_down_pressed_duration,"aw",%nobits
+ 413              	 .global button_up_pressed_timestamp
+ 414              	 .section .bss.button_up_pressed_timestamp,"aw",%nobits
+ 415              	 .align 2
+ 418              	button_up_pressed_timestamp:
+ 419 0000 00000000 	 .space 4
+ 420              	 .global button_down_pressed_timestamp
+ 421              	 .section .bss.button_down_pressed_timestamp,"aw",%nobits
+ 422              	 .align 2
+ 425              	button_down_pressed_timestamp:
+ 426 0000 00000000 	 .space 4
+ 427              	 .global button_usb_pressed_duration
+ 428              	 .section .bss.button_usb_pressed_duration,"aw",%nobits
  429              	 .align 1
- 432              	button_down_pressed_duration:
+ 432              	button_usb_pressed_duration:
  433 0000 0000     	 .space 2
- 434              	 .global ADC_val_current
- 435              	 .section .bss.ADC_val_current,"aw",%nobits
- 436              	 .align 2
- 439              	ADC_val_current:
- 440 0000 00000000 	 .space 4
- 441              	 .global ADC_val_upper_thres_exceed_timestamp
- 442              	 .section .bss.ADC_val_upper_thres_exceed_timestamp,"aw",%nobits
- 443              	 .align 2
- 446              	ADC_val_upper_thres_exceed_timestamp:
- 447 0000 00000000 	 .space 4
- 448              	 .global ADC_val_lower_thres_exceed_timestamp
- 449              	 .section .bss.ADC_val_lower_thres_exceed_timestamp,"aw",%nobits
+ 434              	 .global button_up_pressed_duration
+ 435              	 .section .bss.button_up_pressed_duration,"aw",%nobits
+ 436              	 .align 1
+ 439              	button_up_pressed_duration:
+ 440 0000 0000     	 .space 2
+ 441              	 .global button_down_pressed_duration
+ 442              	 .section .bss.button_down_pressed_duration,"aw",%nobits
+ 443              	 .align 1
+ 446              	button_down_pressed_duration:
+ 447 0000 0000     	 .space 2
+ 448              	 .global ADC_val_current
+ 449              	 .section .bss.ADC_val_current,"aw",%nobits
  450              	 .align 2
- 453              	ADC_val_lower_thres_exceed_timestamp:
+ 453              	ADC_val_current:
  454 0000 00000000 	 .space 4
- 455              	 .global button_usb_pressed_debug
- 456              	 .section .bss.button_usb_pressed_debug,"aw",%nobits
+ 455              	 .global ADC_val_upper_thres_exceed_timestamp
+ 456              	 .section .bss.ADC_val_upper_thres_exceed_timestamp,"aw",%nobits
  457              	 .align 2
- 460              	button_usb_pressed_debug:
+ 460              	ADC_val_upper_thres_exceed_timestamp:
  461 0000 00000000 	 .space 4
- 462              	 .global button_usb_pressed_long_debug
- 463              	 .section .bss.button_usb_pressed_long_debug,"aw",%nobits
+ 462              	 .global ADC_val_lower_thres_exceed_timestamp
+ 463              	 .section .bss.ADC_val_lower_thres_exceed_timestamp,"aw",%nobits
  464              	 .align 2
- 467              	button_usb_pressed_long_debug:
+ 467              	ADC_val_lower_thres_exceed_timestamp:
  468 0000 00000000 	 .space 4
- 469              	 .global systime_debug
- 470              	 .section .bss.systime_debug,"aw",%nobits
+ 469              	 .global button_usb_pressed_debug
+ 470              	 .section .bss.button_usb_pressed_debug,"aw",%nobits
  471              	 .align 2
- 474              	systime_debug:
+ 474              	button_usb_pressed_debug:
  475 0000 00000000 	 .space 4
- 476              	 .section .text.delay_ms,"ax",%progbits
- 477              	 .align 2
- 478              	 .global delay_ms
- 479              	 .code 16
- 480              	 .thumb_func
- 482              	delay_ms:
- 483              	.LFB153:
- 484              	 .file 5 "../main.c"
+ 476              	 .global button_usb_pressed_long_debug
+ 477              	 .section .bss.button_usb_pressed_long_debug,"aw",%nobits
+ 478              	 .align 2
+ 481              	button_usb_pressed_long_debug:
+ 482 0000 00000000 	 .space 4
+ 483              	 .global systime_debug
+ 484              	 .section .bss.systime_debug,"aw",%nobits
+ 485              	 .align 2
+ 488              	systime_debug:
+ 489 0000 00000000 	 .space 4
+ 490              	 .section .text.delay_ms,"ax",%progbits
+ 491              	 .align 2
+ 492              	 .global delay_ms
+ 493              	 .code 16
+ 494              	 .thumb_func
+ 496              	delay_ms:
+ 497              	.LFB153:
+ 498              	 .file 5 "../main.c"
    1:../main.c     **** /*
    2:../main.c     ****  * main.c
    3:../main.c     ****  *
@@ -3721,8 +3731,8 @@
   15:../main.c     **** #define ADC_THRESHOLD_INCREMENT   (ADC_THRESHOLD_MAX / 33)	// Value added/subtracted when adjusting
   16:../main.c     **** #define RELAY_LATCHTIME_MAX       60000						// Maximum configurable time that the threshold must b
   17:../main.c     **** #define RELAY_LATCHTIME_INCREMENT 500						// Value added/subtracted when adjusting time
-  18:../main.c     **** #define LED_PULSE_SHORT 		  300						//
-  19:../main.c     **** #define LED_PULSE_LONG	 		  1100						//
+  18:../main.c     **** #define LED_PULSE_SHORT			  300						//
+  19:../main.c     **** #define LED_PULSE_LONG			  1100						//
   20:../main.c     **** #define PWM_FULL_ON				  PWM_CCU4_SYM_DUTY_MIN
   21:../main.c     **** #define PWM_FULL_OFF			  PWM_CCU4_SYM_DUTY_MAX
   22:../main.c     **** 
@@ -3739,1801 +3749,2083 @@
   33:../main.c     **** USB_states USB_state;
   34:../main.c     **** relay_states relay_state;
   35:../main.c     **** setup_states setup_state;
-  36:../main.c     **** typedef enum {LED_OFF, LED_ON, LED_NUMBER} LED_patterns;
+  36:../main.c     **** typedef enum {LED_OFF, LED_ON, LED_NUMBER, LED_FADE_DOWN, LED_FADE_UP} LED_patterns;
   37:../main.c     **** LED_patterns led_status_pattern = LED_OFF;
   38:../main.c     **** LED_patterns led_status_pattern_last = LED_OFF;
   39:../main.c     **** uint16_t led_number = 0;
-  40:../main.c     **** //ToDo: implement led_status_pattern and number. After setup return to current relay state.
-  41:../main.c     **** 
-  42:../main.c     **** // Buttons
-  43:../main.c     **** typedef enum {BTNPRESS_NOT, BTNPRESS_STD, BTNPRESS_LONG} button_press_states;
-  44:../main.c     **** button_press_states buttonpress_usb = BTNPRESS_NOT;
-  45:../main.c     **** button_press_states buttonpress_up = BTNPRESS_NOT;
-  46:../main.c     **** button_press_states buttonpress_down = BTNPRESS_NOT;
-  47:../main.c     **** uint32_t button_usb_pressed_timestamp = 0; // If a button is pressed (or state = HIGH) the current 
-  48:../main.c     **** uint32_t button_up_pressed_timestamp = 0;
-  49:../main.c     **** uint32_t button_down_pressed_timestamp = 0;
-  50:../main.c     **** uint16_t button_usb_pressed_duration = 0; // If a button is released (or state = LOW) duration is c
-  51:../main.c     **** uint16_t button_up_pressed_duration = 0;
-  52:../main.c     **** uint16_t button_down_pressed_duration = 0;
-  53:../main.c     **** #define SW_ON 0
-  54:../main.c     **** #define SW_OFF 1
-  55:../main.c     **** 
-  56:../main.c     **** // ADC
-  57:../main.c     **** uint32_t ADC_val_current = 0;
-  58:../main.c     **** uint32_t ADC_val_upper_thres_exceed_timestamp = 0; // If this is 0 the threshold is not exceeded. I
-  59:../main.c     **** uint32_t ADC_val_lower_thres_exceed_timestamp = 0;
-  60:../main.c     **** 
-  61:../main.c     **** // Debug
-  62:../main.c     **** int button_usb_pressed_debug = 0;
-  63:../main.c     **** int button_usb_pressed_long_debug = 0;
-  64:../main.c     **** int systime_debug = 0;
-  65:../main.c     **** 
-  66:../main.c     **** 
+  40:../main.c     **** uint16_t led_fadetime = 1000;
+  41:../main.c     **** uint16_t led_fadesteps = 100;
+  42:../main.c     **** //ToDo: implement led_status_pattern and number. After setup return to current relay state.
+  43:../main.c     **** 
+  44:../main.c     **** // Buttons
+  45:../main.c     **** typedef enum {BTNPRESS_NOT, BTNPRESS_STD, BTNPRESS_LONG} button_press_states;
+  46:../main.c     **** button_press_states buttonpress_usb = BTNPRESS_NOT;
+  47:../main.c     **** button_press_states buttonpress_up = BTNPRESS_NOT;
+  48:../main.c     **** button_press_states buttonpress_down = BTNPRESS_NOT;
+  49:../main.c     **** uint32_t button_usb_pressed_timestamp = 0; // If a button is pressed (or state = HIGH) the current 
+  50:../main.c     **** uint32_t button_up_pressed_timestamp = 0;
+  51:../main.c     **** uint32_t button_down_pressed_timestamp = 0;
+  52:../main.c     **** uint16_t button_usb_pressed_duration = 0; // If a button is released (or state = LOW) duration is c
+  53:../main.c     **** uint16_t button_up_pressed_duration = 0;
+  54:../main.c     **** uint16_t button_down_pressed_duration = 0;
+  55:../main.c     **** #define SW_ON 0
+  56:../main.c     **** #define SW_OFF 1
+  57:../main.c     **** 
+  58:../main.c     **** // ADC
+  59:../main.c     **** uint32_t ADC_val_current = 0;
+  60:../main.c     **** uint32_t ADC_val_upper_thres_exceed_timestamp = 0; // If this is 0 the threshold is not exceeded. I
+  61:../main.c     **** uint32_t ADC_val_lower_thres_exceed_timestamp = 0;
+  62:../main.c     **** 
+  63:../main.c     **** // Debug
+  64:../main.c     **** int button_usb_pressed_debug = 0;
+  65:../main.c     **** int button_usb_pressed_long_debug = 0;
+  66:../main.c     **** int systime_debug = 0;
   67:../main.c     **** 
-  68:../main.c     **** //****************************************************************************
-  69:../main.c     **** // delay_ms - millisecond delay function
+  68:../main.c     **** 
+  69:../main.c     **** 
   70:../main.c     **** //****************************************************************************
-  71:../main.c     **** void delay_ms(uint32_t ms){
- 485              	 .loc 5 71 0
- 486              	 .cfi_startproc
- 487 0000 80B5     	 push {r7,lr}
- 488              	.LCFI24:
- 489              	 .cfi_def_cfa_offset 8
- 490              	 .cfi_offset 7,-8
- 491              	 .cfi_offset 14,-4
- 492 0002 84B0     	 sub sp,sp,#16
- 493              	.LCFI25:
- 494              	 .cfi_def_cfa_offset 24
- 495 0004 00AF     	 add r7,sp,#0
- 496              	.LCFI26:
- 497              	 .cfi_def_cfa_register 7
- 498 0006 7860     	 str r0,[r7,#4]
-  72:../main.c     **** 	uint32_t targetMicroSec = SYSTIMER_GetTime() + (ms*1000);
- 499              	 .loc 5 72 0
- 500 0008 FFF7FEFF 	 bl SYSTIMER_GetTime
- 501 000c 011C     	 mov r1,r0
- 502 000e 7B68     	 ldr r3,[r7,#4]
- 503 0010 FA22     	 mov r2,#250
- 504 0012 9200     	 lsl r2,r2,#2
- 505 0014 5343     	 mul r3,r2
- 506 0016 CB18     	 add r3,r1,r3
- 507 0018 FB60     	 str r3,[r7,#12]
-  73:../main.c     **** 	while(targetMicroSec > SYSTIMER_GetTime())
- 508              	 .loc 5 73 0
- 509 001a 00E0     	 b .L16
- 510              	.L17:
-  74:../main.c     **** 		__NOP(); // do nothing
- 511              	 .loc 5 74 0
- 512              	
- 513 001c C046     	 nop
- 514              	
- 515              	 .code 16
- 516              	.L16:
-  73:../main.c     **** 	while(targetMicroSec > SYSTIMER_GetTime())
- 517              	 .loc 5 73 0
- 518 001e FFF7FEFF 	 bl SYSTIMER_GetTime
- 519 0022 021E     	 sub r2,r0,#0
- 520 0024 FB68     	 ldr r3,[r7,#12]
- 521 0026 9A42     	 cmp r2,r3
- 522 0028 F8D3     	 bcc .L17
-  75:../main.c     **** }
- 523              	 .loc 5 75 0
- 524 002a BD46     	 mov sp,r7
- 525 002c 04B0     	 add sp,sp,#16
- 526              	 
- 527 002e 80BD     	 pop {r7,pc}
- 528              	 .cfi_endproc
- 529              	.LFE153:
- 531              	 .section .text.reset_status_led_to_relay_state,"ax",%progbits
- 532              	 .align 2
- 533              	 .global reset_status_led_to_relay_state
- 534              	 .code 16
- 535              	 .thumb_func
- 537              	reset_status_led_to_relay_state:
- 538              	.LFB154:
-  76:../main.c     **** 
-  77:../main.c     **** //****************************************************************************
-  78:../main.c     **** // reset_status_led_to_relay_state - gets state of relay and sets relay led according
+  71:../main.c     **** // delay_ms - millisecond delay function
+  72:../main.c     **** //****************************************************************************
+  73:../main.c     **** void delay_ms(uint32_t ms){
+ 499              	 .loc 5 73 0
+ 500              	 .cfi_startproc
+ 501 0000 80B5     	 push {r7,lr}
+ 502              	.LCFI24:
+ 503              	 .cfi_def_cfa_offset 8
+ 504              	 .cfi_offset 7,-8
+ 505              	 .cfi_offset 14,-4
+ 506 0002 84B0     	 sub sp,sp,#16
+ 507              	.LCFI25:
+ 508              	 .cfi_def_cfa_offset 24
+ 509 0004 00AF     	 add r7,sp,#0
+ 510              	.LCFI26:
+ 511              	 .cfi_def_cfa_register 7
+ 512 0006 7860     	 str r0,[r7,#4]
+  74:../main.c     **** 	uint32_t targetMicroSec = SYSTIMER_GetTime() + (ms*1000);
+ 513              	 .loc 5 74 0
+ 514 0008 FFF7FEFF 	 bl SYSTIMER_GetTime
+ 515 000c 011C     	 mov r1,r0
+ 516 000e 7B68     	 ldr r3,[r7,#4]
+ 517 0010 FA22     	 mov r2,#250
+ 518 0012 9200     	 lsl r2,r2,#2
+ 519 0014 5343     	 mul r3,r2
+ 520 0016 CB18     	 add r3,r1,r3
+ 521 0018 FB60     	 str r3,[r7,#12]
+  75:../main.c     **** 	while(targetMicroSec > SYSTIMER_GetTime())
+ 522              	 .loc 5 75 0
+ 523 001a 00E0     	 b .L16
+ 524              	.L17:
+  76:../main.c     **** 		__NOP(); // do nothing
+ 525              	 .loc 5 76 0
+ 526              	
+ 527 001c C046     	 nop
+ 528              	
+ 529              	 .code 16
+ 530              	.L16:
+  75:../main.c     **** 	while(targetMicroSec > SYSTIMER_GetTime())
+ 531              	 .loc 5 75 0
+ 532 001e FFF7FEFF 	 bl SYSTIMER_GetTime
+ 533 0022 021E     	 sub r2,r0,#0
+ 534 0024 FB68     	 ldr r3,[r7,#12]
+ 535 0026 9A42     	 cmp r2,r3
+ 536 0028 F8D3     	 bcc .L17
+  77:../main.c     **** }
+ 537              	 .loc 5 77 0
+ 538 002a BD46     	 mov sp,r7
+ 539 002c 04B0     	 add sp,sp,#16
+ 540              	 
+ 541 002e 80BD     	 pop {r7,pc}
+ 542              	 .cfi_endproc
+ 543              	.LFE153:
+ 545              	 .section .text.reset_status_led_to_relay_state,"ax",%progbits
+ 546              	 .align 2
+ 547              	 .global reset_status_led_to_relay_state
+ 548              	 .code 16
+ 549              	 .thumb_func
+ 551              	reset_status_led_to_relay_state:
+ 552              	.LFB154:
+  78:../main.c     **** 
   79:../main.c     **** //****************************************************************************
-  80:../main.c     **** void reset_status_led_to_relay_state(){
- 539              	 .loc 5 80 0
- 540              	 .cfi_startproc
- 541 0000 80B5     	 push {r7,lr}
- 542              	.LCFI27:
- 543              	 .cfi_def_cfa_offset 8
- 544              	 .cfi_offset 7,-8
- 545              	 .cfi_offset 14,-4
- 546 0002 82B0     	 sub sp,sp,#8
- 547              	.LCFI28:
- 548              	 .cfi_def_cfa_offset 16
- 549 0004 00AF     	 add r7,sp,#0
- 550              	.LCFI29:
- 551              	 .cfi_def_cfa_register 7
-  81:../main.c     **** 	uint32_t state = DIGITAL_IO_GetInput(&IO_RELAY);
- 552              	 .loc 5 81 0
- 553 0006 0F4B     	 ldr r3,.L21
- 554 0008 181C     	 mov r0,r3
- 555 000a FFF7FEFF 	 bl DIGITAL_IO_GetInput
- 556 000e 031C     	 mov r3,r0
- 557 0010 7B60     	 str r3,[r7,#4]
-  82:../main.c     **** 	if(state == 0){
- 558              	 .loc 5 82 0
- 559 0012 7B68     	 ldr r3,[r7,#4]
- 560 0014 002B     	 cmp r3,#0
- 561 0016 09D1     	 bne .L19
-  83:../main.c     **** 		led_status_pattern = LED_OFF;
- 562              	 .loc 5 83 0
- 563 0018 0B4B     	 ldr r3,.L21+4
- 564 001a 0022     	 mov r2,#0
- 565 001c 1A70     	 strb r2,[r3]
-  84:../main.c     **** 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
- 566              	 .loc 5 84 0
- 567 001e 0B4B     	 ldr r3,.L21+8
- 568 0020 0B4A     	 ldr r2,.L21+12
- 569 0022 181C     	 mov r0,r3
- 570 0024 111C     	 mov r1,r2
- 571 0026 FFF7FEFF 	 bl PWM_CCU4_SetDutyCycle
- 572 002a 07E0     	 b .L18
- 573              	.L19:
-  85:../main.c     **** 	}
-  86:../main.c     **** 	else{
-  87:../main.c     **** 		led_status_pattern = LED_ON;
- 574              	 .loc 5 87 0
- 575 002c 064B     	 ldr r3,.L21+4
- 576 002e 0122     	 mov r2,#1
- 577 0030 1A70     	 strb r2,[r3]
-  88:../main.c     **** 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
- 578              	 .loc 5 88 0
- 579 0032 064B     	 ldr r3,.L21+8
- 580 0034 181C     	 mov r0,r3
- 581 0036 0021     	 mov r1,#0
- 582 0038 FFF7FEFF 	 bl PWM_CCU4_SetDutyCycle
- 583              	.L18:
-  89:../main.c     **** 	}
-  90:../main.c     **** }
- 584              	 .loc 5 90 0
- 585 003c BD46     	 mov sp,r7
- 586 003e 02B0     	 add sp,sp,#8
- 587              	 
- 588 0040 80BD     	 pop {r7,pc}
- 589              	.L22:
- 590 0042 C046     	 .align 2
- 591              	.L21:
- 592 0044 00000000 	 .word IO_RELAY
- 593 0048 00000000 	 .word led_status_pattern
- 594 004c 00000000 	 .word PWM_CCU4_LED_STATUS
- 595 0050 10270000 	 .word 10000
- 596              	 .cfi_endproc
- 597              	.LFE154:
- 599              	 .global __aeabi_uidiv
- 600              	 .section .text.manage_status_led,"ax",%progbits
- 601              	 .align 2
- 602              	 .global manage_status_led
- 603              	 .code 16
- 604              	 .thumb_func
- 606              	manage_status_led:
- 607              	.LFB155:
-  91:../main.c     **** 
-  92:../main.c     **** //****************************************************************************
-  93:../main.c     **** // manage_leds -
+  80:../main.c     **** // reset_status_led_to_relay_state - gets state of relay and sets relay led according
+  81:../main.c     **** //****************************************************************************
+  82:../main.c     **** void reset_status_led_to_relay_state(){
+ 553              	 .loc 5 82 0
+ 554              	 .cfi_startproc
+ 555 0000 80B5     	 push {r7,lr}
+ 556              	.LCFI27:
+ 557              	 .cfi_def_cfa_offset 8
+ 558              	 .cfi_offset 7,-8
+ 559              	 .cfi_offset 14,-4
+ 560 0002 82B0     	 sub sp,sp,#8
+ 561              	.LCFI28:
+ 562              	 .cfi_def_cfa_offset 16
+ 563 0004 00AF     	 add r7,sp,#0
+ 564              	.LCFI29:
+ 565              	 .cfi_def_cfa_register 7
+  83:../main.c     **** 	uint32_t state = DIGITAL_IO_GetInput(&IO_RELAY);
+ 566              	 .loc 5 83 0
+ 567 0006 0F4B     	 ldr r3,.L21
+ 568 0008 181C     	 mov r0,r3
+ 569 000a FFF7FEFF 	 bl DIGITAL_IO_GetInput
+ 570 000e 031C     	 mov r3,r0
+ 571 0010 7B60     	 str r3,[r7,#4]
+  84:../main.c     **** 	if(state == 0){
+ 572              	 .loc 5 84 0
+ 573 0012 7B68     	 ldr r3,[r7,#4]
+ 574 0014 002B     	 cmp r3,#0
+ 575 0016 09D1     	 bne .L19
+  85:../main.c     **** 		led_status_pattern = LED_OFF;
+ 576              	 .loc 5 85 0
+ 577 0018 0B4B     	 ldr r3,.L21+4
+ 578 001a 0022     	 mov r2,#0
+ 579 001c 1A70     	 strb r2,[r3]
+  86:../main.c     **** 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
+ 580              	 .loc 5 86 0
+ 581 001e 0B4B     	 ldr r3,.L21+8
+ 582 0020 0B4A     	 ldr r2,.L21+12
+ 583 0022 181C     	 mov r0,r3
+ 584 0024 111C     	 mov r1,r2
+ 585 0026 FFF7FEFF 	 bl PWM_CCU4_SetDutyCycle
+ 586 002a 07E0     	 b .L18
+ 587              	.L19:
+  87:../main.c     **** 	}
+  88:../main.c     **** 	else{
+  89:../main.c     **** 		led_status_pattern = LED_ON;
+ 588              	 .loc 5 89 0
+ 589 002c 064B     	 ldr r3,.L21+4
+ 590 002e 0122     	 mov r2,#1
+ 591 0030 1A70     	 strb r2,[r3]
+  90:../main.c     **** 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
+ 592              	 .loc 5 90 0
+ 593 0032 064B     	 ldr r3,.L21+8
+ 594 0034 181C     	 mov r0,r3
+ 595 0036 0021     	 mov r1,#0
+ 596 0038 FFF7FEFF 	 bl PWM_CCU4_SetDutyCycle
+ 597              	.L18:
+  91:../main.c     **** 	}
+  92:../main.c     **** }
+ 598              	 .loc 5 92 0
+ 599 003c BD46     	 mov sp,r7
+ 600 003e 02B0     	 add sp,sp,#8
+ 601              	 
+ 602 0040 80BD     	 pop {r7,pc}
+ 603              	.L22:
+ 604 0042 C046     	 .align 2
+ 605              	.L21:
+ 606 0044 00000000 	 .word IO_RELAY
+ 607 0048 00000000 	 .word led_status_pattern
+ 608 004c 00000000 	 .word PWM_CCU4_LED_STATUS
+ 609 0050 10270000 	 .word 10000
+ 610              	 .cfi_endproc
+ 611              	.LFE154:
+ 613              	 .global __aeabi_uidiv
+ 614              	 .section .text.manage_status_led,"ax",%progbits
+ 615              	 .align 2
+ 616              	 .global manage_status_led
+ 617              	 .code 16
+ 618              	 .thumb_func
+ 620              	manage_status_led:
+ 621              	.LFB155:
+  93:../main.c     **** 
   94:../main.c     **** //****************************************************************************
-  95:../main.c     **** 
-  96:../main.c     **** void manage_status_led(){
- 608              	 .loc 5 96 0
- 609              	 .cfi_startproc
- 610 0000 80B5     	 push {r7,lr}
- 611              	.LCFI30:
- 612              	 .cfi_def_cfa_offset 8
- 613              	 .cfi_offset 7,-8
- 614              	 .cfi_offset 14,-4
- 615 0002 00AF     	 add r7,sp,#0
- 616              	.LCFI31:
- 617              	 .cfi_def_cfa_register 7
-  97:../main.c     **** 	static uint16_t led_number_state;
-  98:../main.c     **** 	static uint32_t led_number_state_timestamp;
-  99:../main.c     **** 	static uint16_t led_number_state_length;
- 100:../main.c     **** 
- 101:../main.c     **** 	// Check target pattern an initiate
- 102:../main.c     **** 	if(led_status_pattern != led_status_pattern_last){
- 618              	 .loc 5 102 0
- 619 0004 434B     	 ldr r3,.L36
- 620 0006 1A78     	 ldrb r2,[r3]
- 621 0008 434B     	 ldr r3,.L36+4
- 622 000a 1B78     	 ldrb r3,[r3]
- 623 000c 9A42     	 cmp r2,r3
- 624 000e 30D0     	 beq .L24
- 103:../main.c     **** 		switch (led_status_pattern){
- 625              	 .loc 5 103 0
- 626 0010 404B     	 ldr r3,.L36
- 627 0012 1B78     	 ldrb r3,[r3]
- 628 0014 012B     	 cmp r3,#1
- 629 0016 0AD0     	 beq .L26
- 630 0018 022B     	 cmp r3,#2
- 631 001a 0ED0     	 beq .L27
- 632 001c 002B     	 cmp r3,#0
- 633 001e 24D1     	 bne .L25
- 104:../main.c     **** 			case LED_OFF:
- 105:../main.c     **** 				PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
- 634              	 .loc 5 105 0
- 635 0020 3E4B     	 ldr r3,.L36+8
- 636 0022 3F4A     	 ldr r2,.L36+12
- 637 0024 181C     	 mov r0,r3
- 638 0026 111C     	 mov r1,r2
- 639 0028 FFF7FEFF 	 bl PWM_CCU4_SetDutyCycle
- 106:../main.c     **** 				break;
- 640              	 .loc 5 106 0
- 641 002c 1DE0     	 b .L25
- 642              	.L26:
- 107:../main.c     **** 			case LED_ON:
- 108:../main.c     **** 				PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
- 643              	 .loc 5 108 0
- 644 002e 3B4B     	 ldr r3,.L36+8
- 645 0030 181C     	 mov r0,r3
- 646 0032 0021     	 mov r1,#0
- 647 0034 FFF7FEFF 	 bl PWM_CCU4_SetDutyCycle
- 109:../main.c     **** 				break;
- 648              	 .loc 5 109 0
- 649 0038 17E0     	 b .L25
- 650              	.L27:
- 110:../main.c     **** 			case LED_NUMBER:
- 111:../main.c     **** 				if(led_number >= 1){
- 651              	 .loc 5 111 0
- 652 003a 3A4B     	 ldr r3,.L36+16
- 653 003c 1B88     	 ldrh r3,[r3]
- 654 003e 002B     	 cmp r3,#0
- 655 0040 12D0     	 beq .L29
- 112:../main.c     **** 					led_number_state_timestamp = SYSTIMER_GetTime();
- 656              	 .loc 5 112 0
- 657 0042 FFF7FEFF 	 bl SYSTIMER_GetTime
- 658 0046 021C     	 mov r2,r0
- 659 0048 374B     	 ldr r3,.L36+20
- 660 004a 1A60     	 str r2,[r3]
- 113:../main.c     **** 					led_number_state_length = LED_PULSE_SHORT;
- 661              	 .loc 5 113 0
- 662 004c 374B     	 ldr r3,.L36+24
- 663 004e 9622     	 mov r2,#150
- 664 0050 5200     	 lsl r2,r2,#1
- 665 0052 1A80     	 strh r2,[r3]
- 114:../main.c     **** 					PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
- 666              	 .loc 5 114 0
- 667 0054 314B     	 ldr r3,.L36+8
- 668 0056 324A     	 ldr r2,.L36+12
- 669 0058 181C     	 mov r0,r3
- 670 005a 111C     	 mov r1,r2
- 671 005c FFF7FEFF 	 bl PWM_CCU4_SetDutyCycle
- 115:../main.c     **** 					led_number_state = 0;
- 672              	 .loc 5 115 0
- 673 0060 334B     	 ldr r3,.L36+28
- 674 0062 0022     	 mov r2,#0
- 675 0064 1A80     	 strh r2,[r3]
- 116:../main.c     **** 				}
- 117:../main.c     **** 				break;
- 676              	 .loc 5 117 0
- 677 0066 FFE7     	 b .L35
- 678              	.L29:
- 679              	.L35:
- 680 0068 C046     	 mov r8,r8
- 681              	.L25:
- 118:../main.c     **** 		}
- 119:../main.c     **** 		led_status_pattern_last = led_status_pattern;
- 682              	 .loc 5 119 0
- 683 006a 2A4B     	 ldr r3,.L36
- 684 006c 1A78     	 ldrb r2,[r3]
- 685 006e 2A4B     	 ldr r3,.L36+4
- 686 0070 1A70     	 strb r2,[r3]
- 687              	.L24:
- 120:../main.c     **** 	}
- 121:../main.c     **** 
- 122:../main.c     **** 	// Handle LED_NUMBER pattern
- 123:../main.c     **** 	if(led_status_pattern == LED_NUMBER){
- 688              	 .loc 5 123 0
- 689 0072 284B     	 ldr r3,.L36
- 690 0074 1B78     	 ldrb r3,[r3]
- 691 0076 022B     	 cmp r3,#2
- 692 0078 49D1     	 bne .L23
- 124:../main.c     **** 		if((SYSTIMER_GetTime() - led_number_state_timestamp) / 1000 >= led_number_state_length){
- 693              	 .loc 5 124 0
- 694 007a FFF7FEFF 	 bl SYSTIMER_GetTime
- 695 007e 021C     	 mov r2,r0
- 696 0080 294B     	 ldr r3,.L36+20
- 697 0082 1B68     	 ldr r3,[r3]
- 698 0084 D31A     	 sub r3,r2,r3
- 699 0086 181C     	 mov r0,r3
- 700 0088 FA23     	 mov r3,#250
- 701 008a 9900     	 lsl r1,r3,#2
- 702 008c FFF7FEFF 	 bl __aeabi_uidiv
- 703 0090 031C     	 mov r3,r0
- 704 0092 1A1C     	 mov r2,r3
- 705 0094 254B     	 ldr r3,.L36+24
- 706 0096 1B88     	 ldrh r3,[r3]
- 707 0098 9A42     	 cmp r2,r3
- 708 009a 38D3     	 bcc .L23
- 125:../main.c     **** 			// Next state
- 126:../main.c     **** 			led_number_state++;
- 709              	 .loc 5 126 0
- 710 009c 244B     	 ldr r3,.L36+28
- 711 009e 1B88     	 ldrh r3,[r3]
- 712 00a0 0133     	 add r3,r3,#1
- 713 00a2 9AB2     	 uxth r2,r3
- 714 00a4 224B     	 ldr r3,.L36+28
- 715 00a6 1A80     	 strh r2,[r3]
- 127:../main.c     **** 
- 128:../main.c     **** 			// Check if LED must be powered on or off for this state
- 129:../main.c     **** 			if(led_number_state % 2)
- 716              	 .loc 5 129 0
- 717 00a8 214B     	 ldr r3,.L36+28
- 718 00aa 1B88     	 ldrh r3,[r3]
- 719 00ac 0122     	 mov r2,#1
- 720 00ae 1340     	 and r3,r2
- 721 00b0 9BB2     	 uxth r3,r3
- 722 00b2 002B     	 cmp r3,#0
- 723 00b4 05D0     	 beq .L31
- 130:../main.c     **** 				PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
- 724              	 .loc 5 130 0
- 725 00b6 194B     	 ldr r3,.L36+8
- 726 00b8 181C     	 mov r0,r3
- 727 00ba 0021     	 mov r1,#0
- 728 00bc FFF7FEFF 	 bl PWM_CCU4_SetDutyCycle
- 729 00c0 05E0     	 b .L32
- 730              	.L31:
- 131:../main.c     **** 			else
- 132:../main.c     **** 				PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
- 731              	 .loc 5 132 0
- 732 00c2 164B     	 ldr r3,.L36+8
- 733 00c4 164A     	 ldr r2,.L36+12
- 734 00c6 181C     	 mov r0,r3
- 735 00c8 111C     	 mov r1,r2
- 736 00ca FFF7FEFF 	 bl PWM_CCU4_SetDutyCycle
- 737              	.L32:
- 133:../main.c     **** 
- 134:../main.c     **** 			// Detect last low phase and make it longer
- 135:../main.c     **** 			if(led_number_state == (led_number*2))
- 738              	 .loc 5 135 0
- 739 00ce 184B     	 ldr r3,.L36+28
- 740 00d0 1B88     	 ldrh r3,[r3]
- 741 00d2 1A1C     	 mov r2,r3
- 742 00d4 134B     	 ldr r3,.L36+16
- 743 00d6 1B88     	 ldrh r3,[r3]
- 744 00d8 5B00     	 lsl r3,r3,#1
- 745 00da 9A42     	 cmp r2,r3
- 746 00dc 03D1     	 bne .L33
- 136:../main.c     **** 				led_number_state_length = LED_PULSE_LONG;
- 747              	 .loc 5 136 0
- 748 00de 134B     	 ldr r3,.L36+24
- 749 00e0 144A     	 ldr r2,.L36+32
- 750 00e2 1A80     	 strh r2,[r3]
- 751 00e4 03E0     	 b .L34
- 752              	.L33:
- 137:../main.c     **** 			else
- 138:../main.c     **** 				led_number_state_length = LED_PULSE_SHORT;
- 753              	 .loc 5 138 0
- 754 00e6 114B     	 ldr r3,.L36+24
- 755 00e8 9622     	 mov r2,#150
- 756 00ea 5200     	 lsl r2,r2,#1
- 757 00ec 1A80     	 strh r2,[r3]
- 758              	.L34:
- 139:../main.c     **** 
- 140:../main.c     **** 			// Store current time
- 141:../main.c     **** 			led_number_state_timestamp = SYSTIMER_GetTime();
- 759              	 .loc 5 141 0
- 760 00ee FFF7FEFF 	 bl SYSTIMER_GetTime
- 761 00f2 021C     	 mov r2,r0
- 762 00f4 0C4B     	 ldr r3,.L36+20
- 763 00f6 1A60     	 str r2,[r3]
- 142:../main.c     **** 
- 143:../main.c     **** 			// Check if LED pattern is finished
- 144:../main.c     **** 			if(led_number_state > led_number*2){
- 764              	 .loc 5 144 0
- 765 00f8 0D4B     	 ldr r3,.L36+28
- 766 00fa 1B88     	 ldrh r3,[r3]
- 767 00fc 1A1C     	 mov r2,r3
- 768 00fe 094B     	 ldr r3,.L36+16
- 769 0100 1B88     	 ldrh r3,[r3]
- 770 0102 5B00     	 lsl r3,r3,#1
- 771 0104 9A42     	 cmp r2,r3
- 772 0106 02DD     	 ble .L23
- 145:../main.c     **** 				//led_status_pattern = LED_OFF;
- 146:../main.c     **** 				led_number_state = 1;
- 773              	 .loc 5 146 0
- 774 0108 094B     	 ldr r3,.L36+28
- 775 010a 0122     	 mov r2,#1
- 776 010c 1A80     	 strh r2,[r3]
- 777              	.L23:
- 147:../main.c     **** 			}
- 148:../main.c     **** 		}
- 149:../main.c     **** 	}
- 150:../main.c     **** }
- 778              	 .loc 5 150 0
- 779 010e BD46     	 mov sp,r7
- 780              	 
- 781 0110 80BD     	 pop {r7,pc}
- 782              	.L37:
- 783 0112 C046     	 .align 2
- 784              	.L36:
- 785 0114 00000000 	 .word led_status_pattern
- 786 0118 00000000 	 .word led_status_pattern_last
- 787 011c 00000000 	 .word PWM_CCU4_LED_STATUS
- 788 0120 10270000 	 .word 10000
- 789 0124 00000000 	 .word led_number
- 790 0128 00000000 	 .word led_number_state_timestamp.6990
- 791 012c 00000000 	 .word led_number_state_length.6991
- 792 0130 00000000 	 .word led_number_state.6989
- 793 0134 4C040000 	 .word 1100
- 794              	 .cfi_endproc
- 795              	.LFE155:
- 797              	 .section .text.main,"ax",%progbits
- 798              	 .align 2
- 799              	 .global main
- 800              	 .code 16
- 801              	 .thumb_func
- 803              	main:
- 804              	.LFB156:
- 151:../main.c     **** 
- 152:../main.c     **** //****************************************************************************
- 153:../main.c     **** // main - primary loop function
- 154:../main.c     **** //****************************************************************************
- 155:../main.c     **** int main(void)
- 156:../main.c     **** {
- 805              	 .loc 5 156 0
- 806              	 .cfi_startproc
- 807 0000 90B5     	 push {r4,r7,lr}
- 808              	.LCFI32:
- 809              	 .cfi_def_cfa_offset 12
- 810              	 .cfi_offset 4,-12
- 811              	 .cfi_offset 7,-8
- 812              	 .cfi_offset 14,-4
- 813 0002 85B0     	 sub sp,sp,#20
- 814              	.LCFI33:
- 815              	 .cfi_def_cfa_offset 32
- 816 0004 00AF     	 add r7,sp,#0
- 817              	.LCFI34:
- 818              	 .cfi_def_cfa_register 7
- 157:../main.c     **** 	// Initialization of DAVE APPs
- 158:../main.c     **** 	DAVE_STATUS_t status;
- 159:../main.c     **** 	status = DAVE_Init();
- 819              	 .loc 5 159 0
- 820 0006 0B23     	 mov r3,#11
- 821 0008 FC18     	 add r4,r7,r3
- 822 000a FFF7FEFF 	 bl DAVE_Init
- 823 000e 031C     	 mov r3,r0
- 824 0010 2370     	 strb r3,[r4]
- 160:../main.c     **** 
- 161:../main.c     **** 	// Error routine
- 162:../main.c     **** 	if (status != DAVE_STATUS_SUCCESS) {
- 825              	 .loc 5 162 0
- 826 0012 0B23     	 mov r3,#11
- 827 0014 FB18     	 add r3,r7,r3
- 828 0016 1B78     	 ldrb r3,[r3]
- 829 0018 002B     	 cmp r3,#0
- 830 001a 00D0     	 beq .L39
- 831              	.L40:
- 163:../main.c     **** 		while(1U){
- 164:../main.c     **** 		}
- 832              	 .loc 5 164 0 discriminator 1
- 833 001c FEE7     	 b .L40
- 834              	.L39:
- 165:../main.c     **** 	}
- 166:../main.c     **** 
- 167:../main.c     **** 	/// - Set initial state -
- 168:../main.c     **** 	// Enable USB chip and switch to USB1
- 169:../main.c     **** 	DIGITAL_IO_SetOutputLow(&IO_USB_SI);
- 835              	 .loc 5 169 0
- 836 001e CD4B     	 ldr r3,.L94
- 837 0020 181C     	 mov r0,r3
- 838 0022 FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
- 170:../main.c     **** 	DIGITAL_IO_SetOutputLow(&IO_USB_OE);
- 839              	 .loc 5 170 0
- 840 0026 CC4B     	 ldr r3,.L94+4
- 841 0028 181C     	 mov r0,r3
- 842 002a FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
- 171:../main.c     **** 	// Enable USB1
- 172:../main.c     **** 	DIGITAL_IO_SetOutputHigh(&IO_USBPWR_1);
- 843              	 .loc 5 172 0
- 844 002e CB4B     	 ldr r3,.L94+8
- 845 0030 181C     	 mov r0,r3
- 846 0032 FFF7FEFF 	 bl DIGITAL_IO_SetOutputHigh
- 173:../main.c     **** 	DIGITAL_IO_SetOutputLow(&IO_LED_USB1);
- 847              	 .loc 5 173 0
- 848 0036 CA4B     	 ldr r3,.L94+12
- 849 0038 181C     	 mov r0,r3
- 850 003a FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
- 174:../main.c     **** 	// Disable USB2
- 175:../main.c     **** 	DIGITAL_IO_SetOutputLow(&IO_USBPWR_2);
- 851              	 .loc 5 175 0
- 852 003e C94B     	 ldr r3,.L94+16
- 853 0040 181C     	 mov r0,r3
- 854 0042 FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
- 176:../main.c     **** 	DIGITAL_IO_SetOutputHigh(&IO_LED_USB2);
- 855              	 .loc 5 176 0
- 856 0046 C84B     	 ldr r3,.L94+20
- 857 0048 181C     	 mov r0,r3
- 858 004a FFF7FEFF 	 bl DIGITAL_IO_SetOutputHigh
- 177:../main.c     **** 	// Disable Relay and set LED off
- 178:../main.c     **** 	DIGITAL_IO_SetOutputLow(&IO_RELAY);
- 859              	 .loc 5 178 0
- 860 004e C74B     	 ldr r3,.L94+24
- 861 0050 181C     	 mov r0,r3
- 862 0052 FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
- 179:../main.c     **** 	PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
- 863              	 .loc 5 179 0
- 864 0056 C64B     	 ldr r3,.L94+28
- 865 0058 C64A     	 ldr r2,.L94+32
- 866 005a 181C     	 mov r0,r3
- 867 005c 111C     	 mov r1,r2
- 868 005e FFF7FEFF 	 bl PWM_CCU4_SetDutyCycle
- 180:../main.c     **** 	// Initialize next value conversion
- 181:../main.c     **** 	ADC_MEASUREMENT_StartConversion(&ADC_SENSOR);
- 869              	 .loc 5 181 0
- 870 0062 C54B     	 ldr r3,.L94+36
- 871 0064 181C     	 mov r0,r3
- 872 0066 FFF7FEFF 	 bl ADC_MEASUREMENT_StartConversion
- 182:../main.c     **** 
- 183:../main.c     **** 	int main_loop_count = 0;
- 873              	 .loc 5 183 0
- 874 006a 0023     	 mov r3,#0
- 875 006c FB60     	 str r3,[r7,#12]
- 876              	.L90:
+  95:../main.c     **** // manage_leds -
+  96:../main.c     **** //****************************************************************************
+  97:../main.c     **** 
+  98:../main.c     **** void manage_status_led(){
+ 622              	 .loc 5 98 0
+ 623              	 .cfi_startproc
+ 624 0000 80B5     	 push {r7,lr}
+ 625              	.LCFI30:
+ 626              	 .cfi_def_cfa_offset 8
+ 627              	 .cfi_offset 7,-8
+ 628              	 .cfi_offset 14,-4
+ 629 0002 00AF     	 add r7,sp,#0
+ 630              	.LCFI31:
+ 631              	 .cfi_def_cfa_register 7
+  99:../main.c     **** 	static uint16_t led_pattern_state;
+ 100:../main.c     **** 	static uint32_t led_pattern_state_timestamp;
+ 101:../main.c     **** 	static uint16_t led_pattern_state_length;
+ 102:../main.c     **** 
+ 103:../main.c     **** 	static uint16_t fade_duty_step;
+ 104:../main.c     **** 
+ 105:../main.c     **** 	// Check target pattern an initiate
+ 106:../main.c     **** 	if(led_status_pattern != led_status_pattern_last){
+ 632              	 .loc 5 106 0
+ 633 0004 A44B     	 ldr r3,.L43
+ 634 0006 1A78     	 ldrb r2,[r3]
+ 635 0008 A44B     	 ldr r3,.L43+4
+ 636 000a 1B78     	 ldrb r3,[r3]
+ 637 000c 9A42     	 cmp r2,r3
+ 638 000e 00D1     	 bne .LCB403
+ 639 0010 85E0     	 b .L24
+ 640              	.LCB403:
+ 107:../main.c     **** 		switch (led_status_pattern){
+ 641              	 .loc 5 107 0
+ 642 0012 A14B     	 ldr r3,.L43
+ 643 0014 1B78     	 ldrb r3,[r3]
+ 644 0016 042B     	 cmp r3,#4
+ 645 0018 00D9     	 bls .LCB407
+ 646 001a 7CE0     	 b .L25
+ 647              	.LCB407:
+ 648 001c 9A00     	 lsl r2,r3,#2
+ 649 001e A04B     	 ldr r3,.L43+8
+ 650 0020 D318     	 add r3,r2,r3
+ 651 0022 1B68     	 ldr r3,[r3]
+ 652 0024 9F46     	 mov pc,r3
+ 653              	 .section .rodata.manage_status_led,"a",%progbits
+ 654              	 .align 2
+ 655              	.L27:
+ 656 0000 26000000 	 .word .L26
+ 657 0004 34000000 	 .word .L28
+ 658 0008 40000000 	 .word .L29
+ 659 000c 70000000 	 .word .L30
+ 660 0010 C2000000 	 .word .L31
+ 661              	 .section .text.manage_status_led
+ 662              	.L26:
+ 108:../main.c     **** 			case LED_OFF:
+ 109:../main.c     **** 				PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
+ 663              	 .loc 5 109 0
+ 664 0026 9F4B     	 ldr r3,.L43+12
+ 665 0028 9F4A     	 ldr r2,.L43+16
+ 666 002a 181C     	 mov r0,r3
+ 667 002c 111C     	 mov r1,r2
+ 668 002e FFF7FEFF 	 bl PWM_CCU4_SetDutyCycle
+ 110:../main.c     **** 				break;
+ 669              	 .loc 5 110 0
+ 670 0032 70E0     	 b .L25
+ 671              	.L28:
+ 111:../main.c     **** 			case LED_ON:
+ 112:../main.c     **** 				PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
+ 672              	 .loc 5 112 0
+ 673 0034 9B4B     	 ldr r3,.L43+12
+ 674 0036 181C     	 mov r0,r3
+ 675 0038 0021     	 mov r1,#0
+ 676 003a FFF7FEFF 	 bl PWM_CCU4_SetDutyCycle
+ 113:../main.c     **** 				break;
+ 677              	 .loc 5 113 0
+ 678 003e 6AE0     	 b .L25
+ 679              	.L29:
+ 114:../main.c     **** 			case LED_NUMBER:
+ 115:../main.c     **** 				if(led_number >= 1){
+ 680              	 .loc 5 115 0
+ 681 0040 9A4B     	 ldr r3,.L43+20
+ 682 0042 1B88     	 ldrh r3,[r3]
+ 683 0044 002B     	 cmp r3,#0
+ 684 0046 12D0     	 beq .L32
+ 116:../main.c     **** 					led_pattern_state_timestamp = SYSTIMER_GetTime();
+ 685              	 .loc 5 116 0
+ 686 0048 FFF7FEFF 	 bl SYSTIMER_GetTime
+ 687 004c 021C     	 mov r2,r0
+ 688 004e 984B     	 ldr r3,.L43+24
+ 689 0050 1A60     	 str r2,[r3]
+ 117:../main.c     **** 					led_pattern_state_length = LED_PULSE_SHORT;
+ 690              	 .loc 5 117 0
+ 691 0052 984B     	 ldr r3,.L43+28
+ 692 0054 9622     	 mov r2,#150
+ 693 0056 5200     	 lsl r2,r2,#1
+ 694 0058 1A80     	 strh r2,[r3]
+ 118:../main.c     **** 					PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
+ 695              	 .loc 5 118 0
+ 696 005a 924B     	 ldr r3,.L43+12
+ 697 005c 924A     	 ldr r2,.L43+16
+ 698 005e 181C     	 mov r0,r3
+ 699 0060 111C     	 mov r1,r2
+ 700 0062 FFF7FEFF 	 bl PWM_CCU4_SetDutyCycle
+ 119:../main.c     **** 					led_pattern_state = 0;
+ 701              	 .loc 5 119 0
+ 702 0066 944B     	 ldr r3,.L43+32
+ 703 0068 0022     	 mov r2,#0
+ 704 006a 1A80     	 strh r2,[r3]
+ 120:../main.c     **** 				}
+ 121:../main.c     **** 				break;
+ 705              	 .loc 5 121 0
+ 706 006c 53E0     	 b .L25
+ 707              	.L32:
+ 708 006e 52E0     	 b .L25
+ 709              	.L30:
+ 122:../main.c     **** 			case LED_FADE_DOWN:
+ 123:../main.c     **** 				if(led_fadetime > 0){
+ 710              	 .loc 5 123 0
+ 711 0070 924B     	 ldr r3,.L43+36
+ 712 0072 1B88     	 ldrh r3,[r3]
+ 713 0074 002B     	 cmp r3,#0
+ 714 0076 23D0     	 beq .L33
+ 124:../main.c     **** 					led_pattern_state_timestamp = SYSTIMER_GetTime();
+ 715              	 .loc 5 124 0
+ 716 0078 FFF7FEFF 	 bl SYSTIMER_GetTime
+ 717 007c 021C     	 mov r2,r0
+ 718 007e 8C4B     	 ldr r3,.L43+24
+ 719 0080 1A60     	 str r2,[r3]
+ 125:../main.c     **** 					led_pattern_state_length = led_fadetime/led_fadesteps;
+ 720              	 .loc 5 125 0
+ 721 0082 8E4B     	 ldr r3,.L43+36
+ 722 0084 1A88     	 ldrh r2,[r3]
+ 723 0086 8E4B     	 ldr r3,.L43+40
+ 724 0088 1B88     	 ldrh r3,[r3]
+ 725 008a 101C     	 mov r0,r2
+ 726 008c 191C     	 mov r1,r3
+ 727 008e FFF7FEFF 	 bl __aeabi_uidiv
+ 728 0092 031C     	 mov r3,r0
+ 729 0094 9AB2     	 uxth r2,r3
+ 730 0096 874B     	 ldr r3,.L43+28
+ 731 0098 1A80     	 strh r2,[r3]
+ 126:../main.c     **** 					fade_duty_step = PWM_FULL_OFF/led_fadesteps;
+ 732              	 .loc 5 126 0
+ 733 009a 894B     	 ldr r3,.L43+40
+ 734 009c 1B88     	 ldrh r3,[r3]
+ 735 009e 8248     	 ldr r0,.L43+16
+ 736 00a0 191C     	 mov r1,r3
+ 737 00a2 FFF7FEFF 	 bl __aeabi_uidiv
+ 738 00a6 031C     	 mov r3,r0
+ 739 00a8 9AB2     	 uxth r2,r3
+ 740 00aa 864B     	 ldr r3,.L43+44
+ 741 00ac 1A80     	 strh r2,[r3]
+ 127:../main.c     **** 					PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
+ 742              	 .loc 5 127 0
+ 743 00ae 7D4B     	 ldr r3,.L43+12
+ 744 00b0 181C     	 mov r0,r3
+ 745 00b2 0021     	 mov r1,#0
+ 746 00b4 FFF7FEFF 	 bl PWM_CCU4_SetDutyCycle
+ 128:../main.c     **** 					led_pattern_state = 0;
+ 747              	 .loc 5 128 0
+ 748 00b8 7F4B     	 ldr r3,.L43+32
+ 749 00ba 0022     	 mov r2,#0
+ 750 00bc 1A80     	 strh r2,[r3]
+ 129:../main.c     **** 				}
+ 130:../main.c     **** 				break;
+ 751              	 .loc 5 130 0
+ 752 00be 2AE0     	 b .L25
+ 753              	.L33:
+ 754 00c0 29E0     	 b .L25
+ 755              	.L31:
+ 131:../main.c     **** 			case LED_FADE_UP:
+ 132:../main.c     **** 				if(led_fadetime > 0){
+ 756              	 .loc 5 132 0
+ 757 00c2 7E4B     	 ldr r3,.L43+36
+ 758 00c4 1B88     	 ldrh r3,[r3]
+ 759 00c6 002B     	 cmp r3,#0
+ 760 00c8 24D0     	 beq .L34
+ 133:../main.c     **** 					led_pattern_state_timestamp = SYSTIMER_GetTime();
+ 761              	 .loc 5 133 0
+ 762 00ca FFF7FEFF 	 bl SYSTIMER_GetTime
+ 763 00ce 021C     	 mov r2,r0
+ 764 00d0 774B     	 ldr r3,.L43+24
+ 765 00d2 1A60     	 str r2,[r3]
+ 134:../main.c     **** 					led_pattern_state_length = led_fadetime/led_fadesteps;
+ 766              	 .loc 5 134 0
+ 767 00d4 794B     	 ldr r3,.L43+36
+ 768 00d6 1A88     	 ldrh r2,[r3]
+ 769 00d8 794B     	 ldr r3,.L43+40
+ 770 00da 1B88     	 ldrh r3,[r3]
+ 771 00dc 101C     	 mov r0,r2
+ 772 00de 191C     	 mov r1,r3
+ 773 00e0 FFF7FEFF 	 bl __aeabi_uidiv
+ 774 00e4 031C     	 mov r3,r0
+ 775 00e6 9AB2     	 uxth r2,r3
+ 776 00e8 724B     	 ldr r3,.L43+28
+ 777 00ea 1A80     	 strh r2,[r3]
+ 135:../main.c     **** 					fade_duty_step = PWM_FULL_OFF/led_fadesteps;
+ 778              	 .loc 5 135 0
+ 779 00ec 744B     	 ldr r3,.L43+40
+ 780 00ee 1B88     	 ldrh r3,[r3]
+ 781 00f0 6D48     	 ldr r0,.L43+16
+ 782 00f2 191C     	 mov r1,r3
+ 783 00f4 FFF7FEFF 	 bl __aeabi_uidiv
+ 784 00f8 031C     	 mov r3,r0
+ 785 00fa 9AB2     	 uxth r2,r3
+ 786 00fc 714B     	 ldr r3,.L43+44
+ 787 00fe 1A80     	 strh r2,[r3]
+ 136:../main.c     **** 					PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
+ 788              	 .loc 5 136 0
+ 789 0100 684B     	 ldr r3,.L43+12
+ 790 0102 694A     	 ldr r2,.L43+16
+ 791 0104 181C     	 mov r0,r3
+ 792 0106 111C     	 mov r1,r2
+ 793 0108 FFF7FEFF 	 bl PWM_CCU4_SetDutyCycle
+ 137:../main.c     **** 					led_pattern_state = 0;
+ 794              	 .loc 5 137 0
+ 795 010c 6A4B     	 ldr r3,.L43+32
+ 796 010e 0022     	 mov r2,#0
+ 797 0110 1A80     	 strh r2,[r3]
+ 138:../main.c     **** 				}
+ 139:../main.c     **** 				break;
+ 798              	 .loc 5 139 0
+ 799 0112 FFE7     	 b .L42
+ 800              	.L34:
+ 801              	.L42:
+ 802 0114 C046     	 mov r8,r8
+ 803              	.L25:
+ 140:../main.c     **** 		}
+ 141:../main.c     **** 		led_status_pattern_last = led_status_pattern;
+ 804              	 .loc 5 141 0
+ 805 0116 604B     	 ldr r3,.L43
+ 806 0118 1A78     	 ldrb r2,[r3]
+ 807 011a 604B     	 ldr r3,.L43+4
+ 808 011c 1A70     	 strb r2,[r3]
+ 809              	.L24:
+ 142:../main.c     **** 	}
+ 143:../main.c     **** 
+ 144:../main.c     **** 	// Handle LED_NUMBER pattern
+ 145:../main.c     **** 	if(led_status_pattern == LED_NUMBER){
+ 810              	 .loc 5 145 0
+ 811 011e 5E4B     	 ldr r3,.L43
+ 812 0120 1B78     	 ldrb r3,[r3]
+ 813 0122 022B     	 cmp r3,#2
+ 814 0124 49D1     	 bne .L35
+ 146:../main.c     **** 		if((SYSTIMER_GetTime() - led_pattern_state_timestamp) / 1000 >= led_pattern_state_length){
+ 815              	 .loc 5 146 0
+ 816 0126 FFF7FEFF 	 bl SYSTIMER_GetTime
+ 817 012a 021C     	 mov r2,r0
+ 818 012c 604B     	 ldr r3,.L43+24
+ 819 012e 1B68     	 ldr r3,[r3]
+ 820 0130 D31A     	 sub r3,r2,r3
+ 821 0132 181C     	 mov r0,r3
+ 822 0134 FA23     	 mov r3,#250
+ 823 0136 9900     	 lsl r1,r3,#2
+ 824 0138 FFF7FEFF 	 bl __aeabi_uidiv
+ 825 013c 031C     	 mov r3,r0
+ 826 013e 1A1C     	 mov r2,r3
+ 827 0140 5C4B     	 ldr r3,.L43+28
+ 828 0142 1B88     	 ldrh r3,[r3]
+ 829 0144 9A42     	 cmp r2,r3
+ 830 0146 38D3     	 bcc .L35
+ 147:../main.c     **** 			// Next state
+ 148:../main.c     **** 			led_pattern_state++;
+ 831              	 .loc 5 148 0
+ 832 0148 5B4B     	 ldr r3,.L43+32
+ 833 014a 1B88     	 ldrh r3,[r3]
+ 834 014c 0133     	 add r3,r3,#1
+ 835 014e 9AB2     	 uxth r2,r3
+ 836 0150 594B     	 ldr r3,.L43+32
+ 837 0152 1A80     	 strh r2,[r3]
+ 149:../main.c     **** 
+ 150:../main.c     **** 			// Check if LED must be powered on or off for this state
+ 151:../main.c     **** 			if(led_pattern_state % 2)
+ 838              	 .loc 5 151 0
+ 839 0154 584B     	 ldr r3,.L43+32
+ 840 0156 1B88     	 ldrh r3,[r3]
+ 841 0158 0122     	 mov r2,#1
+ 842 015a 1340     	 and r3,r2
+ 843 015c 9BB2     	 uxth r3,r3
+ 844 015e 002B     	 cmp r3,#0
+ 845 0160 05D0     	 beq .L36
+ 152:../main.c     **** 				PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
+ 846              	 .loc 5 152 0
+ 847 0162 504B     	 ldr r3,.L43+12
+ 848 0164 181C     	 mov r0,r3
+ 849 0166 0021     	 mov r1,#0
+ 850 0168 FFF7FEFF 	 bl PWM_CCU4_SetDutyCycle
+ 851 016c 05E0     	 b .L37
+ 852              	.L36:
+ 153:../main.c     **** 			else
+ 154:../main.c     **** 				PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
+ 853              	 .loc 5 154 0
+ 854 016e 4D4B     	 ldr r3,.L43+12
+ 855 0170 4D4A     	 ldr r2,.L43+16
+ 856 0172 181C     	 mov r0,r3
+ 857 0174 111C     	 mov r1,r2
+ 858 0176 FFF7FEFF 	 bl PWM_CCU4_SetDutyCycle
+ 859              	.L37:
+ 155:../main.c     **** 
+ 156:../main.c     **** 			// Detect last low phase and make it longer
+ 157:../main.c     **** 			if(led_pattern_state == (led_number*2))
+ 860              	 .loc 5 157 0
+ 861 017a 4F4B     	 ldr r3,.L43+32
+ 862 017c 1B88     	 ldrh r3,[r3]
+ 863 017e 1A1C     	 mov r2,r3
+ 864 0180 4A4B     	 ldr r3,.L43+20
+ 865 0182 1B88     	 ldrh r3,[r3]
+ 866 0184 5B00     	 lsl r3,r3,#1
+ 867 0186 9A42     	 cmp r2,r3
+ 868 0188 03D1     	 bne .L38
+ 158:../main.c     **** 				led_pattern_state_length = LED_PULSE_LONG;
+ 869              	 .loc 5 158 0
+ 870 018a 4A4B     	 ldr r3,.L43+28
+ 871 018c 4E4A     	 ldr r2,.L43+48
+ 872 018e 1A80     	 strh r2,[r3]
+ 873 0190 03E0     	 b .L39
+ 874              	.L38:
+ 159:../main.c     **** 			else
+ 160:../main.c     **** 				led_pattern_state_length = LED_PULSE_SHORT;
+ 875              	 .loc 5 160 0
+ 876 0192 484B     	 ldr r3,.L43+28
+ 877 0194 9622     	 mov r2,#150
+ 878 0196 5200     	 lsl r2,r2,#1
+ 879 0198 1A80     	 strh r2,[r3]
+ 880              	.L39:
+ 161:../main.c     **** 
+ 162:../main.c     **** 			// Store current time
+ 163:../main.c     **** 			led_pattern_state_timestamp = SYSTIMER_GetTime();
+ 881              	 .loc 5 163 0
+ 882 019a FFF7FEFF 	 bl SYSTIMER_GetTime
+ 883 019e 021C     	 mov r2,r0
+ 884 01a0 434B     	 ldr r3,.L43+24
+ 885 01a2 1A60     	 str r2,[r3]
+ 164:../main.c     **** 
+ 165:../main.c     **** 			// Check if LED pattern is finished
+ 166:../main.c     **** 			if(led_pattern_state > led_number*2){
+ 886              	 .loc 5 166 0
+ 887 01a4 444B     	 ldr r3,.L43+32
+ 888 01a6 1B88     	 ldrh r3,[r3]
+ 889 01a8 1A1C     	 mov r2,r3
+ 890 01aa 404B     	 ldr r3,.L43+20
+ 891 01ac 1B88     	 ldrh r3,[r3]
+ 892 01ae 5B00     	 lsl r3,r3,#1
+ 893 01b0 9A42     	 cmp r2,r3
+ 894 01b2 02DD     	 ble .L35
+ 167:../main.c     **** 				//led_status_pattern = LED_OFF;
+ 168:../main.c     **** 				led_pattern_state = 1;
+ 895              	 .loc 5 168 0
+ 896 01b4 404B     	 ldr r3,.L43+32
+ 897 01b6 0122     	 mov r2,#1
+ 898 01b8 1A80     	 strh r2,[r3]
+ 899              	.L35:
+ 169:../main.c     **** 			}
+ 170:../main.c     **** 		}
+ 171:../main.c     **** 	}
+ 172:../main.c     **** 
+ 173:../main.c     **** 	// Handle LED_FADE pattern
+ 174:../main.c     **** 	if(led_status_pattern == LED_FADE_DOWN){
+ 900              	 .loc 5 174 0
+ 901 01ba 374B     	 ldr r3,.L43
+ 902 01bc 1B78     	 ldrb r3,[r3]
+ 903 01be 032B     	 cmp r3,#3
+ 904 01c0 30D1     	 bne .L40
+ 175:../main.c     **** 		if((SYSTIMER_GetTime() - led_pattern_state_timestamp) / 1000 >= led_pattern_state_length){
+ 905              	 .loc 5 175 0
+ 906 01c2 FFF7FEFF 	 bl SYSTIMER_GetTime
+ 907 01c6 021C     	 mov r2,r0
+ 908 01c8 394B     	 ldr r3,.L43+24
+ 909 01ca 1B68     	 ldr r3,[r3]
+ 910 01cc D31A     	 sub r3,r2,r3
+ 911 01ce 181C     	 mov r0,r3
+ 912 01d0 FA23     	 mov r3,#250
+ 913 01d2 9900     	 lsl r1,r3,#2
+ 914 01d4 FFF7FEFF 	 bl __aeabi_uidiv
+ 915 01d8 031C     	 mov r3,r0
+ 916 01da 1A1C     	 mov r2,r3
+ 917 01dc 354B     	 ldr r3,.L43+28
+ 918 01de 1B88     	 ldrh r3,[r3]
+ 919 01e0 9A42     	 cmp r2,r3
+ 920 01e2 1FD3     	 bcc .L40
+ 176:../main.c     **** 			//
+ 177:../main.c     **** 			PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, (led_pattern_state*fade_duty_step) + PWM_FULL_ON);
+ 921              	 .loc 5 177 0
+ 922 01e4 344B     	 ldr r3,.L43+32
+ 923 01e6 1B88     	 ldrh r3,[r3]
+ 924 01e8 1A1C     	 mov r2,r3
+ 925 01ea 364B     	 ldr r3,.L43+44
+ 926 01ec 1B88     	 ldrh r3,[r3]
+ 927 01ee 5343     	 mul r3,r2
+ 928 01f0 1A1C     	 mov r2,r3
+ 929 01f2 2C4B     	 ldr r3,.L43+12
+ 930 01f4 181C     	 mov r0,r3
+ 931 01f6 111C     	 mov r1,r2
+ 932 01f8 FFF7FEFF 	 bl PWM_CCU4_SetDutyCycle
+ 178:../main.c     **** 
+ 179:../main.c     **** 			// Store current time
+ 180:../main.c     **** 			led_pattern_state_timestamp = SYSTIMER_GetTime();
+ 933              	 .loc 5 180 0
+ 934 01fc FFF7FEFF 	 bl SYSTIMER_GetTime
+ 935 0200 021C     	 mov r2,r0
+ 936 0202 2B4B     	 ldr r3,.L43+24
+ 937 0204 1A60     	 str r2,[r3]
+ 181:../main.c     **** 
+ 182:../main.c     **** 			// Next state
+ 183:../main.c     **** 			led_pattern_state++;
+ 938              	 .loc 5 183 0
+ 939 0206 2C4B     	 ldr r3,.L43+32
+ 940 0208 1B88     	 ldrh r3,[r3]
+ 941 020a 0133     	 add r3,r3,#1
+ 942 020c 9AB2     	 uxth r2,r3
+ 943 020e 2A4B     	 ldr r3,.L43+32
+ 944 0210 1A80     	 strh r2,[r3]
  184:../main.c     **** 
- 185:../main.c     **** 	// Main loop
- 186:../main.c     **** 	while(1U)
- 187:../main.c     **** 	{
- 188:../main.c     **** 		// - Status LED handling -
- 189:../main.c     **** 		manage_status_led();
- 877              	 .loc 5 189 0
- 878 006e FFF7FEFF 	 bl manage_status_led
- 190:../main.c     **** 		main_loop_count++;
- 879              	 .loc 5 190 0
- 880 0072 FB68     	 ldr r3,[r7,#12]
- 881 0074 0133     	 add r3,r3,#1
- 882 0076 FB60     	 str r3,[r7,#12]
- 191:../main.c     **** 		systime_debug = SYSTIMER_GetTime();
- 883              	 .loc 5 191 0
- 884 0078 FFF7FEFF 	 bl SYSTIMER_GetTime
- 885 007c 031C     	 mov r3,r0
- 886 007e 1A1C     	 mov r2,r3
- 887 0080 BE4B     	 ldr r3,.L94+40
- 888 0082 1A60     	 str r2,[r3]
- 192:../main.c     **** 
- 193:../main.c     **** 		/// - Button handling -
- 194:../main.c     **** 		// Detect press and save current system time
- 195:../main.c     **** 		if(button_usb_pressed_timestamp == 0 && DIGITAL_IO_GetInput(&IO_SW_USB) == SW_ON)
- 889              	 .loc 5 195 0
- 890 0084 BE4B     	 ldr r3,.L94+44
- 891 0086 1B68     	 ldr r3,[r3]
- 892 0088 002B     	 cmp r3,#0
- 893 008a 0AD1     	 bne .L41
- 894              	 .loc 5 195 0 is_stmt 0 discriminator 1
- 895 008c BD4B     	 ldr r3,.L94+48
- 896 008e 181C     	 mov r0,r3
- 897 0090 FFF7FEFF 	 bl DIGITAL_IO_GetInput
- 898 0094 031E     	 sub r3,r0,#0
- 899 0096 04D1     	 bne .L41
- 196:../main.c     **** 			button_usb_pressed_timestamp = SYSTIMER_GetTime();
- 900              	 .loc 5 196 0 is_stmt 1
- 901 0098 FFF7FEFF 	 bl SYSTIMER_GetTime
- 902 009c 021C     	 mov r2,r0
- 903 009e B84B     	 ldr r3,.L94+44
- 904 00a0 1A60     	 str r2,[r3]
- 905              	.L41:
- 197:../main.c     **** 		if(button_up_pressed_timestamp == 0 && DIGITAL_IO_GetInput(&IO_SW_UP) == SW_ON)
- 906              	 .loc 5 197 0
- 907 00a2 B94B     	 ldr r3,.L94+52
- 908 00a4 1B68     	 ldr r3,[r3]
- 909 00a6 002B     	 cmp r3,#0
- 910 00a8 0AD1     	 bne .L42
- 911              	 .loc 5 197 0 is_stmt 0 discriminator 1
- 912 00aa B84B     	 ldr r3,.L94+56
- 913 00ac 181C     	 mov r0,r3
- 914 00ae FFF7FEFF 	 bl DIGITAL_IO_GetInput
- 915 00b2 031E     	 sub r3,r0,#0
- 916 00b4 04D1     	 bne .L42
- 198:../main.c     **** 			button_up_pressed_timestamp = SYSTIMER_GetTime();
- 917              	 .loc 5 198 0 is_stmt 1
- 918 00b6 FFF7FEFF 	 bl SYSTIMER_GetTime
- 919 00ba 021C     	 mov r2,r0
- 920 00bc B24B     	 ldr r3,.L94+52
- 921 00be 1A60     	 str r2,[r3]
- 922              	.L42:
- 199:../main.c     **** 		if(button_down_pressed_timestamp == 0 && DIGITAL_IO_GetInput(&IO_SW_DOWN) == SW_ON)
- 923              	 .loc 5 199 0
- 924 00c0 B34B     	 ldr r3,.L94+60
- 925 00c2 1B68     	 ldr r3,[r3]
- 926 00c4 002B     	 cmp r3,#0
- 927 00c6 0AD1     	 bne .L43
- 928              	 .loc 5 199 0 is_stmt 0 discriminator 1
- 929 00c8 B24B     	 ldr r3,.L94+64
- 930 00ca 181C     	 mov r0,r3
- 931 00cc FFF7FEFF 	 bl DIGITAL_IO_GetInput
- 932 00d0 031E     	 sub r3,r0,#0
- 933 00d2 04D1     	 bne .L43
- 200:../main.c     **** 			button_down_pressed_timestamp = SYSTIMER_GetTime();
- 934              	 .loc 5 200 0 is_stmt 1
- 935 00d4 FFF7FEFF 	 bl SYSTIMER_GetTime
- 936 00d8 021C     	 mov r2,r0
- 937 00da AD4B     	 ldr r3,.L94+60
- 938 00dc 1A60     	 str r2,[r3]
- 939              	.L43:
- 201:../main.c     **** 		// If a press in ongoing and release is detected, calculate time difference
- 202:../main.c     **** 		if(button_usb_pressed_timestamp != 0 && DIGITAL_IO_GetInput(&IO_SW_USB) == SW_OFF){
- 940              	 .loc 5 202 0
- 941 00de A84B     	 ldr r3,.L94+44
- 942 00e0 1B68     	 ldr r3,[r3]
- 943 00e2 002B     	 cmp r3,#0
- 944 00e4 28D0     	 beq .L44
- 945              	 .loc 5 202 0 is_stmt 0 discriminator 1
- 946 00e6 A74B     	 ldr r3,.L94+48
- 947 00e8 181C     	 mov r0,r3
- 948 00ea FFF7FEFF 	 bl DIGITAL_IO_GetInput
- 949 00ee 031E     	 sub r3,r0,#0
- 950 00f0 012B     	 cmp r3,#1
- 951 00f2 21D1     	 bne .L44
- 203:../main.c     **** 			button_usb_pressed_duration = (SYSTIMER_GetTime() - button_usb_pressed_timestamp) / 1000; // con
- 952              	 .loc 5 203 0 is_stmt 1
- 953 00f4 FFF7FEFF 	 bl SYSTIMER_GetTime
- 954 00f8 021C     	 mov r2,r0
- 955 00fa A14B     	 ldr r3,.L94+44
- 956 00fc 1B68     	 ldr r3,[r3]
- 957 00fe D31A     	 sub r3,r2,r3
- 958 0100 181C     	 mov r0,r3
- 959 0102 FA23     	 mov r3,#250
- 960 0104 9900     	 lsl r1,r3,#2
- 961 0106 FFF7FEFF 	 bl __aeabi_uidiv
- 962 010a 031C     	 mov r3,r0
- 963 010c 9AB2     	 uxth r2,r3
- 964 010e A24B     	 ldr r3,.L94+68
- 965 0110 1A80     	 strh r2,[r3]
- 204:../main.c     **** 			button_usb_pressed_timestamp = 0;
- 966              	 .loc 5 204 0
- 967 0112 9B4B     	 ldr r3,.L94+44
- 968 0114 0022     	 mov r2,#0
- 969 0116 1A60     	 str r2,[r3]
- 205:../main.c     **** 			// Interpret button press and activate "button pressed" marker
- 206:../main.c     **** 			if(button_usb_pressed_duration >= BTN_LONG_PRESS_DURATION)
- 970              	 .loc 5 206 0
- 971 0118 9F4B     	 ldr r3,.L94+68
- 972 011a 1B88     	 ldrh r3,[r3]
- 973 011c 9F4A     	 ldr r2,.L94+72
- 974 011e 9342     	 cmp r3,r2
- 975 0120 03D9     	 bls .L45
- 207:../main.c     **** 				buttonpress_usb = BTNPRESS_LONG;
- 976              	 .loc 5 207 0
- 977 0122 9F4B     	 ldr r3,.L94+76
- 978 0124 0222     	 mov r2,#2
- 979 0126 1A70     	 strb r2,[r3]
- 980 0128 06E0     	 b .L44
- 981              	.L45:
- 208:../main.c     **** 			else if(button_usb_pressed_duration >= BTN_STD_PRESS_DURATION)
- 982              	 .loc 5 208 0
- 983 012a 9B4B     	 ldr r3,.L94+68
- 984 012c 1B88     	 ldrh r3,[r3]
- 985 012e 3B2B     	 cmp r3,#59
- 986 0130 02D9     	 bls .L44
- 209:../main.c     **** 				buttonpress_usb = BTNPRESS_STD;
- 987              	 .loc 5 209 0
- 988 0132 9B4B     	 ldr r3,.L94+76
- 989 0134 0122     	 mov r2,#1
- 990 0136 1A70     	 strb r2,[r3]
- 991              	.L44:
- 210:../main.c     **** 
- 211:../main.c     **** 
- 212:../main.c     **** 		}
- 213:../main.c     **** 		if(button_up_pressed_timestamp != 0 && DIGITAL_IO_GetInput(&IO_SW_UP) == SW_OFF){
- 992              	 .loc 5 213 0
- 993 0138 934B     	 ldr r3,.L94+52
- 994 013a 1B68     	 ldr r3,[r3]
- 995 013c 002B     	 cmp r3,#0
- 996 013e 32D0     	 beq .L46
- 997              	 .loc 5 213 0 is_stmt 0 discriminator 1
- 998 0140 924B     	 ldr r3,.L94+56
- 999 0142 181C     	 mov r0,r3
- 1000 0144 FFF7FEFF 	 bl DIGITAL_IO_GetInput
- 1001 0148 031E     	 sub r3,r0,#0
- 1002 014a 012B     	 cmp r3,#1
- 1003 014c 2BD1     	 bne .L46
- 214:../main.c     **** 			button_up_pressed_duration = (SYSTIMER_GetTime() - button_up_pressed_timestamp) / 1000; // conve
- 1004              	 .loc 5 214 0 is_stmt 1
- 1005 014e FFF7FEFF 	 bl SYSTIMER_GetTime
- 1006 0152 021C     	 mov r2,r0
- 1007 0154 8C4B     	 ldr r3,.L94+52
- 1008 0156 1B68     	 ldr r3,[r3]
- 1009 0158 D31A     	 sub r3,r2,r3
- 1010 015a 181C     	 mov r0,r3
- 1011 015c FA23     	 mov r3,#250
- 1012 015e 9900     	 lsl r1,r3,#2
- 1013 0160 FFF7FEFF 	 bl __aeabi_uidiv
- 1014 0164 031C     	 mov r3,r0
- 1015 0166 9AB2     	 uxth r2,r3
- 1016 0168 8E4B     	 ldr r3,.L94+80
- 1017 016a 1A80     	 strh r2,[r3]
- 215:../main.c     **** 			button_up_pressed_timestamp = 0;
- 1018              	 .loc 5 215 0
- 1019 016c 864B     	 ldr r3,.L94+52
- 1020 016e 0022     	 mov r2,#0
- 1021 0170 1A60     	 str r2,[r3]
- 216:../main.c     **** 			// Interpret button press and activate "button pressed" marker
- 217:../main.c     **** 			if(button_up_pressed_duration >= BTN_LONG_PRESS_DURATION){
- 1022              	 .loc 5 217 0
- 1023 0172 8C4B     	 ldr r3,.L94+80
- 1024 0174 1B88     	 ldrh r3,[r3]
- 1025 0176 894A     	 ldr r2,.L94+72
- 1026 0178 9342     	 cmp r3,r2
- 1027 017a 08D9     	 bls .L47
- 218:../main.c     **** 				buttonpress_up = BTNPRESS_LONG;
- 1028              	 .loc 5 218 0
- 1029 017c 8A4B     	 ldr r3,.L94+84
- 1030 017e 0222     	 mov r2,#2
- 1031 0180 1A70     	 strb r2,[r3]
- 219:../main.c     **** 				button_usb_pressed_long_debug++;
- 1032              	 .loc 5 219 0
- 1033 0182 8A4B     	 ldr r3,.L94+88
- 1034 0184 1B68     	 ldr r3,[r3]
- 1035 0186 5A1C     	 add r2,r3,#1
- 1036 0188 884B     	 ldr r3,.L94+88
- 1037 018a 1A60     	 str r2,[r3]
- 1038 018c 0BE0     	 b .L46
- 1039              	.L47:
- 220:../main.c     **** 			}
- 221:../main.c     **** 			else if(button_up_pressed_duration >= BTN_STD_PRESS_DURATION){
- 1040              	 .loc 5 221 0
- 1041 018e 854B     	 ldr r3,.L94+80
- 1042 0190 1B88     	 ldrh r3,[r3]
- 1043 0192 3B2B     	 cmp r3,#59
- 1044 0194 07D9     	 bls .L46
- 222:../main.c     **** 				buttonpress_up = BTNPRESS_STD;
- 1045              	 .loc 5 222 0
- 1046 0196 844B     	 ldr r3,.L94+84
- 1047 0198 0122     	 mov r2,#1
- 1048 019a 1A70     	 strb r2,[r3]
- 223:../main.c     **** 				button_usb_pressed_debug++;
- 1049              	 .loc 5 223 0
- 1050 019c 844B     	 ldr r3,.L94+92
- 1051 019e 1B68     	 ldr r3,[r3]
- 1052 01a0 5A1C     	 add r2,r3,#1
- 1053 01a2 834B     	 ldr r3,.L94+92
- 1054 01a4 1A60     	 str r2,[r3]
- 1055              	.L46:
- 224:../main.c     **** 			}
- 225:../main.c     **** 
- 226:../main.c     **** 		}
- 227:../main.c     **** 		if(button_down_pressed_timestamp != 0 && DIGITAL_IO_GetInput(&IO_SW_DOWN) == SW_OFF){
- 1056              	 .loc 5 227 0
- 1057 01a6 7A4B     	 ldr r3,.L94+60
- 1058 01a8 1B68     	 ldr r3,[r3]
- 1059 01aa 002B     	 cmp r3,#0
- 1060 01ac 28D0     	 beq .L48
- 1061              	 .loc 5 227 0 is_stmt 0 discriminator 1
- 1062 01ae 794B     	 ldr r3,.L94+64
- 1063 01b0 181C     	 mov r0,r3
- 1064 01b2 FFF7FEFF 	 bl DIGITAL_IO_GetInput
- 1065 01b6 031E     	 sub r3,r0,#0
- 1066 01b8 012B     	 cmp r3,#1
- 1067 01ba 21D1     	 bne .L48
- 228:../main.c     **** 			button_down_pressed_duration = (SYSTIMER_GetTime() - button_down_pressed_timestamp) / 1000; // c
- 1068              	 .loc 5 228 0 is_stmt 1
- 1069 01bc FFF7FEFF 	 bl SYSTIMER_GetTime
- 1070 01c0 021C     	 mov r2,r0
- 1071 01c2 734B     	 ldr r3,.L94+60
- 1072 01c4 1B68     	 ldr r3,[r3]
- 1073 01c6 D31A     	 sub r3,r2,r3
- 1074 01c8 181C     	 mov r0,r3
- 1075 01ca FA23     	 mov r3,#250
- 1076 01cc 9900     	 lsl r1,r3,#2
- 1077 01ce FFF7FEFF 	 bl __aeabi_uidiv
- 1078 01d2 031C     	 mov r3,r0
- 1079 01d4 9AB2     	 uxth r2,r3
- 1080 01d6 774B     	 ldr r3,.L94+96
- 1081 01d8 1A80     	 strh r2,[r3]
- 229:../main.c     **** 			button_down_pressed_timestamp = 0;
- 1082              	 .loc 5 229 0
- 1083 01da 6D4B     	 ldr r3,.L94+60
- 1084 01dc 0022     	 mov r2,#0
- 1085 01de 1A60     	 str r2,[r3]
- 230:../main.c     **** 			// Interpret button press and activate "button pressed" marker. The code that is reacting to it 
- 231:../main.c     **** 			if(button_down_pressed_duration >= BTN_LONG_PRESS_DURATION)
- 1086              	 .loc 5 231 0
- 1087 01e0 744B     	 ldr r3,.L94+96
- 1088 01e2 1B88     	 ldrh r3,[r3]
- 1089 01e4 6D4A     	 ldr r2,.L94+72
- 1090 01e6 9342     	 cmp r3,r2
- 1091 01e8 03D9     	 bls .L49
- 232:../main.c     **** 				buttonpress_down = BTNPRESS_LONG;
- 1092              	 .loc 5 232 0
- 1093 01ea 734B     	 ldr r3,.L94+100
- 1094 01ec 0222     	 mov r2,#2
- 1095 01ee 1A70     	 strb r2,[r3]
- 1096 01f0 06E0     	 b .L48
- 1097              	.L49:
- 233:../main.c     **** 			else if(button_down_pressed_duration >= BTN_STD_PRESS_DURATION)
- 1098              	 .loc 5 233 0
- 1099 01f2 704B     	 ldr r3,.L94+96
- 1100 01f4 1B88     	 ldrh r3,[r3]
- 1101 01f6 3B2B     	 cmp r3,#59
- 1102 01f8 02D9     	 bls .L48
- 234:../main.c     **** 				buttonpress_down = BTNPRESS_STD;
- 1103              	 .loc 5 234 0
- 1104 01fa 6F4B     	 ldr r3,.L94+100
- 1105 01fc 0122     	 mov r2,#1
- 1106 01fe 1A70     	 strb r2,[r3]
- 1107              	.L48:
- 235:../main.c     **** 		}
- 236:../main.c     **** 
- 237:../main.c     **** 		/// - USB Channel handling -
- 238:../main.c     **** 		switch (USB_state){
- 1108              	 .loc 5 238 0
- 1109 0200 6E4B     	 ldr r3,.L94+104
- 1110 0202 1B78     	 ldrb r3,[r3]
- 1111 0204 012B     	 cmp r3,#1
- 1112 0206 23D0     	 beq .L51
- 1113 0208 022B     	 cmp r3,#2
- 1114 020a 41D0     	 beq .L91
- 1115 020c 002B     	 cmp r3,#0
- 1116 020e 40D1     	 bne .L50
- 239:../main.c     **** 			case USB_1_active:
- 240:../main.c     **** 				// State code - none atm
- 241:../main.c     **** 
- 242:../main.c     **** 				// Transition statement
- 243:../main.c     **** 				if(buttonpress_usb == BTNPRESS_STD){
- 1117              	 .loc 5 243 0
- 1118 0210 634B     	 ldr r3,.L94+76
- 1119 0212 1B78     	 ldrb r3,[r3]
- 1120 0214 012B     	 cmp r3,#1
- 1121 0216 1AD1     	 bne .L54
- 244:../main.c     **** 					DIGITAL_IO_SetOutputLow(&IO_USBPWR_1);
- 1122              	 .loc 5 244 0
- 1123 0218 504B     	 ldr r3,.L94+8
- 1124 021a 181C     	 mov r0,r3
- 1125 021c FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
- 245:../main.c     **** 					DIGITAL_IO_SetOutputHigh(&IO_USB_SI);
- 1126              	 .loc 5 245 0
- 1127 0220 4C4B     	 ldr r3,.L94
- 1128 0222 181C     	 mov r0,r3
- 1129 0224 FFF7FEFF 	 bl DIGITAL_IO_SetOutputHigh
- 246:../main.c     **** 					DIGITAL_IO_SetOutputLow(&IO_LED_USB2);
- 1130              	 .loc 5 246 0
- 1131 0228 4F4B     	 ldr r3,.L94+20
- 1132 022a 181C     	 mov r0,r3
- 1133 022c FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
- 247:../main.c     **** 					DIGITAL_IO_SetOutputHigh(&IO_LED_USB1);
- 1134              	 .loc 5 247 0
- 1135 0230 4B4B     	 ldr r3,.L94+12
- 1136 0232 181C     	 mov r0,r3
- 1137 0234 FFF7FEFF 	 bl DIGITAL_IO_SetOutputHigh
- 248:../main.c     **** 					DIGITAL_IO_SetOutputHigh(&IO_USBPWR_2);
- 1138              	 .loc 5 248 0
- 1139 0238 4A4B     	 ldr r3,.L94+16
- 1140 023a 181C     	 mov r0,r3
- 1141 023c FFF7FEFF 	 bl DIGITAL_IO_SetOutputHigh
- 249:../main.c     **** 					buttonpress_usb = BTNPRESS_NOT;
- 1142              	 .loc 5 249 0
- 1143 0240 574B     	 ldr r3,.L94+76
- 1144 0242 0022     	 mov r2,#0
- 1145 0244 1A70     	 strb r2,[r3]
+ 185:../main.c     **** 			// Check if LED pattern is finished
+ 186:../main.c     **** 			if(led_pattern_state >= led_fadesteps){
+ 945              	 .loc 5 186 0
+ 946 0212 294B     	 ldr r3,.L43+32
+ 947 0214 1A88     	 ldrh r2,[r3]
+ 948 0216 2A4B     	 ldr r3,.L43+40
+ 949 0218 1B88     	 ldrh r3,[r3]
+ 950 021a 9A42     	 cmp r2,r3
+ 951 021c 02D3     	 bcc .L40
+ 187:../main.c     **** 				led_pattern_state = 0;
+ 952              	 .loc 5 187 0
+ 953 021e 264B     	 ldr r3,.L43+32
+ 954 0220 0022     	 mov r2,#0
+ 955 0222 1A80     	 strh r2,[r3]
+ 956              	.L40:
+ 188:../main.c     **** 			}
+ 189:../main.c     **** 		}
+ 190:../main.c     **** 	}
+ 191:../main.c     **** 	if(led_status_pattern == LED_FADE_UP){ //Todo
+ 957              	 .loc 5 191 0
+ 958 0224 1C4B     	 ldr r3,.L43
+ 959 0226 1B78     	 ldrb r3,[r3]
+ 960 0228 042B     	 cmp r3,#4
+ 961 022a 32D1     	 bne .L23
+ 192:../main.c     **** 		if((SYSTIMER_GetTime() - led_pattern_state_timestamp) / 1000 >= led_pattern_state_length){
+ 962              	 .loc 5 192 0
+ 963 022c FFF7FEFF 	 bl SYSTIMER_GetTime
+ 964 0230 021C     	 mov r2,r0
+ 965 0232 1F4B     	 ldr r3,.L43+24
+ 966 0234 1B68     	 ldr r3,[r3]
+ 967 0236 D31A     	 sub r3,r2,r3
+ 968 0238 181C     	 mov r0,r3
+ 969 023a FA23     	 mov r3,#250
+ 970 023c 9900     	 lsl r1,r3,#2
+ 971 023e FFF7FEFF 	 bl __aeabi_uidiv
+ 972 0242 031C     	 mov r3,r0
+ 973 0244 1A1C     	 mov r2,r3
+ 974 0246 1B4B     	 ldr r3,.L43+28
+ 975 0248 1B88     	 ldrh r3,[r3]
+ 976 024a 9A42     	 cmp r2,r3
+ 977 024c 21D3     	 bcc .L23
+ 193:../main.c     **** 			//
+ 194:../main.c     **** 			PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF - (led_pattern_state*fade_duty_step) );
+ 978              	 .loc 5 194 0
+ 979 024e 1A4B     	 ldr r3,.L43+32
+ 980 0250 1B88     	 ldrh r3,[r3]
+ 981 0252 1A1C     	 mov r2,r3
+ 982 0254 1B4B     	 ldr r3,.L43+44
+ 983 0256 1B88     	 ldrh r3,[r3]
+ 984 0258 5343     	 mul r3,r2
+ 985 025a 1A1C     	 mov r2,r3
+ 986 025c 124B     	 ldr r3,.L43+16
+ 987 025e 9B1A     	 sub r3,r3,r2
+ 988 0260 104A     	 ldr r2,.L43+12
+ 989 0262 101C     	 mov r0,r2
+ 990 0264 191C     	 mov r1,r3
+ 991 0266 FFF7FEFF 	 bl PWM_CCU4_SetDutyCycle
+ 195:../main.c     **** 
+ 196:../main.c     **** 			// Store current time
+ 197:../main.c     **** 			led_pattern_state_timestamp = SYSTIMER_GetTime();
+ 992              	 .loc 5 197 0
+ 993 026a FFF7FEFF 	 bl SYSTIMER_GetTime
+ 994 026e 021C     	 mov r2,r0
+ 995 0270 0F4B     	 ldr r3,.L43+24
+ 996 0272 1A60     	 str r2,[r3]
+ 198:../main.c     **** 
+ 199:../main.c     **** 			// Next state
+ 200:../main.c     **** 			led_pattern_state++;
+ 997              	 .loc 5 200 0
+ 998 0274 104B     	 ldr r3,.L43+32
+ 999 0276 1B88     	 ldrh r3,[r3]
+ 1000 0278 0133     	 add r3,r3,#1
+ 1001 027a 9AB2     	 uxth r2,r3
+ 1002 027c 0E4B     	 ldr r3,.L43+32
+ 1003 027e 1A80     	 strh r2,[r3]
+ 201:../main.c     **** 
+ 202:../main.c     **** 			// Check if LED pattern is finished
+ 203:../main.c     **** 			if(led_pattern_state >= led_fadesteps){
+ 1004              	 .loc 5 203 0
+ 1005 0280 0D4B     	 ldr r3,.L43+32
+ 1006 0282 1A88     	 ldrh r2,[r3]
+ 1007 0284 0E4B     	 ldr r3,.L43+40
+ 1008 0286 1B88     	 ldrh r3,[r3]
+ 1009 0288 9A42     	 cmp r2,r3
+ 1010 028a 02D3     	 bcc .L23
+ 204:../main.c     **** 				led_pattern_state = 0;
+ 1011              	 .loc 5 204 0
+ 1012 028c 0A4B     	 ldr r3,.L43+32
+ 1013 028e 0022     	 mov r2,#0
+ 1014 0290 1A80     	 strh r2,[r3]
+ 1015              	.L23:
+ 205:../main.c     **** 			}
+ 206:../main.c     **** 		}
+ 207:../main.c     **** 	}
+ 208:../main.c     **** }
+ 1016              	 .loc 5 208 0
+ 1017 0292 BD46     	 mov sp,r7
+ 1018              	 
+ 1019 0294 80BD     	 pop {r7,pc}
+ 1020              	.L44:
+ 1021 0296 C046     	 .align 2
+ 1022              	.L43:
+ 1023 0298 00000000 	 .word led_status_pattern
+ 1024 029c 00000000 	 .word led_status_pattern_last
+ 1025 02a0 00000000 	 .word .L27
+ 1026 02a4 00000000 	 .word PWM_CCU4_LED_STATUS
+ 1027 02a8 10270000 	 .word 10000
+ 1028 02ac 00000000 	 .word led_number
+ 1029 02b0 00000000 	 .word led_pattern_state_timestamp.6994
+ 1030 02b4 00000000 	 .word led_pattern_state_length.6995
+ 1031 02b8 00000000 	 .word led_pattern_state.6993
+ 1032 02bc 00000000 	 .word led_fadetime
+ 1033 02c0 00000000 	 .word led_fadesteps
+ 1034 02c4 00000000 	 .word fade_duty_step.6996
+ 1035 02c8 4C040000 	 .word 1100
+ 1036              	 .cfi_endproc
+ 1037              	.LFE155:
+ 1039              	 .section .text.main,"ax",%progbits
+ 1040              	 .align 2
+ 1041              	 .global main
+ 1042              	 .code 16
+ 1043              	 .thumb_func
+ 1045              	main:
+ 1046              	.LFB156:
+ 209:../main.c     **** 
+ 210:../main.c     **** //****************************************************************************
+ 211:../main.c     **** // main - primary loop function
+ 212:../main.c     **** //****************************************************************************
+ 213:../main.c     **** int main(void)
+ 214:../main.c     **** {
+ 1047              	 .loc 5 214 0
+ 1048              	 .cfi_startproc
+ 1049 0000 90B5     	 push {r4,r7,lr}
+ 1050              	.LCFI32:
+ 1051              	 .cfi_def_cfa_offset 12
+ 1052              	 .cfi_offset 4,-12
+ 1053              	 .cfi_offset 7,-8
+ 1054              	 .cfi_offset 14,-4
+ 1055 0002 85B0     	 sub sp,sp,#20
+ 1056              	.LCFI33:
+ 1057              	 .cfi_def_cfa_offset 32
+ 1058 0004 00AF     	 add r7,sp,#0
+ 1059              	.LCFI34:
+ 1060              	 .cfi_def_cfa_register 7
+ 215:../main.c     **** 	// Initialization of DAVE APPs
+ 216:../main.c     **** 	DAVE_STATUS_t status;
+ 217:../main.c     **** 	status = DAVE_Init();
+ 1061              	 .loc 5 217 0
+ 1062 0006 0B23     	 mov r3,#11
+ 1063 0008 FC18     	 add r4,r7,r3
+ 1064 000a FFF7FEFF 	 bl DAVE_Init
+ 1065 000e 031C     	 mov r3,r0
+ 1066 0010 2370     	 strb r3,[r4]
+ 218:../main.c     **** 
+ 219:../main.c     **** 	// Error routine
+ 220:../main.c     **** 	if (status != DAVE_STATUS_SUCCESS) {
+ 1067              	 .loc 5 220 0
+ 1068 0012 0B23     	 mov r3,#11
+ 1069 0014 FB18     	 add r3,r7,r3
+ 1070 0016 1B78     	 ldrb r3,[r3]
+ 1071 0018 002B     	 cmp r3,#0
+ 1072 001a 00D0     	 beq .L46
+ 1073              	.L47:
+ 221:../main.c     **** 		while(1U){
+ 222:../main.c     **** 		}
+ 1074              	 .loc 5 222 0 discriminator 1
+ 1075 001c FEE7     	 b .L47
+ 1076              	.L46:
+ 223:../main.c     **** 	}
+ 224:../main.c     **** 
+ 225:../main.c     **** 	/// - Set initial state -
+ 226:../main.c     **** 	// Enable USB chip and switch to USB1
+ 227:../main.c     **** 	DIGITAL_IO_SetOutputLow(&IO_USB_SI);
+ 1077              	 .loc 5 227 0
+ 1078 001e CD4B     	 ldr r3,.L101
+ 1079 0020 181C     	 mov r0,r3
+ 1080 0022 FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
+ 228:../main.c     **** 	DIGITAL_IO_SetOutputLow(&IO_USB_OE);
+ 1081              	 .loc 5 228 0
+ 1082 0026 CC4B     	 ldr r3,.L101+4
+ 1083 0028 181C     	 mov r0,r3
+ 1084 002a FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
+ 229:../main.c     **** 	// Enable USB1
+ 230:../main.c     **** 	DIGITAL_IO_SetOutputHigh(&IO_USBPWR_1);
+ 1085              	 .loc 5 230 0
+ 1086 002e CB4B     	 ldr r3,.L101+8
+ 1087 0030 181C     	 mov r0,r3
+ 1088 0032 FFF7FEFF 	 bl DIGITAL_IO_SetOutputHigh
+ 231:../main.c     **** 	DIGITAL_IO_SetOutputLow(&IO_LED_USB1);
+ 1089              	 .loc 5 231 0
+ 1090 0036 CA4B     	 ldr r3,.L101+12
+ 1091 0038 181C     	 mov r0,r3
+ 1092 003a FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
+ 232:../main.c     **** 	// Disable USB2
+ 233:../main.c     **** 	DIGITAL_IO_SetOutputLow(&IO_USBPWR_2);
+ 1093              	 .loc 5 233 0
+ 1094 003e C94B     	 ldr r3,.L101+16
+ 1095 0040 181C     	 mov r0,r3
+ 1096 0042 FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
+ 234:../main.c     **** 	DIGITAL_IO_SetOutputHigh(&IO_LED_USB2);
+ 1097              	 .loc 5 234 0
+ 1098 0046 C84B     	 ldr r3,.L101+20
+ 1099 0048 181C     	 mov r0,r3
+ 1100 004a FFF7FEFF 	 bl DIGITAL_IO_SetOutputHigh
+ 235:../main.c     **** 	// Disable Relay and set LED off
+ 236:../main.c     **** 	DIGITAL_IO_SetOutputLow(&IO_RELAY);
+ 1101              	 .loc 5 236 0
+ 1102 004e C74B     	 ldr r3,.L101+24
+ 1103 0050 181C     	 mov r0,r3
+ 1104 0052 FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
+ 237:../main.c     **** 	PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
+ 1105              	 .loc 5 237 0
+ 1106 0056 C64B     	 ldr r3,.L101+28
+ 1107 0058 C64A     	 ldr r2,.L101+32
+ 1108 005a 181C     	 mov r0,r3
+ 1109 005c 111C     	 mov r1,r2
+ 1110 005e FFF7FEFF 	 bl PWM_CCU4_SetDutyCycle
+ 238:../main.c     **** 	// Initialize next value conversion
+ 239:../main.c     **** 	ADC_MEASUREMENT_StartConversion(&ADC_SENSOR);
+ 1111              	 .loc 5 239 0
+ 1112 0062 C54B     	 ldr r3,.L101+36
+ 1113 0064 181C     	 mov r0,r3
+ 1114 0066 FFF7FEFF 	 bl ADC_MEASUREMENT_StartConversion
+ 240:../main.c     **** 
+ 241:../main.c     **** 	int main_loop_count = 0;
+ 1115              	 .loc 5 241 0
+ 1116 006a 0023     	 mov r3,#0
+ 1117 006c FB60     	 str r3,[r7,#12]
+ 1118              	.L97:
+ 242:../main.c     **** 
+ 243:../main.c     **** 	// Main loop
+ 244:../main.c     **** 	while(1U)
+ 245:../main.c     **** 	{
+ 246:../main.c     **** 		// - Status LED handling -
+ 247:../main.c     **** 		manage_status_led();
+ 1119              	 .loc 5 247 0
+ 1120 006e FFF7FEFF 	 bl manage_status_led
+ 248:../main.c     **** 		main_loop_count++;
+ 1121              	 .loc 5 248 0
+ 1122 0072 FB68     	 ldr r3,[r7,#12]
+ 1123 0074 0133     	 add r3,r3,#1
+ 1124 0076 FB60     	 str r3,[r7,#12]
+ 249:../main.c     **** 		systime_debug = SYSTIMER_GetTime();
+ 1125              	 .loc 5 249 0
+ 1126 0078 FFF7FEFF 	 bl SYSTIMER_GetTime
+ 1127 007c 031C     	 mov r3,r0
+ 1128 007e 1A1C     	 mov r2,r3
+ 1129 0080 BE4B     	 ldr r3,.L101+40
+ 1130 0082 1A60     	 str r2,[r3]
  250:../main.c     **** 
- 251:../main.c     **** 					USB_state = USB_2_active;
- 1146              	 .loc 5 251 0
- 1147 0246 5D4B     	 ldr r3,.L94+104
- 1148 0248 0122     	 mov r2,#1
- 1149 024a 1A70     	 strb r2,[r3]
- 252:../main.c     **** 				}
- 253:../main.c     **** 				break;
- 1150              	 .loc 5 253 0
- 1151 024c 21E0     	 b .L50
- 1152              	.L54:
- 1153 024e 20E0     	 b .L50
- 1154              	.L51:
- 254:../main.c     **** 			case USB_2_active:
- 255:../main.c     **** 				// State code - none atm
- 256:../main.c     **** 
- 257:../main.c     **** 				// Transition statement
- 258:../main.c     **** 				if(buttonpress_usb == BTNPRESS_STD){
- 1155              	 .loc 5 258 0
- 1156 0250 534B     	 ldr r3,.L94+76
- 1157 0252 1B78     	 ldrb r3,[r3]
- 1158 0254 012B     	 cmp r3,#1
- 1159 0256 1AD1     	 bne .L55
- 259:../main.c     **** 					DIGITAL_IO_SetOutputLow(&IO_USBPWR_2);
- 1160              	 .loc 5 259 0
- 1161 0258 424B     	 ldr r3,.L94+16
- 1162 025a 181C     	 mov r0,r3
- 1163 025c FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
- 260:../main.c     **** 					DIGITAL_IO_SetOutputLow(&IO_USB_SI);
- 1164              	 .loc 5 260 0
- 1165 0260 3C4B     	 ldr r3,.L94
- 1166 0262 181C     	 mov r0,r3
- 1167 0264 FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
- 261:../main.c     **** 					DIGITAL_IO_SetOutputLow(&IO_LED_USB1);
- 1168              	 .loc 5 261 0
- 1169 0268 3D4B     	 ldr r3,.L94+12
- 1170 026a 181C     	 mov r0,r3
- 1171 026c FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
- 262:../main.c     **** 					DIGITAL_IO_SetOutputHigh(&IO_LED_USB2);
- 1172              	 .loc 5 262 0
- 1173 0270 3D4B     	 ldr r3,.L94+20
- 1174 0272 181C     	 mov r0,r3
- 1175 0274 FFF7FEFF 	 bl DIGITAL_IO_SetOutputHigh
- 263:../main.c     **** 					DIGITAL_IO_SetOutputHigh(&IO_USBPWR_1);
- 1176              	 .loc 5 263 0
- 1177 0278 384B     	 ldr r3,.L94+8
- 1178 027a 181C     	 mov r0,r3
- 1179 027c FFF7FEFF 	 bl DIGITAL_IO_SetOutputHigh
- 264:../main.c     **** 					buttonpress_usb = BTNPRESS_NOT;
- 1180              	 .loc 5 264 0
- 1181 0280 474B     	 ldr r3,.L94+76
- 1182 0282 0022     	 mov r2,#0
- 1183 0284 1A70     	 strb r2,[r3]
- 265:../main.c     **** 
- 266:../main.c     **** 					USB_state = USB_1_active;
- 1184              	 .loc 5 266 0
- 1185 0286 4D4B     	 ldr r3,.L94+104
- 1186 0288 0022     	 mov r2,#0
- 1187 028a 1A70     	 strb r2,[r3]
- 267:../main.c     **** 				}
- 268:../main.c     **** 				break;
- 1188              	 .loc 5 268 0
- 1189 028c 01E0     	 b .L50
- 1190              	.L55:
- 1191 028e 00E0     	 b .L50
- 1192              	.L91:
- 269:../main.c     **** 			case USB_inactive:
- 270:../main.c     **** 				// Currently not implemented!
- 271:../main.c     **** 				break;
- 1193              	 .loc 5 271 0
- 1194 0290 C046     	 mov r8,r8
- 1195              	.L50:
- 272:../main.c     **** 		}
- 273:../main.c     **** 		/// - Relay handling -
- 274:../main.c     **** 		// Check for state change triggers based on current state
- 275:../main.c     **** 		switch (relay_state){
- 1196              	 .loc 5 275 0
- 1197 0292 4B4B     	 ldr r3,.L94+108
- 1198 0294 1B78     	 ldrb r3,[r3]
- 1199 0296 002B     	 cmp r3,#0
- 1200 0298 4AD0     	 beq .L57
- 1201 029a 012B     	 cmp r3,#1
- 1202 029c 00D0     	 beq .LCB924
- 1203 029e D2E0     	 b .L56
- 1204              	.LCB924:
- 276:../main.c     **** 			case RELAY_LOW:
- 277:../main.c     **** 				// State code
- 278:../main.c     **** 				// Check if upper threshold is exceeded. If it is and timestamp is not already set - save times
- 279:../main.c     **** 				if     (ADC_val_upper_thres_exceed_timestamp == 0 && ADC_val_current > ADC_upper_threshold){
- 1205              	 .loc 5 279 0
- 1206 02a0 484B     	 ldr r3,.L94+112
- 1207 02a2 1B68     	 ldr r3,[r3]
- 1208 02a4 002B     	 cmp r3,#0
- 1209 02a6 0CD1     	 bne .L59
- 1210              	 .loc 5 279 0 is_stmt 0 discriminator 1
- 1211 02a8 474B     	 ldr r3,.L94+116
- 1212 02aa 1B68     	 ldr r3,[r3]
- 1213 02ac 1A1E     	 sub r2,r3,#0
- 1214 02ae 474B     	 ldr r3,.L94+120
- 1215 02b0 1B68     	 ldr r3,[r3]
- 1216 02b2 9A42     	 cmp r2,r3
- 1217 02b4 05D2     	 bcs .L59
- 280:../main.c     **** 					ADC_val_upper_thres_exceed_timestamp = SYSTIMER_GetTime();
- 1218              	 .loc 5 280 0 is_stmt 1
- 1219 02b6 FFF7FEFF 	 bl SYSTIMER_GetTime
- 1220 02ba 021C     	 mov r2,r0
- 1221 02bc 414B     	 ldr r3,.L94+112
- 1222 02be 1A60     	 str r2,[r3]
- 1223 02c0 0DE0     	 b .L60
- 1224              	.L59:
- 281:../main.c     **** 				}
- 282:../main.c     **** 				else if(ADC_val_upper_thres_exceed_timestamp != 0 && ADC_val_current < ADC_upper_threshold){
- 1225              	 .loc 5 282 0
- 1226 02c2 404B     	 ldr r3,.L94+112
- 1227 02c4 1B68     	 ldr r3,[r3]
- 1228 02c6 002B     	 cmp r3,#0
- 1229 02c8 09D0     	 beq .L60
- 1230              	 .loc 5 282 0 is_stmt 0 discriminator 1
- 1231 02ca 3F4B     	 ldr r3,.L94+116
- 1232 02cc 1B68     	 ldr r3,[r3]
- 1233 02ce 1A1E     	 sub r2,r3,#0
- 1234 02d0 3E4B     	 ldr r3,.L94+120
- 1235 02d2 1B68     	 ldr r3,[r3]
- 1236 02d4 9A42     	 cmp r2,r3
- 1237 02d6 02D9     	 bls .L60
- 283:../main.c     **** 					ADC_val_upper_thres_exceed_timestamp = 0;
- 1238              	 .loc 5 283 0 is_stmt 1
- 1239 02d8 3A4B     	 ldr r3,.L94+112
- 1240 02da 0022     	 mov r2,#0
- 1241 02dc 1A60     	 str r2,[r3]
- 1242              	.L60:
- 284:../main.c     **** 				}
- 285:../main.c     **** 
- 286:../main.c     **** 				// Transition statement
- 287:../main.c     **** 				// Check if threshold are exceeded long enough to trigger a switch
- 288:../main.c     **** 				if(ADC_val_upper_thres_exceed_timestamp != 0){
- 1243              	 .loc 5 288 0
- 1244 02de 394B     	 ldr r3,.L94+112
- 1245 02e0 1B68     	 ldr r3,[r3]
- 1246 02e2 002B     	 cmp r3,#0
- 1247 02e4 23D0     	 beq .L61
- 1248              	.LBB2:
- 289:../main.c     **** 					uint16_t upperThresholdExceedDuration = (SYSTIMER_GetTime() - ADC_val_upper_thres_exceed_times
- 1249              	 .loc 5 289 0
- 1250 02e6 FFF7FEFF 	 bl SYSTIMER_GetTime
- 1251 02ea 021C     	 mov r2,r0
- 1252 02ec 354B     	 ldr r3,.L94+112
- 1253 02ee 1B68     	 ldr r3,[r3]
- 1254 02f0 D31A     	 sub r3,r2,r3
- 1255 02f2 181C     	 mov r0,r3
- 1256 02f4 FA23     	 mov r3,#250
- 1257 02f6 9900     	 lsl r1,r3,#2
- 1258 02f8 FFF7FEFF 	 bl __aeabi_uidiv
- 1259 02fc 031C     	 mov r3,r0
- 1260 02fe 1A1C     	 mov r2,r3
- 1261 0300 0823     	 mov r3,#8
- 1262 0302 FB18     	 add r3,r7,r3
- 1263 0304 1A80     	 strh r2,[r3]
- 290:../main.c     **** 					if(upperThresholdExceedDuration > relay_threshold_latchtime){
- 1264              	 .loc 5 290 0
- 1265 0306 324B     	 ldr r3,.L94+124
- 1266 0308 1B88     	 ldrh r3,[r3]
- 1267 030a 0822     	 mov r2,#8
- 1268 030c BA18     	 add r2,r7,r2
- 1269 030e 1288     	 ldrh r2,[r2]
- 1270 0310 9A42     	 cmp r2,r3
- 1271 0312 0CD9     	 bls .L61
- 291:../main.c     **** 						relay_state = RELAY_HIGH;
- 1272              	 .loc 5 291 0
- 1273 0314 2A4B     	 ldr r3,.L94+108
- 1274 0316 0022     	 mov r2,#0
- 1275 0318 1A70     	 strb r2,[r3]
- 292:../main.c     **** 						DIGITAL_IO_SetOutputHigh(&IO_RELAY);
- 1276              	 .loc 5 292 0
- 1277 031a 144B     	 ldr r3,.L94+24
- 1278 031c 181C     	 mov r0,r3
- 1279 031e FFF7FEFF 	 bl DIGITAL_IO_SetOutputHigh
- 293:../main.c     **** 						reset_status_led_to_relay_state();
- 1280              	 .loc 5 293 0
- 1281 0322 FFF7FEFF 	 bl reset_status_led_to_relay_state
- 294:../main.c     **** 						ADC_val_upper_thres_exceed_timestamp = 0;
- 1282              	 .loc 5 294 0
- 1283 0326 274B     	 ldr r3,.L94+112
- 1284 0328 0022     	 mov r2,#0
- 1285 032a 1A60     	 str r2,[r3]
- 1286              	.LBE2:
- 295:../main.c     **** 					}
- 296:../main.c     **** 				}
- 297:../main.c     **** 				break;
- 1287              	 .loc 5 297 0
- 1288 032c 8BE0     	 b .L56
- 1289              	.L61:
- 1290 032e 8AE0     	 b .L56
- 1291              	.L57:
- 298:../main.c     **** 			case RELAY_HIGH:
- 299:../main.c     **** 				// State code
- 300:../main.c     **** 				// Check if lower threshold is exceeded. If it is and timestamp is not already set - save times
- 301:../main.c     **** 				if(ADC_val_lower_thres_exceed_timestamp == 0 && ADC_val_current < ADC_lower_threshold){
- 1292              	 .loc 5 301 0
- 1293 0330 284B     	 ldr r3,.L94+128
- 1294 0332 1B68     	 ldr r3,[r3]
- 1295 0334 002B     	 cmp r3,#0
- 1296 0336 51D1     	 bne .L62
- 1297              	 .loc 5 301 0 is_stmt 0 discriminator 1
- 1298 0338 274B     	 ldr r3,.L94+132
- 1299 033a 1B68     	 ldr r3,[r3]
- 1300 033c 1A1E     	 sub r2,r3,#0
- 1301 033e 234B     	 ldr r3,.L94+120
- 1302 0340 1B68     	 ldr r3,[r3]
- 1303 0342 9A42     	 cmp r2,r3
- 1304 0344 4AD9     	 bls .L62
- 302:../main.c     **** 					ADC_val_lower_thres_exceed_timestamp = SYSTIMER_GetTime();
- 1305              	 .loc 5 302 0 is_stmt 1
- 1306 0346 FFF7FEFF 	 bl SYSTIMER_GetTime
- 1307 034a 021C     	 mov r2,r0
- 1308 034c 214B     	 ldr r3,.L94+128
- 1309 034e 1A60     	 str r2,[r3]
- 1310 0350 52E0     	 b .L63
- 1311              	.L95:
- 1312 0352 C046     	 .align 2
- 1313              	.L94:
- 1314 0354 00000000 	 .word IO_USB_SI
- 1315 0358 00000000 	 .word IO_USB_OE
- 1316 035c 00000000 	 .word IO_USBPWR_1
- 1317 0360 00000000 	 .word IO_LED_USB1
- 1318 0364 00000000 	 .word IO_USBPWR_2
- 1319 0368 00000000 	 .word IO_LED_USB2
- 1320 036c 00000000 	 .word IO_RELAY
- 1321 0370 00000000 	 .word PWM_CCU4_LED_STATUS
- 1322 0374 10270000 	 .word 10000
- 1323 0378 00000000 	 .word ADC_SENSOR
- 1324 037c 00000000 	 .word systime_debug
- 1325 0380 00000000 	 .word button_usb_pressed_timestamp
- 1326 0384 00000000 	 .word IO_SW_USB
- 1327 0388 00000000 	 .word button_up_pressed_timestamp
- 1328 038c 00000000 	 .word IO_SW_UP
- 1329 0390 00000000 	 .word button_down_pressed_timestamp
- 1330 0394 00000000 	 .word IO_SW_DOWN
- 1331 0398 00000000 	 .word button_usb_pressed_duration
- 1332 039c E7030000 	 .word 999
- 1333 03a0 00000000 	 .word buttonpress_usb
- 1334 03a4 00000000 	 .word button_up_pressed_duration
- 1335 03a8 00000000 	 .word buttonpress_up
- 1336 03ac 00000000 	 .word button_usb_pressed_long_debug
- 1337 03b0 00000000 	 .word button_usb_pressed_debug
- 1338 03b4 00000000 	 .word button_down_pressed_duration
- 1339 03b8 00000000 	 .word buttonpress_down
- 1340 03bc 00000000 	 .word USB_state
- 1341 03c0 00000000 	 .word relay_state
- 1342 03c4 00000000 	 .word ADC_val_upper_thres_exceed_timestamp
- 1343 03c8 00000000 	 .word ADC_upper_threshold
- 1344 03cc 00000000 	 .word ADC_val_current
- 1345 03d0 00000000 	 .word relay_threshold_latchtime
- 1346 03d4 00000000 	 .word ADC_val_lower_thres_exceed_timestamp
- 1347 03d8 00000000 	 .word ADC_lower_threshold
- 1348              	.L62:
- 303:../main.c     **** 				}
- 304:../main.c     **** 				else if(ADC_val_lower_thres_exceed_timestamp != 0 && ADC_val_current > ADC_lower_threshold){
- 1349              	 .loc 5 304 0
- 1350 03dc 8F4B     	 ldr r3,.L96
- 1351 03de 1B68     	 ldr r3,[r3]
- 1352 03e0 002B     	 cmp r3,#0
- 1353 03e2 09D0     	 beq .L63
- 1354              	 .loc 5 304 0 is_stmt 0 discriminator 1
- 1355 03e4 8E4B     	 ldr r3,.L96+4
- 1356 03e6 1B68     	 ldr r3,[r3]
- 1357 03e8 1A1E     	 sub r2,r3,#0
- 1358 03ea 8E4B     	 ldr r3,.L96+8
- 1359 03ec 1B68     	 ldr r3,[r3]
- 1360 03ee 9A42     	 cmp r2,r3
- 1361 03f0 02D2     	 bcs .L63
- 305:../main.c     **** 					ADC_val_lower_thres_exceed_timestamp = 0;
- 1362              	 .loc 5 305 0 is_stmt 1
- 1363 03f2 8A4B     	 ldr r3,.L96
- 1364 03f4 0022     	 mov r2,#0
- 1365 03f6 1A60     	 str r2,[r3]
- 1366              	.L63:
- 306:../main.c     **** 				}
- 307:../main.c     **** 
- 308:../main.c     **** 				// Transition statement
- 309:../main.c     **** 				// Check if threshold are exceeded long enough to trigger a switch
- 310:../main.c     **** 				if(ADC_val_lower_thres_exceed_timestamp != 0){
- 1367              	 .loc 5 310 0
- 1368 03f8 884B     	 ldr r3,.L96
- 1369 03fa 1B68     	 ldr r3,[r3]
- 1370 03fc 002B     	 cmp r3,#0
- 1371 03fe 21D0     	 beq .L64
- 1372              	.LBB3:
- 311:../main.c     **** 					uint16_t lowerThresholdExceedDuration = (SYSTIMER_GetTime() - ADC_val_lower_thres_exceed_times
- 1373              	 .loc 5 311 0
- 1374 0400 FFF7FEFF 	 bl SYSTIMER_GetTime
- 1375 0404 021C     	 mov r2,r0
- 1376 0406 854B     	 ldr r3,.L96
- 1377 0408 1B68     	 ldr r3,[r3]
- 1378 040a D31A     	 sub r3,r2,r3
- 1379 040c 181C     	 mov r0,r3
- 1380 040e FA23     	 mov r3,#250
- 1381 0410 9900     	 lsl r1,r3,#2
- 1382 0412 FFF7FEFF 	 bl __aeabi_uidiv
- 1383 0416 031C     	 mov r3,r0
- 1384 0418 1A1C     	 mov r2,r3
- 1385 041a BB1D     	 add r3,r7,#6
- 1386 041c 1A80     	 strh r2,[r3]
- 312:../main.c     **** 					if(lowerThresholdExceedDuration > relay_threshold_latchtime){
- 1387              	 .loc 5 312 0
- 1388 041e 824B     	 ldr r3,.L96+12
- 1389 0420 1B88     	 ldrh r3,[r3]
- 1390 0422 BA1D     	 add r2,r7,#6
- 1391 0424 1288     	 ldrh r2,[r2]
- 1392 0426 9A42     	 cmp r2,r3
- 1393 0428 0CD9     	 bls .L64
- 313:../main.c     **** 						relay_state = RELAY_LOW;
- 1394              	 .loc 5 313 0
- 1395 042a 804B     	 ldr r3,.L96+16
- 1396 042c 0122     	 mov r2,#1
- 1397 042e 1A70     	 strb r2,[r3]
- 314:../main.c     **** 						DIGITAL_IO_SetOutputLow(&IO_RELAY);
- 1398              	 .loc 5 314 0
- 1399 0430 7F4B     	 ldr r3,.L96+20
- 1400 0432 181C     	 mov r0,r3
- 1401 0434 FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
- 315:../main.c     **** 						reset_status_led_to_relay_state();
- 1402              	 .loc 5 315 0
- 1403 0438 FFF7FEFF 	 bl reset_status_led_to_relay_state
- 316:../main.c     **** 						ADC_val_lower_thres_exceed_timestamp = 0;
- 1404              	 .loc 5 316 0
- 1405 043c 774B     	 ldr r3,.L96
- 1406 043e 0022     	 mov r2,#0
- 1407 0440 1A60     	 str r2,[r3]
- 1408              	.LBE3:
- 317:../main.c     **** 					}
- 318:../main.c     **** 				}
- 319:../main.c     **** 				break;
- 1409              	 .loc 5 319 0
- 1410 0442 FFE7     	 b .L92
- 1411              	.L64:
- 1412              	.L92:
- 1413 0444 C046     	 mov r8,r8
- 1414              	.L56:
- 320:../main.c     **** 		}
- 321:../main.c     **** 		// Init next value conversion
- 322:../main.c     **** 		ADC_MEASUREMENT_StartConversion(&ADC_SENSOR);
- 1415              	 .loc 5 322 0
- 1416 0446 7B4B     	 ldr r3,.L96+24
- 1417 0448 181C     	 mov r0,r3
- 1418 044a FFF7FEFF 	 bl ADC_MEASUREMENT_StartConversion
+ 251:../main.c     **** 		/// - Button handling -
+ 252:../main.c     **** 		// Detect press and save current system time
+ 253:../main.c     **** 		if(button_usb_pressed_timestamp == 0 && DIGITAL_IO_GetInput(&IO_SW_USB) == SW_ON)
+ 1131              	 .loc 5 253 0
+ 1132 0084 BE4B     	 ldr r3,.L101+44
+ 1133 0086 1B68     	 ldr r3,[r3]
+ 1134 0088 002B     	 cmp r3,#0
+ 1135 008a 0AD1     	 bne .L48
+ 1136              	 .loc 5 253 0 is_stmt 0 discriminator 1
+ 1137 008c BD4B     	 ldr r3,.L101+48
+ 1138 008e 181C     	 mov r0,r3
+ 1139 0090 FFF7FEFF 	 bl DIGITAL_IO_GetInput
+ 1140 0094 031E     	 sub r3,r0,#0
+ 1141 0096 04D1     	 bne .L48
+ 254:../main.c     **** 			button_usb_pressed_timestamp = SYSTIMER_GetTime();
+ 1142              	 .loc 5 254 0 is_stmt 1
+ 1143 0098 FFF7FEFF 	 bl SYSTIMER_GetTime
+ 1144 009c 021C     	 mov r2,r0
+ 1145 009e B84B     	 ldr r3,.L101+44
+ 1146 00a0 1A60     	 str r2,[r3]
+ 1147              	.L48:
+ 255:../main.c     **** 		if(button_up_pressed_timestamp == 0 && DIGITAL_IO_GetInput(&IO_SW_UP) == SW_ON)
+ 1148              	 .loc 5 255 0
+ 1149 00a2 B94B     	 ldr r3,.L101+52
+ 1150 00a4 1B68     	 ldr r3,[r3]
+ 1151 00a6 002B     	 cmp r3,#0
+ 1152 00a8 0AD1     	 bne .L49
+ 1153              	 .loc 5 255 0 is_stmt 0 discriminator 1
+ 1154 00aa B84B     	 ldr r3,.L101+56
+ 1155 00ac 181C     	 mov r0,r3
+ 1156 00ae FFF7FEFF 	 bl DIGITAL_IO_GetInput
+ 1157 00b2 031E     	 sub r3,r0,#0
+ 1158 00b4 04D1     	 bne .L49
+ 256:../main.c     **** 			button_up_pressed_timestamp = SYSTIMER_GetTime();
+ 1159              	 .loc 5 256 0 is_stmt 1
+ 1160 00b6 FFF7FEFF 	 bl SYSTIMER_GetTime
+ 1161 00ba 021C     	 mov r2,r0
+ 1162 00bc B24B     	 ldr r3,.L101+52
+ 1163 00be 1A60     	 str r2,[r3]
+ 1164              	.L49:
+ 257:../main.c     **** 		if(button_down_pressed_timestamp == 0 && DIGITAL_IO_GetInput(&IO_SW_DOWN) == SW_ON)
+ 1165              	 .loc 5 257 0
+ 1166 00c0 B34B     	 ldr r3,.L101+60
+ 1167 00c2 1B68     	 ldr r3,[r3]
+ 1168 00c4 002B     	 cmp r3,#0
+ 1169 00c6 0AD1     	 bne .L50
+ 1170              	 .loc 5 257 0 is_stmt 0 discriminator 1
+ 1171 00c8 B24B     	 ldr r3,.L101+64
+ 1172 00ca 181C     	 mov r0,r3
+ 1173 00cc FFF7FEFF 	 bl DIGITAL_IO_GetInput
+ 1174 00d0 031E     	 sub r3,r0,#0
+ 1175 00d2 04D1     	 bne .L50
+ 258:../main.c     **** 			button_down_pressed_timestamp = SYSTIMER_GetTime();
+ 1176              	 .loc 5 258 0 is_stmt 1
+ 1177 00d4 FFF7FEFF 	 bl SYSTIMER_GetTime
+ 1178 00d8 021C     	 mov r2,r0
+ 1179 00da AD4B     	 ldr r3,.L101+60
+ 1180 00dc 1A60     	 str r2,[r3]
+ 1181              	.L50:
+ 259:../main.c     **** 		// If a press in ongoing and release is detected, calculate time difference
+ 260:../main.c     **** 		if(button_usb_pressed_timestamp != 0 && DIGITAL_IO_GetInput(&IO_SW_USB) == SW_OFF){
+ 1182              	 .loc 5 260 0
+ 1183 00de A84B     	 ldr r3,.L101+44
+ 1184 00e0 1B68     	 ldr r3,[r3]
+ 1185 00e2 002B     	 cmp r3,#0
+ 1186 00e4 28D0     	 beq .L51
+ 1187              	 .loc 5 260 0 is_stmt 0 discriminator 1
+ 1188 00e6 A74B     	 ldr r3,.L101+48
+ 1189 00e8 181C     	 mov r0,r3
+ 1190 00ea FFF7FEFF 	 bl DIGITAL_IO_GetInput
+ 1191 00ee 031E     	 sub r3,r0,#0
+ 1192 00f0 012B     	 cmp r3,#1
+ 1193 00f2 21D1     	 bne .L51
+ 261:../main.c     **** 			button_usb_pressed_duration = (SYSTIMER_GetTime() - button_usb_pressed_timestamp) / 1000; // con
+ 1194              	 .loc 5 261 0 is_stmt 1
+ 1195 00f4 FFF7FEFF 	 bl SYSTIMER_GetTime
+ 1196 00f8 021C     	 mov r2,r0
+ 1197 00fa A14B     	 ldr r3,.L101+44
+ 1198 00fc 1B68     	 ldr r3,[r3]
+ 1199 00fe D31A     	 sub r3,r2,r3
+ 1200 0100 181C     	 mov r0,r3
+ 1201 0102 FA23     	 mov r3,#250
+ 1202 0104 9900     	 lsl r1,r3,#2
+ 1203 0106 FFF7FEFF 	 bl __aeabi_uidiv
+ 1204 010a 031C     	 mov r3,r0
+ 1205 010c 9AB2     	 uxth r2,r3
+ 1206 010e A24B     	 ldr r3,.L101+68
+ 1207 0110 1A80     	 strh r2,[r3]
+ 262:../main.c     **** 			button_usb_pressed_timestamp = 0;
+ 1208              	 .loc 5 262 0
+ 1209 0112 9B4B     	 ldr r3,.L101+44
+ 1210 0114 0022     	 mov r2,#0
+ 1211 0116 1A60     	 str r2,[r3]
+ 263:../main.c     **** 			// Interpret button press and activate "button pressed" marker
+ 264:../main.c     **** 			if(button_usb_pressed_duration >= BTN_LONG_PRESS_DURATION)
+ 1212              	 .loc 5 264 0
+ 1213 0118 9F4B     	 ldr r3,.L101+68
+ 1214 011a 1B88     	 ldrh r3,[r3]
+ 1215 011c 9F4A     	 ldr r2,.L101+72
+ 1216 011e 9342     	 cmp r3,r2
+ 1217 0120 03D9     	 bls .L52
+ 265:../main.c     **** 				buttonpress_usb = BTNPRESS_LONG;
+ 1218              	 .loc 5 265 0
+ 1219 0122 9F4B     	 ldr r3,.L101+76
+ 1220 0124 0222     	 mov r2,#2
+ 1221 0126 1A70     	 strb r2,[r3]
+ 1222 0128 06E0     	 b .L51
+ 1223              	.L52:
+ 266:../main.c     **** 			else if(button_usb_pressed_duration >= BTN_STD_PRESS_DURATION)
+ 1224              	 .loc 5 266 0
+ 1225 012a 9B4B     	 ldr r3,.L101+68
+ 1226 012c 1B88     	 ldrh r3,[r3]
+ 1227 012e 3B2B     	 cmp r3,#59
+ 1228 0130 02D9     	 bls .L51
+ 267:../main.c     **** 				buttonpress_usb = BTNPRESS_STD;
+ 1229              	 .loc 5 267 0
+ 1230 0132 9B4B     	 ldr r3,.L101+76
+ 1231 0134 0122     	 mov r2,#1
+ 1232 0136 1A70     	 strb r2,[r3]
+ 1233              	.L51:
+ 268:../main.c     **** 
+ 269:../main.c     **** 
+ 270:../main.c     **** 		}
+ 271:../main.c     **** 		if(button_up_pressed_timestamp != 0 && DIGITAL_IO_GetInput(&IO_SW_UP) == SW_OFF){
+ 1234              	 .loc 5 271 0
+ 1235 0138 934B     	 ldr r3,.L101+52
+ 1236 013a 1B68     	 ldr r3,[r3]
+ 1237 013c 002B     	 cmp r3,#0
+ 1238 013e 32D0     	 beq .L53
+ 1239              	 .loc 5 271 0 is_stmt 0 discriminator 1
+ 1240 0140 924B     	 ldr r3,.L101+56
+ 1241 0142 181C     	 mov r0,r3
+ 1242 0144 FFF7FEFF 	 bl DIGITAL_IO_GetInput
+ 1243 0148 031E     	 sub r3,r0,#0
+ 1244 014a 012B     	 cmp r3,#1
+ 1245 014c 2BD1     	 bne .L53
+ 272:../main.c     **** 			button_up_pressed_duration = (SYSTIMER_GetTime() - button_up_pressed_timestamp) / 1000; // conve
+ 1246              	 .loc 5 272 0 is_stmt 1
+ 1247 014e FFF7FEFF 	 bl SYSTIMER_GetTime
+ 1248 0152 021C     	 mov r2,r0
+ 1249 0154 8C4B     	 ldr r3,.L101+52
+ 1250 0156 1B68     	 ldr r3,[r3]
+ 1251 0158 D31A     	 sub r3,r2,r3
+ 1252 015a 181C     	 mov r0,r3
+ 1253 015c FA23     	 mov r3,#250
+ 1254 015e 9900     	 lsl r1,r3,#2
+ 1255 0160 FFF7FEFF 	 bl __aeabi_uidiv
+ 1256 0164 031C     	 mov r3,r0
+ 1257 0166 9AB2     	 uxth r2,r3
+ 1258 0168 8E4B     	 ldr r3,.L101+80
+ 1259 016a 1A80     	 strh r2,[r3]
+ 273:../main.c     **** 			button_up_pressed_timestamp = 0;
+ 1260              	 .loc 5 273 0
+ 1261 016c 864B     	 ldr r3,.L101+52
+ 1262 016e 0022     	 mov r2,#0
+ 1263 0170 1A60     	 str r2,[r3]
+ 274:../main.c     **** 			// Interpret button press and activate "button pressed" marker
+ 275:../main.c     **** 			if(button_up_pressed_duration >= BTN_LONG_PRESS_DURATION){
+ 1264              	 .loc 5 275 0
+ 1265 0172 8C4B     	 ldr r3,.L101+80
+ 1266 0174 1B88     	 ldrh r3,[r3]
+ 1267 0176 894A     	 ldr r2,.L101+72
+ 1268 0178 9342     	 cmp r3,r2
+ 1269 017a 08D9     	 bls .L54
+ 276:../main.c     **** 				buttonpress_up = BTNPRESS_LONG;
+ 1270              	 .loc 5 276 0
+ 1271 017c 8A4B     	 ldr r3,.L101+84
+ 1272 017e 0222     	 mov r2,#2
+ 1273 0180 1A70     	 strb r2,[r3]
+ 277:../main.c     **** 				button_usb_pressed_long_debug++;
+ 1274              	 .loc 5 277 0
+ 1275 0182 8A4B     	 ldr r3,.L101+88
+ 1276 0184 1B68     	 ldr r3,[r3]
+ 1277 0186 5A1C     	 add r2,r3,#1
+ 1278 0188 884B     	 ldr r3,.L101+88
+ 1279 018a 1A60     	 str r2,[r3]
+ 1280 018c 0BE0     	 b .L53
+ 1281              	.L54:
+ 278:../main.c     **** 			}
+ 279:../main.c     **** 			else if(button_up_pressed_duration >= BTN_STD_PRESS_DURATION){
+ 1282              	 .loc 5 279 0
+ 1283 018e 854B     	 ldr r3,.L101+80
+ 1284 0190 1B88     	 ldrh r3,[r3]
+ 1285 0192 3B2B     	 cmp r3,#59
+ 1286 0194 07D9     	 bls .L53
+ 280:../main.c     **** 				buttonpress_up = BTNPRESS_STD;
+ 1287              	 .loc 5 280 0
+ 1288 0196 844B     	 ldr r3,.L101+84
+ 1289 0198 0122     	 mov r2,#1
+ 1290 019a 1A70     	 strb r2,[r3]
+ 281:../main.c     **** 				button_usb_pressed_debug++;
+ 1291              	 .loc 5 281 0
+ 1292 019c 844B     	 ldr r3,.L101+92
+ 1293 019e 1B68     	 ldr r3,[r3]
+ 1294 01a0 5A1C     	 add r2,r3,#1
+ 1295 01a2 834B     	 ldr r3,.L101+92
+ 1296 01a4 1A60     	 str r2,[r3]
+ 1297              	.L53:
+ 282:../main.c     **** 			}
+ 283:../main.c     **** 
+ 284:../main.c     **** 		}
+ 285:../main.c     **** 		if(button_down_pressed_timestamp != 0 && DIGITAL_IO_GetInput(&IO_SW_DOWN) == SW_OFF){
+ 1298              	 .loc 5 285 0
+ 1299 01a6 7A4B     	 ldr r3,.L101+60
+ 1300 01a8 1B68     	 ldr r3,[r3]
+ 1301 01aa 002B     	 cmp r3,#0
+ 1302 01ac 28D0     	 beq .L55
+ 1303              	 .loc 5 285 0 is_stmt 0 discriminator 1
+ 1304 01ae 794B     	 ldr r3,.L101+64
+ 1305 01b0 181C     	 mov r0,r3
+ 1306 01b2 FFF7FEFF 	 bl DIGITAL_IO_GetInput
+ 1307 01b6 031E     	 sub r3,r0,#0
+ 1308 01b8 012B     	 cmp r3,#1
+ 1309 01ba 21D1     	 bne .L55
+ 286:../main.c     **** 			button_down_pressed_duration = (SYSTIMER_GetTime() - button_down_pressed_timestamp) / 1000; // c
+ 1310              	 .loc 5 286 0 is_stmt 1
+ 1311 01bc FFF7FEFF 	 bl SYSTIMER_GetTime
+ 1312 01c0 021C     	 mov r2,r0
+ 1313 01c2 734B     	 ldr r3,.L101+60
+ 1314 01c4 1B68     	 ldr r3,[r3]
+ 1315 01c6 D31A     	 sub r3,r2,r3
+ 1316 01c8 181C     	 mov r0,r3
+ 1317 01ca FA23     	 mov r3,#250
+ 1318 01cc 9900     	 lsl r1,r3,#2
+ 1319 01ce FFF7FEFF 	 bl __aeabi_uidiv
+ 1320 01d2 031C     	 mov r3,r0
+ 1321 01d4 9AB2     	 uxth r2,r3
+ 1322 01d6 774B     	 ldr r3,.L101+96
+ 1323 01d8 1A80     	 strh r2,[r3]
+ 287:../main.c     **** 			button_down_pressed_timestamp = 0;
+ 1324              	 .loc 5 287 0
+ 1325 01da 6D4B     	 ldr r3,.L101+60
+ 1326 01dc 0022     	 mov r2,#0
+ 1327 01de 1A60     	 str r2,[r3]
+ 288:../main.c     **** 			// Interpret button press and activate "button pressed" marker. The code that is reacting to it 
+ 289:../main.c     **** 			if(button_down_pressed_duration >= BTN_LONG_PRESS_DURATION)
+ 1328              	 .loc 5 289 0
+ 1329 01e0 744B     	 ldr r3,.L101+96
+ 1330 01e2 1B88     	 ldrh r3,[r3]
+ 1331 01e4 6D4A     	 ldr r2,.L101+72
+ 1332 01e6 9342     	 cmp r3,r2
+ 1333 01e8 03D9     	 bls .L56
+ 290:../main.c     **** 				buttonpress_down = BTNPRESS_LONG;
+ 1334              	 .loc 5 290 0
+ 1335 01ea 734B     	 ldr r3,.L101+100
+ 1336 01ec 0222     	 mov r2,#2
+ 1337 01ee 1A70     	 strb r2,[r3]
+ 1338 01f0 06E0     	 b .L55
+ 1339              	.L56:
+ 291:../main.c     **** 			else if(button_down_pressed_duration >= BTN_STD_PRESS_DURATION)
+ 1340              	 .loc 5 291 0
+ 1341 01f2 704B     	 ldr r3,.L101+96
+ 1342 01f4 1B88     	 ldrh r3,[r3]
+ 1343 01f6 3B2B     	 cmp r3,#59
+ 1344 01f8 02D9     	 bls .L55
+ 292:../main.c     **** 				buttonpress_down = BTNPRESS_STD;
+ 1345              	 .loc 5 292 0
+ 1346 01fa 6F4B     	 ldr r3,.L101+100
+ 1347 01fc 0122     	 mov r2,#1
+ 1348 01fe 1A70     	 strb r2,[r3]
+ 1349              	.L55:
+ 293:../main.c     **** 		}
+ 294:../main.c     **** 
+ 295:../main.c     **** 		/// - USB Channel handling -
+ 296:../main.c     **** 		switch (USB_state){
+ 1350              	 .loc 5 296 0
+ 1351 0200 6E4B     	 ldr r3,.L101+104
+ 1352 0202 1B78     	 ldrb r3,[r3]
+ 1353 0204 012B     	 cmp r3,#1
+ 1354 0206 23D0     	 beq .L58
+ 1355 0208 022B     	 cmp r3,#2
+ 1356 020a 41D0     	 beq .L98
+ 1357 020c 002B     	 cmp r3,#0
+ 1358 020e 40D1     	 bne .L57
+ 297:../main.c     **** 			case USB_1_active:
+ 298:../main.c     **** 				// State code - none atm
+ 299:../main.c     **** 
+ 300:../main.c     **** 				// Transition statement
+ 301:../main.c     **** 				if(buttonpress_usb == BTNPRESS_STD){
+ 1359              	 .loc 5 301 0
+ 1360 0210 634B     	 ldr r3,.L101+76
+ 1361 0212 1B78     	 ldrb r3,[r3]
+ 1362 0214 012B     	 cmp r3,#1
+ 1363 0216 1AD1     	 bne .L61
+ 302:../main.c     **** 					DIGITAL_IO_SetOutputLow(&IO_USBPWR_1);
+ 1364              	 .loc 5 302 0
+ 1365 0218 504B     	 ldr r3,.L101+8
+ 1366 021a 181C     	 mov r0,r3
+ 1367 021c FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
+ 303:../main.c     **** 					DIGITAL_IO_SetOutputHigh(&IO_USB_SI);
+ 1368              	 .loc 5 303 0
+ 1369 0220 4C4B     	 ldr r3,.L101
+ 1370 0222 181C     	 mov r0,r3
+ 1371 0224 FFF7FEFF 	 bl DIGITAL_IO_SetOutputHigh
+ 304:../main.c     **** 					DIGITAL_IO_SetOutputLow(&IO_LED_USB2);
+ 1372              	 .loc 5 304 0
+ 1373 0228 4F4B     	 ldr r3,.L101+20
+ 1374 022a 181C     	 mov r0,r3
+ 1375 022c FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
+ 305:../main.c     **** 					DIGITAL_IO_SetOutputHigh(&IO_LED_USB1);
+ 1376              	 .loc 5 305 0
+ 1377 0230 4B4B     	 ldr r3,.L101+12
+ 1378 0232 181C     	 mov r0,r3
+ 1379 0234 FFF7FEFF 	 bl DIGITAL_IO_SetOutputHigh
+ 306:../main.c     **** 					DIGITAL_IO_SetOutputHigh(&IO_USBPWR_2);
+ 1380              	 .loc 5 306 0
+ 1381 0238 4A4B     	 ldr r3,.L101+16
+ 1382 023a 181C     	 mov r0,r3
+ 1383 023c FFF7FEFF 	 bl DIGITAL_IO_SetOutputHigh
+ 307:../main.c     **** 					buttonpress_usb = BTNPRESS_NOT;
+ 1384              	 .loc 5 307 0
+ 1385 0240 574B     	 ldr r3,.L101+76
+ 1386 0242 0022     	 mov r2,#0
+ 1387 0244 1A70     	 strb r2,[r3]
+ 308:../main.c     **** 
+ 309:../main.c     **** 					USB_state = USB_2_active;
+ 1388              	 .loc 5 309 0
+ 1389 0246 5D4B     	 ldr r3,.L101+104
+ 1390 0248 0122     	 mov r2,#1
+ 1391 024a 1A70     	 strb r2,[r3]
+ 310:../main.c     **** 				}
+ 311:../main.c     **** 				break;
+ 1392              	 .loc 5 311 0
+ 1393 024c 21E0     	 b .L57
+ 1394              	.L61:
+ 1395 024e 20E0     	 b .L57
+ 1396              	.L58:
+ 312:../main.c     **** 			case USB_2_active:
+ 313:../main.c     **** 				// State code - none atm
+ 314:../main.c     **** 
+ 315:../main.c     **** 				// Transition statement
+ 316:../main.c     **** 				if(buttonpress_usb == BTNPRESS_STD){
+ 1397              	 .loc 5 316 0
+ 1398 0250 534B     	 ldr r3,.L101+76
+ 1399 0252 1B78     	 ldrb r3,[r3]
+ 1400 0254 012B     	 cmp r3,#1
+ 1401 0256 1AD1     	 bne .L62
+ 317:../main.c     **** 					DIGITAL_IO_SetOutputLow(&IO_USBPWR_2);
+ 1402              	 .loc 5 317 0
+ 1403 0258 424B     	 ldr r3,.L101+16
+ 1404 025a 181C     	 mov r0,r3
+ 1405 025c FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
+ 318:../main.c     **** 					DIGITAL_IO_SetOutputLow(&IO_USB_SI);
+ 1406              	 .loc 5 318 0
+ 1407 0260 3C4B     	 ldr r3,.L101
+ 1408 0262 181C     	 mov r0,r3
+ 1409 0264 FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
+ 319:../main.c     **** 					DIGITAL_IO_SetOutputLow(&IO_LED_USB1);
+ 1410              	 .loc 5 319 0
+ 1411 0268 3D4B     	 ldr r3,.L101+12
+ 1412 026a 181C     	 mov r0,r3
+ 1413 026c FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
+ 320:../main.c     **** 					DIGITAL_IO_SetOutputHigh(&IO_LED_USB2);
+ 1414              	 .loc 5 320 0
+ 1415 0270 3D4B     	 ldr r3,.L101+20
+ 1416 0272 181C     	 mov r0,r3
+ 1417 0274 FFF7FEFF 	 bl DIGITAL_IO_SetOutputHigh
+ 321:../main.c     **** 					DIGITAL_IO_SetOutputHigh(&IO_USBPWR_1);
+ 1418              	 .loc 5 321 0
+ 1419 0278 384B     	 ldr r3,.L101+8
+ 1420 027a 181C     	 mov r0,r3
+ 1421 027c FFF7FEFF 	 bl DIGITAL_IO_SetOutputHigh
+ 322:../main.c     **** 					buttonpress_usb = BTNPRESS_NOT;
+ 1422              	 .loc 5 322 0
+ 1423 0280 474B     	 ldr r3,.L101+76
+ 1424 0282 0022     	 mov r2,#0
+ 1425 0284 1A70     	 strb r2,[r3]
  323:../main.c     **** 
- 324:../main.c     **** 		/// - Relay settings handling - Todo auto exit menus after time?, led signal when reaching max?, 
- 325:../main.c     **** 		switch(setup_state){
- 1419              	 .loc 5 325 0
- 1420 044e 7A4B     	 ldr r3,.L96+28
- 1421 0450 1B78     	 ldrb r3,[r3]
- 1422 0452 012B     	 cmp r3,#1
- 1423 0454 39D0     	 beq .L66
- 1424 0456 02DC     	 bgt .L67
- 1425 0458 002B     	 cmp r3,#0
- 1426 045a 07D0     	 beq .L68
- 1427 045c D3E0     	 b .L65
- 1428              	.L67:
- 1429 045e 022B     	 cmp r3,#2
- 1430 0460 00D1     	 bne .LCB1139
- 1431 0462 66E0     	 b .L69
- 1432              	.LCB1139:
- 1433 0464 032B     	 cmp r3,#3
- 1434 0466 00D1     	 bne .LCB1141
- 1435 0468 97E0     	 b .L70
- 1436              	.LCB1141:
- 1437 046a CCE0     	 b .L65
- 1438              	.L68:
- 326:../main.c     **** 			case SETUP_IDLE:
- 327:../main.c     **** 				/// Interpret button press and change to according setup sub-menu (state)
- 328:../main.c     **** 				// A long  press of up or down brings system in time setup menu
- 329:../main.c     **** 				// A short press of up         brings system in upper threshold setup menu
- 330:../main.c     **** 				// A short press of down       brings system in lower threshold setup menu
- 331:../main.c     **** 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
- 1439              	 .loc 5 331 0
- 1440 046c 734B     	 ldr r3,.L96+32
- 1441 046e 1B78     	 ldrb r3,[r3]
- 1442 0470 022B     	 cmp r3,#2
- 1443 0472 03D0     	 beq .L71
- 1444              	 .loc 5 331 0 is_stmt 0 discriminator 1
- 1445 0474 724B     	 ldr r3,.L96+36
- 1446 0476 1B78     	 ldrb r3,[r3]
- 1447 0478 022B     	 cmp r3,#2
- 1448 047a 09D1     	 bne .L72
- 1449              	.L71:
- 332:../main.c     **** 					setup_state = SETUP_TIME_TH;
- 1450              	 .loc 5 332 0 is_stmt 1
- 1451 047c 6E4B     	 ldr r3,.L96+28
- 1452 047e 0322     	 mov r2,#3
- 1453 0480 1A70     	 strb r2,[r3]
- 333:../main.c     **** 					led_status_pattern = LED_NUMBER;
- 1454              	 .loc 5 333 0
- 1455 0482 704B     	 ldr r3,.L96+40
- 1456 0484 0222     	 mov r2,#2
- 1457 0486 1A70     	 strb r2,[r3]
- 334:../main.c     **** 					led_number = 1;
- 1458              	 .loc 5 334 0
- 1459 0488 6F4B     	 ldr r3,.L96+44
- 1460 048a 0122     	 mov r2,#1
- 1461 048c 1A80     	 strh r2,[r3]
- 1462 048e 1BE0     	 b .L73
- 1463              	.L72:
- 335:../main.c     **** 				}
- 336:../main.c     **** 				else if(buttonpress_up == BTNPRESS_STD){
- 1464              	 .loc 5 336 0
- 1465 0490 6A4B     	 ldr r3,.L96+32
- 1466 0492 1B78     	 ldrb r3,[r3]
- 1467 0494 012B     	 cmp r3,#1
- 1468 0496 09D1     	 bne .L74
- 337:../main.c     **** 					setup_state = SETUP_UPPER_TH;
- 1469              	 .loc 5 337 0
- 1470 0498 674B     	 ldr r3,.L96+28
- 1471 049a 0122     	 mov r2,#1
- 1472 049c 1A70     	 strb r2,[r3]
- 338:../main.c     **** 					led_status_pattern = LED_NUMBER;
- 1473              	 .loc 5 338 0
- 1474 049e 694B     	 ldr r3,.L96+40
- 1475 04a0 0222     	 mov r2,#2
- 1476 04a2 1A70     	 strb r2,[r3]
- 339:../main.c     **** 					led_number = 2;
- 1477              	 .loc 5 339 0
- 1478 04a4 684B     	 ldr r3,.L96+44
- 1479 04a6 0222     	 mov r2,#2
- 1480 04a8 1A80     	 strh r2,[r3]
- 1481 04aa 0DE0     	 b .L73
- 1482              	.L74:
- 340:../main.c     **** 				}
- 341:../main.c     **** 				else if(buttonpress_down == BTNPRESS_STD){
- 1483              	 .loc 5 341 0
- 1484 04ac 644B     	 ldr r3,.L96+36
- 1485 04ae 1B78     	 ldrb r3,[r3]
- 1486 04b0 012B     	 cmp r3,#1
- 1487 04b2 09D1     	 bne .L73
- 342:../main.c     **** 					setup_state = SETUP_LOWER_TH;
- 1488              	 .loc 5 342 0
- 1489 04b4 604B     	 ldr r3,.L96+28
- 1490 04b6 0222     	 mov r2,#2
- 1491 04b8 1A70     	 strb r2,[r3]
- 343:../main.c     **** 					led_status_pattern = LED_NUMBER;
- 1492              	 .loc 5 343 0
- 1493 04ba 624B     	 ldr r3,.L96+40
- 1494 04bc 0222     	 mov r2,#2
- 1495 04be 1A70     	 strb r2,[r3]
- 344:../main.c     **** 					led_number = 3;
- 1496              	 .loc 5 344 0
- 1497 04c0 614B     	 ldr r3,.L96+44
- 1498 04c2 0322     	 mov r2,#3
- 1499 04c4 1A80     	 strh r2,[r3]
- 345:../main.c     **** 				}
- 346:../main.c     **** 				break;
- 1500              	 .loc 5 346 0
- 1501 04c6 9EE0     	 b .L65
- 1502              	.L73:
- 1503 04c8 9DE0     	 b .L65
- 1504              	.L66:
- 347:../main.c     **** 			case SETUP_UPPER_TH:
- 348:../main.c     **** 				// Blink relay LED
- 349:../main.c     **** 
- 350:../main.c     **** 				/// Interpret button press:
- 351:../main.c     **** 				// A long  press of up or down brings system back to setup idle
- 352:../main.c     **** 				// A short press of up         increases the upper threshold value
- 353:../main.c     **** 				// A short press of down       decreases the upper threshold value
- 354:../main.c     **** 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
- 1505              	 .loc 5 354 0
- 1506 04ca 5C4B     	 ldr r3,.L96+32
- 1507 04cc 1B78     	 ldrb r3,[r3]
- 1508 04ce 022B     	 cmp r3,#2
- 1509 04d0 03D0     	 beq .L75
- 1510              	 .loc 5 354 0 is_stmt 0 discriminator 1
- 1511 04d2 5B4B     	 ldr r3,.L96+36
- 1512 04d4 1B78     	 ldrb r3,[r3]
- 1513 04d6 022B     	 cmp r3,#2
- 1514 04d8 05D1     	 bne .L76
- 1515              	.L75:
- 355:../main.c     **** 					setup_state = SETUP_IDLE;
- 1516              	 .loc 5 355 0 is_stmt 1
- 1517 04da 574B     	 ldr r3,.L96+28
- 1518 04dc 0022     	 mov r2,#0
- 1519 04de 1A70     	 strb r2,[r3]
- 356:../main.c     **** 					reset_status_led_to_relay_state();
- 1520              	 .loc 5 356 0
- 1521 04e0 FFF7FEFF 	 bl reset_status_led_to_relay_state
- 1522 04e4 24E0     	 b .L77
- 1523              	.L76:
- 357:../main.c     **** 				}
- 358:../main.c     **** 				else if(buttonpress_up == BTNPRESS_STD){
- 1524              	 .loc 5 358 0
- 1525 04e6 554B     	 ldr r3,.L96+32
- 1526 04e8 1B78     	 ldrb r3,[r3]
- 1527 04ea 012B     	 cmp r3,#1
- 1528 04ec 0ED1     	 bne .L78
- 359:../main.c     **** 					ADC_upper_threshold += ADC_THRESHOLD_INCREMENT;
- 1529              	 .loc 5 359 0
- 1530 04ee 574B     	 ldr r3,.L96+48
- 1531 04f0 1B68     	 ldr r3,[r3]
- 1532 04f2 7C33     	 add r3,r3,#124
- 1533 04f4 1A1C     	 mov r2,r3
- 1534 04f6 554B     	 ldr r3,.L96+48
- 1535 04f8 1A60     	 str r2,[r3]
- 360:../main.c     **** 					if(ADC_upper_threshold > ADC_THRESHOLD_MAX)
- 1536              	 .loc 5 360 0
- 1537 04fa 544B     	 ldr r3,.L96+48
- 1538 04fc 1B68     	 ldr r3,[r3]
- 1539 04fe 544A     	 ldr r2,.L96+52
- 1540 0500 9342     	 cmp r3,r2
- 1541 0502 15DD     	 ble .L77
- 361:../main.c     **** 						ADC_upper_threshold = ADC_THRESHOLD_MAX;
- 1542              	 .loc 5 361 0
- 1543 0504 514B     	 ldr r3,.L96+48
- 1544 0506 524A     	 ldr r2,.L96+52
- 1545 0508 1A60     	 str r2,[r3]
- 362:../main.c     **** 				}
- 363:../main.c     **** 				else if(buttonpress_down == BTNPRESS_STD){
- 364:../main.c     **** 					ADC_upper_threshold -= ADC_THRESHOLD_INCREMENT;
- 365:../main.c     **** 					if(ADC_upper_threshold <= 0)
- 366:../main.c     **** 						ADC_upper_threshold = 0;
- 367:../main.c     **** 					//if(ADC_upper_threshold <= ADC_lower_threshold)
- 368:../main.c     **** 						//ADC_upper_threshold = ADC_lower_threshold;
- 369:../main.c     **** 				}
- 370:../main.c     **** 				break;
- 1546              	 .loc 5 370 0
- 1547 050a 7CE0     	 b .L65
- 1548              	.L78:
- 363:../main.c     **** 					ADC_upper_threshold -= ADC_THRESHOLD_INCREMENT;
- 1549              	 .loc 5 363 0
- 1550 050c 4C4B     	 ldr r3,.L96+36
- 1551 050e 1B78     	 ldrb r3,[r3]
- 1552 0510 012B     	 cmp r3,#1
- 1553 0512 0DD1     	 bne .L77
- 364:../main.c     **** 					if(ADC_upper_threshold <= 0)
- 1554              	 .loc 5 364 0
- 1555 0514 4D4B     	 ldr r3,.L96+48
- 1556 0516 1B68     	 ldr r3,[r3]
- 1557 0518 7C3B     	 sub r3,r3,#124
- 1558 051a 1A1C     	 mov r2,r3
- 1559 051c 4B4B     	 ldr r3,.L96+48
- 1560 051e 1A60     	 str r2,[r3]
- 365:../main.c     **** 						ADC_upper_threshold = 0;
- 1561              	 .loc 5 365 0
- 1562 0520 4A4B     	 ldr r3,.L96+48
- 1563 0522 1B68     	 ldr r3,[r3]
- 1564 0524 002B     	 cmp r3,#0
- 1565 0526 03DC     	 bgt .L77
- 366:../main.c     **** 					//if(ADC_upper_threshold <= ADC_lower_threshold)
- 1566              	 .loc 5 366 0
- 1567 0528 484B     	 ldr r3,.L96+48
- 1568 052a 0022     	 mov r2,#0
- 1569 052c 1A60     	 str r2,[r3]
- 1570              	 .loc 5 370 0
- 1571 052e 6AE0     	 b .L65
- 1572              	.L77:
- 1573              	 .loc 5 370 0 is_stmt 0 discriminator 2
- 1574 0530 69E0     	 b .L65
- 1575              	.L69:
- 371:../main.c     **** 			case SETUP_LOWER_TH:
- 372:../main.c     **** 				// Blink relay LED
- 373:../main.c     **** 
- 374:../main.c     **** 				/// Interpret button press:
- 375:../main.c     **** 				// A long  press of up or down brings system back to setup idle
- 376:../main.c     **** 				// A short press of up         increases the lower threshold value
- 377:../main.c     **** 				// A short press of down       decreases the lower threshold value
- 378:../main.c     **** 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
- 1576              	 .loc 5 378 0 is_stmt 1
- 1577 0532 424B     	 ldr r3,.L96+32
- 1578 0534 1B78     	 ldrb r3,[r3]
- 1579 0536 022B     	 cmp r3,#2
- 1580 0538 03D0     	 beq .L80
- 1581              	 .loc 5 378 0 is_stmt 0 discriminator 1
- 1582 053a 414B     	 ldr r3,.L96+36
- 1583 053c 1B78     	 ldrb r3,[r3]
- 1584 053e 022B     	 cmp r3,#2
- 1585 0540 05D1     	 bne .L81
- 1586              	.L80:
- 379:../main.c     **** 					setup_state = SETUP_IDLE;
- 1587              	 .loc 5 379 0 is_stmt 1
- 1588 0542 3D4B     	 ldr r3,.L96+28
- 1589 0544 0022     	 mov r2,#0
- 1590 0546 1A70     	 strb r2,[r3]
- 380:../main.c     **** 					reset_status_led_to_relay_state();
- 1591              	 .loc 5 380 0
- 1592 0548 FFF7FEFF 	 bl reset_status_led_to_relay_state
- 1593 054c 24E0     	 b .L82
- 1594              	.L81:
- 381:../main.c     **** 				}
- 382:../main.c     **** 				else if(buttonpress_up == BTNPRESS_STD){
- 1595              	 .loc 5 382 0
- 1596 054e 3B4B     	 ldr r3,.L96+32
- 1597 0550 1B78     	 ldrb r3,[r3]
- 1598 0552 012B     	 cmp r3,#1
- 1599 0554 0ED1     	 bne .L83
- 383:../main.c     **** 					ADC_lower_threshold += ADC_THRESHOLD_INCREMENT;
- 1600              	 .loc 5 383 0
- 1601 0556 324B     	 ldr r3,.L96+4
- 1602 0558 1B68     	 ldr r3,[r3]
- 1603 055a 7C33     	 add r3,r3,#124
- 1604 055c 1A1C     	 mov r2,r3
- 1605 055e 304B     	 ldr r3,.L96+4
- 1606 0560 1A60     	 str r2,[r3]
- 384:../main.c     **** 					if(ADC_lower_threshold > ADC_THRESHOLD_MAX)
- 1607              	 .loc 5 384 0
- 1608 0562 2F4B     	 ldr r3,.L96+4
- 1609 0564 1B68     	 ldr r3,[r3]
- 1610 0566 3A4A     	 ldr r2,.L96+52
- 1611 0568 9342     	 cmp r3,r2
- 1612 056a 15DD     	 ble .L82
- 385:../main.c     **** 						ADC_lower_threshold = ADC_THRESHOLD_MAX;
- 1613              	 .loc 5 385 0
- 1614 056c 2C4B     	 ldr r3,.L96+4
- 1615 056e 384A     	 ldr r2,.L96+52
- 1616 0570 1A60     	 str r2,[r3]
- 386:../main.c     **** 				}
- 387:../main.c     **** 				else if(buttonpress_down == BTNPRESS_STD){
- 388:../main.c     **** 					ADC_lower_threshold -= ADC_THRESHOLD_INCREMENT;
- 389:../main.c     **** 					if(ADC_lower_threshold <= 0)
- 390:../main.c     **** 						ADC_lower_threshold = 0;
- 391:../main.c     **** 				}
- 392:../main.c     **** 				break;
- 1617              	 .loc 5 392 0
- 1618 0572 48E0     	 b .L65
- 1619              	.L83:
- 387:../main.c     **** 					ADC_lower_threshold -= ADC_THRESHOLD_INCREMENT;
- 1620              	 .loc 5 387 0
- 1621 0574 324B     	 ldr r3,.L96+36
- 1622 0576 1B78     	 ldrb r3,[r3]
- 1623 0578 012B     	 cmp r3,#1
- 1624 057a 0DD1     	 bne .L82
- 388:../main.c     **** 					if(ADC_lower_threshold <= 0)
- 1625              	 .loc 5 388 0
- 1626 057c 284B     	 ldr r3,.L96+4
- 1627 057e 1B68     	 ldr r3,[r3]
- 1628 0580 7C3B     	 sub r3,r3,#124
- 1629 0582 1A1C     	 mov r2,r3
- 1630 0584 264B     	 ldr r3,.L96+4
- 1631 0586 1A60     	 str r2,[r3]
- 389:../main.c     **** 						ADC_lower_threshold = 0;
- 1632              	 .loc 5 389 0
- 1633 0588 254B     	 ldr r3,.L96+4
- 1634 058a 1B68     	 ldr r3,[r3]
- 1635 058c 002B     	 cmp r3,#0
- 1636 058e 03DC     	 bgt .L82
- 390:../main.c     **** 				}
- 1637              	 .loc 5 390 0
- 1638 0590 234B     	 ldr r3,.L96+4
- 1639 0592 0022     	 mov r2,#0
- 1640 0594 1A60     	 str r2,[r3]
- 1641              	 .loc 5 392 0
- 1642 0596 36E0     	 b .L65
- 1643              	.L82:
- 1644              	 .loc 5 392 0 is_stmt 0 discriminator 3
- 1645 0598 35E0     	 b .L65
- 1646              	.L70:
- 393:../main.c     **** 			case SETUP_TIME_TH:
- 394:../main.c     **** 				/// Interpret button press:
- 395:../main.c     **** 				// A long  press of up or down brings system back to setup idle
- 396:../main.c     **** 				// A short press of up         increases the threshold exceed time
- 397:../main.c     **** 				// A short press of down       decreases the threshold exceed time
- 398:../main.c     **** 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
- 1647              	 .loc 5 398 0 is_stmt 1
- 1648 059a 284B     	 ldr r3,.L96+32
- 1649 059c 1B78     	 ldrb r3,[r3]
- 1650 059e 022B     	 cmp r3,#2
- 1651 05a0 03D0     	 beq .L85
- 1652              	 .loc 5 398 0 is_stmt 0 discriminator 1
- 1653 05a2 274B     	 ldr r3,.L96+36
- 1654 05a4 1B78     	 ldrb r3,[r3]
- 1655 05a6 022B     	 cmp r3,#2
- 1656 05a8 05D1     	 bne .L86
- 1657              	.L85:
- 399:../main.c     **** 					setup_state = SETUP_IDLE;
- 1658              	 .loc 5 399 0 is_stmt 1
- 1659 05aa 234B     	 ldr r3,.L96+28
- 1660 05ac 0022     	 mov r2,#0
- 1661 05ae 1A70     	 strb r2,[r3]
- 400:../main.c     **** 					reset_status_led_to_relay_state();
- 1662              	 .loc 5 400 0
- 1663 05b0 FFF7FEFF 	 bl reset_status_led_to_relay_state
- 1664 05b4 26E0     	 b .L87
- 1665              	.L86:
- 401:../main.c     **** 				}
- 402:../main.c     **** 				else if(buttonpress_up == BTNPRESS_STD){
- 1666              	 .loc 5 402 0
- 1667 05b6 214B     	 ldr r3,.L96+32
- 1668 05b8 1B78     	 ldrb r3,[r3]
- 1669 05ba 012B     	 cmp r3,#1
- 1670 05bc 0FD1     	 bne .L88
- 403:../main.c     **** 					relay_threshold_latchtime += RELAY_LATCHTIME_INCREMENT;
- 1671              	 .loc 5 403 0
- 1672 05be 1A4B     	 ldr r3,.L96+12
- 1673 05c0 1B88     	 ldrh r3,[r3]
- 1674 05c2 F533     	 add r3,r3,#245
- 1675 05c4 FF33     	 add r3,r3,#255
- 1676 05c6 9AB2     	 uxth r2,r3
- 1677 05c8 174B     	 ldr r3,.L96+12
- 1678 05ca 1A80     	 strh r2,[r3]
- 404:../main.c     **** 					if(relay_threshold_latchtime > RELAY_LATCHTIME_MAX)
- 1679              	 .loc 5 404 0
- 1680 05cc 164B     	 ldr r3,.L96+12
- 1681 05ce 1B88     	 ldrh r3,[r3]
- 1682 05d0 204A     	 ldr r2,.L96+56
- 1683 05d2 9342     	 cmp r3,r2
- 1684 05d4 16D9     	 bls .L87
- 405:../main.c     **** 						relay_threshold_latchtime = RELAY_LATCHTIME_MAX;
- 1685              	 .loc 5 405 0
- 1686 05d6 144B     	 ldr r3,.L96+12
- 1687 05d8 1F4A     	 ldr r2,.L96+60
- 1688 05da 1A80     	 strh r2,[r3]
- 406:../main.c     **** 				}
- 407:../main.c     **** 				else if(buttonpress_down == BTNPRESS_STD){
- 408:../main.c     **** 					relay_threshold_latchtime -= RELAY_LATCHTIME_INCREMENT;
- 409:../main.c     **** 					if(relay_threshold_latchtime <= 0)
- 410:../main.c     **** 						relay_threshold_latchtime = 0;
- 411:../main.c     **** 				}
- 412:../main.c     **** 				break;
- 1689              	 .loc 5 412 0
- 1690 05dc 12E0     	 b .L93
- 1691              	.L88:
- 407:../main.c     **** 					relay_threshold_latchtime -= RELAY_LATCHTIME_INCREMENT;
- 1692              	 .loc 5 407 0
- 1693 05de 184B     	 ldr r3,.L96+36
- 1694 05e0 1B78     	 ldrb r3,[r3]
- 1695 05e2 012B     	 cmp r3,#1
- 1696 05e4 0ED1     	 bne .L87
- 408:../main.c     **** 					if(relay_threshold_latchtime <= 0)
- 1697              	 .loc 5 408 0
- 1698 05e6 104B     	 ldr r3,.L96+12
- 1699 05e8 1B88     	 ldrh r3,[r3]
- 1700 05ea F53B     	 sub r3,r3,#245
- 1701 05ec FF3B     	 sub r3,r3,#255
- 1702 05ee 9AB2     	 uxth r2,r3
- 1703 05f0 0D4B     	 ldr r3,.L96+12
- 1704 05f2 1A80     	 strh r2,[r3]
- 409:../main.c     **** 						relay_threshold_latchtime = 0;
- 1705              	 .loc 5 409 0
- 1706 05f4 0C4B     	 ldr r3,.L96+12
- 1707 05f6 1B88     	 ldrh r3,[r3]
- 1708 05f8 002B     	 cmp r3,#0
- 1709 05fa 03D1     	 bne .L87
- 410:../main.c     **** 				}
- 1710              	 .loc 5 410 0
- 1711 05fc 0A4B     	 ldr r3,.L96+12
- 1712 05fe 0022     	 mov r2,#0
- 1713 0600 1A80     	 strh r2,[r3]
- 1714              	 .loc 5 412 0
- 1715 0602 FFE7     	 b .L93
- 1716              	.L87:
- 1717              	.L93:
- 1718 0604 C046     	 mov r8,r8
- 1719              	.L65:
- 413:../main.c     **** 		}
- 414:../main.c     **** 
- 415:../main.c     **** 		// Reset all button presses
- 416:../main.c     **** 		buttonpress_usb = BTNPRESS_NOT;
- 1720              	 .loc 5 416 0
- 1721 0606 154B     	 ldr r3,.L96+64
- 1722 0608 0022     	 mov r2,#0
- 1723 060a 1A70     	 strb r2,[r3]
- 417:../main.c     **** 		buttonpress_up = BTNPRESS_NOT;
- 1724              	 .loc 5 417 0
- 1725 060c 0B4B     	 ldr r3,.L96+32
- 1726 060e 0022     	 mov r2,#0
- 1727 0610 1A70     	 strb r2,[r3]
- 418:../main.c     **** 		buttonpress_down = BTNPRESS_NOT;
- 1728              	 .loc 5 418 0
- 1729 0612 0B4B     	 ldr r3,.L96+36
- 1730 0614 0022     	 mov r2,#0
- 1731 0616 1A70     	 strb r2,[r3]
- 419:../main.c     **** 	}
- 1732              	 .loc 5 419 0
- 1733 0618 29E5     	 b .L90
- 1734              	.L97:
- 1735 061a C046     	 .align 2
- 1736              	.L96:
- 1737 061c 00000000 	 .word ADC_val_lower_thres_exceed_timestamp
- 1738 0620 00000000 	 .word ADC_lower_threshold
- 1739 0624 00000000 	 .word ADC_val_current
- 1740 0628 00000000 	 .word relay_threshold_latchtime
- 1741 062c 00000000 	 .word relay_state
- 1742 0630 00000000 	 .word IO_RELAY
- 1743 0634 00000000 	 .word ADC_SENSOR
- 1744 0638 00000000 	 .word setup_state
- 1745 063c 00000000 	 .word buttonpress_up
- 1746 0640 00000000 	 .word buttonpress_down
- 1747 0644 00000000 	 .word led_status_pattern
- 1748 0648 00000000 	 .word led_number
- 1749 064c 00000000 	 .word ADC_upper_threshold
- 1750 0650 FF0F0000 	 .word 4095
- 1751 0654 60EA0000 	 .word 60000
- 1752 0658 60EAFFFF 	 .word -5536
- 1753 065c 00000000 	 .word buttonpress_usb
- 1754              	 .cfi_endproc
- 1755              	.LFE156:
- 1757              	 .global meas_invalid_count
- 1758              	 .section .bss.meas_invalid_count,"aw",%nobits
- 1759              	 .align 2
- 1762              	meas_invalid_count:
- 1763 0000 00000000 	 .space 4
- 1764              	 .section .text.VADC0_C0_0_IRQHandler,"ax",%progbits
- 1765              	 .align 2
- 1766              	 .global VADC0_C0_0_IRQHandler
- 1767              	 .code 16
- 1768              	 .thumb_func
- 1770              	VADC0_C0_0_IRQHandler:
- 1771              	.LFB157:
- 420:../main.c     **** }
- 421:../main.c     **** 
- 422:../main.c     **** 
- 423:../main.c     **** 
- 424:../main.c     **** //void Adc_Measurement_Handler()
- 425:../main.c     **** //{
- 426:../main.c     **** ////	#if(UC_SERIES == XMC11)
- 427:../main.c     **** ////		ADC_val_current = ADC_MEASUREMENT_GetGlobalResult();
- 428:../main.c     **** ////		ADC_val_current = ADC_val_current >> ((uint32_t)ADC_SENSOR.iclass_config_handle->conversion_m
- 429:../main.c     **** ////	#endif
- 430:../main.c     **** //}
- 431:../main.c     **** 
- 432:../main.c     **** int meas_invalid_count = 0;
+ 324:../main.c     **** 					USB_state = USB_1_active;
+ 1426              	 .loc 5 324 0
+ 1427 0286 4D4B     	 ldr r3,.L101+104
+ 1428 0288 0022     	 mov r2,#0
+ 1429 028a 1A70     	 strb r2,[r3]
+ 325:../main.c     **** 				}
+ 326:../main.c     **** 				break;
+ 1430              	 .loc 5 326 0
+ 1431 028c 01E0     	 b .L57
+ 1432              	.L62:
+ 1433 028e 00E0     	 b .L57
+ 1434              	.L98:
+ 327:../main.c     **** 			case USB_inactive:
+ 328:../main.c     **** 				// Currently not implemented!
+ 329:../main.c     **** 				break;
+ 1435              	 .loc 5 329 0
+ 1436 0290 C046     	 mov r8,r8
+ 1437              	.L57:
+ 330:../main.c     **** 		}
+ 331:../main.c     **** 		/// - Relay handling -
+ 332:../main.c     **** 		// Check for state change triggers based on current state
+ 333:../main.c     **** 		switch (relay_state){
+ 1438              	 .loc 5 333 0
+ 1439 0292 4B4B     	 ldr r3,.L101+108
+ 1440 0294 1B78     	 ldrb r3,[r3]
+ 1441 0296 002B     	 cmp r3,#0
+ 1442 0298 4AD0     	 beq .L64
+ 1443 029a 012B     	 cmp r3,#1
+ 1444 029c 00D0     	 beq .LCB1126
+ 1445 029e D2E0     	 b .L63
+ 1446              	.LCB1126:
+ 334:../main.c     **** 			case RELAY_LOW:
+ 335:../main.c     **** 				// State code
+ 336:../main.c     **** 				// Check if upper threshold is exceeded. If it is and timestamp is not already set - save times
+ 337:../main.c     **** 				if     (ADC_val_upper_thres_exceed_timestamp == 0 && ADC_val_current > ADC_upper_threshold){
+ 1447              	 .loc 5 337 0
+ 1448 02a0 484B     	 ldr r3,.L101+112
+ 1449 02a2 1B68     	 ldr r3,[r3]
+ 1450 02a4 002B     	 cmp r3,#0
+ 1451 02a6 0CD1     	 bne .L66
+ 1452              	 .loc 5 337 0 is_stmt 0 discriminator 1
+ 1453 02a8 474B     	 ldr r3,.L101+116
+ 1454 02aa 1B68     	 ldr r3,[r3]
+ 1455 02ac 1A1E     	 sub r2,r3,#0
+ 1456 02ae 474B     	 ldr r3,.L101+120
+ 1457 02b0 1B68     	 ldr r3,[r3]
+ 1458 02b2 9A42     	 cmp r2,r3
+ 1459 02b4 05D2     	 bcs .L66
+ 338:../main.c     **** 					ADC_val_upper_thres_exceed_timestamp = SYSTIMER_GetTime();
+ 1460              	 .loc 5 338 0 is_stmt 1
+ 1461 02b6 FFF7FEFF 	 bl SYSTIMER_GetTime
+ 1462 02ba 021C     	 mov r2,r0
+ 1463 02bc 414B     	 ldr r3,.L101+112
+ 1464 02be 1A60     	 str r2,[r3]
+ 1465 02c0 0DE0     	 b .L67
+ 1466              	.L66:
+ 339:../main.c     **** 				}
+ 340:../main.c     **** 				else if(ADC_val_upper_thres_exceed_timestamp != 0 && ADC_val_current < ADC_upper_threshold){
+ 1467              	 .loc 5 340 0
+ 1468 02c2 404B     	 ldr r3,.L101+112
+ 1469 02c4 1B68     	 ldr r3,[r3]
+ 1470 02c6 002B     	 cmp r3,#0
+ 1471 02c8 09D0     	 beq .L67
+ 1472              	 .loc 5 340 0 is_stmt 0 discriminator 1
+ 1473 02ca 3F4B     	 ldr r3,.L101+116
+ 1474 02cc 1B68     	 ldr r3,[r3]
+ 1475 02ce 1A1E     	 sub r2,r3,#0
+ 1476 02d0 3E4B     	 ldr r3,.L101+120
+ 1477 02d2 1B68     	 ldr r3,[r3]
+ 1478 02d4 9A42     	 cmp r2,r3
+ 1479 02d6 02D9     	 bls .L67
+ 341:../main.c     **** 					ADC_val_upper_thres_exceed_timestamp = 0;
+ 1480              	 .loc 5 341 0 is_stmt 1
+ 1481 02d8 3A4B     	 ldr r3,.L101+112
+ 1482 02da 0022     	 mov r2,#0
+ 1483 02dc 1A60     	 str r2,[r3]
+ 1484              	.L67:
+ 342:../main.c     **** 				}
+ 343:../main.c     **** 
+ 344:../main.c     **** 				// Transition statement
+ 345:../main.c     **** 				// Check if threshold are exceeded long enough to trigger a switch
+ 346:../main.c     **** 				if(ADC_val_upper_thres_exceed_timestamp != 0){
+ 1485              	 .loc 5 346 0
+ 1486 02de 394B     	 ldr r3,.L101+112
+ 1487 02e0 1B68     	 ldr r3,[r3]
+ 1488 02e2 002B     	 cmp r3,#0
+ 1489 02e4 23D0     	 beq .L68
+ 1490              	.LBB2:
+ 347:../main.c     **** 					uint16_t upperThresholdExceedDuration = (SYSTIMER_GetTime() - ADC_val_upper_thres_exceed_times
+ 1491              	 .loc 5 347 0
+ 1492 02e6 FFF7FEFF 	 bl SYSTIMER_GetTime
+ 1493 02ea 021C     	 mov r2,r0
+ 1494 02ec 354B     	 ldr r3,.L101+112
+ 1495 02ee 1B68     	 ldr r3,[r3]
+ 1496 02f0 D31A     	 sub r3,r2,r3
+ 1497 02f2 181C     	 mov r0,r3
+ 1498 02f4 FA23     	 mov r3,#250
+ 1499 02f6 9900     	 lsl r1,r3,#2
+ 1500 02f8 FFF7FEFF 	 bl __aeabi_uidiv
+ 1501 02fc 031C     	 mov r3,r0
+ 1502 02fe 1A1C     	 mov r2,r3
+ 1503 0300 0823     	 mov r3,#8
+ 1504 0302 FB18     	 add r3,r7,r3
+ 1505 0304 1A80     	 strh r2,[r3]
+ 348:../main.c     **** 					if(upperThresholdExceedDuration > relay_threshold_latchtime){
+ 1506              	 .loc 5 348 0
+ 1507 0306 324B     	 ldr r3,.L101+124
+ 1508 0308 1B88     	 ldrh r3,[r3]
+ 1509 030a 0822     	 mov r2,#8
+ 1510 030c BA18     	 add r2,r7,r2
+ 1511 030e 1288     	 ldrh r2,[r2]
+ 1512 0310 9A42     	 cmp r2,r3
+ 1513 0312 0CD9     	 bls .L68
+ 349:../main.c     **** 						relay_state = RELAY_HIGH;
+ 1514              	 .loc 5 349 0
+ 1515 0314 2A4B     	 ldr r3,.L101+108
+ 1516 0316 0022     	 mov r2,#0
+ 1517 0318 1A70     	 strb r2,[r3]
+ 350:../main.c     **** 						DIGITAL_IO_SetOutputHigh(&IO_RELAY);
+ 1518              	 .loc 5 350 0
+ 1519 031a 144B     	 ldr r3,.L101+24
+ 1520 031c 181C     	 mov r0,r3
+ 1521 031e FFF7FEFF 	 bl DIGITAL_IO_SetOutputHigh
+ 351:../main.c     **** 						reset_status_led_to_relay_state();
+ 1522              	 .loc 5 351 0
+ 1523 0322 FFF7FEFF 	 bl reset_status_led_to_relay_state
+ 352:../main.c     **** 						ADC_val_upper_thres_exceed_timestamp = 0;
+ 1524              	 .loc 5 352 0
+ 1525 0326 274B     	 ldr r3,.L101+112
+ 1526 0328 0022     	 mov r2,#0
+ 1527 032a 1A60     	 str r2,[r3]
+ 1528              	.LBE2:
+ 353:../main.c     **** 					}
+ 354:../main.c     **** 				}
+ 355:../main.c     **** 				break;
+ 1529              	 .loc 5 355 0
+ 1530 032c 8BE0     	 b .L63
+ 1531              	.L68:
+ 1532 032e 8AE0     	 b .L63
+ 1533              	.L64:
+ 356:../main.c     **** 			case RELAY_HIGH:
+ 357:../main.c     **** 				// State code
+ 358:../main.c     **** 				// Check if lower threshold is exceeded. If it is and timestamp is not already set - save times
+ 359:../main.c     **** 				if(ADC_val_lower_thres_exceed_timestamp == 0 && ADC_val_current < ADC_lower_threshold){
+ 1534              	 .loc 5 359 0
+ 1535 0330 284B     	 ldr r3,.L101+128
+ 1536 0332 1B68     	 ldr r3,[r3]
+ 1537 0334 002B     	 cmp r3,#0
+ 1538 0336 51D1     	 bne .L69
+ 1539              	 .loc 5 359 0 is_stmt 0 discriminator 1
+ 1540 0338 274B     	 ldr r3,.L101+132
+ 1541 033a 1B68     	 ldr r3,[r3]
+ 1542 033c 1A1E     	 sub r2,r3,#0
+ 1543 033e 234B     	 ldr r3,.L101+120
+ 1544 0340 1B68     	 ldr r3,[r3]
+ 1545 0342 9A42     	 cmp r2,r3
+ 1546 0344 4AD9     	 bls .L69
+ 360:../main.c     **** 					ADC_val_lower_thres_exceed_timestamp = SYSTIMER_GetTime();
+ 1547              	 .loc 5 360 0 is_stmt 1
+ 1548 0346 FFF7FEFF 	 bl SYSTIMER_GetTime
+ 1549 034a 021C     	 mov r2,r0
+ 1550 034c 214B     	 ldr r3,.L101+128
+ 1551 034e 1A60     	 str r2,[r3]
+ 1552 0350 52E0     	 b .L70
+ 1553              	.L102:
+ 1554 0352 C046     	 .align 2
+ 1555              	.L101:
+ 1556 0354 00000000 	 .word IO_USB_SI
+ 1557 0358 00000000 	 .word IO_USB_OE
+ 1558 035c 00000000 	 .word IO_USBPWR_1
+ 1559 0360 00000000 	 .word IO_LED_USB1
+ 1560 0364 00000000 	 .word IO_USBPWR_2
+ 1561 0368 00000000 	 .word IO_LED_USB2
+ 1562 036c 00000000 	 .word IO_RELAY
+ 1563 0370 00000000 	 .word PWM_CCU4_LED_STATUS
+ 1564 0374 10270000 	 .word 10000
+ 1565 0378 00000000 	 .word ADC_SENSOR
+ 1566 037c 00000000 	 .word systime_debug
+ 1567 0380 00000000 	 .word button_usb_pressed_timestamp
+ 1568 0384 00000000 	 .word IO_SW_USB
+ 1569 0388 00000000 	 .word button_up_pressed_timestamp
+ 1570 038c 00000000 	 .word IO_SW_UP
+ 1571 0390 00000000 	 .word button_down_pressed_timestamp
+ 1572 0394 00000000 	 .word IO_SW_DOWN
+ 1573 0398 00000000 	 .word button_usb_pressed_duration
+ 1574 039c E7030000 	 .word 999
+ 1575 03a0 00000000 	 .word buttonpress_usb
+ 1576 03a4 00000000 	 .word button_up_pressed_duration
+ 1577 03a8 00000000 	 .word buttonpress_up
+ 1578 03ac 00000000 	 .word button_usb_pressed_long_debug
+ 1579 03b0 00000000 	 .word button_usb_pressed_debug
+ 1580 03b4 00000000 	 .word button_down_pressed_duration
+ 1581 03b8 00000000 	 .word buttonpress_down
+ 1582 03bc 00000000 	 .word USB_state
+ 1583 03c0 00000000 	 .word relay_state
+ 1584 03c4 00000000 	 .word ADC_val_upper_thres_exceed_timestamp
+ 1585 03c8 00000000 	 .word ADC_upper_threshold
+ 1586 03cc 00000000 	 .word ADC_val_current
+ 1587 03d0 00000000 	 .word relay_threshold_latchtime
+ 1588 03d4 00000000 	 .word ADC_val_lower_thres_exceed_timestamp
+ 1589 03d8 00000000 	 .word ADC_lower_threshold
+ 1590              	.L69:
+ 361:../main.c     **** 				}
+ 362:../main.c     **** 				else if(ADC_val_lower_thres_exceed_timestamp != 0 && ADC_val_current > ADC_lower_threshold){
+ 1591              	 .loc 5 362 0
+ 1592 03dc 8B4B     	 ldr r3,.L103
+ 1593 03de 1B68     	 ldr r3,[r3]
+ 1594 03e0 002B     	 cmp r3,#0
+ 1595 03e2 09D0     	 beq .L70
+ 1596              	 .loc 5 362 0 is_stmt 0 discriminator 1
+ 1597 03e4 8A4B     	 ldr r3,.L103+4
+ 1598 03e6 1B68     	 ldr r3,[r3]
+ 1599 03e8 1A1E     	 sub r2,r3,#0
+ 1600 03ea 8A4B     	 ldr r3,.L103+8
+ 1601 03ec 1B68     	 ldr r3,[r3]
+ 1602 03ee 9A42     	 cmp r2,r3
+ 1603 03f0 02D2     	 bcs .L70
+ 363:../main.c     **** 					ADC_val_lower_thres_exceed_timestamp = 0;
+ 1604              	 .loc 5 363 0 is_stmt 1
+ 1605 03f2 864B     	 ldr r3,.L103
+ 1606 03f4 0022     	 mov r2,#0
+ 1607 03f6 1A60     	 str r2,[r3]
+ 1608              	.L70:
+ 364:../main.c     **** 				}
+ 365:../main.c     **** 
+ 366:../main.c     **** 				// Transition statement
+ 367:../main.c     **** 				// Check if threshold are exceeded long enough to trigger a switch
+ 368:../main.c     **** 				if(ADC_val_lower_thres_exceed_timestamp != 0){
+ 1609              	 .loc 5 368 0
+ 1610 03f8 844B     	 ldr r3,.L103
+ 1611 03fa 1B68     	 ldr r3,[r3]
+ 1612 03fc 002B     	 cmp r3,#0
+ 1613 03fe 21D0     	 beq .L71
+ 1614              	.LBB3:
+ 369:../main.c     **** 					uint16_t lowerThresholdExceedDuration = (SYSTIMER_GetTime() - ADC_val_lower_thres_exceed_times
+ 1615              	 .loc 5 369 0
+ 1616 0400 FFF7FEFF 	 bl SYSTIMER_GetTime
+ 1617 0404 021C     	 mov r2,r0
+ 1618 0406 814B     	 ldr r3,.L103
+ 1619 0408 1B68     	 ldr r3,[r3]
+ 1620 040a D31A     	 sub r3,r2,r3
+ 1621 040c 181C     	 mov r0,r3
+ 1622 040e FA23     	 mov r3,#250
+ 1623 0410 9900     	 lsl r1,r3,#2
+ 1624 0412 FFF7FEFF 	 bl __aeabi_uidiv
+ 1625 0416 031C     	 mov r3,r0
+ 1626 0418 1A1C     	 mov r2,r3
+ 1627 041a BB1D     	 add r3,r7,#6
+ 1628 041c 1A80     	 strh r2,[r3]
+ 370:../main.c     **** 					if(lowerThresholdExceedDuration > relay_threshold_latchtime){
+ 1629              	 .loc 5 370 0
+ 1630 041e 7E4B     	 ldr r3,.L103+12
+ 1631 0420 1B88     	 ldrh r3,[r3]
+ 1632 0422 BA1D     	 add r2,r7,#6
+ 1633 0424 1288     	 ldrh r2,[r2]
+ 1634 0426 9A42     	 cmp r2,r3
+ 1635 0428 0CD9     	 bls .L71
+ 371:../main.c     **** 						relay_state = RELAY_LOW;
+ 1636              	 .loc 5 371 0
+ 1637 042a 7C4B     	 ldr r3,.L103+16
+ 1638 042c 0122     	 mov r2,#1
+ 1639 042e 1A70     	 strb r2,[r3]
+ 372:../main.c     **** 						DIGITAL_IO_SetOutputLow(&IO_RELAY);
+ 1640              	 .loc 5 372 0
+ 1641 0430 7B4B     	 ldr r3,.L103+20
+ 1642 0432 181C     	 mov r0,r3
+ 1643 0434 FFF7FEFF 	 bl DIGITAL_IO_SetOutputLow
+ 373:../main.c     **** 						reset_status_led_to_relay_state();
+ 1644              	 .loc 5 373 0
+ 1645 0438 FFF7FEFF 	 bl reset_status_led_to_relay_state
+ 374:../main.c     **** 						ADC_val_lower_thres_exceed_timestamp = 0;
+ 1646              	 .loc 5 374 0
+ 1647 043c 734B     	 ldr r3,.L103
+ 1648 043e 0022     	 mov r2,#0
+ 1649 0440 1A60     	 str r2,[r3]
+ 1650              	.LBE3:
+ 375:../main.c     **** 					}
+ 376:../main.c     **** 				}
+ 377:../main.c     **** 				break;
+ 1651              	 .loc 5 377 0
+ 1652 0442 FFE7     	 b .L99
+ 1653              	.L71:
+ 1654              	.L99:
+ 1655 0444 C046     	 mov r8,r8
+ 1656              	.L63:
+ 378:../main.c     **** 		}
+ 379:../main.c     **** 		// Init next value conversion
+ 380:../main.c     **** 		ADC_MEASUREMENT_StartConversion(&ADC_SENSOR);
+ 1657              	 .loc 5 380 0
+ 1658 0446 774B     	 ldr r3,.L103+24
+ 1659 0448 181C     	 mov r0,r3
+ 1660 044a FFF7FEFF 	 bl ADC_MEASUREMENT_StartConversion
+ 381:../main.c     **** 
+ 382:../main.c     **** 		/// - Relay settings handling - Todo auto exit menus after time?, led signal when reaching max?, 
+ 383:../main.c     **** 		switch(setup_state){
+ 1661              	 .loc 5 383 0
+ 1662 044e 764B     	 ldr r3,.L103+28
+ 1663 0450 1B78     	 ldrb r3,[r3]
+ 1664 0452 012B     	 cmp r3,#1
+ 1665 0454 32D0     	 beq .L73
+ 1666 0456 02DC     	 bgt .L74
+ 1667 0458 002B     	 cmp r3,#0
+ 1668 045a 06D0     	 beq .L75
+ 1669 045c CCE0     	 b .L72
+ 1670              	.L74:
+ 1671 045e 022B     	 cmp r3,#2
+ 1672 0460 60D0     	 beq .L76
+ 1673 0462 032B     	 cmp r3,#3
+ 1674 0464 00D1     	 bne .LCB1343
+ 1675 0466 91E0     	 b .L77
+ 1676              	.LCB1343:
+ 1677 0468 C6E0     	 b .L72
+ 1678              	.L75:
+ 384:../main.c     **** 			case SETUP_IDLE:
+ 385:../main.c     **** 				/// Interpret button press and change to according setup sub-menu (state)
+ 386:../main.c     **** 				// A long  press of up or down brings system in time setup menu
+ 387:../main.c     **** 				// A short press of up         brings system in upper threshold setup menu
+ 388:../main.c     **** 				// A short press of down       brings system in lower threshold setup menu
+ 389:../main.c     **** 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
+ 1679              	 .loc 5 389 0
+ 1680 046a 704B     	 ldr r3,.L103+32
+ 1681 046c 1B78     	 ldrb r3,[r3]
+ 1682 046e 022B     	 cmp r3,#2
+ 1683 0470 03D0     	 beq .L78
+ 1684              	 .loc 5 389 0 is_stmt 0 discriminator 1
+ 1685 0472 6F4B     	 ldr r3,.L103+36
+ 1686 0474 1B78     	 ldrb r3,[r3]
+ 1687 0476 022B     	 cmp r3,#2
+ 1688 0478 09D1     	 bne .L79
+ 1689              	.L78:
+ 390:../main.c     **** 					setup_state = SETUP_TIME_TH;
+ 1690              	 .loc 5 390 0 is_stmt 1
+ 1691 047a 6B4B     	 ldr r3,.L103+28
+ 1692 047c 0322     	 mov r2,#3
+ 1693 047e 1A70     	 strb r2,[r3]
+ 391:../main.c     **** 					led_status_pattern = LED_NUMBER;
+ 1694              	 .loc 5 391 0
+ 1695 0480 6C4B     	 ldr r3,.L103+40
+ 1696 0482 0222     	 mov r2,#2
+ 1697 0484 1A70     	 strb r2,[r3]
+ 392:../main.c     **** 					led_number = 1;
+ 1698              	 .loc 5 392 0
+ 1699 0486 6C4B     	 ldr r3,.L103+44
+ 1700 0488 0122     	 mov r2,#1
+ 1701 048a 1A80     	 strh r2,[r3]
+ 1702 048c 15E0     	 b .L80
+ 1703              	.L79:
+ 393:../main.c     **** 				}
+ 394:../main.c     **** 				else if(buttonpress_up == BTNPRESS_STD){
+ 1704              	 .loc 5 394 0
+ 1705 048e 674B     	 ldr r3,.L103+32
+ 1706 0490 1B78     	 ldrb r3,[r3]
+ 1707 0492 012B     	 cmp r3,#1
+ 1708 0494 06D1     	 bne .L81
+ 395:../main.c     **** 					setup_state = SETUP_UPPER_TH;
+ 1709              	 .loc 5 395 0
+ 1710 0496 644B     	 ldr r3,.L103+28
+ 1711 0498 0122     	 mov r2,#1
+ 1712 049a 1A70     	 strb r2,[r3]
+ 396:../main.c     **** 					//led_status_pattern = LED_NUMBER;
+ 397:../main.c     **** 					//led_number = 5;
+ 398:../main.c     **** 					led_status_pattern = LED_FADE_UP;
+ 1713              	 .loc 5 398 0
+ 1714 049c 654B     	 ldr r3,.L103+40
+ 1715 049e 0422     	 mov r2,#4
+ 1716 04a0 1A70     	 strb r2,[r3]
+ 1717 04a2 0AE0     	 b .L80
+ 1718              	.L81:
+ 399:../main.c     **** 				}
+ 400:../main.c     **** 				else if(buttonpress_down == BTNPRESS_STD){
+ 1719              	 .loc 5 400 0
+ 1720 04a4 624B     	 ldr r3,.L103+36
+ 1721 04a6 1B78     	 ldrb r3,[r3]
+ 1722 04a8 012B     	 cmp r3,#1
+ 1723 04aa 06D1     	 bne .L80
+ 401:../main.c     **** 					setup_state = SETUP_LOWER_TH;
+ 1724              	 .loc 5 401 0
+ 1725 04ac 5E4B     	 ldr r3,.L103+28
+ 1726 04ae 0222     	 mov r2,#2
+ 1727 04b0 1A70     	 strb r2,[r3]
+ 402:../main.c     **** 					//led_status_pattern = LED_NUMBER;
+ 403:../main.c     **** 					//led_number = 3;
+ 404:../main.c     **** 					led_status_pattern = LED_FADE_DOWN;
+ 1728              	 .loc 5 404 0
+ 1729 04b2 604B     	 ldr r3,.L103+40
+ 1730 04b4 0322     	 mov r2,#3
+ 1731 04b6 1A70     	 strb r2,[r3]
+ 405:../main.c     **** 				}
+ 406:../main.c     **** 				break;
+ 1732              	 .loc 5 406 0
+ 1733 04b8 9EE0     	 b .L72
+ 1734              	.L80:
+ 1735 04ba 9DE0     	 b .L72
+ 1736              	.L73:
+ 407:../main.c     **** 			case SETUP_UPPER_TH:
+ 408:../main.c     **** 				// Blink relay LED
+ 409:../main.c     **** 
+ 410:../main.c     **** 				/// Interpret button press:
+ 411:../main.c     **** 				// A long  press of up or down brings system back to setup idle
+ 412:../main.c     **** 				// A short press of up         increases the upper threshold value
+ 413:../main.c     **** 				// A short press of down       decreases the upper threshold value
+ 414:../main.c     **** 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
+ 1737              	 .loc 5 414 0
+ 1738 04bc 5B4B     	 ldr r3,.L103+32
+ 1739 04be 1B78     	 ldrb r3,[r3]
+ 1740 04c0 022B     	 cmp r3,#2
+ 1741 04c2 03D0     	 beq .L82
+ 1742              	 .loc 5 414 0 is_stmt 0 discriminator 1
+ 1743 04c4 5A4B     	 ldr r3,.L103+36
+ 1744 04c6 1B78     	 ldrb r3,[r3]
+ 1745 04c8 022B     	 cmp r3,#2
+ 1746 04ca 05D1     	 bne .L83
+ 1747              	.L82:
+ 415:../main.c     **** 					setup_state = SETUP_IDLE;
+ 1748              	 .loc 5 415 0 is_stmt 1
+ 1749 04cc 564B     	 ldr r3,.L103+28
+ 1750 04ce 0022     	 mov r2,#0
+ 1751 04d0 1A70     	 strb r2,[r3]
+ 416:../main.c     **** 					reset_status_led_to_relay_state();
+ 1752              	 .loc 5 416 0
+ 1753 04d2 FFF7FEFF 	 bl reset_status_led_to_relay_state
+ 1754 04d6 24E0     	 b .L84
+ 1755              	.L83:
+ 417:../main.c     **** 				}
+ 418:../main.c     **** 				else if(buttonpress_up == BTNPRESS_STD){
+ 1756              	 .loc 5 418 0
+ 1757 04d8 544B     	 ldr r3,.L103+32
+ 1758 04da 1B78     	 ldrb r3,[r3]
+ 1759 04dc 012B     	 cmp r3,#1
+ 1760 04de 0ED1     	 bne .L85
+ 419:../main.c     **** 					ADC_upper_threshold += ADC_THRESHOLD_INCREMENT;
+ 1761              	 .loc 5 419 0
+ 1762 04e0 564B     	 ldr r3,.L103+48
+ 1763 04e2 1B68     	 ldr r3,[r3]
+ 1764 04e4 7C33     	 add r3,r3,#124
+ 1765 04e6 1A1C     	 mov r2,r3
+ 1766 04e8 544B     	 ldr r3,.L103+48
+ 1767 04ea 1A60     	 str r2,[r3]
+ 420:../main.c     **** 					if(ADC_upper_threshold > ADC_THRESHOLD_MAX)
+ 1768              	 .loc 5 420 0
+ 1769 04ec 534B     	 ldr r3,.L103+48
+ 1770 04ee 1B68     	 ldr r3,[r3]
+ 1771 04f0 534A     	 ldr r2,.L103+52
+ 1772 04f2 9342     	 cmp r3,r2
+ 1773 04f4 15DD     	 ble .L84
+ 421:../main.c     **** 						ADC_upper_threshold = ADC_THRESHOLD_MAX;
+ 1774              	 .loc 5 421 0
+ 1775 04f6 514B     	 ldr r3,.L103+48
+ 1776 04f8 514A     	 ldr r2,.L103+52
+ 1777 04fa 1A60     	 str r2,[r3]
+ 422:../main.c     **** 				}
+ 423:../main.c     **** 				else if(buttonpress_down == BTNPRESS_STD){
+ 424:../main.c     **** 					ADC_upper_threshold -= ADC_THRESHOLD_INCREMENT;
+ 425:../main.c     **** 					if(ADC_upper_threshold <= 0)
+ 426:../main.c     **** 						ADC_upper_threshold = 0;
+ 427:../main.c     **** 					//if(ADC_upper_threshold <= ADC_lower_threshold)
+ 428:../main.c     **** 						//ADC_upper_threshold = ADC_lower_threshold;
+ 429:../main.c     **** 				}
+ 430:../main.c     **** 				break;
+ 1778              	 .loc 5 430 0
+ 1779 04fc 7CE0     	 b .L72
+ 1780              	.L85:
+ 423:../main.c     **** 					ADC_upper_threshold -= ADC_THRESHOLD_INCREMENT;
+ 1781              	 .loc 5 423 0
+ 1782 04fe 4C4B     	 ldr r3,.L103+36
+ 1783 0500 1B78     	 ldrb r3,[r3]
+ 1784 0502 012B     	 cmp r3,#1
+ 1785 0504 0DD1     	 bne .L84
+ 424:../main.c     **** 					if(ADC_upper_threshold <= 0)
+ 1786              	 .loc 5 424 0
+ 1787 0506 4D4B     	 ldr r3,.L103+48
+ 1788 0508 1B68     	 ldr r3,[r3]
+ 1789 050a 7C3B     	 sub r3,r3,#124
+ 1790 050c 1A1C     	 mov r2,r3
+ 1791 050e 4B4B     	 ldr r3,.L103+48
+ 1792 0510 1A60     	 str r2,[r3]
+ 425:../main.c     **** 						ADC_upper_threshold = 0;
+ 1793              	 .loc 5 425 0
+ 1794 0512 4A4B     	 ldr r3,.L103+48
+ 1795 0514 1B68     	 ldr r3,[r3]
+ 1796 0516 002B     	 cmp r3,#0
+ 1797 0518 03DC     	 bgt .L84
+ 426:../main.c     **** 					//if(ADC_upper_threshold <= ADC_lower_threshold)
+ 1798              	 .loc 5 426 0
+ 1799 051a 484B     	 ldr r3,.L103+48
+ 1800 051c 0022     	 mov r2,#0
+ 1801 051e 1A60     	 str r2,[r3]
+ 1802              	 .loc 5 430 0
+ 1803 0520 6AE0     	 b .L72
+ 1804              	.L84:
+ 1805              	 .loc 5 430 0 is_stmt 0 discriminator 2
+ 1806 0522 69E0     	 b .L72
+ 1807              	.L76:
+ 431:../main.c     **** 			case SETUP_LOWER_TH:
+ 432:../main.c     **** 				// Blink relay LED
  433:../main.c     **** 
- 434:../main.c     **** void Adc_Measurement_Handler()
- 435:../main.c     **** {
- 1772              	 .loc 5 435 0
- 1773              	 .cfi_startproc
- 1774 0000 80B5     	 push {r7,lr}
- 1775              	.LCFI35:
- 1776              	 .cfi_def_cfa_offset 8
- 1777              	 .cfi_offset 7,-8
- 1778              	 .cfi_offset 14,-4
- 1779 0002 82B0     	 sub sp,sp,#8
- 1780              	.LCFI36:
- 1781              	 .cfi_def_cfa_offset 16
- 1782 0004 00AF     	 add r7,sp,#0
- 1783              	.LCFI37:
- 1784              	 .cfi_def_cfa_register 7
- 436:../main.c     **** 	//uint8_t channel_num;
- 437:../main.c     **** 	//uint8_t group_num;
- 438:../main.c     **** 	uint32_t adc_register;
- 439:../main.c     **** 
- 440:../main.c     **** 	#if(UC_SERIES == XMC11)
- 441:../main.c     **** 	adc_register = ADC_MEASUREMENT_GetGlobalDetailedResult();
- 1785              	 .loc 5 441 0
- 1786 0006 FFF7FEFF 	 bl ADC_MEASUREMENT_GetGlobalDetailedResult
- 1787 000a 031C     	 mov r3,r0
- 1788 000c 7B60     	 str r3,[r7,#4]
- 442:../main.c     **** 	#endif
- 443:../main.c     **** 
- 444:../main.c     **** 	if((bool)(adc_register >> VADC_GLOBRES_VF_Pos))
- 1789              	 .loc 5 444 0
- 1790 000e 7B68     	 ldr r3,[r7,#4]
- 1791 0010 002B     	 cmp r3,#0
- 1792 0012 0DDA     	 bge .L99
- 445:../main.c     **** 	{
- 446:../main.c     **** 		//channel_num = (adc_register & VADC_GLOBRES_CHNR_Msk) >> VADC_GLOBRES_CHNR_Pos;
- 447:../main.c     **** 		//group_num = ADC_MEASUREMENT_Channel_A.group_index;
- 448:../main.c     **** 		ADC_val_current = (adc_register & VADC_GLOBRES_RESULT_Msk) >> ((uint32_t)(ADC_SENSOR.iclass_confi
- 1793              	 .loc 5 448 0
- 1794 0014 7B68     	 ldr r3,[r7,#4]
- 1795 0016 1B04     	 lsl r3,r3,#16
- 1796 0018 1A0C     	 lsr r2,r3,#16
- 1797 001a 094B     	 ldr r3,.L101
- 1798 001c 9B68     	 ldr r3,[r3,#8]
- 1799 001e 5B78     	 ldrb r3,[r3,#1]
- 1800 0020 5B07     	 lsl r3,r3,#29
- 1801 0022 5B0F     	 lsr r3,r3,#29
- 1802 0024 DBB2     	 uxtb r3,r3
- 1803 0026 5B00     	 lsl r3,r3,#1
- 1804 0028 DA40     	 lsr r2,r2,r3
- 1805 002a 064B     	 ldr r3,.L101+4
- 1806 002c 1A60     	 str r2,[r3]
- 1807 002e 04E0     	 b .L98
- 1808              	.L99:
- 449:../main.c     **** 	}
- 450:../main.c     **** 	else{
- 451:../main.c     **** 		meas_invalid_count++;
- 1809              	 .loc 5 451 0
- 1810 0030 054B     	 ldr r3,.L101+8
- 1811 0032 1B68     	 ldr r3,[r3]
- 1812 0034 5A1C     	 add r2,r3,#1
- 1813 0036 044B     	 ldr r3,.L101+8
- 1814 0038 1A60     	 str r2,[r3]
- 1815              	.L98:
- 452:../main.c     **** 	}
- 453:../main.c     **** 
- 454:../main.c     **** }
- 1816              	 .loc 5 454 0
- 1817 003a BD46     	 mov sp,r7
- 1818 003c 02B0     	 add sp,sp,#8
- 1819              	 
- 1820 003e 80BD     	 pop {r7,pc}
- 1821              	.L102:
- 1822              	 .align 2
- 1823              	.L101:
- 1824 0040 00000000 	 .word ADC_SENSOR
- 1825 0044 00000000 	 .word ADC_val_current
- 1826 0048 00000000 	 .word meas_invalid_count
- 1827              	 .cfi_endproc
- 1828              	.LFE157:
- 1830              	 .section .bss.led_number_state_timestamp.6990,"aw",%nobits
- 1831              	 .align 2
- 1834              	led_number_state_timestamp.6990:
- 1835 0000 00000000 	 .space 4
- 1836              	 .section .bss.led_number_state_length.6991,"aw",%nobits
- 1837              	 .align 1
- 1840              	led_number_state_length.6991:
- 1841 0000 0000     	 .space 2
- 1842              	 .section .bss.led_number_state.6989,"aw",%nobits
- 1843              	 .align 1
- 1846              	led_number_state.6989:
- 1847 0000 0000     	 .space 2
- 1848              	 .text
- 1849              	.Letext0:
- 1850              	 .file 6 "c:\\workspaces\\4.5.0\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
- 1851              	 .file 7 "c:\\workspaces\\4.5.0\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
- 1852              	 .file 8 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Infineon/XMC1100_series/Include/XMC1100.h"
- 1853              	 .file 9 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc1_scu.h"
- 1854              	 .file 10 "C:/Workspaces/DAVE_WS/USB_Changer/Dave/Generated/GLOBAL_ADC/global_adc.h"
- 1855              	 .file 11 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc1_gpio.h"
- 1856              	 .file 12 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc_ccu4.h"
- 1857              	 .file 13 "C:/Workspaces/DAVE_WS/USB_Changer/Dave/Generated/GLOBAL_CCU4/global_ccu4.h"
- 1858              	 .file 14 "C:/Workspaces/DAVE_WS/USB_Changer/Dave/Generated/PWM_CCU4/pwm_ccu4.h"
- 1859              	 .file 15 "C:/Workspaces/DAVE_WS/USB_Changer/Dave/Generated/DAVE.h"
- 1860              	 .file 16 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Include/cmsis_gcc.h"
- 1861              	 .file 17 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Infineon/XMC1100_series/Include/system_XMC1100.h"
- 1862              	 .file 18 "C:/Workspaces/DAVE_WS/USB_Changer/Dave/Generated/ADC_MEASUREMENT/adc_measurement_extern.h"
- 1863              	 .file 19 "C:/Workspaces/DAVE_WS/USB_Changer/Dave/Generated/DIGITAL_IO/digital_io_extern.h"
- 1864              	 .file 20 "C:/Workspaces/DAVE_WS/USB_Changer/Dave/Generated/PWM_CCU4/pwm_ccu4_extern.h"
+ 434:../main.c     **** 				/// Interpret button press:
+ 435:../main.c     **** 				// A long  press of up or down brings system back to setup idle
+ 436:../main.c     **** 				// A short press of up         increases the lower threshold value
+ 437:../main.c     **** 				// A short press of down       decreases the lower threshold value
+ 438:../main.c     **** 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
+ 1808              	 .loc 5 438 0 is_stmt 1
+ 1809 0524 414B     	 ldr r3,.L103+32
+ 1810 0526 1B78     	 ldrb r3,[r3]
+ 1811 0528 022B     	 cmp r3,#2
+ 1812 052a 03D0     	 beq .L87
+ 1813              	 .loc 5 438 0 is_stmt 0 discriminator 1
+ 1814 052c 404B     	 ldr r3,.L103+36
+ 1815 052e 1B78     	 ldrb r3,[r3]
+ 1816 0530 022B     	 cmp r3,#2
+ 1817 0532 05D1     	 bne .L88
+ 1818              	.L87:
+ 439:../main.c     **** 					setup_state = SETUP_IDLE;
+ 1819              	 .loc 5 439 0 is_stmt 1
+ 1820 0534 3C4B     	 ldr r3,.L103+28
+ 1821 0536 0022     	 mov r2,#0
+ 1822 0538 1A70     	 strb r2,[r3]
+ 440:../main.c     **** 					reset_status_led_to_relay_state();
+ 1823              	 .loc 5 440 0
+ 1824 053a FFF7FEFF 	 bl reset_status_led_to_relay_state
+ 1825 053e 24E0     	 b .L89
+ 1826              	.L88:
+ 441:../main.c     **** 				}
+ 442:../main.c     **** 				else if(buttonpress_up == BTNPRESS_STD){
+ 1827              	 .loc 5 442 0
+ 1828 0540 3A4B     	 ldr r3,.L103+32
+ 1829 0542 1B78     	 ldrb r3,[r3]
+ 1830 0544 012B     	 cmp r3,#1
+ 1831 0546 0ED1     	 bne .L90
+ 443:../main.c     **** 					ADC_lower_threshold += ADC_THRESHOLD_INCREMENT;
+ 1832              	 .loc 5 443 0
+ 1833 0548 314B     	 ldr r3,.L103+4
+ 1834 054a 1B68     	 ldr r3,[r3]
+ 1835 054c 7C33     	 add r3,r3,#124
+ 1836 054e 1A1C     	 mov r2,r3
+ 1837 0550 2F4B     	 ldr r3,.L103+4
+ 1838 0552 1A60     	 str r2,[r3]
+ 444:../main.c     **** 					if(ADC_lower_threshold > ADC_THRESHOLD_MAX)
+ 1839              	 .loc 5 444 0
+ 1840 0554 2E4B     	 ldr r3,.L103+4
+ 1841 0556 1B68     	 ldr r3,[r3]
+ 1842 0558 394A     	 ldr r2,.L103+52
+ 1843 055a 9342     	 cmp r3,r2
+ 1844 055c 15DD     	 ble .L89
+ 445:../main.c     **** 						ADC_lower_threshold = ADC_THRESHOLD_MAX;
+ 1845              	 .loc 5 445 0
+ 1846 055e 2C4B     	 ldr r3,.L103+4
+ 1847 0560 374A     	 ldr r2,.L103+52
+ 1848 0562 1A60     	 str r2,[r3]
+ 446:../main.c     **** 				}
+ 447:../main.c     **** 				else if(buttonpress_down == BTNPRESS_STD){
+ 448:../main.c     **** 					ADC_lower_threshold -= ADC_THRESHOLD_INCREMENT;
+ 449:../main.c     **** 					if(ADC_lower_threshold <= 0)
+ 450:../main.c     **** 						ADC_lower_threshold = 0;
+ 451:../main.c     **** 				}
+ 452:../main.c     **** 				break;
+ 1849              	 .loc 5 452 0
+ 1850 0564 48E0     	 b .L72
+ 1851              	.L90:
+ 447:../main.c     **** 					ADC_lower_threshold -= ADC_THRESHOLD_INCREMENT;
+ 1852              	 .loc 5 447 0
+ 1853 0566 324B     	 ldr r3,.L103+36
+ 1854 0568 1B78     	 ldrb r3,[r3]
+ 1855 056a 012B     	 cmp r3,#1
+ 1856 056c 0DD1     	 bne .L89
+ 448:../main.c     **** 					if(ADC_lower_threshold <= 0)
+ 1857              	 .loc 5 448 0
+ 1858 056e 284B     	 ldr r3,.L103+4
+ 1859 0570 1B68     	 ldr r3,[r3]
+ 1860 0572 7C3B     	 sub r3,r3,#124
+ 1861 0574 1A1C     	 mov r2,r3
+ 1862 0576 264B     	 ldr r3,.L103+4
+ 1863 0578 1A60     	 str r2,[r3]
+ 449:../main.c     **** 						ADC_lower_threshold = 0;
+ 1864              	 .loc 5 449 0
+ 1865 057a 254B     	 ldr r3,.L103+4
+ 1866 057c 1B68     	 ldr r3,[r3]
+ 1867 057e 002B     	 cmp r3,#0
+ 1868 0580 03DC     	 bgt .L89
+ 450:../main.c     **** 				}
+ 1869              	 .loc 5 450 0
+ 1870 0582 234B     	 ldr r3,.L103+4
+ 1871 0584 0022     	 mov r2,#0
+ 1872 0586 1A60     	 str r2,[r3]
+ 1873              	 .loc 5 452 0
+ 1874 0588 36E0     	 b .L72
+ 1875              	.L89:
+ 1876              	 .loc 5 452 0 is_stmt 0 discriminator 3
+ 1877 058a 35E0     	 b .L72
+ 1878              	.L77:
+ 453:../main.c     **** 			case SETUP_TIME_TH:
+ 454:../main.c     **** 				/// Interpret button press:
+ 455:../main.c     **** 				// A long  press of up or down brings system back to setup idle
+ 456:../main.c     **** 				// A short press of up         increases the threshold exceed time
+ 457:../main.c     **** 				// A short press of down       decreases the threshold exceed time
+ 458:../main.c     **** 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
+ 1879              	 .loc 5 458 0 is_stmt 1
+ 1880 058c 274B     	 ldr r3,.L103+32
+ 1881 058e 1B78     	 ldrb r3,[r3]
+ 1882 0590 022B     	 cmp r3,#2
+ 1883 0592 03D0     	 beq .L92
+ 1884              	 .loc 5 458 0 is_stmt 0 discriminator 1
+ 1885 0594 264B     	 ldr r3,.L103+36
+ 1886 0596 1B78     	 ldrb r3,[r3]
+ 1887 0598 022B     	 cmp r3,#2
+ 1888 059a 05D1     	 bne .L93
+ 1889              	.L92:
+ 459:../main.c     **** 					setup_state = SETUP_IDLE;
+ 1890              	 .loc 5 459 0 is_stmt 1
+ 1891 059c 224B     	 ldr r3,.L103+28
+ 1892 059e 0022     	 mov r2,#0
+ 1893 05a0 1A70     	 strb r2,[r3]
+ 460:../main.c     **** 					reset_status_led_to_relay_state();
+ 1894              	 .loc 5 460 0
+ 1895 05a2 FFF7FEFF 	 bl reset_status_led_to_relay_state
+ 1896 05a6 26E0     	 b .L94
+ 1897              	.L93:
+ 461:../main.c     **** 				}
+ 462:../main.c     **** 				else if(buttonpress_up == BTNPRESS_STD){
+ 1898              	 .loc 5 462 0
+ 1899 05a8 204B     	 ldr r3,.L103+32
+ 1900 05aa 1B78     	 ldrb r3,[r3]
+ 1901 05ac 012B     	 cmp r3,#1
+ 1902 05ae 0FD1     	 bne .L95
+ 463:../main.c     **** 					relay_threshold_latchtime += RELAY_LATCHTIME_INCREMENT;
+ 1903              	 .loc 5 463 0
+ 1904 05b0 194B     	 ldr r3,.L103+12
+ 1905 05b2 1B88     	 ldrh r3,[r3]
+ 1906 05b4 F533     	 add r3,r3,#245
+ 1907 05b6 FF33     	 add r3,r3,#255
+ 1908 05b8 9AB2     	 uxth r2,r3
+ 1909 05ba 174B     	 ldr r3,.L103+12
+ 1910 05bc 1A80     	 strh r2,[r3]
+ 464:../main.c     **** 					if(relay_threshold_latchtime > RELAY_LATCHTIME_MAX)
+ 1911              	 .loc 5 464 0
+ 1912 05be 164B     	 ldr r3,.L103+12
+ 1913 05c0 1B88     	 ldrh r3,[r3]
+ 1914 05c2 204A     	 ldr r2,.L103+56
+ 1915 05c4 9342     	 cmp r3,r2
+ 1916 05c6 16D9     	 bls .L94
+ 465:../main.c     **** 						relay_threshold_latchtime = RELAY_LATCHTIME_MAX;
+ 1917              	 .loc 5 465 0
+ 1918 05c8 134B     	 ldr r3,.L103+12
+ 1919 05ca 1F4A     	 ldr r2,.L103+60
+ 1920 05cc 1A80     	 strh r2,[r3]
+ 466:../main.c     **** 				}
+ 467:../main.c     **** 				else if(buttonpress_down == BTNPRESS_STD){
+ 468:../main.c     **** 					relay_threshold_latchtime -= RELAY_LATCHTIME_INCREMENT;
+ 469:../main.c     **** 					if(relay_threshold_latchtime <= 0)
+ 470:../main.c     **** 						relay_threshold_latchtime = 0;
+ 471:../main.c     **** 				}
+ 472:../main.c     **** 				break;
+ 1921              	 .loc 5 472 0
+ 1922 05ce 12E0     	 b .L100
+ 1923              	.L95:
+ 467:../main.c     **** 					relay_threshold_latchtime -= RELAY_LATCHTIME_INCREMENT;
+ 1924              	 .loc 5 467 0
+ 1925 05d0 174B     	 ldr r3,.L103+36
+ 1926 05d2 1B78     	 ldrb r3,[r3]
+ 1927 05d4 012B     	 cmp r3,#1
+ 1928 05d6 0ED1     	 bne .L94
+ 468:../main.c     **** 					if(relay_threshold_latchtime <= 0)
+ 1929              	 .loc 5 468 0
+ 1930 05d8 0F4B     	 ldr r3,.L103+12
+ 1931 05da 1B88     	 ldrh r3,[r3]
+ 1932 05dc F53B     	 sub r3,r3,#245
+ 1933 05de FF3B     	 sub r3,r3,#255
+ 1934 05e0 9AB2     	 uxth r2,r3
+ 1935 05e2 0D4B     	 ldr r3,.L103+12
+ 1936 05e4 1A80     	 strh r2,[r3]
+ 469:../main.c     **** 						relay_threshold_latchtime = 0;
+ 1937              	 .loc 5 469 0
+ 1938 05e6 0C4B     	 ldr r3,.L103+12
+ 1939 05e8 1B88     	 ldrh r3,[r3]
+ 1940 05ea 002B     	 cmp r3,#0
+ 1941 05ec 03D1     	 bne .L94
+ 470:../main.c     **** 				}
+ 1942              	 .loc 5 470 0
+ 1943 05ee 0A4B     	 ldr r3,.L103+12
+ 1944 05f0 0022     	 mov r2,#0
+ 1945 05f2 1A80     	 strh r2,[r3]
+ 1946              	 .loc 5 472 0
+ 1947 05f4 FFE7     	 b .L100
+ 1948              	.L94:
+ 1949              	.L100:
+ 1950 05f6 C046     	 mov r8,r8
+ 1951              	.L72:
+ 473:../main.c     **** 		}
+ 474:../main.c     **** 
+ 475:../main.c     **** 		// Reset all button presses
+ 476:../main.c     **** 		buttonpress_usb = BTNPRESS_NOT;
+ 1952              	 .loc 5 476 0
+ 1953 05f8 144B     	 ldr r3,.L103+64
+ 1954 05fa 0022     	 mov r2,#0
+ 1955 05fc 1A70     	 strb r2,[r3]
+ 477:../main.c     **** 		buttonpress_up = BTNPRESS_NOT;
+ 1956              	 .loc 5 477 0
+ 1957 05fe 0B4B     	 ldr r3,.L103+32
+ 1958 0600 0022     	 mov r2,#0
+ 1959 0602 1A70     	 strb r2,[r3]
+ 478:../main.c     **** 		buttonpress_down = BTNPRESS_NOT;
+ 1960              	 .loc 5 478 0
+ 1961 0604 0A4B     	 ldr r3,.L103+36
+ 1962 0606 0022     	 mov r2,#0
+ 1963 0608 1A70     	 strb r2,[r3]
+ 479:../main.c     **** 	}
+ 1964              	 .loc 5 479 0
+ 1965 060a 30E5     	 b .L97
+ 1966              	.L104:
+ 1967              	 .align 2
+ 1968              	.L103:
+ 1969 060c 00000000 	 .word ADC_val_lower_thres_exceed_timestamp
+ 1970 0610 00000000 	 .word ADC_lower_threshold
+ 1971 0614 00000000 	 .word ADC_val_current
+ 1972 0618 00000000 	 .word relay_threshold_latchtime
+ 1973 061c 00000000 	 .word relay_state
+ 1974 0620 00000000 	 .word IO_RELAY
+ 1975 0624 00000000 	 .word ADC_SENSOR
+ 1976 0628 00000000 	 .word setup_state
+ 1977 062c 00000000 	 .word buttonpress_up
+ 1978 0630 00000000 	 .word buttonpress_down
+ 1979 0634 00000000 	 .word led_status_pattern
+ 1980 0638 00000000 	 .word led_number
+ 1981 063c 00000000 	 .word ADC_upper_threshold
+ 1982 0640 FF0F0000 	 .word 4095
+ 1983 0644 60EA0000 	 .word 60000
+ 1984 0648 60EAFFFF 	 .word -5536
+ 1985 064c 00000000 	 .word buttonpress_usb
+ 1986              	 .cfi_endproc
+ 1987              	.LFE156:
+ 1989              	 .global meas_invalid_count
+ 1990              	 .section .bss.meas_invalid_count,"aw",%nobits
+ 1991              	 .align 2
+ 1994              	meas_invalid_count:
+ 1995 0000 00000000 	 .space 4
+ 1996              	 .section .text.VADC0_C0_0_IRQHandler,"ax",%progbits
+ 1997              	 .align 2
+ 1998              	 .global VADC0_C0_0_IRQHandler
+ 1999              	 .code 16
+ 2000              	 .thumb_func
+ 2002              	VADC0_C0_0_IRQHandler:
+ 2003              	.LFB157:
+ 480:../main.c     **** }
+ 481:../main.c     **** 
+ 482:../main.c     **** 
+ 483:../main.c     **** 
+ 484:../main.c     **** //void Adc_Measurement_Handler()
+ 485:../main.c     **** //{
+ 486:../main.c     **** ////	#if(UC_SERIES == XMC11)
+ 487:../main.c     **** ////		ADC_val_current = ADC_MEASUREMENT_GetGlobalResult();
+ 488:../main.c     **** ////		ADC_val_current = ADC_val_current >> ((uint32_t)ADC_SENSOR.iclass_config_handle->conversion_m
+ 489:../main.c     **** ////	#endif
+ 490:../main.c     **** //}
+ 491:../main.c     **** 
+ 492:../main.c     **** int meas_invalid_count = 0;
+ 493:../main.c     **** 
+ 494:../main.c     **** void Adc_Measurement_Handler()
+ 495:../main.c     **** {
+ 2004              	 .loc 5 495 0
+ 2005              	 .cfi_startproc
+ 2006 0000 80B5     	 push {r7,lr}
+ 2007              	.LCFI35:
+ 2008              	 .cfi_def_cfa_offset 8
+ 2009              	 .cfi_offset 7,-8
+ 2010              	 .cfi_offset 14,-4
+ 2011 0002 82B0     	 sub sp,sp,#8
+ 2012              	.LCFI36:
+ 2013              	 .cfi_def_cfa_offset 16
+ 2014 0004 00AF     	 add r7,sp,#0
+ 2015              	.LCFI37:
+ 2016              	 .cfi_def_cfa_register 7
+ 496:../main.c     **** 	//uint8_t channel_num;
+ 497:../main.c     **** 	//uint8_t group_num;
+ 498:../main.c     **** 	uint32_t adc_register;
+ 499:../main.c     **** 
+ 500:../main.c     **** 	#if(UC_SERIES == XMC11)
+ 501:../main.c     **** 	adc_register = ADC_MEASUREMENT_GetGlobalDetailedResult();
+ 2017              	 .loc 5 501 0
+ 2018 0006 FFF7FEFF 	 bl ADC_MEASUREMENT_GetGlobalDetailedResult
+ 2019 000a 031C     	 mov r3,r0
+ 2020 000c 7B60     	 str r3,[r7,#4]
+ 502:../main.c     **** 	#endif
+ 503:../main.c     **** 
+ 504:../main.c     **** 	if((bool)(adc_register >> VADC_GLOBRES_VF_Pos))
+ 2021              	 .loc 5 504 0
+ 2022 000e 7B68     	 ldr r3,[r7,#4]
+ 2023 0010 002B     	 cmp r3,#0
+ 2024 0012 0DDA     	 bge .L106
+ 505:../main.c     **** 	{
+ 506:../main.c     **** 		//channel_num = (adc_register & VADC_GLOBRES_CHNR_Msk) >> VADC_GLOBRES_CHNR_Pos;
+ 507:../main.c     **** 		//group_num = ADC_MEASUREMENT_Channel_A.group_index;
+ 508:../main.c     **** 		ADC_val_current = (adc_register & VADC_GLOBRES_RESULT_Msk) >> ((uint32_t)(ADC_SENSOR.iclass_confi
+ 2025              	 .loc 5 508 0
+ 2026 0014 7B68     	 ldr r3,[r7,#4]
+ 2027 0016 1B04     	 lsl r3,r3,#16
+ 2028 0018 1A0C     	 lsr r2,r3,#16
+ 2029 001a 094B     	 ldr r3,.L108
+ 2030 001c 9B68     	 ldr r3,[r3,#8]
+ 2031 001e 5B78     	 ldrb r3,[r3,#1]
+ 2032 0020 5B07     	 lsl r3,r3,#29
+ 2033 0022 5B0F     	 lsr r3,r3,#29
+ 2034 0024 DBB2     	 uxtb r3,r3
+ 2035 0026 5B00     	 lsl r3,r3,#1
+ 2036 0028 DA40     	 lsr r2,r2,r3
+ 2037 002a 064B     	 ldr r3,.L108+4
+ 2038 002c 1A60     	 str r2,[r3]
+ 2039 002e 04E0     	 b .L105
+ 2040              	.L106:
+ 509:../main.c     **** 	}
+ 510:../main.c     **** 	else{
+ 511:../main.c     **** 		meas_invalid_count++;
+ 2041              	 .loc 5 511 0
+ 2042 0030 054B     	 ldr r3,.L108+8
+ 2043 0032 1B68     	 ldr r3,[r3]
+ 2044 0034 5A1C     	 add r2,r3,#1
+ 2045 0036 044B     	 ldr r3,.L108+8
+ 2046 0038 1A60     	 str r2,[r3]
+ 2047              	.L105:
+ 512:../main.c     **** 	}
+ 513:../main.c     **** 
+ 514:../main.c     **** }
+ 2048              	 .loc 5 514 0
+ 2049 003a BD46     	 mov sp,r7
+ 2050 003c 02B0     	 add sp,sp,#8
+ 2051              	 
+ 2052 003e 80BD     	 pop {r7,pc}
+ 2053              	.L109:
+ 2054              	 .align 2
+ 2055              	.L108:
+ 2056 0040 00000000 	 .word ADC_SENSOR
+ 2057 0044 00000000 	 .word ADC_val_current
+ 2058 0048 00000000 	 .word meas_invalid_count
+ 2059              	 .cfi_endproc
+ 2060              	.LFE157:
+ 2062              	 .section .bss.led_pattern_state_timestamp.6994,"aw",%nobits
+ 2063              	 .align 2
+ 2066              	led_pattern_state_timestamp.6994:
+ 2067 0000 00000000 	 .space 4
+ 2068              	 .section .bss.led_pattern_state_length.6995,"aw",%nobits
+ 2069              	 .align 1
+ 2072              	led_pattern_state_length.6995:
+ 2073 0000 0000     	 .space 2
+ 2074              	 .section .bss.led_pattern_state.6993,"aw",%nobits
+ 2075              	 .align 1
+ 2078              	led_pattern_state.6993:
+ 2079 0000 0000     	 .space 2
+ 2080              	 .section .bss.fade_duty_step.6996,"aw",%nobits
+ 2081              	 .align 1
+ 2084              	fade_duty_step.6996:
+ 2085 0000 0000     	 .space 2
+ 2086              	 .text
+ 2087              	.Letext0:
+ 2088              	 .file 6 "c:\\workspaces\\4.5.0\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 2089              	 .file 7 "c:\\workspaces\\4.5.0\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 2090              	 .file 8 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Infineon/XMC1100_series/Include/XMC1100.h"
+ 2091              	 .file 9 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc1_scu.h"
+ 2092              	 .file 10 "C:/Workspaces/DAVE_WS/USB_Changer/Dave/Generated/GLOBAL_ADC/global_adc.h"
+ 2093              	 .file 11 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc1_gpio.h"
+ 2094              	 .file 12 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc_ccu4.h"
+ 2095              	 .file 13 "C:/Workspaces/DAVE_WS/USB_Changer/Dave/Generated/GLOBAL_CCU4/global_ccu4.h"
+ 2096              	 .file 14 "C:/Workspaces/DAVE_WS/USB_Changer/Dave/Generated/PWM_CCU4/pwm_ccu4.h"
+ 2097              	 .file 15 "C:/Workspaces/DAVE_WS/USB_Changer/Dave/Generated/DAVE.h"
+ 2098              	 .file 16 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Include/cmsis_gcc.h"
+ 2099              	 .file 17 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Infineon/XMC1100_series/Include/system_XMC1100.h"
+ 2100              	 .file 18 "C:/Workspaces/DAVE_WS/USB_Changer/Dave/Generated/ADC_MEASUREMENT/adc_measurement_extern.h"
+ 2101              	 .file 19 "C:/Workspaces/DAVE_WS/USB_Changer/Dave/Generated/DIGITAL_IO/digital_io_extern.h"
+ 2102              	 .file 20 "C:/Workspaces/DAVE_WS/USB_Changer/Dave/Generated/PWM_CCU4/pwm_ccu4_extern.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
     {standard input}:18     .text.XMC_VADC_GLOBAL_GetDetailedResult:00000000 $t
@@ -5568,60 +5860,67 @@ DEFINED SYMBOLS
     {standard input}:366    .bss.led_status_pattern_last:00000000 $d
     {standard input}:372    .bss.led_number:00000000 led_number
     {standard input}:369    .bss.led_number:00000000 $d
-    {standard input}:378    .bss.buttonpress_usb:00000000 buttonpress_usb
-    {standard input}:379    .bss.buttonpress_usb:00000000 $d
-    {standard input}:384    .bss.buttonpress_up:00000000 buttonpress_up
-    {standard input}:385    .bss.buttonpress_up:00000000 $d
-    {standard input}:390    .bss.buttonpress_down:00000000 buttonpress_down
-    {standard input}:391    .bss.buttonpress_down:00000000 $d
-    {standard input}:397    .bss.button_usb_pressed_timestamp:00000000 button_usb_pressed_timestamp
-    {standard input}:394    .bss.button_usb_pressed_timestamp:00000000 $d
-    {standard input}:404    .bss.button_up_pressed_timestamp:00000000 button_up_pressed_timestamp
-    {standard input}:401    .bss.button_up_pressed_timestamp:00000000 $d
-    {standard input}:411    .bss.button_down_pressed_timestamp:00000000 button_down_pressed_timestamp
-    {standard input}:408    .bss.button_down_pressed_timestamp:00000000 $d
-    {standard input}:418    .bss.button_usb_pressed_duration:00000000 button_usb_pressed_duration
-    {standard input}:415    .bss.button_usb_pressed_duration:00000000 $d
-    {standard input}:425    .bss.button_up_pressed_duration:00000000 button_up_pressed_duration
-    {standard input}:422    .bss.button_up_pressed_duration:00000000 $d
-    {standard input}:432    .bss.button_down_pressed_duration:00000000 button_down_pressed_duration
-    {standard input}:429    .bss.button_down_pressed_duration:00000000 $d
-    {standard input}:439    .bss.ADC_val_current:00000000 ADC_val_current
-    {standard input}:436    .bss.ADC_val_current:00000000 $d
-    {standard input}:446    .bss.ADC_val_upper_thres_exceed_timestamp:00000000 ADC_val_upper_thres_exceed_timestamp
-    {standard input}:443    .bss.ADC_val_upper_thres_exceed_timestamp:00000000 $d
-    {standard input}:453    .bss.ADC_val_lower_thres_exceed_timestamp:00000000 ADC_val_lower_thres_exceed_timestamp
-    {standard input}:450    .bss.ADC_val_lower_thres_exceed_timestamp:00000000 $d
-    {standard input}:460    .bss.button_usb_pressed_debug:00000000 button_usb_pressed_debug
-    {standard input}:457    .bss.button_usb_pressed_debug:00000000 $d
-    {standard input}:467    .bss.button_usb_pressed_long_debug:00000000 button_usb_pressed_long_debug
-    {standard input}:464    .bss.button_usb_pressed_long_debug:00000000 $d
-    {standard input}:474    .bss.systime_debug:00000000 systime_debug
-    {standard input}:471    .bss.systime_debug:00000000 $d
-    {standard input}:477    .text.delay_ms:00000000 $t
-    {standard input}:482    .text.delay_ms:00000000 delay_ms
-    {standard input}:532    .text.reset_status_led_to_relay_state:00000000 $t
-    {standard input}:537    .text.reset_status_led_to_relay_state:00000000 reset_status_led_to_relay_state
-    {standard input}:592    .text.reset_status_led_to_relay_state:00000044 $d
-    {standard input}:601    .text.manage_status_led:00000000 $t
-    {standard input}:606    .text.manage_status_led:00000000 manage_status_led
-    {standard input}:785    .text.manage_status_led:00000114 $d
-    {standard input}:1834   .bss.led_number_state_timestamp.6990:00000000 led_number_state_timestamp.6990
-    {standard input}:1840   .bss.led_number_state_length.6991:00000000 led_number_state_length.6991
-    {standard input}:1846   .bss.led_number_state.6989:00000000 led_number_state.6989
-    {standard input}:798    .text.main:00000000 $t
-    {standard input}:803    .text.main:00000000 main
-    {standard input}:1314   .text.main:00000354 $d
-    {standard input}:1350   .text.main:000003dc $t
-    {standard input}:1737   .text.main:0000061c $d
-    {standard input}:1762   .bss.meas_invalid_count:00000000 meas_invalid_count
-    {standard input}:1759   .bss.meas_invalid_count:00000000 $d
-    {standard input}:1765   .text.VADC0_C0_0_IRQHandler:00000000 $t
-    {standard input}:1770   .text.VADC0_C0_0_IRQHandler:00000000 VADC0_C0_0_IRQHandler
-    {standard input}:1824   .text.VADC0_C0_0_IRQHandler:00000040 $d
-    {standard input}:1831   .bss.led_number_state_timestamp.6990:00000000 $d
-    {standard input}:1837   .bss.led_number_state_length.6991:00000000 $d
-    {standard input}:1843   .bss.led_number_state.6989:00000000 $d
+    {standard input}:379    .data.led_fadetime:00000000 led_fadetime
+    {standard input}:376    .data.led_fadetime:00000000 $d
+    {standard input}:386    .data.led_fadesteps:00000000 led_fadesteps
+    {standard input}:383    .data.led_fadesteps:00000000 $d
+    {standard input}:392    .bss.buttonpress_usb:00000000 buttonpress_usb
+    {standard input}:393    .bss.buttonpress_usb:00000000 $d
+    {standard input}:398    .bss.buttonpress_up:00000000 buttonpress_up
+    {standard input}:399    .bss.buttonpress_up:00000000 $d
+    {standard input}:404    .bss.buttonpress_down:00000000 buttonpress_down
+    {standard input}:405    .bss.buttonpress_down:00000000 $d
+    {standard input}:411    .bss.button_usb_pressed_timestamp:00000000 button_usb_pressed_timestamp
+    {standard input}:408    .bss.button_usb_pressed_timestamp:00000000 $d
+    {standard input}:418    .bss.button_up_pressed_timestamp:00000000 button_up_pressed_timestamp
+    {standard input}:415    .bss.button_up_pressed_timestamp:00000000 $d
+    {standard input}:425    .bss.button_down_pressed_timestamp:00000000 button_down_pressed_timestamp
+    {standard input}:422    .bss.button_down_pressed_timestamp:00000000 $d
+    {standard input}:432    .bss.button_usb_pressed_duration:00000000 button_usb_pressed_duration
+    {standard input}:429    .bss.button_usb_pressed_duration:00000000 $d
+    {standard input}:439    .bss.button_up_pressed_duration:00000000 button_up_pressed_duration
+    {standard input}:436    .bss.button_up_pressed_duration:00000000 $d
+    {standard input}:446    .bss.button_down_pressed_duration:00000000 button_down_pressed_duration
+    {standard input}:443    .bss.button_down_pressed_duration:00000000 $d
+    {standard input}:453    .bss.ADC_val_current:00000000 ADC_val_current
+    {standard input}:450    .bss.ADC_val_current:00000000 $d
+    {standard input}:460    .bss.ADC_val_upper_thres_exceed_timestamp:00000000 ADC_val_upper_thres_exceed_timestamp
+    {standard input}:457    .bss.ADC_val_upper_thres_exceed_timestamp:00000000 $d
+    {standard input}:467    .bss.ADC_val_lower_thres_exceed_timestamp:00000000 ADC_val_lower_thres_exceed_timestamp
+    {standard input}:464    .bss.ADC_val_lower_thres_exceed_timestamp:00000000 $d
+    {standard input}:474    .bss.button_usb_pressed_debug:00000000 button_usb_pressed_debug
+    {standard input}:471    .bss.button_usb_pressed_debug:00000000 $d
+    {standard input}:481    .bss.button_usb_pressed_long_debug:00000000 button_usb_pressed_long_debug
+    {standard input}:478    .bss.button_usb_pressed_long_debug:00000000 $d
+    {standard input}:488    .bss.systime_debug:00000000 systime_debug
+    {standard input}:485    .bss.systime_debug:00000000 $d
+    {standard input}:491    .text.delay_ms:00000000 $t
+    {standard input}:496    .text.delay_ms:00000000 delay_ms
+    {standard input}:546    .text.reset_status_led_to_relay_state:00000000 $t
+    {standard input}:551    .text.reset_status_led_to_relay_state:00000000 reset_status_led_to_relay_state
+    {standard input}:606    .text.reset_status_led_to_relay_state:00000044 $d
+    {standard input}:615    .text.manage_status_led:00000000 $t
+    {standard input}:620    .text.manage_status_led:00000000 manage_status_led
+    {standard input}:654    .rodata.manage_status_led:00000000 $d
+    {standard input}:1023   .text.manage_status_led:00000298 $d
+    {standard input}:2066   .bss.led_pattern_state_timestamp.6994:00000000 led_pattern_state_timestamp.6994
+    {standard input}:2072   .bss.led_pattern_state_length.6995:00000000 led_pattern_state_length.6995
+    {standard input}:2078   .bss.led_pattern_state.6993:00000000 led_pattern_state.6993
+    {standard input}:2084   .bss.fade_duty_step.6996:00000000 fade_duty_step.6996
+    {standard input}:1040   .text.main:00000000 $t
+    {standard input}:1045   .text.main:00000000 main
+    {standard input}:1556   .text.main:00000354 $d
+    {standard input}:1592   .text.main:000003dc $t
+    {standard input}:1969   .text.main:0000060c $d
+    {standard input}:1994   .bss.meas_invalid_count:00000000 meas_invalid_count
+    {standard input}:1991   .bss.meas_invalid_count:00000000 $d
+    {standard input}:1997   .text.VADC0_C0_0_IRQHandler:00000000 $t
+    {standard input}:2002   .text.VADC0_C0_0_IRQHandler:00000000 VADC0_C0_0_IRQHandler
+    {standard input}:2056   .text.VADC0_C0_0_IRQHandler:00000040 $d
+    {standard input}:2063   .bss.led_pattern_state_timestamp.6994:00000000 $d
+    {standard input}:2069   .bss.led_pattern_state_length.6995:00000000 $d
+    {standard input}:2075   .bss.led_pattern_state.6993:00000000 $d
+    {standard input}:2081   .bss.fade_duty_step.6996:00000000 $d
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS
