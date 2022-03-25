@@ -1,0 +1,104 @@
+   1              	 .cpu cortex-m0
+   2              	 .fpu softvfp
+   3              	 .eabi_attribute 20,1
+   4              	 .eabi_attribute 21,1
+   5              	 .eabi_attribute 23,3
+   6              	 .eabi_attribute 24,1
+   7              	 .eabi_attribute 25,1
+   8              	 .eabi_attribute 26,1
+   9              	 .eabi_attribute 30,6
+  10              	 .eabi_attribute 34,0
+  11              	 .eabi_attribute 18,4
+  12              	 .code 16
+  13              	 .file "adc_measurement_conf.c"
+  14              	 .text
+  15              	.Ltext0:
+  16              	 .cfi_sections .debug_frame
+  17              	 .global global_iclass_config
+  18              	 .section .rodata.global_iclass_config,"a",%progbits
+  19              	 .align 2
+  22              	global_iclass_config:
+  23 0000 1F       	 .byte 31
+  24 0001 00       	 .byte 0
+  25 0002 0000     	 .space 2
+  26              	 .global ADC_MEASUREMENT_Channel_A_handle
+  27              	 .section .bss.ADC_MEASUREMENT_Channel_A_handle,"aw",%nobits
+  28              	 .align 2
+  31              	ADC_MEASUREMENT_Channel_A_handle:
+  32 0000 0000     	 .space 2
+  33              	 .global global_res_config
+  34 0002 0000     	 .section .data.global_res_config,"aw",%progbits
+  35              	 .align 2
+  38              	global_res_config:
+  39 0000 0000     	 .space 2
+  40 0002 00       	 .byte 0
+  41 0003 81       	 .byte 129
+  42              	 .global ADC_MEASUREMENT_channel_array
+  43              	 .section .data.ADC_MEASUREMENT_channel_array,"aw",%progbits
+  44              	 .align 2
+  47              	ADC_MEASUREMENT_channel_array:
+  48 0000 00000000 	 .word ADC_MEASUREMENT_Channel_A_handle
+  49 0004 00000000 	 .word global_res_config
+  50              	 .global global_result_intr_handle
+  51              	 .section .rodata.global_result_intr_handle,"a",%progbits
+  52              	 .align 2
+  55              	global_result_intr_handle:
+  56 0000 0F000000 	 .word 15
+  57 0004 03000000 	 .word 3
+  58              	 .global backgnd_config
+  59              	 .section .rodata.backgnd_config,"a",%progbits
+  60              	 .align 2
+  63              	backgnd_config:
+  64 0000 05       	 .byte 5
+  65 0001 000000   	 .space 3
+  66 0004 00       	 .space 1
+  67 0005 00       	 .byte 0
+  68 0006 00       	 .byte 0
+  69 0007 00       	 .byte 0
+  70 0008 00       	 .byte 0
+  71 0009 000000   	 .space 3
+  72              	 .global ADC_SENSOR
+  73              	 .section .data.ADC_SENSOR,"aw",%progbits
+  74              	 .align 2
+  77              	ADC_SENSOR:
+  78 0000 00000000 	 .word ADC_MEASUREMENT_channel_array
+  79 0004 00000000 	 .word backgnd_config
+  80 0008 00000000 	 .word global_iclass_config
+  81 000c 00000000 	 .word GLOBAL_ADC_0
+  82 0010 00000000 	 .word global_result_intr_handle
+  83 0014 00000000 	 .word 0
+  84 0018 02       	 .byte 2
+  85 0019 04       	 .byte 4
+  86 001a 01       	 .byte 1
+  87 001b 00       	 .space 1
+  88              	 .text
+  89              	.Letext0:
+  90              	 .file 1 "c:\\workspaces\\4.5.0\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+  91              	 .file 2 "c:\\workspaces\\4.5.0\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+  92              	 .file 3 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Infineon/XMC1100_series/Include/XMC1100.h"
+  93              	 .file 4 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc_vadc.h"
+  94              	 .file 5 "C:/Workspaces/DAVE_WS/USB_Changer/Dave/Generated/GLOBAL_ADC/global_adc.h"
+  95              	 .file 6 "../Dave/Generated/ADC_MEASUREMENT/adc_measurement.h"
+  96              	 .file 7 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Include/cmsis_gcc.h"
+  97              	 .file 8 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Infineon/XMC1100_series/Include/system_XMC1100.h"
+  98              	 .file 9 "C:/Workspaces/DAVE_WS/USB_Changer/Dave/Generated/GLOBAL_ADC/global_adc_extern.h"
+  99              	 .file 10 "../Dave/Generated/ADC_MEASUREMENT/adc_measurement_conf.c"
+DEFINED SYMBOLS
+                            *ABS*:00000000 adc_measurement_conf.c
+    {standard input}:22     .rodata.global_iclass_config:00000000 global_iclass_config
+    {standard input}:19     .rodata.global_iclass_config:00000000 $d
+    {standard input}:31     .bss.ADC_MEASUREMENT_Channel_A_handle:00000000 ADC_MEASUREMENT_Channel_A_handle
+    {standard input}:28     .bss.ADC_MEASUREMENT_Channel_A_handle:00000000 $d
+    {standard input}:38     .data.global_res_config:00000000 global_res_config
+    {standard input}:35     .data.global_res_config:00000000 $d
+    {standard input}:47     .data.ADC_MEASUREMENT_channel_array:00000000 ADC_MEASUREMENT_channel_array
+    {standard input}:44     .data.ADC_MEASUREMENT_channel_array:00000000 $d
+    {standard input}:55     .rodata.global_result_intr_handle:00000000 global_result_intr_handle
+    {standard input}:52     .rodata.global_result_intr_handle:00000000 $d
+    {standard input}:63     .rodata.backgnd_config:00000000 backgnd_config
+    {standard input}:60     .rodata.backgnd_config:00000000 $d
+    {standard input}:77     .data.ADC_SENSOR:00000000 ADC_SENSOR
+    {standard input}:74     .data.ADC_SENSOR:00000000 $d
+
+UNDEFINED SYMBOLS
+GLOBAL_ADC_0

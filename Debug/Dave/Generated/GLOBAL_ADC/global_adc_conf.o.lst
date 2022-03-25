@@ -1,0 +1,54 @@
+   1              	 .cpu cortex-m0
+   2              	 .fpu softvfp
+   3              	 .eabi_attribute 20,1
+   4              	 .eabi_attribute 21,1
+   5              	 .eabi_attribute 23,3
+   6              	 .eabi_attribute 24,1
+   7              	 .eabi_attribute 25,1
+   8              	 .eabi_attribute 26,1
+   9              	 .eabi_attribute 30,6
+  10              	 .eabi_attribute 34,0
+  11              	 .eabi_attribute 18,4
+  12              	 .code 16
+  13              	 .file "global_adc_conf.c"
+  14              	 .text
+  15              	.Ltext0:
+  16              	 .cfi_sections .debug_frame
+  17              	 .global global_config
+  18              	 .section .rodata.global_config,"a",%progbits
+  19              	 .align 2
+  22              	global_config:
+  23 0000 00000000 	 .space 20
+  23      00000000 
+  23      00000000 
+  23      00000000 
+  23      00000000 
+  24              	 .global GLOBAL_ADC_0
+  25              	 .section .data.GLOBAL_ADC_0,"aw",%progbits
+  26              	 .align 2
+  29              	GLOBAL_ADC_0:
+  30 0000 00000000 	 .word global_config
+  31 0004 00000348 	 .word 1208156160
+  32 0008 00400348 	 .word 1208172544
+  33 000c 00000000 	 .space 4
+  34 0010 02       	 .byte 2
+  35 0011 01       	 .byte 1
+  36 0012 0000     	 .space 2
+  37              	 .text
+  38              	.Letext0:
+  39              	 .file 1 "c:\\workspaces\\4.5.0\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+  40              	 .file 2 "c:\\workspaces\\4.5.0\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+  41              	 .file 3 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Infineon/XMC1100_series/Include/XMC1100.h"
+  42              	 .file 4 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc_vadc.h"
+  43              	 .file 5 "../Dave/Generated/GLOBAL_ADC/global_adc.h"
+  44              	 .file 6 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Include/cmsis_gcc.h"
+  45              	 .file 7 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Infineon/XMC1100_series/Include/system_XMC1100.h"
+  46              	 .file 8 "../Dave/Generated/GLOBAL_ADC/global_adc_conf.c"
+DEFINED SYMBOLS
+                            *ABS*:00000000 global_adc_conf.c
+    {standard input}:22     .rodata.global_config:00000000 global_config
+    {standard input}:19     .rodata.global_config:00000000 $d
+    {standard input}:29     .data.GLOBAL_ADC_0:00000000 GLOBAL_ADC_0
+    {standard input}:26     .data.GLOBAL_ADC_0:00000000 $d
+
+NO UNDEFINED SYMBOLS

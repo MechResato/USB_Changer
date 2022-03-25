@@ -1,0 +1,175 @@
+   1              	 .cpu cortex-m0
+   2              	 .fpu softvfp
+   3              	 .eabi_attribute 20,1
+   4              	 .eabi_attribute 21,1
+   5              	 .eabi_attribute 23,3
+   6              	 .eabi_attribute 24,1
+   7              	 .eabi_attribute 25,1
+   8              	 .eabi_attribute 26,1
+   9              	 .eabi_attribute 30,6
+  10              	 .eabi_attribute 34,0
+  11              	 .eabi_attribute 18,4
+  12              	 .code 16
+  13              	 .file "digital_io_conf.c"
+  14              	 .text
+  15              	.Ltext0:
+  16              	 .cfi_sections .debug_frame
+  17              	 .global IO_USB_SI
+  18              	 .section .rodata.IO_USB_SI,"a",%progbits
+  19              	 .align 2
+  22              	IO_USB_SI:
+  23 0000 00020440 	 .word 1074004480
+  24 0004 80       	 .byte -128
+  25 0005 000000   	 .space 3
+  26 0008 00000100 	 .word 65536
+  27 000c 00       	 .byte 0
+  28 000d 00       	 .byte 0
+  29 000e 0000     	 .space 2
+  30              	 .global IO_USB_OE
+  31              	 .section .rodata.IO_USB_OE,"a",%progbits
+  32              	 .align 2
+  35              	IO_USB_OE:
+  36 0000 00000440 	 .word 1074003968
+  37 0004 80       	 .byte -128
+  38 0005 000000   	 .space 3
+  39 0008 00000100 	 .word 65536
+  40 000c 09       	 .byte 9
+  41 000d 00       	 .byte 0
+  42 000e 0000     	 .space 2
+  43              	 .global IO_LED_RELAY
+  44              	 .section .rodata.IO_LED_RELAY,"a",%progbits
+  45              	 .align 2
+  48              	IO_LED_RELAY:
+  49 0000 00000440 	 .word 1074003968
+  50 0004 80       	 .byte -128
+  51 0005 000000   	 .space 3
+  52 0008 00000100 	 .word 65536
+  53 000c 06       	 .byte 6
+  54 000d 00       	 .byte 0
+  55 000e 0000     	 .space 2
+  56              	 .global IO_SW_USB
+  57              	 .section .rodata.IO_SW_USB,"a",%progbits
+  58              	 .align 2
+  61              	IO_SW_USB:
+  62 0000 00000440 	 .word 1074003968
+  63 0004 10       	 .byte 16
+  64 0005 00       	 .byte 0
+  65 0006 00000000 	 .space 6
+  65      0000
+  66 000c 08       	 .byte 8
+  67 000d 00       	 .byte 0
+  68 000e 0000     	 .space 2
+  69              	 .global IO_SW_UP
+  70              	 .section .rodata.IO_SW_UP,"a",%progbits
+  71              	 .align 2
+  74              	IO_SW_UP:
+  75 0000 00020440 	 .word 1074004480
+  76 0004 10       	 .byte 16
+  77 0005 00       	 .byte 0
+  78 0006 00000000 	 .space 6
+  78      0000
+  79 000c 07       	 .byte 7
+  80 000d 00       	 .byte 0
+  81 000e 0000     	 .space 2
+  82              	 .global IO_SW_DOWN
+  83              	 .section .rodata.IO_SW_DOWN,"a",%progbits
+  84              	 .align 2
+  87              	IO_SW_DOWN:
+  88 0000 00020440 	 .word 1074004480
+  89 0004 10       	 .byte 16
+  90 0005 00       	 .byte 0
+  91 0006 00000000 	 .space 6
+  91      0000
+  92 000c 09       	 .byte 9
+  93 000d 00       	 .byte 0
+  94 000e 0000     	 .space 2
+  95              	 .global IO_USBPWR_2
+  96              	 .section .rodata.IO_USBPWR_2,"a",%progbits
+  97              	 .align 2
+ 100              	IO_USBPWR_2:
+ 101 0000 00000440 	 .word 1074003968
+ 102 0004 80       	 .byte -128
+ 103 0005 000000   	 .space 3
+ 104 0008 00000100 	 .word 65536
+ 105 000c 05       	 .byte 5
+ 106 000d 00       	 .byte 0
+ 107 000e 0000     	 .space 2
+ 108              	 .global IO_USBPWR_1
+ 109              	 .section .rodata.IO_USBPWR_1,"a",%progbits
+ 110              	 .align 2
+ 113              	IO_USBPWR_1:
+ 114 0000 00020440 	 .word 1074004480
+ 115 0004 80       	 .byte -128
+ 116 0005 000000   	 .space 3
+ 117 0008 00000100 	 .word 65536
+ 118 000c 0A       	 .byte 10
+ 119 000d 00       	 .byte 0
+ 120 000e 0000     	 .space 2
+ 121              	 .global IO_RELAY
+ 122              	 .section .rodata.IO_RELAY,"a",%progbits
+ 123              	 .align 2
+ 126              	IO_RELAY:
+ 127 0000 00000440 	 .word 1074003968
+ 128 0004 80       	 .byte -128
+ 129 0005 000000   	 .space 3
+ 130 0008 00000100 	 .word 65536
+ 131 000c 07       	 .byte 7
+ 132 000d 00       	 .byte 0
+ 133 000e 0000     	 .space 2
+ 134              	 .global IO_LED_USB2
+ 135              	 .section .rodata.IO_LED_USB2,"a",%progbits
+ 136              	 .align 2
+ 139              	IO_LED_USB2:
+ 140 0000 00000440 	 .word 1074003968
+ 141 0004 80       	 .byte -128
+ 142 0005 000000   	 .space 3
+ 143 0008 00000100 	 .word 65536
+ 144 000c 00       	 .byte 0
+ 145 000d 00       	 .byte 0
+ 146 000e 0000     	 .space 2
+ 147              	 .global IO_LED_USB1
+ 148              	 .section .rodata.IO_LED_USB1,"a",%progbits
+ 149              	 .align 2
+ 152              	IO_LED_USB1:
+ 153 0000 00020440 	 .word 1074004480
+ 154 0004 80       	 .byte -128
+ 155 0005 000000   	 .space 3
+ 156 0008 00000100 	 .word 65536
+ 157 000c 0B       	 .byte 11
+ 158 000d 00       	 .byte 0
+ 159 000e 0000     	 .space 2
+ 160              	 .text
+ 161              	.Letext0:
+ 162              	 .file 1 "c:\\workspaces\\4.5.0\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 163              	 .file 2 "c:\\workspaces\\4.5.0\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 164              	 .file 3 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc_gpio.h"
+ 165              	 .file 4 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc1_gpio.h"
+ 166              	 .file 5 "../Dave/Generated/DIGITAL_IO/digital_io.h"
+ 167              	 .file 6 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Include/cmsis_gcc.h"
+ 168              	 .file 7 "../Dave/Generated/DIGITAL_IO/digital_io_conf.c"
+DEFINED SYMBOLS
+                            *ABS*:00000000 digital_io_conf.c
+    {standard input}:22     .rodata.IO_USB_SI:00000000 IO_USB_SI
+    {standard input}:19     .rodata.IO_USB_SI:00000000 $d
+    {standard input}:35     .rodata.IO_USB_OE:00000000 IO_USB_OE
+    {standard input}:32     .rodata.IO_USB_OE:00000000 $d
+    {standard input}:48     .rodata.IO_LED_RELAY:00000000 IO_LED_RELAY
+    {standard input}:45     .rodata.IO_LED_RELAY:00000000 $d
+    {standard input}:61     .rodata.IO_SW_USB:00000000 IO_SW_USB
+    {standard input}:58     .rodata.IO_SW_USB:00000000 $d
+    {standard input}:74     .rodata.IO_SW_UP:00000000 IO_SW_UP
+    {standard input}:71     .rodata.IO_SW_UP:00000000 $d
+    {standard input}:87     .rodata.IO_SW_DOWN:00000000 IO_SW_DOWN
+    {standard input}:84     .rodata.IO_SW_DOWN:00000000 $d
+    {standard input}:100    .rodata.IO_USBPWR_2:00000000 IO_USBPWR_2
+    {standard input}:97     .rodata.IO_USBPWR_2:00000000 $d
+    {standard input}:113    .rodata.IO_USBPWR_1:00000000 IO_USBPWR_1
+    {standard input}:110    .rodata.IO_USBPWR_1:00000000 $d
+    {standard input}:126    .rodata.IO_RELAY:00000000 IO_RELAY
+    {standard input}:123    .rodata.IO_RELAY:00000000 $d
+    {standard input}:139    .rodata.IO_LED_USB2:00000000 IO_LED_USB2
+    {standard input}:136    .rodata.IO_LED_USB2:00000000 $d
+    {standard input}:152    .rodata.IO_LED_USB1:00000000 IO_LED_USB1
+    {standard input}:149    .rodata.IO_LED_USB1:00000000 $d
+
+NO UNDEFINED SYMBOLS
