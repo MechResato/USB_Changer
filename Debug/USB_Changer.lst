@@ -3,35 +3,35 @@ USB_Changer.elf:     file format elf32-littlearm
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00004f24  10001000  10001000  00001000  2**2
+  0 .text         00004f34  10001000  10001000  00001000  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .VENEER_Code  00000110  2000000c  10005f24  0000800c  2**2
+  1 .VENEER_Code  00000110  2000000c  10005f34  0000800c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
   2 Stack         00000404  2000011c  00000000  0000011c  2**0
                   ALLOC
-  3 .data         00000098  20000520  10006034  00008520  2**2
+  3 .data         00000098  20000520  10006044  00008520  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  4 .bss          00000318  200005b8  0000049c  000085b8  2**2
+  4 .bss          00000308  200005b8  0000049c  000085b8  2**2
                   ALLOC
   5 .no_init      00000004  20003ffc  00003ee0  0000011c  2**2
                   ALLOC
   6 .debug_aranges 00000ae0  00000000  00000000  000085b8  2**3
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   00012fca  00000000  00000000  00009098  2**0
+  7 .debug_info   00012fbf  00000000  00000000  00009098  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 00002bcc  00000000  00000000  0001c062  2**0
+  8 .debug_abbrev 00002bcc  00000000  00000000  0001c057  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   000058de  00000000  00000000  0001ec2e  2**0
+  9 .debug_line   000058de  00000000  00000000  0001ec23  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  0000224c  00000000  00000000  0002450c  2**2
+ 10 .debug_frame  00002250  00000000  00000000  00024504  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    00007233  00000000  00000000  00026758  2**0
+ 11 .debug_str    00007233  00000000  00000000  00026754  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    0000380c  00000000  00000000  0002d98b  2**0
+ 12 .debug_loc    00003818  00000000  00000000  0002d987  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 000008f0  00000000  00000000  00031198  2**3
+ 13 .debug_ranges 000008f0  00000000  00000000  000311a0  2**3
                   CONTENTS, READONLY, DEBUGGING
- 14 .build_attributes 000005b4  00000000  00000000  00031a88  2**0
+ 14 .build_attributes 000005b4  00000000  00000000  00031a90  2**0
                   CONTENTS, READONLY
 
 Disassembly of section .text:
@@ -149,7 +149,7 @@ Reset_Handler:
 Reset_Handler: 
 /* Initialize interrupt veneer */
 	ldr	r1, =eROData
-10001060:	10005f24 	.word	0x10005f24
+10001060:	10005f34 	.word	0x10005f34
 	ldr	r2, =VeneerStart
 10001064:	2000000c 	.word	0x2000000c
 	ldr	r3, =VeneerEnd
@@ -162,7 +162,7 @@ Reset_Handler:
 	
 /* Initialize data */
 	ldr	r1, =DataLoadAddr
-10001070:	10006034 	.word	0x10006034
+10001070:	10006044 	.word	0x10006044
 	ldr	r2, =__data_start
 10001074:	20000520 	.word	0x20000520
 	ldr	r3, =__data_end
@@ -171,7 +171,7 @@ Reset_Handler:
 
 /* RAM code */
 	ldr	r1, =__ram_code_load
-1000107c:	100060cc 	.word	0x100060cc
+1000107c:	100060dc 	.word	0x100060dc
 	ldr	r2, =__ram_code_start
 10001080:	200005b8 	.word	0x200005b8
 	ldr	r3, =__ram_code_end
@@ -184,19 +184,19 @@ Reset_Handler:
 	ldr	r1, =__bss_start
 10001088:	200005b8 	.word	0x200005b8
 	ldr	r2, =__bss_end
-1000108c:	200008d0 	.word	0x200008d0
+1000108c:	200008c0 	.word	0x200008c0
 	bgt	.L_loop3
 .L_loop3_done:
 #endif /* __SKIP_BSS_CLEAR */
 
 #ifndef __SKIP_LIBC_INIT_ARRAY
     ldr  r0, =__libc_init_array
-10001090:	10005d09 	.word	0x10005d09
+10001090:	10005d19 	.word	0x10005d19
     blx  r0
 #endif
 
     ldr  r0, =main
-10001094:	1000555d 	.word	0x1000555d
+10001094:	10005571 	.word	0x10005571
 
 10001098 <CCU40_0_IRQHandler>:
     
@@ -269,7 +269,7 @@ __WEAK void SystemCoreClockUpdate(void)
 100010de:	18d3      	adds	r3, r2, r3
 100010e0:	4809      	ldr	r0, [pc, #36]	; (10001108 <SystemCoreClockUpdate+0x5c>)
 100010e2:	1c19      	adds	r1, r3, #0
-100010e4:	f004 fd7e 	bl	10005be4 <__aeabi_uidiv>
+100010e4:	f004 fd86 	bl	10005bf4 <__aeabi_uidiv>
 100010e8:	1c03      	adds	r3, r0, #0
 100010ea:	005a      	lsls	r2, r3, #1
 100010ec:	4b07      	ldr	r3, [pc, #28]	; (1000110c <SystemCoreClockUpdate+0x60>)
@@ -2768,7 +2768,7 @@ void XMC_CCU4_SLICE_SetInterruptNode(XMC_CCU4_SLICE_t *const slice,
 10001d5a:	b006      	add	sp, #24
 10001d5c:	bd80      	pop	{r7, pc}
 10001d5e:	46c0      	nop			; (mov r8, r8)
-10001d60:	10005d54 	.word	0x10005d54
+10001d60:	10005d64 	.word	0x10005d64
 
 10001d64 <XMC_GPIO_SetHardwareControl>:
   port->IOCR[(uint32_t)pin >> 2U] &= ~(uint32_t)((uint32_t)PORT_IOCR_PC_Msk << ((uint32_t)PORT_IOCR_PC_Size * ((uint32_t)pin & 0x3U)));
@@ -5386,7 +5386,7 @@ PWM_CCU4_STATUS_t PWM_CCU4_SetDutyCycle(PWM_CCU4_t* handle_ptr, uint32_t duty_cy
 10002a52:	4353      	muls	r3, r2
 10002a54:	1c18      	adds	r0, r3, #0
 10002a56:	4911      	ldr	r1, [pc, #68]	; (10002a9c <PWM_CCU4_SetDutyCycle+0x84>)
-10002a58:	f003 f8c4 	bl	10005be4 <__aeabi_uidiv>
+10002a58:	f003 f8cc 	bl	10005bf4 <__aeabi_uidiv>
 10002a5c:	1c03      	adds	r3, r0, #0
 10002a5e:	60fb      	str	r3, [r7, #12]
 
@@ -7338,7 +7338,7 @@ static void E_EEPROM_XMC1_lGarbageCollection(void)
 100033e8:	bd80      	pop	{r7, pc}
 100033ea:	46c0      	nop			; (mov r8, r8)
 100033ec:	2000056c 	.word	0x2000056c
-100033f0:	10005dfc 	.word	0x10005dfc
+100033f0:	10005e0c 	.word	0x10005e0c
 
 100033f4 <E_EEPROM_XMC1_lHandleGcRequested>:
  * Return value    : void
@@ -11207,7 +11207,7 @@ const XMC_SCU_CLOCK_CONFIG_t CLOCK_XMC1_0_CONFIG =
 1000465e:	46bd      	mov	sp, r7
 10004660:	b005      	add	sp, #20
 10004662:	bd90      	pop	{r4, r7, pc}
-10004664:	10005ee8 	.word	0x10005ee8
+10004664:	10005ef8 	.word	0x10005ef8
 
 10004668 <__NVIC_EnableIRQ>:
   \details Enables a device specific interrupt in the NVIC interrupt controller.
@@ -12016,17 +12016,17 @@ __WEAK DAVE_STATUS_t DAVE_Init(void)
 10004aaa:	bd90      	pop	{r4, r7, pc}
 10004aac:	200005d0 	.word	0x200005d0
 10004ab0:	20000588 	.word	0x20000588
-10004ab4:	10005e38 	.word	0x10005e38
-10004ab8:	10005e48 	.word	0x10005e48
-10004abc:	10005e58 	.word	0x10005e58
-10004ac0:	10005e68 	.word	0x10005e68
-10004ac4:	10005e78 	.word	0x10005e78
-10004ac8:	10005e88 	.word	0x10005e88
-10004acc:	10005e98 	.word	0x10005e98
-10004ad0:	10005ea8 	.word	0x10005ea8
-10004ad4:	10005eb8 	.word	0x10005eb8
-10004ad8:	10005ec8 	.word	0x10005ec8
-10004adc:	10005ed8 	.word	0x10005ed8
+10004ab4:	10005e48 	.word	0x10005e48
+10004ab8:	10005e58 	.word	0x10005e58
+10004abc:	10005e68 	.word	0x10005e68
+10004ac0:	10005e78 	.word	0x10005e78
+10004ac4:	10005e88 	.word	0x10005e88
+10004ac8:	10005e98 	.word	0x10005e98
+10004acc:	10005ea8 	.word	0x10005ea8
+10004ad0:	10005eb8 	.word	0x10005eb8
+10004ad4:	10005ec8 	.word	0x10005ec8
+10004ad8:	10005ed8 	.word	0x10005ed8
+10004adc:	10005ee8 	.word	0x10005ee8
 10004ae0:	200005cc 	.word	0x200005cc
 10004ae4:	20000520 	.word	0x20000520
 10004ae8:	2000056c 	.word	0x2000056c
@@ -12340,7 +12340,7 @@ void reset_status_led_to_relay_state(){
 10004c62:	b002      	add	sp, #8
 10004c64:	bd80      	pop	{r7, pc}
 10004c66:	46c0      	nop			; (mov r8, r8)
-10004c68:	10005eb8 	.word	0x10005eb8
+10004c68:	10005ec8 	.word	0x10005ec8
 10004c6c:	200005da 	.word	0x200005da
 10004c70:	20000520 	.word	0x20000520
 10004c74:	00002710 	.word	0x00002710
@@ -12454,7 +12454,7 @@ void manage_status_led(){
 10004d18:	881b      	ldrh	r3, [r3, #0]
 10004d1a:	1c10      	adds	r0, r2, #0
 10004d1c:	1c19      	adds	r1, r3, #0
-10004d1e:	f000 ff61 	bl	10005be4 <__aeabi_uidiv>
+10004d1e:	f000 ff69 	bl	10005bf4 <__aeabi_uidiv>
 10004d22:	1c03      	adds	r3, r0, #0
 10004d24:	b29a      	uxth	r2, r3
 10004d26:	4b95      	ldr	r3, [pc, #596]	; (10004f7c <manage_status_led+0x304>)
@@ -12464,7 +12464,7 @@ void manage_status_led(){
 10004d2c:	881b      	ldrh	r3, [r3, #0]
 10004d2e:	488e      	ldr	r0, [pc, #568]	; (10004f68 <manage_status_led+0x2f0>)
 10004d30:	1c19      	adds	r1, r3, #0
-10004d32:	f000 ff57 	bl	10005be4 <__aeabi_uidiv>
+10004d32:	f000 ff5f 	bl	10005bf4 <__aeabi_uidiv>
 10004d36:	1c03      	adds	r3, r0, #0
 10004d38:	b29a      	uxth	r2, r3
 10004d3a:	4b94      	ldr	r3, [pc, #592]	; (10004f8c <manage_status_led+0x314>)
@@ -12500,7 +12500,7 @@ void manage_status_led(){
 10004d6a:	881b      	ldrh	r3, [r3, #0]
 10004d6c:	1c10      	adds	r0, r2, #0
 10004d6e:	1c19      	adds	r1, r3, #0
-10004d70:	f000 ff38 	bl	10005be4 <__aeabi_uidiv>
+10004d70:	f000 ff40 	bl	10005bf4 <__aeabi_uidiv>
 10004d74:	1c03      	adds	r3, r0, #0
 10004d76:	b29a      	uxth	r2, r3
 10004d78:	4b80      	ldr	r3, [pc, #512]	; (10004f7c <manage_status_led+0x304>)
@@ -12510,7 +12510,7 @@ void manage_status_led(){
 10004d7e:	881b      	ldrh	r3, [r3, #0]
 10004d80:	4879      	ldr	r0, [pc, #484]	; (10004f68 <manage_status_led+0x2f0>)
 10004d82:	1c19      	adds	r1, r3, #0
-10004d84:	f000 ff2e 	bl	10005be4 <__aeabi_uidiv>
+10004d84:	f000 ff36 	bl	10005bf4 <__aeabi_uidiv>
 10004d88:	1c03      	adds	r3, r0, #0
 10004d8a:	b29a      	uxth	r2, r3
 10004d8c:	4b7f      	ldr	r3, [pc, #508]	; (10004f8c <manage_status_led+0x314>)
@@ -12558,7 +12558,7 @@ void manage_status_led(){
 10004dca:	1c18      	adds	r0, r3, #0
 10004dcc:	23fa      	movs	r3, #250	; 0xfa
 10004dce:	0099      	lsls	r1, r3, #2
-10004dd0:	f000 ff08 	bl	10005be4 <__aeabi_uidiv>
+10004dd0:	f000 ff10 	bl	10005bf4 <__aeabi_uidiv>
 10004dd4:	1c03      	adds	r3, r0, #0
 10004dd6:	1c1a      	adds	r2, r3, #0
 10004dd8:	4b68      	ldr	r3, [pc, #416]	; (10004f7c <manage_status_led+0x304>)
@@ -12705,7 +12705,7 @@ void manage_status_led(){
 10004eac:	1c18      	adds	r0, r3, #0
 10004eae:	23fa      	movs	r3, #250	; 0xfa
 10004eb0:	0099      	lsls	r1, r3, #2
-10004eb2:	f000 fe97 	bl	10005be4 <__aeabi_uidiv>
+10004eb2:	f000 fe9f 	bl	10005bf4 <__aeabi_uidiv>
 10004eb6:	1c03      	adds	r3, r0, #0
 10004eb8:	1c1a      	adds	r2, r3, #0
 10004eba:	4b30      	ldr	r3, [pc, #192]	; (10004f7c <manage_status_led+0x304>)
@@ -12809,7 +12809,7 @@ void manage_status_led(){
 10004f56:	46c0      	nop			; (mov r8, r8)
 10004f58:	200005da 	.word	0x200005da
 10004f5c:	200005db 	.word	0x200005db
-10004f60:	10005f0c 	.word	0x10005f0c
+10004f60:	10005f1c 	.word	0x10005f1c
 10004f64:	20000520 	.word	0x20000520
 10004f68:	00002710 	.word	0x00002710
 10004f6c:	200005de 	.word	0x200005de
@@ -12842,7 +12842,7 @@ void manage_status_led(){
 10004fac:	1c18      	adds	r0, r3, #0
 10004fae:	23fa      	movs	r3, #250	; 0xfa
 10004fb0:	0099      	lsls	r1, r3, #2
-10004fb2:	f000 fe17 	bl	10005be4 <__aeabi_uidiv>
+10004fb2:	f000 fe1f 	bl	10005bf4 <__aeabi_uidiv>
 10004fb6:	1c03      	adds	r3, r0, #0
 10004fb8:	1c1a      	adds	r2, r3, #0
 10004fba:	4b29      	ldr	r3, [pc, #164]	; (10005060 <manage_status_led+0x3e8>)
@@ -12961,2115 +12961,2132 @@ void manage_status_led(){
 1000507c:	200005dd 	.word	0x200005dd
 
 10005080 <read_eeprom_setup>:
-uint8_t ReadBuffer_LTH[4];
-uint8_t ReadBuffer_UTH[4];
-uint8_t ReadBuffer_LT[4];
 
-uint8_t EEPROM_WriteBuffer[4];
+//****************************************************************************
+// read_eeprom_setup -
+//****************************************************************************
 void read_eeprom_setup(void){
 10005080:	b580      	push	{r7, lr}
-10005082:	af00      	add	r7, sp, #0
+10005082:	b084      	sub	sp, #16
+10005084:	af00      	add	r7, sp, #0
+	uint8_t ReadBuffer_LTH[4];
+	uint8_t ReadBuffer_UTH[4];
+	uint8_t ReadBuffer_LT[4];
+
 	// Read from EEPROM and interpret value
 	E_EEPROM_XMC1_Read(EEPROM_LOWER_TH, 0, ReadBuffer_LTH, 4U);
-10005084:	4b74      	ldr	r3, [pc, #464]	; (10005258 <read_eeprom_setup+0x1d8>)
-10005086:	2001      	movs	r0, #1
-10005088:	2100      	movs	r1, #0
-1000508a:	1c1a      	adds	r2, r3, #0
-1000508c:	2304      	movs	r3, #4
-1000508e:	f7fd fe51 	bl	10002d34 <E_EEPROM_XMC1_Read>
+10005086:	230c      	movs	r3, #12
+10005088:	18fb      	adds	r3, r7, r3
+1000508a:	2001      	movs	r0, #1
+1000508c:	2100      	movs	r1, #0
+1000508e:	1c1a      	adds	r2, r3, #0
+10005090:	2304      	movs	r3, #4
+10005092:	f7fd fe4f 	bl	10002d34 <E_EEPROM_XMC1_Read>
 	E_EEPROM_XMC1_Read(EEPROM_UPPER_TH, 0U, ReadBuffer_UTH, 4U);
-10005092:	4b72      	ldr	r3, [pc, #456]	; (1000525c <read_eeprom_setup+0x1dc>)
-10005094:	2002      	movs	r0, #2
-10005096:	2100      	movs	r1, #0
-10005098:	1c1a      	adds	r2, r3, #0
-1000509a:	2304      	movs	r3, #4
-1000509c:	f7fd fe4a 	bl	10002d34 <E_EEPROM_XMC1_Read>
+10005096:	2308      	movs	r3, #8
+10005098:	18fb      	adds	r3, r7, r3
+1000509a:	2002      	movs	r0, #2
+1000509c:	2100      	movs	r1, #0
+1000509e:	1c1a      	adds	r2, r3, #0
+100050a0:	2304      	movs	r3, #4
+100050a2:	f7fd fe47 	bl	10002d34 <E_EEPROM_XMC1_Read>
 	E_EEPROM_XMC1_Read(EEPROM_LATCHTIME, 0U, ReadBuffer_LT, 4U);
-100050a0:	4b6f      	ldr	r3, [pc, #444]	; (10005260 <read_eeprom_setup+0x1e0>)
-100050a2:	2003      	movs	r0, #3
-100050a4:	2100      	movs	r1, #0
-100050a6:	1c1a      	adds	r2, r3, #0
-100050a8:	2304      	movs	r3, #4
-100050aa:	f7fd fe43 	bl	10002d34 <E_EEPROM_XMC1_Read>
+100050a6:	1d3b      	adds	r3, r7, #4
+100050a8:	2003      	movs	r0, #3
+100050aa:	2100      	movs	r1, #0
+100050ac:	1c1a      	adds	r2, r3, #0
+100050ae:	2304      	movs	r3, #4
+100050b0:	f7fd fe40 	bl	10002d34 <E_EEPROM_XMC1_Read>
 	eeprom_lower = ReadBuffer_LTH[0] + (ReadBuffer_LTH[1] << 8) + (ReadBuffer_LTH[2] << 16) + (ReadBuffer_LTH[3] << 24);
-100050ae:	4b6a      	ldr	r3, [pc, #424]	; (10005258 <read_eeprom_setup+0x1d8>)
-100050b0:	781b      	ldrb	r3, [r3, #0]
-100050b2:	1c1a      	adds	r2, r3, #0
-100050b4:	4b68      	ldr	r3, [pc, #416]	; (10005258 <read_eeprom_setup+0x1d8>)
-100050b6:	785b      	ldrb	r3, [r3, #1]
-100050b8:	021b      	lsls	r3, r3, #8
-100050ba:	18d2      	adds	r2, r2, r3
-100050bc:	4b66      	ldr	r3, [pc, #408]	; (10005258 <read_eeprom_setup+0x1d8>)
-100050be:	789b      	ldrb	r3, [r3, #2]
-100050c0:	041b      	lsls	r3, r3, #16
-100050c2:	18d2      	adds	r2, r2, r3
-100050c4:	4b64      	ldr	r3, [pc, #400]	; (10005258 <read_eeprom_setup+0x1d8>)
-100050c6:	78db      	ldrb	r3, [r3, #3]
-100050c8:	061b      	lsls	r3, r3, #24
-100050ca:	18d2      	adds	r2, r2, r3
-100050cc:	4b65      	ldr	r3, [pc, #404]	; (10005264 <read_eeprom_setup+0x1e4>)
-100050ce:	601a      	str	r2, [r3, #0]
+100050b4:	230c      	movs	r3, #12
+100050b6:	18fb      	adds	r3, r7, r3
+100050b8:	781b      	ldrb	r3, [r3, #0]
+100050ba:	1c1a      	adds	r2, r3, #0
+100050bc:	230c      	movs	r3, #12
+100050be:	18fb      	adds	r3, r7, r3
+100050c0:	785b      	ldrb	r3, [r3, #1]
+100050c2:	021b      	lsls	r3, r3, #8
+100050c4:	18d2      	adds	r2, r2, r3
+100050c6:	230c      	movs	r3, #12
+100050c8:	18fb      	adds	r3, r7, r3
+100050ca:	789b      	ldrb	r3, [r3, #2]
+100050cc:	041b      	lsls	r3, r3, #16
+100050ce:	18d2      	adds	r2, r2, r3
+100050d0:	230c      	movs	r3, #12
+100050d2:	18fb      	adds	r3, r7, r3
+100050d4:	78db      	ldrb	r3, [r3, #3]
+100050d6:	061b      	lsls	r3, r3, #24
+100050d8:	18d2      	adds	r2, r2, r3
+100050da:	4b65      	ldr	r3, [pc, #404]	; (10005270 <read_eeprom_setup+0x1f0>)
+100050dc:	601a      	str	r2, [r3, #0]
 	eeprom_upper = ReadBuffer_UTH[0] + (ReadBuffer_UTH[1] << 8) + (ReadBuffer_UTH[2] << 16) + (ReadBuffer_UTH[3] << 24);
-100050d0:	4b62      	ldr	r3, [pc, #392]	; (1000525c <read_eeprom_setup+0x1dc>)
-100050d2:	781b      	ldrb	r3, [r3, #0]
-100050d4:	1c1a      	adds	r2, r3, #0
-100050d6:	4b61      	ldr	r3, [pc, #388]	; (1000525c <read_eeprom_setup+0x1dc>)
-100050d8:	785b      	ldrb	r3, [r3, #1]
-100050da:	021b      	lsls	r3, r3, #8
-100050dc:	18d2      	adds	r2, r2, r3
-100050de:	4b5f      	ldr	r3, [pc, #380]	; (1000525c <read_eeprom_setup+0x1dc>)
-100050e0:	789b      	ldrb	r3, [r3, #2]
-100050e2:	041b      	lsls	r3, r3, #16
-100050e4:	18d2      	adds	r2, r2, r3
-100050e6:	4b5d      	ldr	r3, [pc, #372]	; (1000525c <read_eeprom_setup+0x1dc>)
-100050e8:	78db      	ldrb	r3, [r3, #3]
-100050ea:	061b      	lsls	r3, r3, #24
-100050ec:	18d2      	adds	r2, r2, r3
-100050ee:	4b5e      	ldr	r3, [pc, #376]	; (10005268 <read_eeprom_setup+0x1e8>)
-100050f0:	601a      	str	r2, [r3, #0]
+100050de:	2308      	movs	r3, #8
+100050e0:	18fb      	adds	r3, r7, r3
+100050e2:	781b      	ldrb	r3, [r3, #0]
+100050e4:	1c1a      	adds	r2, r3, #0
+100050e6:	2308      	movs	r3, #8
+100050e8:	18fb      	adds	r3, r7, r3
+100050ea:	785b      	ldrb	r3, [r3, #1]
+100050ec:	021b      	lsls	r3, r3, #8
+100050ee:	18d2      	adds	r2, r2, r3
+100050f0:	2308      	movs	r3, #8
+100050f2:	18fb      	adds	r3, r7, r3
+100050f4:	789b      	ldrb	r3, [r3, #2]
+100050f6:	041b      	lsls	r3, r3, #16
+100050f8:	18d2      	adds	r2, r2, r3
+100050fa:	2308      	movs	r3, #8
+100050fc:	18fb      	adds	r3, r7, r3
+100050fe:	78db      	ldrb	r3, [r3, #3]
+10005100:	061b      	lsls	r3, r3, #24
+10005102:	18d2      	adds	r2, r2, r3
+10005104:	4b5b      	ldr	r3, [pc, #364]	; (10005274 <read_eeprom_setup+0x1f4>)
+10005106:	601a      	str	r2, [r3, #0]
 	eeprom_latchtime = ReadBuffer_LT[0] + (ReadBuffer_LT[1] << 8) + (ReadBuffer_LT[2] << 16) + (ReadBuffer_LT[3] << 24);
-100050f2:	4b5b      	ldr	r3, [pc, #364]	; (10005260 <read_eeprom_setup+0x1e0>)
-100050f4:	781b      	ldrb	r3, [r3, #0]
-100050f6:	1c1a      	adds	r2, r3, #0
-100050f8:	4b59      	ldr	r3, [pc, #356]	; (10005260 <read_eeprom_setup+0x1e0>)
-100050fa:	785b      	ldrb	r3, [r3, #1]
-100050fc:	021b      	lsls	r3, r3, #8
-100050fe:	18d2      	adds	r2, r2, r3
-10005100:	4b57      	ldr	r3, [pc, #348]	; (10005260 <read_eeprom_setup+0x1e0>)
-10005102:	789b      	ldrb	r3, [r3, #2]
-10005104:	041b      	lsls	r3, r3, #16
-10005106:	18d2      	adds	r2, r2, r3
-10005108:	4b55      	ldr	r3, [pc, #340]	; (10005260 <read_eeprom_setup+0x1e0>)
-1000510a:	78db      	ldrb	r3, [r3, #3]
-1000510c:	061b      	lsls	r3, r3, #24
-1000510e:	18d2      	adds	r2, r2, r3
-10005110:	4b56      	ldr	r3, [pc, #344]	; (1000526c <read_eeprom_setup+0x1ec>)
-10005112:	601a      	str	r2, [r3, #0]
+10005108:	1d3b      	adds	r3, r7, #4
+1000510a:	781b      	ldrb	r3, [r3, #0]
+1000510c:	1c1a      	adds	r2, r3, #0
+1000510e:	1d3b      	adds	r3, r7, #4
+10005110:	785b      	ldrb	r3, [r3, #1]
+10005112:	021b      	lsls	r3, r3, #8
+10005114:	18d2      	adds	r2, r2, r3
+10005116:	1d3b      	adds	r3, r7, #4
+10005118:	789b      	ldrb	r3, [r3, #2]
+1000511a:	041b      	lsls	r3, r3, #16
+1000511c:	18d2      	adds	r2, r2, r3
+1000511e:	1d3b      	adds	r3, r7, #4
+10005120:	78db      	ldrb	r3, [r3, #3]
+10005122:	061b      	lsls	r3, r3, #24
+10005124:	18d2      	adds	r2, r2, r3
+10005126:	4b54      	ldr	r3, [pc, #336]	; (10005278 <read_eeprom_setup+0x1f8>)
+10005128:	601a      	str	r2, [r3, #0]
 
 	// Check if values make sense, else return to default
 	if(eeprom_upper < 0 || eeprom_upper > ADC_THRESHOLD_MAX){
-10005114:	4b54      	ldr	r3, [pc, #336]	; (10005268 <read_eeprom_setup+0x1e8>)
-10005116:	681b      	ldr	r3, [r3, #0]
-10005118:	2b00      	cmp	r3, #0
-1000511a:	db04      	blt.n	10005126 <read_eeprom_setup+0xa6>
-1000511c:	4b52      	ldr	r3, [pc, #328]	; (10005268 <read_eeprom_setup+0x1e8>)
-1000511e:	681b      	ldr	r3, [r3, #0]
-10005120:	4a53      	ldr	r2, [pc, #332]	; (10005270 <read_eeprom_setup+0x1f0>)
-10005122:	4293      	cmp	r3, r2
-10005124:	dd27      	ble.n	10005176 <read_eeprom_setup+0xf6>
+1000512a:	4b52      	ldr	r3, [pc, #328]	; (10005274 <read_eeprom_setup+0x1f4>)
+1000512c:	681b      	ldr	r3, [r3, #0]
+1000512e:	2b00      	cmp	r3, #0
+10005130:	db04      	blt.n	1000513c <read_eeprom_setup+0xbc>
+10005132:	4b50      	ldr	r3, [pc, #320]	; (10005274 <read_eeprom_setup+0x1f4>)
+10005134:	681b      	ldr	r3, [r3, #0]
+10005136:	4a51      	ldr	r2, [pc, #324]	; (1000527c <read_eeprom_setup+0x1fc>)
+10005138:	4293      	cmp	r3, r2
+1000513a:	dd27      	ble.n	1000518c <read_eeprom_setup+0x10c>
 		ADC_upper_threshold = ADC_TH_UPPER_DEFAULT;
-10005126:	4b53      	ldr	r3, [pc, #332]	; (10005274 <read_eeprom_setup+0x1f4>)
-10005128:	4a53      	ldr	r2, [pc, #332]	; (10005278 <read_eeprom_setup+0x1f8>)
-1000512a:	601a      	str	r2, [r3, #0]
+1000513c:	4b50      	ldr	r3, [pc, #320]	; (10005280 <read_eeprom_setup+0x200>)
+1000513e:	4a51      	ldr	r2, [pc, #324]	; (10005284 <read_eeprom_setup+0x204>)
+10005140:	601a      	str	r2, [r3, #0]
 		// Blink LED for error indication
 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
-1000512c:	4b53      	ldr	r3, [pc, #332]	; (1000527c <read_eeprom_setup+0x1fc>)
-1000512e:	1c18      	adds	r0, r3, #0
-10005130:	2100      	movs	r1, #0
-10005132:	f7fd fc71 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
+10005142:	4b51      	ldr	r3, [pc, #324]	; (10005288 <read_eeprom_setup+0x208>)
+10005144:	1c18      	adds	r0, r3, #0
+10005146:	2100      	movs	r1, #0
+10005148:	f7fd fc66 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
 		delay_ms(200);
-10005136:	20c8      	movs	r0, #200	; 0xc8
-10005138:	f7ff fd5c 	bl	10004bf4 <delay_ms>
+1000514c:	20c8      	movs	r0, #200	; 0xc8
+1000514e:	f7ff fd51 	bl	10004bf4 <delay_ms>
 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
-1000513c:	4b4f      	ldr	r3, [pc, #316]	; (1000527c <read_eeprom_setup+0x1fc>)
-1000513e:	4a50      	ldr	r2, [pc, #320]	; (10005280 <read_eeprom_setup+0x200>)
-10005140:	1c18      	adds	r0, r3, #0
-10005142:	1c11      	adds	r1, r2, #0
-10005144:	f7fd fc68 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
+10005152:	4b4d      	ldr	r3, [pc, #308]	; (10005288 <read_eeprom_setup+0x208>)
+10005154:	4a4d      	ldr	r2, [pc, #308]	; (1000528c <read_eeprom_setup+0x20c>)
+10005156:	1c18      	adds	r0, r3, #0
+10005158:	1c11      	adds	r1, r2, #0
+1000515a:	f7fd fc5d 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
 		delay_ms(200);
-10005148:	20c8      	movs	r0, #200	; 0xc8
-1000514a:	f7ff fd53 	bl	10004bf4 <delay_ms>
+1000515e:	20c8      	movs	r0, #200	; 0xc8
+10005160:	f7ff fd48 	bl	10004bf4 <delay_ms>
 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
-1000514e:	4b4b      	ldr	r3, [pc, #300]	; (1000527c <read_eeprom_setup+0x1fc>)
-10005150:	1c18      	adds	r0, r3, #0
-10005152:	2100      	movs	r1, #0
-10005154:	f7fd fc60 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
+10005164:	4b48      	ldr	r3, [pc, #288]	; (10005288 <read_eeprom_setup+0x208>)
+10005166:	1c18      	adds	r0, r3, #0
+10005168:	2100      	movs	r1, #0
+1000516a:	f7fd fc55 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
 		delay_ms(200);
-10005158:	20c8      	movs	r0, #200	; 0xc8
-1000515a:	f7ff fd4b 	bl	10004bf4 <delay_ms>
-		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
-1000515e:	4b47      	ldr	r3, [pc, #284]	; (1000527c <read_eeprom_setup+0x1fc>)
-10005160:	4a47      	ldr	r2, [pc, #284]	; (10005280 <read_eeprom_setup+0x200>)
-10005162:	1c18      	adds	r0, r3, #0
-10005164:	1c11      	adds	r1, r2, #0
-10005166:	f7fd fc57 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
-		delay_ms(600);
-1000516a:	2396      	movs	r3, #150	; 0x96
-1000516c:	009b      	lsls	r3, r3, #2
-1000516e:	1c18      	adds	r0, r3, #0
+1000516e:	20c8      	movs	r0, #200	; 0xc8
 10005170:	f7ff fd40 	bl	10004bf4 <delay_ms>
-10005174:	e003      	b.n	1000517e <read_eeprom_setup+0xfe>
+		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
+10005174:	4b44      	ldr	r3, [pc, #272]	; (10005288 <read_eeprom_setup+0x208>)
+10005176:	4a45      	ldr	r2, [pc, #276]	; (1000528c <read_eeprom_setup+0x20c>)
+10005178:	1c18      	adds	r0, r3, #0
+1000517a:	1c11      	adds	r1, r2, #0
+1000517c:	f7fd fc4c 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
+		delay_ms(600);
+10005180:	2396      	movs	r3, #150	; 0x96
+10005182:	009b      	lsls	r3, r3, #2
+10005184:	1c18      	adds	r0, r3, #0
+10005186:	f7ff fd35 	bl	10004bf4 <delay_ms>
+1000518a:	e003      	b.n	10005194 <read_eeprom_setup+0x114>
 	}
 	else{
 		ADC_upper_threshold = eeprom_upper;
-10005176:	4b3c      	ldr	r3, [pc, #240]	; (10005268 <read_eeprom_setup+0x1e8>)
-10005178:	681a      	ldr	r2, [r3, #0]
-1000517a:	4b3e      	ldr	r3, [pc, #248]	; (10005274 <read_eeprom_setup+0x1f4>)
-1000517c:	601a      	str	r2, [r3, #0]
+1000518c:	4b39      	ldr	r3, [pc, #228]	; (10005274 <read_eeprom_setup+0x1f4>)
+1000518e:	681a      	ldr	r2, [r3, #0]
+10005190:	4b3b      	ldr	r3, [pc, #236]	; (10005280 <read_eeprom_setup+0x200>)
+10005192:	601a      	str	r2, [r3, #0]
 	}
 	if(eeprom_lower < 0 || eeprom_lower > ADC_THRESHOLD_MAX){
-1000517e:	4b39      	ldr	r3, [pc, #228]	; (10005264 <read_eeprom_setup+0x1e4>)
-10005180:	681b      	ldr	r3, [r3, #0]
-10005182:	2b00      	cmp	r3, #0
-10005184:	db04      	blt.n	10005190 <read_eeprom_setup+0x110>
-10005186:	4b37      	ldr	r3, [pc, #220]	; (10005264 <read_eeprom_setup+0x1e4>)
-10005188:	681b      	ldr	r3, [r3, #0]
-1000518a:	4a39      	ldr	r2, [pc, #228]	; (10005270 <read_eeprom_setup+0x1f0>)
-1000518c:	4293      	cmp	r3, r2
-1000518e:	dd27      	ble.n	100051e0 <read_eeprom_setup+0x160>
+10005194:	4b36      	ldr	r3, [pc, #216]	; (10005270 <read_eeprom_setup+0x1f0>)
+10005196:	681b      	ldr	r3, [r3, #0]
+10005198:	2b00      	cmp	r3, #0
+1000519a:	db04      	blt.n	100051a6 <read_eeprom_setup+0x126>
+1000519c:	4b34      	ldr	r3, [pc, #208]	; (10005270 <read_eeprom_setup+0x1f0>)
+1000519e:	681b      	ldr	r3, [r3, #0]
+100051a0:	4a36      	ldr	r2, [pc, #216]	; (1000527c <read_eeprom_setup+0x1fc>)
+100051a2:	4293      	cmp	r3, r2
+100051a4:	dd27      	ble.n	100051f6 <read_eeprom_setup+0x176>
 		ADC_lower_threshold = ADC_TH_LOWER_DEFAULT;
-10005190:	4b3c      	ldr	r3, [pc, #240]	; (10005284 <read_eeprom_setup+0x204>)
-10005192:	4a3d      	ldr	r2, [pc, #244]	; (10005288 <read_eeprom_setup+0x208>)
-10005194:	601a      	str	r2, [r3, #0]
+100051a6:	4b3a      	ldr	r3, [pc, #232]	; (10005290 <read_eeprom_setup+0x210>)
+100051a8:	4a3a      	ldr	r2, [pc, #232]	; (10005294 <read_eeprom_setup+0x214>)
+100051aa:	601a      	str	r2, [r3, #0]
 		// Blink LED for error indication
 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
-10005196:	4b39      	ldr	r3, [pc, #228]	; (1000527c <read_eeprom_setup+0x1fc>)
-10005198:	1c18      	adds	r0, r3, #0
-1000519a:	2100      	movs	r1, #0
-1000519c:	f7fd fc3c 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
+100051ac:	4b36      	ldr	r3, [pc, #216]	; (10005288 <read_eeprom_setup+0x208>)
+100051ae:	1c18      	adds	r0, r3, #0
+100051b0:	2100      	movs	r1, #0
+100051b2:	f7fd fc31 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
 		delay_ms(200);
-100051a0:	20c8      	movs	r0, #200	; 0xc8
-100051a2:	f7ff fd27 	bl	10004bf4 <delay_ms>
+100051b6:	20c8      	movs	r0, #200	; 0xc8
+100051b8:	f7ff fd1c 	bl	10004bf4 <delay_ms>
 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
-100051a6:	4b35      	ldr	r3, [pc, #212]	; (1000527c <read_eeprom_setup+0x1fc>)
-100051a8:	4a35      	ldr	r2, [pc, #212]	; (10005280 <read_eeprom_setup+0x200>)
-100051aa:	1c18      	adds	r0, r3, #0
-100051ac:	1c11      	adds	r1, r2, #0
-100051ae:	f7fd fc33 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
+100051bc:	4b32      	ldr	r3, [pc, #200]	; (10005288 <read_eeprom_setup+0x208>)
+100051be:	4a33      	ldr	r2, [pc, #204]	; (1000528c <read_eeprom_setup+0x20c>)
+100051c0:	1c18      	adds	r0, r3, #0
+100051c2:	1c11      	adds	r1, r2, #0
+100051c4:	f7fd fc28 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
 		delay_ms(200);
-100051b2:	20c8      	movs	r0, #200	; 0xc8
-100051b4:	f7ff fd1e 	bl	10004bf4 <delay_ms>
+100051c8:	20c8      	movs	r0, #200	; 0xc8
+100051ca:	f7ff fd13 	bl	10004bf4 <delay_ms>
 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
-100051b8:	4b30      	ldr	r3, [pc, #192]	; (1000527c <read_eeprom_setup+0x1fc>)
-100051ba:	1c18      	adds	r0, r3, #0
-100051bc:	2100      	movs	r1, #0
-100051be:	f7fd fc2b 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
+100051ce:	4b2e      	ldr	r3, [pc, #184]	; (10005288 <read_eeprom_setup+0x208>)
+100051d0:	1c18      	adds	r0, r3, #0
+100051d2:	2100      	movs	r1, #0
+100051d4:	f7fd fc20 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
 		delay_ms(200);
-100051c2:	20c8      	movs	r0, #200	; 0xc8
-100051c4:	f7ff fd16 	bl	10004bf4 <delay_ms>
-		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
-100051c8:	4b2c      	ldr	r3, [pc, #176]	; (1000527c <read_eeprom_setup+0x1fc>)
-100051ca:	4a2d      	ldr	r2, [pc, #180]	; (10005280 <read_eeprom_setup+0x200>)
-100051cc:	1c18      	adds	r0, r3, #0
-100051ce:	1c11      	adds	r1, r2, #0
-100051d0:	f7fd fc22 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
-		delay_ms(600);
-100051d4:	2396      	movs	r3, #150	; 0x96
-100051d6:	009b      	lsls	r3, r3, #2
-100051d8:	1c18      	adds	r0, r3, #0
+100051d8:	20c8      	movs	r0, #200	; 0xc8
 100051da:	f7ff fd0b 	bl	10004bf4 <delay_ms>
-100051de:	e003      	b.n	100051e8 <read_eeprom_setup+0x168>
+		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
+100051de:	4b2a      	ldr	r3, [pc, #168]	; (10005288 <read_eeprom_setup+0x208>)
+100051e0:	4a2a      	ldr	r2, [pc, #168]	; (1000528c <read_eeprom_setup+0x20c>)
+100051e2:	1c18      	adds	r0, r3, #0
+100051e4:	1c11      	adds	r1, r2, #0
+100051e6:	f7fd fc17 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
+		delay_ms(600);
+100051ea:	2396      	movs	r3, #150	; 0x96
+100051ec:	009b      	lsls	r3, r3, #2
+100051ee:	1c18      	adds	r0, r3, #0
+100051f0:	f7ff fd00 	bl	10004bf4 <delay_ms>
+100051f4:	e003      	b.n	100051fe <read_eeprom_setup+0x17e>
 	}
 	else{
 		ADC_lower_threshold = eeprom_lower;
-100051e0:	4b20      	ldr	r3, [pc, #128]	; (10005264 <read_eeprom_setup+0x1e4>)
-100051e2:	681a      	ldr	r2, [r3, #0]
-100051e4:	4b27      	ldr	r3, [pc, #156]	; (10005284 <read_eeprom_setup+0x204>)
-100051e6:	601a      	str	r2, [r3, #0]
+100051f6:	4b1e      	ldr	r3, [pc, #120]	; (10005270 <read_eeprom_setup+0x1f0>)
+100051f8:	681a      	ldr	r2, [r3, #0]
+100051fa:	4b25      	ldr	r3, [pc, #148]	; (10005290 <read_eeprom_setup+0x210>)
+100051fc:	601a      	str	r2, [r3, #0]
 	}
 	if(eeprom_latchtime < 0 || eeprom_latchtime > ADC_THRESHOLD_MAX){
-100051e8:	4b20      	ldr	r3, [pc, #128]	; (1000526c <read_eeprom_setup+0x1ec>)
-100051ea:	681b      	ldr	r3, [r3, #0]
-100051ec:	2b00      	cmp	r3, #0
-100051ee:	db04      	blt.n	100051fa <read_eeprom_setup+0x17a>
-100051f0:	4b1e      	ldr	r3, [pc, #120]	; (1000526c <read_eeprom_setup+0x1ec>)
-100051f2:	681b      	ldr	r3, [r3, #0]
-100051f4:	4a1e      	ldr	r2, [pc, #120]	; (10005270 <read_eeprom_setup+0x1f0>)
-100051f6:	4293      	cmp	r3, r2
-100051f8:	dd28      	ble.n	1000524c <read_eeprom_setup+0x1cc>
+100051fe:	4b1e      	ldr	r3, [pc, #120]	; (10005278 <read_eeprom_setup+0x1f8>)
+10005200:	681b      	ldr	r3, [r3, #0]
+10005202:	2b00      	cmp	r3, #0
+10005204:	db04      	blt.n	10005210 <read_eeprom_setup+0x190>
+10005206:	4b1c      	ldr	r3, [pc, #112]	; (10005278 <read_eeprom_setup+0x1f8>)
+10005208:	681b      	ldr	r3, [r3, #0]
+1000520a:	4a1c      	ldr	r2, [pc, #112]	; (1000527c <read_eeprom_setup+0x1fc>)
+1000520c:	4293      	cmp	r3, r2
+1000520e:	dd28      	ble.n	10005262 <read_eeprom_setup+0x1e2>
 		relay_threshold_latchtime = RELAY_LATCHTIME_DEFAULT;
-100051fa:	4b24      	ldr	r3, [pc, #144]	; (1000528c <read_eeprom_setup+0x20c>)
-100051fc:	22fa      	movs	r2, #250	; 0xfa
-100051fe:	0052      	lsls	r2, r2, #1
-10005200:	601a      	str	r2, [r3, #0]
+10005210:	4b21      	ldr	r3, [pc, #132]	; (10005298 <read_eeprom_setup+0x218>)
+10005212:	22fa      	movs	r2, #250	; 0xfa
+10005214:	0052      	lsls	r2, r2, #1
+10005216:	601a      	str	r2, [r3, #0]
 		// Blink LED for error indication
 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
-10005202:	4b1e      	ldr	r3, [pc, #120]	; (1000527c <read_eeprom_setup+0x1fc>)
-10005204:	1c18      	adds	r0, r3, #0
-10005206:	2100      	movs	r1, #0
-10005208:	f7fd fc06 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
+10005218:	4b1b      	ldr	r3, [pc, #108]	; (10005288 <read_eeprom_setup+0x208>)
+1000521a:	1c18      	adds	r0, r3, #0
+1000521c:	2100      	movs	r1, #0
+1000521e:	f7fd fbfb 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
 		delay_ms(200);
-1000520c:	20c8      	movs	r0, #200	; 0xc8
-1000520e:	f7ff fcf1 	bl	10004bf4 <delay_ms>
+10005222:	20c8      	movs	r0, #200	; 0xc8
+10005224:	f7ff fce6 	bl	10004bf4 <delay_ms>
 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
-10005212:	4b1a      	ldr	r3, [pc, #104]	; (1000527c <read_eeprom_setup+0x1fc>)
-10005214:	4a1a      	ldr	r2, [pc, #104]	; (10005280 <read_eeprom_setup+0x200>)
-10005216:	1c18      	adds	r0, r3, #0
-10005218:	1c11      	adds	r1, r2, #0
-1000521a:	f7fd fbfd 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
+10005228:	4b17      	ldr	r3, [pc, #92]	; (10005288 <read_eeprom_setup+0x208>)
+1000522a:	4a18      	ldr	r2, [pc, #96]	; (1000528c <read_eeprom_setup+0x20c>)
+1000522c:	1c18      	adds	r0, r3, #0
+1000522e:	1c11      	adds	r1, r2, #0
+10005230:	f7fd fbf2 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
 		delay_ms(200);
-1000521e:	20c8      	movs	r0, #200	; 0xc8
-10005220:	f7ff fce8 	bl	10004bf4 <delay_ms>
+10005234:	20c8      	movs	r0, #200	; 0xc8
+10005236:	f7ff fcdd 	bl	10004bf4 <delay_ms>
 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
-10005224:	4b15      	ldr	r3, [pc, #84]	; (1000527c <read_eeprom_setup+0x1fc>)
-10005226:	1c18      	adds	r0, r3, #0
-10005228:	2100      	movs	r1, #0
-1000522a:	f7fd fbf5 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
+1000523a:	4b13      	ldr	r3, [pc, #76]	; (10005288 <read_eeprom_setup+0x208>)
+1000523c:	1c18      	adds	r0, r3, #0
+1000523e:	2100      	movs	r1, #0
+10005240:	f7fd fbea 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
 		delay_ms(200);
-1000522e:	20c8      	movs	r0, #200	; 0xc8
-10005230:	f7ff fce0 	bl	10004bf4 <delay_ms>
-		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
-10005234:	4b11      	ldr	r3, [pc, #68]	; (1000527c <read_eeprom_setup+0x1fc>)
-10005236:	4a12      	ldr	r2, [pc, #72]	; (10005280 <read_eeprom_setup+0x200>)
-10005238:	1c18      	adds	r0, r3, #0
-1000523a:	1c11      	adds	r1, r2, #0
-1000523c:	f7fd fbec 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
-		delay_ms(300);
-10005240:	2396      	movs	r3, #150	; 0x96
-10005242:	005b      	lsls	r3, r3, #1
-10005244:	1c18      	adds	r0, r3, #0
+10005244:	20c8      	movs	r0, #200	; 0xc8
 10005246:	f7ff fcd5 	bl	10004bf4 <delay_ms>
-1000524a:	e003      	b.n	10005254 <read_eeprom_setup+0x1d4>
+		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
+1000524a:	4b0f      	ldr	r3, [pc, #60]	; (10005288 <read_eeprom_setup+0x208>)
+1000524c:	4a0f      	ldr	r2, [pc, #60]	; (1000528c <read_eeprom_setup+0x20c>)
+1000524e:	1c18      	adds	r0, r3, #0
+10005250:	1c11      	adds	r1, r2, #0
+10005252:	f7fd fbe1 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
+		delay_ms(300);
+10005256:	2396      	movs	r3, #150	; 0x96
+10005258:	005b      	lsls	r3, r3, #1
+1000525a:	1c18      	adds	r0, r3, #0
+1000525c:	f7ff fcca 	bl	10004bf4 <delay_ms>
+10005260:	e003      	b.n	1000526a <read_eeprom_setup+0x1ea>
 	}
 	else{
 		relay_threshold_latchtime = eeprom_latchtime;
-1000524c:	4b07      	ldr	r3, [pc, #28]	; (1000526c <read_eeprom_setup+0x1ec>)
-1000524e:	681a      	ldr	r2, [r3, #0]
-10005250:	4b0e      	ldr	r3, [pc, #56]	; (1000528c <read_eeprom_setup+0x20c>)
-10005252:	601a      	str	r2, [r3, #0]
-	//
-	//uint16_t temp16 = 1015;
-	//EEPROM_WriteBuffer[0] = (uint8_t)temp16;
-	//EEPROM_WriteBuffer[1] = (uint8_t)(temp16 >> 8);
+10005262:	4b05      	ldr	r3, [pc, #20]	; (10005278 <read_eeprom_setup+0x1f8>)
+10005264:	681a      	ldr	r2, [r3, #0]
+10005266:	4b0c      	ldr	r3, [pc, #48]	; (10005298 <read_eeprom_setup+0x218>)
+10005268:	601a      	str	r2, [r3, #0]
+	//EEPROM_WriteBuffer[0] = (uint8_t)temp;
+	//EEPROM_WriteBuffer[1] = (uint8_t)(temp >> 8);
+	//EEPROM_WriteBuffer[2] = (uint8_t)(temp >> 16);
+	//EEPROM_WriteBuffer[3] = (uint8_t)(temp >> 24);
 	//E_EEPROM_XMC1_Write(EEPROM_LATCHTIME, EEPROM_WriteBuffer);
 }
-10005254:	46bd      	mov	sp, r7
-10005256:	bd80      	pop	{r7, pc}
-10005258:	200008c0 	.word	0x200008c0
-1000525c:	200008c8 	.word	0x200008c8
-10005260:	200008c4 	.word	0x200008c4
-10005264:	20000614 	.word	0x20000614
-10005268:	20000610 	.word	0x20000610
-1000526c:	2000060c 	.word	0x2000060c
-10005270:	00000fff 	.word	0x00000fff
-10005274:	200005a8 	.word	0x200005a8
-10005278:	00000db6 	.word	0x00000db6
-1000527c:	20000520 	.word	0x20000520
-10005280:	00002710 	.word	0x00002710
-10005284:	200005ac 	.word	0x200005ac
-10005288:	00000249 	.word	0x00000249
-1000528c:	200005a4 	.word	0x200005a4
+1000526a:	46bd      	mov	sp, r7
+1000526c:	b004      	add	sp, #16
+1000526e:	bd80      	pop	{r7, pc}
+10005270:	20000614 	.word	0x20000614
+10005274:	20000610 	.word	0x20000610
+10005278:	2000060c 	.word	0x2000060c
+1000527c:	00000fff 	.word	0x00000fff
+10005280:	200005a8 	.word	0x200005a8
+10005284:	00000db6 	.word	0x00000db6
+10005288:	20000520 	.word	0x20000520
+1000528c:	00002710 	.word	0x00002710
+10005290:	200005ac 	.word	0x200005ac
+10005294:	00000249 	.word	0x00000249
+10005298:	200005a4 	.word	0x200005a4
 
-10005290 <write_eeprom_setup>:
+1000529c <write_eeprom_setup>:
 
 void write_eeprom_setup(uint8_t block_number, int32_t value){
-10005290:	b580      	push	{r7, lr}
-10005292:	b082      	sub	sp, #8
-10005294:	af00      	add	r7, sp, #0
-10005296:	1c02      	adds	r2, r0, #0
-10005298:	6039      	str	r1, [r7, #0]
-1000529a:	1dfb      	adds	r3, r7, #7
-1000529c:	701a      	strb	r2, [r3, #0]
+1000529c:	b580      	push	{r7, lr}
+1000529e:	b084      	sub	sp, #16
+100052a0:	af00      	add	r7, sp, #0
+100052a2:	1c02      	adds	r2, r0, #0
+100052a4:	6039      	str	r1, [r7, #0]
+100052a6:	1dfb      	adds	r3, r7, #7
+100052a8:	701a      	strb	r2, [r3, #0]
+	uint8_t EEPROM_WriteBuffer[4];
+
 	EEPROM_WriteBuffer[0] = (uint8_t)value;
-1000529e:	683b      	ldr	r3, [r7, #0]
-100052a0:	b2da      	uxtb	r2, r3
-100052a2:	4b0d      	ldr	r3, [pc, #52]	; (100052d8 <write_eeprom_setup+0x48>)
-100052a4:	701a      	strb	r2, [r3, #0]
+100052aa:	683b      	ldr	r3, [r7, #0]
+100052ac:	b2da      	uxtb	r2, r3
+100052ae:	230c      	movs	r3, #12
+100052b0:	18fb      	adds	r3, r7, r3
+100052b2:	701a      	strb	r2, [r3, #0]
 	EEPROM_WriteBuffer[1] = (uint8_t)(value >> 8);
-100052a6:	683b      	ldr	r3, [r7, #0]
-100052a8:	121b      	asrs	r3, r3, #8
-100052aa:	b2da      	uxtb	r2, r3
-100052ac:	4b0a      	ldr	r3, [pc, #40]	; (100052d8 <write_eeprom_setup+0x48>)
-100052ae:	705a      	strb	r2, [r3, #1]
+100052b4:	683b      	ldr	r3, [r7, #0]
+100052b6:	121b      	asrs	r3, r3, #8
+100052b8:	b2da      	uxtb	r2, r3
+100052ba:	230c      	movs	r3, #12
+100052bc:	18fb      	adds	r3, r7, r3
+100052be:	705a      	strb	r2, [r3, #1]
 	EEPROM_WriteBuffer[2] = (uint8_t)(value >> 16);
-100052b0:	683b      	ldr	r3, [r7, #0]
-100052b2:	141b      	asrs	r3, r3, #16
-100052b4:	b2da      	uxtb	r2, r3
-100052b6:	4b08      	ldr	r3, [pc, #32]	; (100052d8 <write_eeprom_setup+0x48>)
-100052b8:	709a      	strb	r2, [r3, #2]
+100052c0:	683b      	ldr	r3, [r7, #0]
+100052c2:	141b      	asrs	r3, r3, #16
+100052c4:	b2da      	uxtb	r2, r3
+100052c6:	230c      	movs	r3, #12
+100052c8:	18fb      	adds	r3, r7, r3
+100052ca:	709a      	strb	r2, [r3, #2]
 	EEPROM_WriteBuffer[3] = (uint8_t)(value >> 24);
-100052ba:	683b      	ldr	r3, [r7, #0]
-100052bc:	161b      	asrs	r3, r3, #24
-100052be:	b2da      	uxtb	r2, r3
-100052c0:	4b05      	ldr	r3, [pc, #20]	; (100052d8 <write_eeprom_setup+0x48>)
-100052c2:	70da      	strb	r2, [r3, #3]
+100052cc:	683b      	ldr	r3, [r7, #0]
+100052ce:	161b      	asrs	r3, r3, #24
+100052d0:	b2da      	uxtb	r2, r3
+100052d2:	230c      	movs	r3, #12
+100052d4:	18fb      	adds	r3, r7, r3
+100052d6:	70da      	strb	r2, [r3, #3]
 	E_EEPROM_XMC1_Write(block_number, EEPROM_WriteBuffer);
-100052c4:	1dfb      	adds	r3, r7, #7
-100052c6:	781a      	ldrb	r2, [r3, #0]
-100052c8:	4b03      	ldr	r3, [pc, #12]	; (100052d8 <write_eeprom_setup+0x48>)
-100052ca:	1c10      	adds	r0, r2, #0
-100052cc:	1c19      	adds	r1, r3, #0
-100052ce:	f7fd fd07 	bl	10002ce0 <E_EEPROM_XMC1_Write>
+100052d8:	1dfb      	adds	r3, r7, #7
+100052da:	781a      	ldrb	r2, [r3, #0]
+100052dc:	230c      	movs	r3, #12
+100052de:	18fb      	adds	r3, r7, r3
+100052e0:	1c10      	adds	r0, r2, #0
+100052e2:	1c19      	adds	r1, r3, #0
+100052e4:	f7fd fcfc 	bl	10002ce0 <E_EEPROM_XMC1_Write>
 
 }
-100052d2:	46bd      	mov	sp, r7
-100052d4:	b002      	add	sp, #8
-100052d6:	bd80      	pop	{r7, pc}
-100052d8:	200008cc 	.word	0x200008cc
+100052e8:	46bd      	mov	sp, r7
+100052ea:	b004      	add	sp, #16
+100052ec:	bd80      	pop	{r7, pc}
+100052ee:	46c0      	nop			; (mov r8, r8)
 
-100052dc <manage_buttons>:
+100052f0 <manage_buttons>:
 
 //****************************************************************************
 // manage_buttons - function to manage, debounce and interpret button presses
 //****************************************************************************
 void manage_buttons(void)
 {
-100052dc:	b580      	push	{r7, lr}
-100052de:	af00      	add	r7, sp, #0
+100052f0:	b580      	push	{r7, lr}
+100052f2:	af00      	add	r7, sp, #0
 	/// Detect start of press and save current system time
 	if(button_usb_pressed_timestamp == 0 && DIGITAL_IO_GetInput(&IO_SW_USB) == SW_ON)
-100052e0:	4b8f      	ldr	r3, [pc, #572]	; (10005520 <manage_buttons+0x244>)
-100052e2:	681b      	ldr	r3, [r3, #0]
-100052e4:	2b00      	cmp	r3, #0
-100052e6:	d10a      	bne.n	100052fe <manage_buttons+0x22>
-100052e8:	4b8e      	ldr	r3, [pc, #568]	; (10005524 <manage_buttons+0x248>)
-100052ea:	1c18      	adds	r0, r3, #0
-100052ec:	f7ff fc70 	bl	10004bd0 <DIGITAL_IO_GetInput>
-100052f0:	1e03      	subs	r3, r0, #0
-100052f2:	d104      	bne.n	100052fe <manage_buttons+0x22>
+100052f4:	4b8f      	ldr	r3, [pc, #572]	; (10005534 <manage_buttons+0x244>)
+100052f6:	681b      	ldr	r3, [r3, #0]
+100052f8:	2b00      	cmp	r3, #0
+100052fa:	d10a      	bne.n	10005312 <manage_buttons+0x22>
+100052fc:	4b8e      	ldr	r3, [pc, #568]	; (10005538 <manage_buttons+0x248>)
+100052fe:	1c18      	adds	r0, r3, #0
+10005300:	f7ff fc66 	bl	10004bd0 <DIGITAL_IO_GetInput>
+10005304:	1e03      	subs	r3, r0, #0
+10005306:	d104      	bne.n	10005312 <manage_buttons+0x22>
 		button_usb_pressed_timestamp = SYSTIMER_GetTime();
-100052f4:	f7fd f8b4 	bl	10002460 <SYSTIMER_GetTime>
-100052f8:	1c02      	adds	r2, r0, #0
-100052fa:	4b89      	ldr	r3, [pc, #548]	; (10005520 <manage_buttons+0x244>)
-100052fc:	601a      	str	r2, [r3, #0]
+10005308:	f7fd f8aa 	bl	10002460 <SYSTIMER_GetTime>
+1000530c:	1c02      	adds	r2, r0, #0
+1000530e:	4b89      	ldr	r3, [pc, #548]	; (10005534 <manage_buttons+0x244>)
+10005310:	601a      	str	r2, [r3, #0]
 	if(button_up_pressed_timestamp == 0 && DIGITAL_IO_GetInput(&IO_SW_UP) == SW_ON)
-100052fe:	4b8a      	ldr	r3, [pc, #552]	; (10005528 <manage_buttons+0x24c>)
-10005300:	681b      	ldr	r3, [r3, #0]
-10005302:	2b00      	cmp	r3, #0
-10005304:	d10a      	bne.n	1000531c <manage_buttons+0x40>
-10005306:	4b89      	ldr	r3, [pc, #548]	; (1000552c <manage_buttons+0x250>)
-10005308:	1c18      	adds	r0, r3, #0
-1000530a:	f7ff fc61 	bl	10004bd0 <DIGITAL_IO_GetInput>
-1000530e:	1e03      	subs	r3, r0, #0
-10005310:	d104      	bne.n	1000531c <manage_buttons+0x40>
+10005312:	4b8a      	ldr	r3, [pc, #552]	; (1000553c <manage_buttons+0x24c>)
+10005314:	681b      	ldr	r3, [r3, #0]
+10005316:	2b00      	cmp	r3, #0
+10005318:	d10a      	bne.n	10005330 <manage_buttons+0x40>
+1000531a:	4b89      	ldr	r3, [pc, #548]	; (10005540 <manage_buttons+0x250>)
+1000531c:	1c18      	adds	r0, r3, #0
+1000531e:	f7ff fc57 	bl	10004bd0 <DIGITAL_IO_GetInput>
+10005322:	1e03      	subs	r3, r0, #0
+10005324:	d104      	bne.n	10005330 <manage_buttons+0x40>
 		button_up_pressed_timestamp = SYSTIMER_GetTime();
-10005312:	f7fd f8a5 	bl	10002460 <SYSTIMER_GetTime>
-10005316:	1c02      	adds	r2, r0, #0
-10005318:	4b83      	ldr	r3, [pc, #524]	; (10005528 <manage_buttons+0x24c>)
-1000531a:	601a      	str	r2, [r3, #0]
+10005326:	f7fd f89b 	bl	10002460 <SYSTIMER_GetTime>
+1000532a:	1c02      	adds	r2, r0, #0
+1000532c:	4b83      	ldr	r3, [pc, #524]	; (1000553c <manage_buttons+0x24c>)
+1000532e:	601a      	str	r2, [r3, #0]
 	if(button_down_pressed_timestamp == 0 && DIGITAL_IO_GetInput(&IO_SW_DOWN) == SW_ON)
-1000531c:	4b84      	ldr	r3, [pc, #528]	; (10005530 <manage_buttons+0x254>)
-1000531e:	681b      	ldr	r3, [r3, #0]
-10005320:	2b00      	cmp	r3, #0
-10005322:	d10a      	bne.n	1000533a <manage_buttons+0x5e>
-10005324:	4b83      	ldr	r3, [pc, #524]	; (10005534 <manage_buttons+0x258>)
-10005326:	1c18      	adds	r0, r3, #0
-10005328:	f7ff fc52 	bl	10004bd0 <DIGITAL_IO_GetInput>
-1000532c:	1e03      	subs	r3, r0, #0
-1000532e:	d104      	bne.n	1000533a <manage_buttons+0x5e>
+10005330:	4b84      	ldr	r3, [pc, #528]	; (10005544 <manage_buttons+0x254>)
+10005332:	681b      	ldr	r3, [r3, #0]
+10005334:	2b00      	cmp	r3, #0
+10005336:	d10a      	bne.n	1000534e <manage_buttons+0x5e>
+10005338:	4b83      	ldr	r3, [pc, #524]	; (10005548 <manage_buttons+0x258>)
+1000533a:	1c18      	adds	r0, r3, #0
+1000533c:	f7ff fc48 	bl	10004bd0 <DIGITAL_IO_GetInput>
+10005340:	1e03      	subs	r3, r0, #0
+10005342:	d104      	bne.n	1000534e <manage_buttons+0x5e>
 		button_down_pressed_timestamp = SYSTIMER_GetTime();
-10005330:	f7fd f896 	bl	10002460 <SYSTIMER_GetTime>
-10005334:	1c02      	adds	r2, r0, #0
-10005336:	4b7e      	ldr	r3, [pc, #504]	; (10005530 <manage_buttons+0x254>)
-10005338:	601a      	str	r2, [r3, #0]
+10005344:	f7fd f88c 	bl	10002460 <SYSTIMER_GetTime>
+10005348:	1c02      	adds	r2, r0, #0
+1000534a:	4b7e      	ldr	r3, [pc, #504]	; (10005544 <manage_buttons+0x254>)
+1000534c:	601a      	str	r2, [r3, #0]
 
 	// USB BUTTON: If a press in ongoing and release is detected, calculate time difference
 	if(button_usb_pressed_timestamp != 0 && DIGITAL_IO_GetInput(&IO_SW_USB) == SW_OFF){
-1000533a:	4b79      	ldr	r3, [pc, #484]	; (10005520 <manage_buttons+0x244>)
-1000533c:	681b      	ldr	r3, [r3, #0]
-1000533e:	2b00      	cmp	r3, #0
-10005340:	d033      	beq.n	100053aa <manage_buttons+0xce>
-10005342:	4b78      	ldr	r3, [pc, #480]	; (10005524 <manage_buttons+0x248>)
-10005344:	1c18      	adds	r0, r3, #0
-10005346:	f7ff fc43 	bl	10004bd0 <DIGITAL_IO_GetInput>
-1000534a:	1e03      	subs	r3, r0, #0
-1000534c:	2b01      	cmp	r3, #1
-1000534e:	d12c      	bne.n	100053aa <manage_buttons+0xce>
+1000534e:	4b79      	ldr	r3, [pc, #484]	; (10005534 <manage_buttons+0x244>)
+10005350:	681b      	ldr	r3, [r3, #0]
+10005352:	2b00      	cmp	r3, #0
+10005354:	d033      	beq.n	100053be <manage_buttons+0xce>
+10005356:	4b78      	ldr	r3, [pc, #480]	; (10005538 <manage_buttons+0x248>)
+10005358:	1c18      	adds	r0, r3, #0
+1000535a:	f7ff fc39 	bl	10004bd0 <DIGITAL_IO_GetInput>
+1000535e:	1e03      	subs	r3, r0, #0
+10005360:	2b01      	cmp	r3, #1
+10005362:	d12c      	bne.n	100053be <manage_buttons+0xce>
 		button_usb_pressed_duration = (SYSTIMER_GetTime() - button_usb_pressed_timestamp) / 1000; // convert us to ms
-10005350:	f7fd f886 	bl	10002460 <SYSTIMER_GetTime>
-10005354:	1c02      	adds	r2, r0, #0
-10005356:	4b72      	ldr	r3, [pc, #456]	; (10005520 <manage_buttons+0x244>)
-10005358:	681b      	ldr	r3, [r3, #0]
-1000535a:	1ad3      	subs	r3, r2, r3
-1000535c:	1c18      	adds	r0, r3, #0
-1000535e:	23fa      	movs	r3, #250	; 0xfa
-10005360:	0099      	lsls	r1, r3, #2
-10005362:	f000 fc3f 	bl	10005be4 <__aeabi_uidiv>
-10005366:	1c03      	adds	r3, r0, #0
-10005368:	b29a      	uxth	r2, r3
-1000536a:	4b73      	ldr	r3, [pc, #460]	; (10005538 <manage_buttons+0x25c>)
-1000536c:	801a      	strh	r2, [r3, #0]
+10005364:	f7fd f87c 	bl	10002460 <SYSTIMER_GetTime>
+10005368:	1c02      	adds	r2, r0, #0
+1000536a:	4b72      	ldr	r3, [pc, #456]	; (10005534 <manage_buttons+0x244>)
+1000536c:	681b      	ldr	r3, [r3, #0]
+1000536e:	1ad3      	subs	r3, r2, r3
+10005370:	1c18      	adds	r0, r3, #0
+10005372:	23fa      	movs	r3, #250	; 0xfa
+10005374:	0099      	lsls	r1, r3, #2
+10005376:	f000 fc3d 	bl	10005bf4 <__aeabi_uidiv>
+1000537a:	1c03      	adds	r3, r0, #0
+1000537c:	b29a      	uxth	r2, r3
+1000537e:	4b73      	ldr	r3, [pc, #460]	; (1000554c <manage_buttons+0x25c>)
+10005380:	801a      	strh	r2, [r3, #0]
 		button_usb_pressed_timestamp = 0;
-1000536e:	4b6c      	ldr	r3, [pc, #432]	; (10005520 <manage_buttons+0x244>)
-10005370:	2200      	movs	r2, #0
-10005372:	601a      	str	r2, [r3, #0]
+10005382:	4b6c      	ldr	r3, [pc, #432]	; (10005534 <manage_buttons+0x244>)
+10005384:	2200      	movs	r2, #0
+10005386:	601a      	str	r2, [r3, #0]
 		// Interpret button press and activate "button pressed" marker
 		if(button_usb_pressed_duration >= BTN_LONGEST_PRESS_DURATION)
-10005374:	4b70      	ldr	r3, [pc, #448]	; (10005538 <manage_buttons+0x25c>)
-10005376:	881b      	ldrh	r3, [r3, #0]
-10005378:	4a70      	ldr	r2, [pc, #448]	; (1000553c <manage_buttons+0x260>)
-1000537a:	4293      	cmp	r3, r2
-1000537c:	d903      	bls.n	10005386 <manage_buttons+0xaa>
+10005388:	4b70      	ldr	r3, [pc, #448]	; (1000554c <manage_buttons+0x25c>)
+1000538a:	881b      	ldrh	r3, [r3, #0]
+1000538c:	4a70      	ldr	r2, [pc, #448]	; (10005550 <manage_buttons+0x260>)
+1000538e:	4293      	cmp	r3, r2
+10005390:	d903      	bls.n	1000539a <manage_buttons+0xaa>
 			buttonpress_usb = BTNPRESS_NOT; // In this case the press is already handled
-1000537e:	4b70      	ldr	r3, [pc, #448]	; (10005540 <manage_buttons+0x264>)
-10005380:	2200      	movs	r2, #0
-10005382:	701a      	strb	r2, [r3, #0]
-10005384:	e010      	b.n	100053a8 <manage_buttons+0xcc>
+10005392:	4b70      	ldr	r3, [pc, #448]	; (10005554 <manage_buttons+0x264>)
+10005394:	2200      	movs	r2, #0
+10005396:	701a      	strb	r2, [r3, #0]
+10005398:	e010      	b.n	100053bc <manage_buttons+0xcc>
 		else if(button_usb_pressed_duration >= BTN_LONG_PRESS_DURATION)
-10005386:	4b6c      	ldr	r3, [pc, #432]	; (10005538 <manage_buttons+0x25c>)
-10005388:	881b      	ldrh	r3, [r3, #0]
-1000538a:	4a6e      	ldr	r2, [pc, #440]	; (10005544 <manage_buttons+0x268>)
-1000538c:	4293      	cmp	r3, r2
-1000538e:	d903      	bls.n	10005398 <manage_buttons+0xbc>
+1000539a:	4b6c      	ldr	r3, [pc, #432]	; (1000554c <manage_buttons+0x25c>)
+1000539c:	881b      	ldrh	r3, [r3, #0]
+1000539e:	4a6e      	ldr	r2, [pc, #440]	; (10005558 <manage_buttons+0x268>)
+100053a0:	4293      	cmp	r3, r2
+100053a2:	d903      	bls.n	100053ac <manage_buttons+0xbc>
 			buttonpress_usb = BTNPRESS_LONG;
-10005390:	4b6b      	ldr	r3, [pc, #428]	; (10005540 <manage_buttons+0x264>)
-10005392:	2202      	movs	r2, #2
-10005394:	701a      	strb	r2, [r3, #0]
-10005396:	e007      	b.n	100053a8 <manage_buttons+0xcc>
+100053a4:	4b6b      	ldr	r3, [pc, #428]	; (10005554 <manage_buttons+0x264>)
+100053a6:	2202      	movs	r2, #2
+100053a8:	701a      	strb	r2, [r3, #0]
+100053aa:	e007      	b.n	100053bc <manage_buttons+0xcc>
 		else if(button_usb_pressed_duration >= BTN_STD_PRESS_DURATION)
-10005398:	4b67      	ldr	r3, [pc, #412]	; (10005538 <manage_buttons+0x25c>)
-1000539a:	881b      	ldrh	r3, [r3, #0]
-1000539c:	2b3b      	cmp	r3, #59	; 0x3b
-1000539e:	d903      	bls.n	100053a8 <manage_buttons+0xcc>
+100053ac:	4b67      	ldr	r3, [pc, #412]	; (1000554c <manage_buttons+0x25c>)
+100053ae:	881b      	ldrh	r3, [r3, #0]
+100053b0:	2b3b      	cmp	r3, #59	; 0x3b
+100053b2:	d903      	bls.n	100053bc <manage_buttons+0xcc>
 			buttonpress_usb = BTNPRESS_STD;
-100053a0:	4b67      	ldr	r3, [pc, #412]	; (10005540 <manage_buttons+0x264>)
-100053a2:	2201      	movs	r2, #1
-100053a4:	701a      	strb	r2, [r3, #0]
+100053b4:	4b67      	ldr	r3, [pc, #412]	; (10005554 <manage_buttons+0x264>)
+100053b6:	2201      	movs	r2, #1
+100053b8:	701a      	strb	r2, [r3, #0]
 	// USB BUTTON: If a press in ongoing and release is detected, calculate time difference
 	if(button_usb_pressed_timestamp != 0 && DIGITAL_IO_GetInput(&IO_SW_USB) == SW_OFF){
 		button_usb_pressed_duration = (SYSTIMER_GetTime() - button_usb_pressed_timestamp) / 1000; // convert us to ms
 		button_usb_pressed_timestamp = 0;
 		// Interpret button press and activate "button pressed" marker
 		if(button_usb_pressed_duration >= BTN_LONGEST_PRESS_DURATION)
-100053a6:	e018      	b.n	100053da <manage_buttons+0xfe>
-100053a8:	e017      	b.n	100053da <manage_buttons+0xfe>
+100053ba:	e018      	b.n	100053ee <manage_buttons+0xfe>
+100053bc:	e017      	b.n	100053ee <manage_buttons+0xfe>
 			buttonpress_usb = BTNPRESS_LONG;
 		else if(button_usb_pressed_duration >= BTN_STD_PRESS_DURATION)
 			buttonpress_usb = BTNPRESS_STD;
 	}
 	// USB BUTTON: If press is to long reset (simulate that press ended)
 	else if(button_usb_pressed_timestamp != 0 && button_usb_pressed_timestamp != TIMESTAMP_DEACTIVATED && ((SYSTIMER_GetTime() - button_usb_pressed_timestamp) / 1000) > BTN_LONGEST_PRESS_DURATION){
-100053aa:	4b5d      	ldr	r3, [pc, #372]	; (10005520 <manage_buttons+0x244>)
-100053ac:	681b      	ldr	r3, [r3, #0]
-100053ae:	2b00      	cmp	r3, #0
-100053b0:	d013      	beq.n	100053da <manage_buttons+0xfe>
-100053b2:	4b5b      	ldr	r3, [pc, #364]	; (10005520 <manage_buttons+0x244>)
-100053b4:	681b      	ldr	r3, [r3, #0]
-100053b6:	3301      	adds	r3, #1
-100053b8:	d00f      	beq.n	100053da <manage_buttons+0xfe>
-100053ba:	f7fd f851 	bl	10002460 <SYSTIMER_GetTime>
-100053be:	1c02      	adds	r2, r0, #0
-100053c0:	4b57      	ldr	r3, [pc, #348]	; (10005520 <manage_buttons+0x244>)
-100053c2:	681b      	ldr	r3, [r3, #0]
-100053c4:	1ad3      	subs	r3, r2, r3
-100053c6:	4a60      	ldr	r2, [pc, #384]	; (10005548 <manage_buttons+0x26c>)
-100053c8:	4293      	cmp	r3, r2
-100053ca:	d906      	bls.n	100053da <manage_buttons+0xfe>
+100053be:	4b5d      	ldr	r3, [pc, #372]	; (10005534 <manage_buttons+0x244>)
+100053c0:	681b      	ldr	r3, [r3, #0]
+100053c2:	2b00      	cmp	r3, #0
+100053c4:	d013      	beq.n	100053ee <manage_buttons+0xfe>
+100053c6:	4b5b      	ldr	r3, [pc, #364]	; (10005534 <manage_buttons+0x244>)
+100053c8:	681b      	ldr	r3, [r3, #0]
+100053ca:	3301      	adds	r3, #1
+100053cc:	d00f      	beq.n	100053ee <manage_buttons+0xfe>
+100053ce:	f7fd f847 	bl	10002460 <SYSTIMER_GetTime>
+100053d2:	1c02      	adds	r2, r0, #0
+100053d4:	4b57      	ldr	r3, [pc, #348]	; (10005534 <manage_buttons+0x244>)
+100053d6:	681b      	ldr	r3, [r3, #0]
+100053d8:	1ad3      	subs	r3, r2, r3
+100053da:	4a60      	ldr	r2, [pc, #384]	; (1000555c <manage_buttons+0x26c>)
+100053dc:	4293      	cmp	r3, r2
+100053de:	d906      	bls.n	100053ee <manage_buttons+0xfe>
 		button_usb_pressed_timestamp = TIMESTAMP_DEACTIVATED; // deactivate timestamp till button is released
-100053cc:	4b54      	ldr	r3, [pc, #336]	; (10005520 <manage_buttons+0x244>)
-100053ce:	2201      	movs	r2, #1
-100053d0:	4252      	negs	r2, r2
-100053d2:	601a      	str	r2, [r3, #0]
+100053e0:	4b54      	ldr	r3, [pc, #336]	; (10005534 <manage_buttons+0x244>)
+100053e2:	2201      	movs	r2, #1
+100053e4:	4252      	negs	r2, r2
+100053e6:	601a      	str	r2, [r3, #0]
 		buttonpress_usb = BTNPRESS_LONGEST;
-100053d4:	4b5a      	ldr	r3, [pc, #360]	; (10005540 <manage_buttons+0x264>)
-100053d6:	2203      	movs	r2, #3
-100053d8:	701a      	strb	r2, [r3, #0]
+100053e8:	4b5a      	ldr	r3, [pc, #360]	; (10005554 <manage_buttons+0x264>)
+100053ea:	2203      	movs	r2, #3
+100053ec:	701a      	strb	r2, [r3, #0]
 	}
 
 	// UP BUTTON: If a press in ongoing and release is detected, calculate time difference
 	if(button_up_pressed_timestamp != 0 && DIGITAL_IO_GetInput(&IO_SW_UP) == SW_OFF){
-100053da:	4b53      	ldr	r3, [pc, #332]	; (10005528 <manage_buttons+0x24c>)
-100053dc:	681b      	ldr	r3, [r3, #0]
-100053de:	2b00      	cmp	r3, #0
-100053e0:	d033      	beq.n	1000544a <manage_buttons+0x16e>
-100053e2:	4b52      	ldr	r3, [pc, #328]	; (1000552c <manage_buttons+0x250>)
-100053e4:	1c18      	adds	r0, r3, #0
-100053e6:	f7ff fbf3 	bl	10004bd0 <DIGITAL_IO_GetInput>
-100053ea:	1e03      	subs	r3, r0, #0
-100053ec:	2b01      	cmp	r3, #1
-100053ee:	d12c      	bne.n	1000544a <manage_buttons+0x16e>
+100053ee:	4b53      	ldr	r3, [pc, #332]	; (1000553c <manage_buttons+0x24c>)
+100053f0:	681b      	ldr	r3, [r3, #0]
+100053f2:	2b00      	cmp	r3, #0
+100053f4:	d033      	beq.n	1000545e <manage_buttons+0x16e>
+100053f6:	4b52      	ldr	r3, [pc, #328]	; (10005540 <manage_buttons+0x250>)
+100053f8:	1c18      	adds	r0, r3, #0
+100053fa:	f7ff fbe9 	bl	10004bd0 <DIGITAL_IO_GetInput>
+100053fe:	1e03      	subs	r3, r0, #0
+10005400:	2b01      	cmp	r3, #1
+10005402:	d12c      	bne.n	1000545e <manage_buttons+0x16e>
 		button_up_pressed_duration = (SYSTIMER_GetTime() - button_up_pressed_timestamp) / 1000; // convert us to ms
-100053f0:	f7fd f836 	bl	10002460 <SYSTIMER_GetTime>
-100053f4:	1c02      	adds	r2, r0, #0
-100053f6:	4b4c      	ldr	r3, [pc, #304]	; (10005528 <manage_buttons+0x24c>)
-100053f8:	681b      	ldr	r3, [r3, #0]
-100053fa:	1ad3      	subs	r3, r2, r3
-100053fc:	1c18      	adds	r0, r3, #0
-100053fe:	23fa      	movs	r3, #250	; 0xfa
-10005400:	0099      	lsls	r1, r3, #2
-10005402:	f000 fbef 	bl	10005be4 <__aeabi_uidiv>
-10005406:	1c03      	adds	r3, r0, #0
-10005408:	b29a      	uxth	r2, r3
-1000540a:	4b50      	ldr	r3, [pc, #320]	; (1000554c <manage_buttons+0x270>)
-1000540c:	801a      	strh	r2, [r3, #0]
+10005404:	f7fd f82c 	bl	10002460 <SYSTIMER_GetTime>
+10005408:	1c02      	adds	r2, r0, #0
+1000540a:	4b4c      	ldr	r3, [pc, #304]	; (1000553c <manage_buttons+0x24c>)
+1000540c:	681b      	ldr	r3, [r3, #0]
+1000540e:	1ad3      	subs	r3, r2, r3
+10005410:	1c18      	adds	r0, r3, #0
+10005412:	23fa      	movs	r3, #250	; 0xfa
+10005414:	0099      	lsls	r1, r3, #2
+10005416:	f000 fbed 	bl	10005bf4 <__aeabi_uidiv>
+1000541a:	1c03      	adds	r3, r0, #0
+1000541c:	b29a      	uxth	r2, r3
+1000541e:	4b50      	ldr	r3, [pc, #320]	; (10005560 <manage_buttons+0x270>)
+10005420:	801a      	strh	r2, [r3, #0]
 		button_up_pressed_timestamp = 0;
-1000540e:	4b46      	ldr	r3, [pc, #280]	; (10005528 <manage_buttons+0x24c>)
-10005410:	2200      	movs	r2, #0
-10005412:	601a      	str	r2, [r3, #0]
+10005422:	4b46      	ldr	r3, [pc, #280]	; (1000553c <manage_buttons+0x24c>)
+10005424:	2200      	movs	r2, #0
+10005426:	601a      	str	r2, [r3, #0]
 		// Interpret button press and activate "button pressed" marker
 		if(button_up_pressed_duration >= BTN_LONGEST_PRESS_DURATION)
-10005414:	4b4d      	ldr	r3, [pc, #308]	; (1000554c <manage_buttons+0x270>)
-10005416:	881b      	ldrh	r3, [r3, #0]
-10005418:	4a48      	ldr	r2, [pc, #288]	; (1000553c <manage_buttons+0x260>)
-1000541a:	4293      	cmp	r3, r2
-1000541c:	d903      	bls.n	10005426 <manage_buttons+0x14a>
+10005428:	4b4d      	ldr	r3, [pc, #308]	; (10005560 <manage_buttons+0x270>)
+1000542a:	881b      	ldrh	r3, [r3, #0]
+1000542c:	4a48      	ldr	r2, [pc, #288]	; (10005550 <manage_buttons+0x260>)
+1000542e:	4293      	cmp	r3, r2
+10005430:	d903      	bls.n	1000543a <manage_buttons+0x14a>
 			buttonpress_up = BTNPRESS_NOT; // In this case the press is already handled
-1000541e:	4b4c      	ldr	r3, [pc, #304]	; (10005550 <manage_buttons+0x274>)
-10005420:	2200      	movs	r2, #0
-10005422:	701a      	strb	r2, [r3, #0]
-10005424:	e010      	b.n	10005448 <manage_buttons+0x16c>
+10005432:	4b4c      	ldr	r3, [pc, #304]	; (10005564 <manage_buttons+0x274>)
+10005434:	2200      	movs	r2, #0
+10005436:	701a      	strb	r2, [r3, #0]
+10005438:	e010      	b.n	1000545c <manage_buttons+0x16c>
 		else if(button_up_pressed_duration >= BTN_LONG_PRESS_DURATION)
-10005426:	4b49      	ldr	r3, [pc, #292]	; (1000554c <manage_buttons+0x270>)
-10005428:	881b      	ldrh	r3, [r3, #0]
-1000542a:	4a46      	ldr	r2, [pc, #280]	; (10005544 <manage_buttons+0x268>)
-1000542c:	4293      	cmp	r3, r2
-1000542e:	d903      	bls.n	10005438 <manage_buttons+0x15c>
+1000543a:	4b49      	ldr	r3, [pc, #292]	; (10005560 <manage_buttons+0x270>)
+1000543c:	881b      	ldrh	r3, [r3, #0]
+1000543e:	4a46      	ldr	r2, [pc, #280]	; (10005558 <manage_buttons+0x268>)
+10005440:	4293      	cmp	r3, r2
+10005442:	d903      	bls.n	1000544c <manage_buttons+0x15c>
 			buttonpress_up = BTNPRESS_LONG;
-10005430:	4b47      	ldr	r3, [pc, #284]	; (10005550 <manage_buttons+0x274>)
-10005432:	2202      	movs	r2, #2
-10005434:	701a      	strb	r2, [r3, #0]
-10005436:	e007      	b.n	10005448 <manage_buttons+0x16c>
+10005444:	4b47      	ldr	r3, [pc, #284]	; (10005564 <manage_buttons+0x274>)
+10005446:	2202      	movs	r2, #2
+10005448:	701a      	strb	r2, [r3, #0]
+1000544a:	e007      	b.n	1000545c <manage_buttons+0x16c>
 		else if(button_up_pressed_duration >= BTN_STD_PRESS_DURATION)
-10005438:	4b44      	ldr	r3, [pc, #272]	; (1000554c <manage_buttons+0x270>)
-1000543a:	881b      	ldrh	r3, [r3, #0]
-1000543c:	2b3b      	cmp	r3, #59	; 0x3b
-1000543e:	d903      	bls.n	10005448 <manage_buttons+0x16c>
+1000544c:	4b44      	ldr	r3, [pc, #272]	; (10005560 <manage_buttons+0x270>)
+1000544e:	881b      	ldrh	r3, [r3, #0]
+10005450:	2b3b      	cmp	r3, #59	; 0x3b
+10005452:	d903      	bls.n	1000545c <manage_buttons+0x16c>
 			buttonpress_up = BTNPRESS_STD;
-10005440:	4b43      	ldr	r3, [pc, #268]	; (10005550 <manage_buttons+0x274>)
-10005442:	2201      	movs	r2, #1
-10005444:	701a      	strb	r2, [r3, #0]
+10005454:	4b43      	ldr	r3, [pc, #268]	; (10005564 <manage_buttons+0x274>)
+10005456:	2201      	movs	r2, #1
+10005458:	701a      	strb	r2, [r3, #0]
 	// UP BUTTON: If a press in ongoing and release is detected, calculate time difference
 	if(button_up_pressed_timestamp != 0 && DIGITAL_IO_GetInput(&IO_SW_UP) == SW_OFF){
 		button_up_pressed_duration = (SYSTIMER_GetTime() - button_up_pressed_timestamp) / 1000; // convert us to ms
 		button_up_pressed_timestamp = 0;
 		// Interpret button press and activate "button pressed" marker
 		if(button_up_pressed_duration >= BTN_LONGEST_PRESS_DURATION)
-10005446:	e018      	b.n	1000547a <manage_buttons+0x19e>
-10005448:	e017      	b.n	1000547a <manage_buttons+0x19e>
+1000545a:	e018      	b.n	1000548e <manage_buttons+0x19e>
+1000545c:	e017      	b.n	1000548e <manage_buttons+0x19e>
 		else if(button_up_pressed_duration >= BTN_STD_PRESS_DURATION)
 			buttonpress_up = BTNPRESS_STD;
 
 	}
 	// UP BUTTON: If press is to long reset (simulate that press ended)
 	else if(button_up_pressed_timestamp != 0 && button_up_pressed_timestamp != TIMESTAMP_DEACTIVATED && ((SYSTIMER_GetTime() - button_up_pressed_timestamp) / 1000) > BTN_LONGEST_PRESS_DURATION){
-1000544a:	4b37      	ldr	r3, [pc, #220]	; (10005528 <manage_buttons+0x24c>)
-1000544c:	681b      	ldr	r3, [r3, #0]
-1000544e:	2b00      	cmp	r3, #0
-10005450:	d013      	beq.n	1000547a <manage_buttons+0x19e>
-10005452:	4b35      	ldr	r3, [pc, #212]	; (10005528 <manage_buttons+0x24c>)
-10005454:	681b      	ldr	r3, [r3, #0]
-10005456:	3301      	adds	r3, #1
-10005458:	d00f      	beq.n	1000547a <manage_buttons+0x19e>
-1000545a:	f7fd f801 	bl	10002460 <SYSTIMER_GetTime>
-1000545e:	1c02      	adds	r2, r0, #0
-10005460:	4b31      	ldr	r3, [pc, #196]	; (10005528 <manage_buttons+0x24c>)
-10005462:	681b      	ldr	r3, [r3, #0]
-10005464:	1ad3      	subs	r3, r2, r3
-10005466:	4a38      	ldr	r2, [pc, #224]	; (10005548 <manage_buttons+0x26c>)
-10005468:	4293      	cmp	r3, r2
-1000546a:	d906      	bls.n	1000547a <manage_buttons+0x19e>
+1000545e:	4b37      	ldr	r3, [pc, #220]	; (1000553c <manage_buttons+0x24c>)
+10005460:	681b      	ldr	r3, [r3, #0]
+10005462:	2b00      	cmp	r3, #0
+10005464:	d013      	beq.n	1000548e <manage_buttons+0x19e>
+10005466:	4b35      	ldr	r3, [pc, #212]	; (1000553c <manage_buttons+0x24c>)
+10005468:	681b      	ldr	r3, [r3, #0]
+1000546a:	3301      	adds	r3, #1
+1000546c:	d00f      	beq.n	1000548e <manage_buttons+0x19e>
+1000546e:	f7fc fff7 	bl	10002460 <SYSTIMER_GetTime>
+10005472:	1c02      	adds	r2, r0, #0
+10005474:	4b31      	ldr	r3, [pc, #196]	; (1000553c <manage_buttons+0x24c>)
+10005476:	681b      	ldr	r3, [r3, #0]
+10005478:	1ad3      	subs	r3, r2, r3
+1000547a:	4a38      	ldr	r2, [pc, #224]	; (1000555c <manage_buttons+0x26c>)
+1000547c:	4293      	cmp	r3, r2
+1000547e:	d906      	bls.n	1000548e <manage_buttons+0x19e>
 		button_up_pressed_timestamp = TIMESTAMP_DEACTIVATED;
-1000546c:	4b2e      	ldr	r3, [pc, #184]	; (10005528 <manage_buttons+0x24c>)
-1000546e:	2201      	movs	r2, #1
-10005470:	4252      	negs	r2, r2
-10005472:	601a      	str	r2, [r3, #0]
+10005480:	4b2e      	ldr	r3, [pc, #184]	; (1000553c <manage_buttons+0x24c>)
+10005482:	2201      	movs	r2, #1
+10005484:	4252      	negs	r2, r2
+10005486:	601a      	str	r2, [r3, #0]
 		buttonpress_up = BTNPRESS_LONGEST;
-10005474:	4b36      	ldr	r3, [pc, #216]	; (10005550 <manage_buttons+0x274>)
-10005476:	2203      	movs	r2, #3
-10005478:	701a      	strb	r2, [r3, #0]
+10005488:	4b36      	ldr	r3, [pc, #216]	; (10005564 <manage_buttons+0x274>)
+1000548a:	2203      	movs	r2, #3
+1000548c:	701a      	strb	r2, [r3, #0]
 	}
 
 	// DOWN BUTTON: If a press in ongoing and release is detected, calculate time difference
 	if(button_down_pressed_timestamp != 0 && DIGITAL_IO_GetInput(&IO_SW_DOWN) == SW_OFF){
-1000547a:	4b2d      	ldr	r3, [pc, #180]	; (10005530 <manage_buttons+0x254>)
-1000547c:	681b      	ldr	r3, [r3, #0]
-1000547e:	2b00      	cmp	r3, #0
-10005480:	d033      	beq.n	100054ea <manage_buttons+0x20e>
-10005482:	4b2c      	ldr	r3, [pc, #176]	; (10005534 <manage_buttons+0x258>)
-10005484:	1c18      	adds	r0, r3, #0
-10005486:	f7ff fba3 	bl	10004bd0 <DIGITAL_IO_GetInput>
-1000548a:	1e03      	subs	r3, r0, #0
-1000548c:	2b01      	cmp	r3, #1
-1000548e:	d12c      	bne.n	100054ea <manage_buttons+0x20e>
+1000548e:	4b2d      	ldr	r3, [pc, #180]	; (10005544 <manage_buttons+0x254>)
+10005490:	681b      	ldr	r3, [r3, #0]
+10005492:	2b00      	cmp	r3, #0
+10005494:	d033      	beq.n	100054fe <manage_buttons+0x20e>
+10005496:	4b2c      	ldr	r3, [pc, #176]	; (10005548 <manage_buttons+0x258>)
+10005498:	1c18      	adds	r0, r3, #0
+1000549a:	f7ff fb99 	bl	10004bd0 <DIGITAL_IO_GetInput>
+1000549e:	1e03      	subs	r3, r0, #0
+100054a0:	2b01      	cmp	r3, #1
+100054a2:	d12c      	bne.n	100054fe <manage_buttons+0x20e>
 		button_down_pressed_duration = (SYSTIMER_GetTime() - button_down_pressed_timestamp) / 1000; // convert us to ms
-10005490:	f7fc ffe6 	bl	10002460 <SYSTIMER_GetTime>
-10005494:	1c02      	adds	r2, r0, #0
-10005496:	4b26      	ldr	r3, [pc, #152]	; (10005530 <manage_buttons+0x254>)
-10005498:	681b      	ldr	r3, [r3, #0]
-1000549a:	1ad3      	subs	r3, r2, r3
-1000549c:	1c18      	adds	r0, r3, #0
-1000549e:	23fa      	movs	r3, #250	; 0xfa
-100054a0:	0099      	lsls	r1, r3, #2
-100054a2:	f000 fb9f 	bl	10005be4 <__aeabi_uidiv>
-100054a6:	1c03      	adds	r3, r0, #0
-100054a8:	b29a      	uxth	r2, r3
-100054aa:	4b2a      	ldr	r3, [pc, #168]	; (10005554 <manage_buttons+0x278>)
-100054ac:	801a      	strh	r2, [r3, #0]
+100054a4:	f7fc ffdc 	bl	10002460 <SYSTIMER_GetTime>
+100054a8:	1c02      	adds	r2, r0, #0
+100054aa:	4b26      	ldr	r3, [pc, #152]	; (10005544 <manage_buttons+0x254>)
+100054ac:	681b      	ldr	r3, [r3, #0]
+100054ae:	1ad3      	subs	r3, r2, r3
+100054b0:	1c18      	adds	r0, r3, #0
+100054b2:	23fa      	movs	r3, #250	; 0xfa
+100054b4:	0099      	lsls	r1, r3, #2
+100054b6:	f000 fb9d 	bl	10005bf4 <__aeabi_uidiv>
+100054ba:	1c03      	adds	r3, r0, #0
+100054bc:	b29a      	uxth	r2, r3
+100054be:	4b2a      	ldr	r3, [pc, #168]	; (10005568 <manage_buttons+0x278>)
+100054c0:	801a      	strh	r2, [r3, #0]
 		button_down_pressed_timestamp = 0;
-100054ae:	4b20      	ldr	r3, [pc, #128]	; (10005530 <manage_buttons+0x254>)
-100054b0:	2200      	movs	r2, #0
-100054b2:	601a      	str	r2, [r3, #0]
+100054c2:	4b20      	ldr	r3, [pc, #128]	; (10005544 <manage_buttons+0x254>)
+100054c4:	2200      	movs	r2, #0
+100054c6:	601a      	str	r2, [r3, #0]
 		// Interpret button press and activate "button pressed" marker. The code that is reacting to it must reset it afterwards!
 		if(button_down_pressed_duration >= BTN_LONGEST_PRESS_DURATION)
-100054b4:	4b27      	ldr	r3, [pc, #156]	; (10005554 <manage_buttons+0x278>)
-100054b6:	881b      	ldrh	r3, [r3, #0]
-100054b8:	4a20      	ldr	r2, [pc, #128]	; (1000553c <manage_buttons+0x260>)
-100054ba:	4293      	cmp	r3, r2
-100054bc:	d903      	bls.n	100054c6 <manage_buttons+0x1ea>
+100054c8:	4b27      	ldr	r3, [pc, #156]	; (10005568 <manage_buttons+0x278>)
+100054ca:	881b      	ldrh	r3, [r3, #0]
+100054cc:	4a20      	ldr	r2, [pc, #128]	; (10005550 <manage_buttons+0x260>)
+100054ce:	4293      	cmp	r3, r2
+100054d0:	d903      	bls.n	100054da <manage_buttons+0x1ea>
 			buttonpress_down = BTNPRESS_NOT; // In this case the press is already handled
-100054be:	4b26      	ldr	r3, [pc, #152]	; (10005558 <manage_buttons+0x27c>)
-100054c0:	2200      	movs	r2, #0
-100054c2:	701a      	strb	r2, [r3, #0]
-100054c4:	e010      	b.n	100054e8 <manage_buttons+0x20c>
+100054d2:	4b26      	ldr	r3, [pc, #152]	; (1000556c <manage_buttons+0x27c>)
+100054d4:	2200      	movs	r2, #0
+100054d6:	701a      	strb	r2, [r3, #0]
+100054d8:	e010      	b.n	100054fc <manage_buttons+0x20c>
 		else if(button_down_pressed_duration >= BTN_LONG_PRESS_DURATION)
-100054c6:	4b23      	ldr	r3, [pc, #140]	; (10005554 <manage_buttons+0x278>)
-100054c8:	881b      	ldrh	r3, [r3, #0]
-100054ca:	4a1e      	ldr	r2, [pc, #120]	; (10005544 <manage_buttons+0x268>)
-100054cc:	4293      	cmp	r3, r2
-100054ce:	d903      	bls.n	100054d8 <manage_buttons+0x1fc>
+100054da:	4b23      	ldr	r3, [pc, #140]	; (10005568 <manage_buttons+0x278>)
+100054dc:	881b      	ldrh	r3, [r3, #0]
+100054de:	4a1e      	ldr	r2, [pc, #120]	; (10005558 <manage_buttons+0x268>)
+100054e0:	4293      	cmp	r3, r2
+100054e2:	d903      	bls.n	100054ec <manage_buttons+0x1fc>
 			buttonpress_down = BTNPRESS_LONG;
-100054d0:	4b21      	ldr	r3, [pc, #132]	; (10005558 <manage_buttons+0x27c>)
-100054d2:	2202      	movs	r2, #2
-100054d4:	701a      	strb	r2, [r3, #0]
-100054d6:	e007      	b.n	100054e8 <manage_buttons+0x20c>
+100054e4:	4b21      	ldr	r3, [pc, #132]	; (1000556c <manage_buttons+0x27c>)
+100054e6:	2202      	movs	r2, #2
+100054e8:	701a      	strb	r2, [r3, #0]
+100054ea:	e007      	b.n	100054fc <manage_buttons+0x20c>
 		else if(button_down_pressed_duration >= BTN_STD_PRESS_DURATION)
-100054d8:	4b1e      	ldr	r3, [pc, #120]	; (10005554 <manage_buttons+0x278>)
-100054da:	881b      	ldrh	r3, [r3, #0]
-100054dc:	2b3b      	cmp	r3, #59	; 0x3b
-100054de:	d903      	bls.n	100054e8 <manage_buttons+0x20c>
+100054ec:	4b1e      	ldr	r3, [pc, #120]	; (10005568 <manage_buttons+0x278>)
+100054ee:	881b      	ldrh	r3, [r3, #0]
+100054f0:	2b3b      	cmp	r3, #59	; 0x3b
+100054f2:	d903      	bls.n	100054fc <manage_buttons+0x20c>
 			buttonpress_down = BTNPRESS_STD;
-100054e0:	4b1d      	ldr	r3, [pc, #116]	; (10005558 <manage_buttons+0x27c>)
-100054e2:	2201      	movs	r2, #1
-100054e4:	701a      	strb	r2, [r3, #0]
+100054f4:	4b1d      	ldr	r3, [pc, #116]	; (1000556c <manage_buttons+0x27c>)
+100054f6:	2201      	movs	r2, #1
+100054f8:	701a      	strb	r2, [r3, #0]
 	// DOWN BUTTON: If a press in ongoing and release is detected, calculate time difference
 	if(button_down_pressed_timestamp != 0 && DIGITAL_IO_GetInput(&IO_SW_DOWN) == SW_OFF){
 		button_down_pressed_duration = (SYSTIMER_GetTime() - button_down_pressed_timestamp) / 1000; // convert us to ms
 		button_down_pressed_timestamp = 0;
 		// Interpret button press and activate "button pressed" marker. The code that is reacting to it must reset it afterwards!
 		if(button_down_pressed_duration >= BTN_LONGEST_PRESS_DURATION)
-100054e6:	e018      	b.n	1000551a <manage_buttons+0x23e>
-100054e8:	e017      	b.n	1000551a <manage_buttons+0x23e>
+100054fa:	e018      	b.n	1000552e <manage_buttons+0x23e>
+100054fc:	e017      	b.n	1000552e <manage_buttons+0x23e>
 			buttonpress_down = BTNPRESS_LONG;
 		else if(button_down_pressed_duration >= BTN_STD_PRESS_DURATION)
 			buttonpress_down = BTNPRESS_STD;
 	}
 	// DOWN BUTTON: If press is to long reset (simulate that press ended)
 	else if(button_down_pressed_timestamp != 0 && button_down_pressed_timestamp != TIMESTAMP_DEACTIVATED && ((SYSTIMER_GetTime() - button_down_pressed_timestamp) / 1000) > BTN_LONGEST_PRESS_DURATION){
-100054ea:	4b11      	ldr	r3, [pc, #68]	; (10005530 <manage_buttons+0x254>)
-100054ec:	681b      	ldr	r3, [r3, #0]
-100054ee:	2b00      	cmp	r3, #0
-100054f0:	d013      	beq.n	1000551a <manage_buttons+0x23e>
-100054f2:	4b0f      	ldr	r3, [pc, #60]	; (10005530 <manage_buttons+0x254>)
-100054f4:	681b      	ldr	r3, [r3, #0]
-100054f6:	3301      	adds	r3, #1
-100054f8:	d00f      	beq.n	1000551a <manage_buttons+0x23e>
-100054fa:	f7fc ffb1 	bl	10002460 <SYSTIMER_GetTime>
-100054fe:	1c02      	adds	r2, r0, #0
-10005500:	4b0b      	ldr	r3, [pc, #44]	; (10005530 <manage_buttons+0x254>)
-10005502:	681b      	ldr	r3, [r3, #0]
-10005504:	1ad3      	subs	r3, r2, r3
-10005506:	4a10      	ldr	r2, [pc, #64]	; (10005548 <manage_buttons+0x26c>)
-10005508:	4293      	cmp	r3, r2
-1000550a:	d906      	bls.n	1000551a <manage_buttons+0x23e>
+100054fe:	4b11      	ldr	r3, [pc, #68]	; (10005544 <manage_buttons+0x254>)
+10005500:	681b      	ldr	r3, [r3, #0]
+10005502:	2b00      	cmp	r3, #0
+10005504:	d013      	beq.n	1000552e <manage_buttons+0x23e>
+10005506:	4b0f      	ldr	r3, [pc, #60]	; (10005544 <manage_buttons+0x254>)
+10005508:	681b      	ldr	r3, [r3, #0]
+1000550a:	3301      	adds	r3, #1
+1000550c:	d00f      	beq.n	1000552e <manage_buttons+0x23e>
+1000550e:	f7fc ffa7 	bl	10002460 <SYSTIMER_GetTime>
+10005512:	1c02      	adds	r2, r0, #0
+10005514:	4b0b      	ldr	r3, [pc, #44]	; (10005544 <manage_buttons+0x254>)
+10005516:	681b      	ldr	r3, [r3, #0]
+10005518:	1ad3      	subs	r3, r2, r3
+1000551a:	4a10      	ldr	r2, [pc, #64]	; (1000555c <manage_buttons+0x26c>)
+1000551c:	4293      	cmp	r3, r2
+1000551e:	d906      	bls.n	1000552e <manage_buttons+0x23e>
 		button_down_pressed_timestamp = TIMESTAMP_DEACTIVATED;
-1000550c:	4b08      	ldr	r3, [pc, #32]	; (10005530 <manage_buttons+0x254>)
-1000550e:	2201      	movs	r2, #1
-10005510:	4252      	negs	r2, r2
-10005512:	601a      	str	r2, [r3, #0]
+10005520:	4b08      	ldr	r3, [pc, #32]	; (10005544 <manage_buttons+0x254>)
+10005522:	2201      	movs	r2, #1
+10005524:	4252      	negs	r2, r2
+10005526:	601a      	str	r2, [r3, #0]
 		buttonpress_down = BTNPRESS_LONGEST;
-10005514:	4b10      	ldr	r3, [pc, #64]	; (10005558 <manage_buttons+0x27c>)
-10005516:	2203      	movs	r2, #3
-10005518:	701a      	strb	r2, [r3, #0]
+10005528:	4b10      	ldr	r3, [pc, #64]	; (1000556c <manage_buttons+0x27c>)
+1000552a:	2203      	movs	r2, #3
+1000552c:	701a      	strb	r2, [r3, #0]
 	}
 }
-1000551a:	46bd      	mov	sp, r7
-1000551c:	bd80      	pop	{r7, pc}
-1000551e:	46c0      	nop			; (mov r8, r8)
-10005520:	200005e8 	.word	0x200005e8
-10005524:	10005e68 	.word	0x10005e68
-10005528:	200005ec 	.word	0x200005ec
-1000552c:	10005e78 	.word	0x10005e78
-10005530:	200005f0 	.word	0x200005f0
-10005534:	10005e88 	.word	0x10005e88
-10005538:	200005f4 	.word	0x200005f4
-1000553c:	00000f9f 	.word	0x00000f9f
-10005540:	200005e2 	.word	0x200005e2
-10005544:	000003e7 	.word	0x000003e7
-10005548:	003d0ce7 	.word	0x003d0ce7
-1000554c:	200005f6 	.word	0x200005f6
-10005550:	200005e3 	.word	0x200005e3
-10005554:	200005f8 	.word	0x200005f8
-10005558:	200005e4 	.word	0x200005e4
+1000552e:	46bd      	mov	sp, r7
+10005530:	bd80      	pop	{r7, pc}
+10005532:	46c0      	nop			; (mov r8, r8)
+10005534:	200005e8 	.word	0x200005e8
+10005538:	10005e78 	.word	0x10005e78
+1000553c:	200005ec 	.word	0x200005ec
+10005540:	10005e88 	.word	0x10005e88
+10005544:	200005f0 	.word	0x200005f0
+10005548:	10005e98 	.word	0x10005e98
+1000554c:	200005f4 	.word	0x200005f4
+10005550:	00000f9f 	.word	0x00000f9f
+10005554:	200005e2 	.word	0x200005e2
+10005558:	000003e7 	.word	0x000003e7
+1000555c:	003d0ce7 	.word	0x003d0ce7
+10005560:	200005f6 	.word	0x200005f6
+10005564:	200005e3 	.word	0x200005e3
+10005568:	200005f8 	.word	0x200005f8
+1000556c:	200005e4 	.word	0x200005e4
 
-1000555c <main>:
+10005570 <main>:
 
 //****************************************************************************
 // main - primary loop function
 //****************************************************************************
 int main(void)
 {
-1000555c:	b590      	push	{r4, r7, lr}
-1000555e:	b085      	sub	sp, #20
-10005560:	af00      	add	r7, sp, #0
+10005570:	b590      	push	{r4, r7, lr}
+10005572:	b085      	sub	sp, #20
+10005574:	af00      	add	r7, sp, #0
 	// Initialization of DAVE APPs
 	DAVE_STATUS_t status;
 	status = DAVE_Init();
-10005562:	230b      	movs	r3, #11
-10005564:	18fc      	adds	r4, r7, r3
-10005566:	f7ff f9e9 	bl	1000493c <DAVE_Init>
-1000556a:	1c03      	adds	r3, r0, #0
-1000556c:	7023      	strb	r3, [r4, #0]
+10005576:	230b      	movs	r3, #11
+10005578:	18fc      	adds	r4, r7, r3
+1000557a:	f7ff f9df 	bl	1000493c <DAVE_Init>
+1000557e:	1c03      	adds	r3, r0, #0
+10005580:	7023      	strb	r3, [r4, #0]
 
 	// Error routine
 	if (status != DAVE_STATUS_SUCCESS) {
-1000556e:	230b      	movs	r3, #11
-10005570:	18fb      	adds	r3, r7, r3
-10005572:	781b      	ldrb	r3, [r3, #0]
-10005574:	2b00      	cmp	r3, #0
-10005576:	d025      	beq.n	100055c4 <main+0x68>
+10005582:	230b      	movs	r3, #11
+10005584:	18fb      	adds	r3, r7, r3
+10005586:	781b      	ldrb	r3, [r3, #0]
+10005588:	2b00      	cmp	r3, #0
+1000558a:	d025      	beq.n	100055d8 <main+0x68>
 		while(1U){
 			DIGITAL_IO_SetOutputLow(&IO_LED_USB1);
-10005578:	4bc9      	ldr	r3, [pc, #804]	; (100058a0 <main+0x344>)
-1000557a:	1c18      	adds	r0, r3, #0
-1000557c:	f7ff fb18 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
+1000558c:	4bc9      	ldr	r3, [pc, #804]	; (100058b4 <main+0x344>)
+1000558e:	1c18      	adds	r0, r3, #0
+10005590:	f7ff fb0e 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
 			DIGITAL_IO_SetOutputLow(&IO_LED_USB2);
-10005580:	4bc8      	ldr	r3, [pc, #800]	; (100058a4 <main+0x348>)
-10005582:	1c18      	adds	r0, r3, #0
-10005584:	f7ff fb14 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
-			PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
-10005588:	4bc7      	ldr	r3, [pc, #796]	; (100058a8 <main+0x34c>)
-1000558a:	1c18      	adds	r0, r3, #0
-1000558c:	2100      	movs	r1, #0
-1000558e:	f7fd fa43 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
-			delay_ms(500);
-10005592:	23fa      	movs	r3, #250	; 0xfa
-10005594:	005b      	lsls	r3, r3, #1
+10005594:	4bc8      	ldr	r3, [pc, #800]	; (100058b8 <main+0x348>)
 10005596:	1c18      	adds	r0, r3, #0
-10005598:	f7ff fb2c 	bl	10004bf4 <delay_ms>
-			DIGITAL_IO_SetOutputHigh(&IO_LED_USB1);
-1000559c:	4bc0      	ldr	r3, [pc, #768]	; (100058a0 <main+0x344>)
+10005598:	f7ff fb0a 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
+			PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
+1000559c:	4bc7      	ldr	r3, [pc, #796]	; (100058bc <main+0x34c>)
 1000559e:	1c18      	adds	r0, r3, #0
-100055a0:	f7ff faf6 	bl	10004b90 <DIGITAL_IO_SetOutputHigh>
-			DIGITAL_IO_SetOutputHigh(&IO_LED_USB2);
-100055a4:	4bbf      	ldr	r3, [pc, #764]	; (100058a4 <main+0x348>)
-100055a6:	1c18      	adds	r0, r3, #0
-100055a8:	f7ff faf2 	bl	10004b90 <DIGITAL_IO_SetOutputHigh>
-			PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
-100055ac:	4bbe      	ldr	r3, [pc, #760]	; (100058a8 <main+0x34c>)
-100055ae:	4abf      	ldr	r2, [pc, #764]	; (100058ac <main+0x350>)
-100055b0:	1c18      	adds	r0, r3, #0
-100055b2:	1c11      	adds	r1, r2, #0
-100055b4:	f7fd fa30 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
+100055a0:	2100      	movs	r1, #0
+100055a2:	f7fd fa39 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
 			delay_ms(500);
-100055b8:	23fa      	movs	r3, #250	; 0xfa
-100055ba:	005b      	lsls	r3, r3, #1
-100055bc:	1c18      	adds	r0, r3, #0
-100055be:	f7ff fb19 	bl	10004bf4 <delay_ms>
+100055a6:	23fa      	movs	r3, #250	; 0xfa
+100055a8:	005b      	lsls	r3, r3, #1
+100055aa:	1c18      	adds	r0, r3, #0
+100055ac:	f7ff fb22 	bl	10004bf4 <delay_ms>
+			DIGITAL_IO_SetOutputHigh(&IO_LED_USB1);
+100055b0:	4bc0      	ldr	r3, [pc, #768]	; (100058b4 <main+0x344>)
+100055b2:	1c18      	adds	r0, r3, #0
+100055b4:	f7ff faec 	bl	10004b90 <DIGITAL_IO_SetOutputHigh>
+			DIGITAL_IO_SetOutputHigh(&IO_LED_USB2);
+100055b8:	4bbf      	ldr	r3, [pc, #764]	; (100058b8 <main+0x348>)
+100055ba:	1c18      	adds	r0, r3, #0
+100055bc:	f7ff fae8 	bl	10004b90 <DIGITAL_IO_SetOutputHigh>
+			PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
+100055c0:	4bbe      	ldr	r3, [pc, #760]	; (100058bc <main+0x34c>)
+100055c2:	4abf      	ldr	r2, [pc, #764]	; (100058c0 <main+0x350>)
+100055c4:	1c18      	adds	r0, r3, #0
+100055c6:	1c11      	adds	r1, r2, #0
+100055c8:	f7fd fa26 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
+			delay_ms(500);
+100055cc:	23fa      	movs	r3, #250	; 0xfa
+100055ce:	005b      	lsls	r3, r3, #1
+100055d0:	1c18      	adds	r0, r3, #0
+100055d2:	f7ff fb0f 	bl	10004bf4 <delay_ms>
 		}
-100055c2:	e7d9      	b.n	10005578 <main+0x1c>
+100055d6:	e7d9      	b.n	1000558c <main+0x1c>
 	}
 
 	/// - Set initial state -
 	// Enable USB chip and switch to USB1
 	DIGITAL_IO_SetOutputLow(&IO_USB_SI);
-100055c4:	4bba      	ldr	r3, [pc, #744]	; (100058b0 <main+0x354>)
-100055c6:	1c18      	adds	r0, r3, #0
-100055c8:	f7ff faf2 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
+100055d8:	4bba      	ldr	r3, [pc, #744]	; (100058c4 <main+0x354>)
+100055da:	1c18      	adds	r0, r3, #0
+100055dc:	f7ff fae8 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
 	DIGITAL_IO_SetOutputLow(&IO_USB_OE);
-100055cc:	4bb9      	ldr	r3, [pc, #740]	; (100058b4 <main+0x358>)
-100055ce:	1c18      	adds	r0, r3, #0
-100055d0:	f7ff faee 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
+100055e0:	4bb9      	ldr	r3, [pc, #740]	; (100058c8 <main+0x358>)
+100055e2:	1c18      	adds	r0, r3, #0
+100055e4:	f7ff fae4 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
 	// Enable USB1
 	DIGITAL_IO_SetOutputHigh(&IO_USBPWR_1);
-100055d4:	4bb8      	ldr	r3, [pc, #736]	; (100058b8 <main+0x35c>)
-100055d6:	1c18      	adds	r0, r3, #0
-100055d8:	f7ff fada 	bl	10004b90 <DIGITAL_IO_SetOutputHigh>
+100055e8:	4bb8      	ldr	r3, [pc, #736]	; (100058cc <main+0x35c>)
+100055ea:	1c18      	adds	r0, r3, #0
+100055ec:	f7ff fad0 	bl	10004b90 <DIGITAL_IO_SetOutputHigh>
 	DIGITAL_IO_SetOutputLow(&IO_LED_USB1);
-100055dc:	4bb0      	ldr	r3, [pc, #704]	; (100058a0 <main+0x344>)
-100055de:	1c18      	adds	r0, r3, #0
-100055e0:	f7ff fae6 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
+100055f0:	4bb0      	ldr	r3, [pc, #704]	; (100058b4 <main+0x344>)
+100055f2:	1c18      	adds	r0, r3, #0
+100055f4:	f7ff fadc 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
 	// Disable USB2
 	DIGITAL_IO_SetOutputLow(&IO_USBPWR_2);
-100055e4:	4bb5      	ldr	r3, [pc, #724]	; (100058bc <main+0x360>)
-100055e6:	1c18      	adds	r0, r3, #0
-100055e8:	f7ff fae2 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
+100055f8:	4bb5      	ldr	r3, [pc, #724]	; (100058d0 <main+0x360>)
+100055fa:	1c18      	adds	r0, r3, #0
+100055fc:	f7ff fad8 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
 	DIGITAL_IO_SetOutputHigh(&IO_LED_USB2);
-100055ec:	4bad      	ldr	r3, [pc, #692]	; (100058a4 <main+0x348>)
-100055ee:	1c18      	adds	r0, r3, #0
-100055f0:	f7ff face 	bl	10004b90 <DIGITAL_IO_SetOutputHigh>
+10005600:	4bad      	ldr	r3, [pc, #692]	; (100058b8 <main+0x348>)
+10005602:	1c18      	adds	r0, r3, #0
+10005604:	f7ff fac4 	bl	10004b90 <DIGITAL_IO_SetOutputHigh>
 	// Disable Relay and set LED off
 	DIGITAL_IO_SetOutputLow(&IO_RELAY);
-100055f4:	4bb2      	ldr	r3, [pc, #712]	; (100058c0 <main+0x364>)
-100055f6:	1c18      	adds	r0, r3, #0
-100055f8:	f7ff fada 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
+10005608:	4bb2      	ldr	r3, [pc, #712]	; (100058d4 <main+0x364>)
+1000560a:	1c18      	adds	r0, r3, #0
+1000560c:	f7ff fad0 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
 	PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
-100055fc:	4baa      	ldr	r3, [pc, #680]	; (100058a8 <main+0x34c>)
-100055fe:	4aab      	ldr	r2, [pc, #684]	; (100058ac <main+0x350>)
-10005600:	1c18      	adds	r0, r3, #0
-10005602:	1c11      	adds	r1, r2, #0
-10005604:	f7fd fa08 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
+10005610:	4baa      	ldr	r3, [pc, #680]	; (100058bc <main+0x34c>)
+10005612:	4aab      	ldr	r2, [pc, #684]	; (100058c0 <main+0x350>)
+10005614:	1c18      	adds	r0, r3, #0
+10005616:	1c11      	adds	r1, r2, #0
+10005618:	f7fd f9fe 	bl	10002a18 <PWM_CCU4_SetDutyCycle>
 	// Initialize next value conversion
 	ADC_MEASUREMENT_StartConversion(&ADC_SENSOR);
-10005608:	4bae      	ldr	r3, [pc, #696]	; (100058c4 <main+0x368>)
-1000560a:	1c18      	adds	r0, r3, #0
-1000560c:	f7ff f988 	bl	10004920 <ADC_MEASUREMENT_StartConversion>
+1000561c:	4bae      	ldr	r3, [pc, #696]	; (100058d8 <main+0x368>)
+1000561e:	1c18      	adds	r0, r3, #0
+10005620:	f7ff f97e 	bl	10004920 <ADC_MEASUREMENT_StartConversion>
 
 	/// - Read setup from emulated EEPROM
 	read_eeprom_setup();
-10005610:	f7ff fd36 	bl	10005080 <read_eeprom_setup>
+10005624:	f7ff fd2c 	bl	10005080 <read_eeprom_setup>
 
 	int main_loop_count = 0;
-10005614:	2300      	movs	r3, #0
-10005616:	60fb      	str	r3, [r7, #12]
+10005628:	2300      	movs	r3, #0
+1000562a:	60fb      	str	r3, [r7, #12]
 
 	// Main loop
 	while(1U)
 	{
 		// - Status LED handling -
 		manage_status_led();
-10005618:	f7ff fb2e 	bl	10004c78 <manage_status_led>
+1000562c:	f7ff fb24 	bl	10004c78 <manage_status_led>
 		main_loop_count++;
-1000561c:	68fb      	ldr	r3, [r7, #12]
-1000561e:	3301      	adds	r3, #1
-10005620:	60fb      	str	r3, [r7, #12]
+10005630:	68fb      	ldr	r3, [r7, #12]
+10005632:	3301      	adds	r3, #1
+10005634:	60fb      	str	r3, [r7, #12]
 		systime_debug = SYSTIMER_GetTime();
-10005622:	f7fc ff1d 	bl	10002460 <SYSTIMER_GetTime>
-10005626:	1c03      	adds	r3, r0, #0
-10005628:	1c1a      	adds	r2, r3, #0
-1000562a:	4ba7      	ldr	r3, [pc, #668]	; (100058c8 <main+0x36c>)
-1000562c:	601a      	str	r2, [r3, #0]
+10005636:	f7fc ff13 	bl	10002460 <SYSTIMER_GetTime>
+1000563a:	1c03      	adds	r3, r0, #0
+1000563c:	1c1a      	adds	r2, r3, #0
+1000563e:	4ba7      	ldr	r3, [pc, #668]	; (100058dc <main+0x36c>)
+10005640:	601a      	str	r2, [r3, #0]
 
 		//// - Button handling -
 		manage_buttons();
-1000562e:	f7ff fe55 	bl	100052dc <manage_buttons>
+10005642:	f7ff fe55 	bl	100052f0 <manage_buttons>
 
 		/// - USB Channel handling -
 		switch (USB_state){
-10005632:	4ba6      	ldr	r3, [pc, #664]	; (100058cc <main+0x370>)
-10005634:	781b      	ldrb	r3, [r3, #0]
-10005636:	2b01      	cmp	r3, #1
-10005638:	d023      	beq.n	10005682 <main+0x126>
-1000563a:	2b02      	cmp	r3, #2
-1000563c:	d041      	beq.n	100056c2 <main+0x166>
-1000563e:	2b00      	cmp	r3, #0
-10005640:	d140      	bne.n	100056c4 <main+0x168>
+10005646:	4ba6      	ldr	r3, [pc, #664]	; (100058e0 <main+0x370>)
+10005648:	781b      	ldrb	r3, [r3, #0]
+1000564a:	2b01      	cmp	r3, #1
+1000564c:	d023      	beq.n	10005696 <main+0x126>
+1000564e:	2b02      	cmp	r3, #2
+10005650:	d041      	beq.n	100056d6 <main+0x166>
+10005652:	2b00      	cmp	r3, #0
+10005654:	d140      	bne.n	100056d8 <main+0x168>
 			case USB_1_active:
 				// State code - none atm
 
 				// Transition statement
 				if(buttonpress_usb == BTNPRESS_STD){
-10005642:	4ba3      	ldr	r3, [pc, #652]	; (100058d0 <main+0x374>)
-10005644:	781b      	ldrb	r3, [r3, #0]
-10005646:	2b01      	cmp	r3, #1
-10005648:	d11a      	bne.n	10005680 <main+0x124>
+10005656:	4ba3      	ldr	r3, [pc, #652]	; (100058e4 <main+0x374>)
+10005658:	781b      	ldrb	r3, [r3, #0]
+1000565a:	2b01      	cmp	r3, #1
+1000565c:	d11a      	bne.n	10005694 <main+0x124>
 					DIGITAL_IO_SetOutputLow(&IO_USBPWR_1);
-1000564a:	4b9b      	ldr	r3, [pc, #620]	; (100058b8 <main+0x35c>)
-1000564c:	1c18      	adds	r0, r3, #0
-1000564e:	f7ff faaf 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
+1000565e:	4b9b      	ldr	r3, [pc, #620]	; (100058cc <main+0x35c>)
+10005660:	1c18      	adds	r0, r3, #0
+10005662:	f7ff faa5 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
 					DIGITAL_IO_SetOutputHigh(&IO_USB_SI);
-10005652:	4b97      	ldr	r3, [pc, #604]	; (100058b0 <main+0x354>)
-10005654:	1c18      	adds	r0, r3, #0
-10005656:	f7ff fa9b 	bl	10004b90 <DIGITAL_IO_SetOutputHigh>
+10005666:	4b97      	ldr	r3, [pc, #604]	; (100058c4 <main+0x354>)
+10005668:	1c18      	adds	r0, r3, #0
+1000566a:	f7ff fa91 	bl	10004b90 <DIGITAL_IO_SetOutputHigh>
 					DIGITAL_IO_SetOutputLow(&IO_LED_USB2);
-1000565a:	4b92      	ldr	r3, [pc, #584]	; (100058a4 <main+0x348>)
-1000565c:	1c18      	adds	r0, r3, #0
-1000565e:	f7ff faa7 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
+1000566e:	4b92      	ldr	r3, [pc, #584]	; (100058b8 <main+0x348>)
+10005670:	1c18      	adds	r0, r3, #0
+10005672:	f7ff fa9d 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
 					DIGITAL_IO_SetOutputHigh(&IO_LED_USB1);
-10005662:	4b8f      	ldr	r3, [pc, #572]	; (100058a0 <main+0x344>)
-10005664:	1c18      	adds	r0, r3, #0
-10005666:	f7ff fa93 	bl	10004b90 <DIGITAL_IO_SetOutputHigh>
+10005676:	4b8f      	ldr	r3, [pc, #572]	; (100058b4 <main+0x344>)
+10005678:	1c18      	adds	r0, r3, #0
+1000567a:	f7ff fa89 	bl	10004b90 <DIGITAL_IO_SetOutputHigh>
 					DIGITAL_IO_SetOutputHigh(&IO_USBPWR_2);
-1000566a:	4b94      	ldr	r3, [pc, #592]	; (100058bc <main+0x360>)
-1000566c:	1c18      	adds	r0, r3, #0
-1000566e:	f7ff fa8f 	bl	10004b90 <DIGITAL_IO_SetOutputHigh>
+1000567e:	4b94      	ldr	r3, [pc, #592]	; (100058d0 <main+0x360>)
+10005680:	1c18      	adds	r0, r3, #0
+10005682:	f7ff fa85 	bl	10004b90 <DIGITAL_IO_SetOutputHigh>
 					buttonpress_usb = BTNPRESS_NOT;
-10005672:	4b97      	ldr	r3, [pc, #604]	; (100058d0 <main+0x374>)
-10005674:	2200      	movs	r2, #0
-10005676:	701a      	strb	r2, [r3, #0]
+10005686:	4b97      	ldr	r3, [pc, #604]	; (100058e4 <main+0x374>)
+10005688:	2200      	movs	r2, #0
+1000568a:	701a      	strb	r2, [r3, #0]
 
 					USB_state = USB_2_active;
-10005678:	4b94      	ldr	r3, [pc, #592]	; (100058cc <main+0x370>)
-1000567a:	2201      	movs	r2, #1
-1000567c:	701a      	strb	r2, [r3, #0]
+1000568c:	4b94      	ldr	r3, [pc, #592]	; (100058e0 <main+0x370>)
+1000568e:	2201      	movs	r2, #1
+10005690:	701a      	strb	r2, [r3, #0]
 				}
 				break;
-1000567e:	e021      	b.n	100056c4 <main+0x168>
-10005680:	e020      	b.n	100056c4 <main+0x168>
+10005692:	e021      	b.n	100056d8 <main+0x168>
+10005694:	e020      	b.n	100056d8 <main+0x168>
 			case USB_2_active:
 				// State code - none atm
 
 				// Transition statement
 				if(buttonpress_usb == BTNPRESS_STD){
-10005682:	4b93      	ldr	r3, [pc, #588]	; (100058d0 <main+0x374>)
-10005684:	781b      	ldrb	r3, [r3, #0]
-10005686:	2b01      	cmp	r3, #1
-10005688:	d11a      	bne.n	100056c0 <main+0x164>
+10005696:	4b93      	ldr	r3, [pc, #588]	; (100058e4 <main+0x374>)
+10005698:	781b      	ldrb	r3, [r3, #0]
+1000569a:	2b01      	cmp	r3, #1
+1000569c:	d11a      	bne.n	100056d4 <main+0x164>
 					DIGITAL_IO_SetOutputLow(&IO_USBPWR_2);
-1000568a:	4b8c      	ldr	r3, [pc, #560]	; (100058bc <main+0x360>)
-1000568c:	1c18      	adds	r0, r3, #0
-1000568e:	f7ff fa8f 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
+1000569e:	4b8c      	ldr	r3, [pc, #560]	; (100058d0 <main+0x360>)
+100056a0:	1c18      	adds	r0, r3, #0
+100056a2:	f7ff fa85 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
 					DIGITAL_IO_SetOutputLow(&IO_USB_SI);
-10005692:	4b87      	ldr	r3, [pc, #540]	; (100058b0 <main+0x354>)
-10005694:	1c18      	adds	r0, r3, #0
-10005696:	f7ff fa8b 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
+100056a6:	4b87      	ldr	r3, [pc, #540]	; (100058c4 <main+0x354>)
+100056a8:	1c18      	adds	r0, r3, #0
+100056aa:	f7ff fa81 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
 					DIGITAL_IO_SetOutputLow(&IO_LED_USB1);
-1000569a:	4b81      	ldr	r3, [pc, #516]	; (100058a0 <main+0x344>)
-1000569c:	1c18      	adds	r0, r3, #0
-1000569e:	f7ff fa87 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
+100056ae:	4b81      	ldr	r3, [pc, #516]	; (100058b4 <main+0x344>)
+100056b0:	1c18      	adds	r0, r3, #0
+100056b2:	f7ff fa7d 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
 					DIGITAL_IO_SetOutputHigh(&IO_LED_USB2);
-100056a2:	4b80      	ldr	r3, [pc, #512]	; (100058a4 <main+0x348>)
-100056a4:	1c18      	adds	r0, r3, #0
-100056a6:	f7ff fa73 	bl	10004b90 <DIGITAL_IO_SetOutputHigh>
+100056b6:	4b80      	ldr	r3, [pc, #512]	; (100058b8 <main+0x348>)
+100056b8:	1c18      	adds	r0, r3, #0
+100056ba:	f7ff fa69 	bl	10004b90 <DIGITAL_IO_SetOutputHigh>
 					DIGITAL_IO_SetOutputHigh(&IO_USBPWR_1);
-100056aa:	4b83      	ldr	r3, [pc, #524]	; (100058b8 <main+0x35c>)
-100056ac:	1c18      	adds	r0, r3, #0
-100056ae:	f7ff fa6f 	bl	10004b90 <DIGITAL_IO_SetOutputHigh>
+100056be:	4b83      	ldr	r3, [pc, #524]	; (100058cc <main+0x35c>)
+100056c0:	1c18      	adds	r0, r3, #0
+100056c2:	f7ff fa65 	bl	10004b90 <DIGITAL_IO_SetOutputHigh>
 					buttonpress_usb = BTNPRESS_NOT;
-100056b2:	4b87      	ldr	r3, [pc, #540]	; (100058d0 <main+0x374>)
-100056b4:	2200      	movs	r2, #0
-100056b6:	701a      	strb	r2, [r3, #0]
+100056c6:	4b87      	ldr	r3, [pc, #540]	; (100058e4 <main+0x374>)
+100056c8:	2200      	movs	r2, #0
+100056ca:	701a      	strb	r2, [r3, #0]
 
 					USB_state = USB_1_active;
-100056b8:	4b84      	ldr	r3, [pc, #528]	; (100058cc <main+0x370>)
-100056ba:	2200      	movs	r2, #0
-100056bc:	701a      	strb	r2, [r3, #0]
+100056cc:	4b84      	ldr	r3, [pc, #528]	; (100058e0 <main+0x370>)
+100056ce:	2200      	movs	r2, #0
+100056d0:	701a      	strb	r2, [r3, #0]
 				}
 				break;
-100056be:	e001      	b.n	100056c4 <main+0x168>
-100056c0:	e000      	b.n	100056c4 <main+0x168>
+100056d2:	e001      	b.n	100056d8 <main+0x168>
+100056d4:	e000      	b.n	100056d8 <main+0x168>
 			case USB_inactive:
 				// Currently not implemented!
 				break;
-100056c2:	46c0      	nop			; (mov r8, r8)
+100056d6:	46c0      	nop			; (mov r8, r8)
 		}
 
 		/// - Relay handling -
 		// Check for state change triggers based on current state
 		switch (relay_state){
-100056c4:	4b83      	ldr	r3, [pc, #524]	; (100058d4 <main+0x378>)
-100056c6:	781b      	ldrb	r3, [r3, #0]
-100056c8:	2b00      	cmp	r3, #0
-100056ca:	d04e      	beq.n	1000576a <main+0x20e>
-100056cc:	2b01      	cmp	r3, #1
-100056ce:	d000      	beq.n	100056d2 <main+0x176>
-100056d0:	e095      	b.n	100057fe <main+0x2a2>
+100056d8:	4b83      	ldr	r3, [pc, #524]	; (100058e8 <main+0x378>)
+100056da:	781b      	ldrb	r3, [r3, #0]
+100056dc:	2b00      	cmp	r3, #0
+100056de:	d04e      	beq.n	1000577e <main+0x20e>
+100056e0:	2b01      	cmp	r3, #1
+100056e2:	d000      	beq.n	100056e6 <main+0x176>
+100056e4:	e095      	b.n	10005812 <main+0x2a2>
 			case RELAY_LOW:
 				// State code
 				// Check if upper threshold is exceeded. If it is and timestamp is not already set - save timestamp. If timestamp is already saved and threshold is not exceeded anymore reset timestamp
 				if     (ADC_val_upper_thres_exceed_timestamp == 0 && ADC_val_current > ADC_upper_threshold){
-100056d2:	4b81      	ldr	r3, [pc, #516]	; (100058d8 <main+0x37c>)
-100056d4:	681b      	ldr	r3, [r3, #0]
-100056d6:	2b00      	cmp	r3, #0
-100056d8:	d10c      	bne.n	100056f4 <main+0x198>
-100056da:	4b80      	ldr	r3, [pc, #512]	; (100058dc <main+0x380>)
-100056dc:	681b      	ldr	r3, [r3, #0]
-100056de:	1e1a      	subs	r2, r3, #0
-100056e0:	4b7f      	ldr	r3, [pc, #508]	; (100058e0 <main+0x384>)
-100056e2:	681b      	ldr	r3, [r3, #0]
-100056e4:	429a      	cmp	r2, r3
-100056e6:	d205      	bcs.n	100056f4 <main+0x198>
+100056e6:	4b81      	ldr	r3, [pc, #516]	; (100058ec <main+0x37c>)
+100056e8:	681b      	ldr	r3, [r3, #0]
+100056ea:	2b00      	cmp	r3, #0
+100056ec:	d10c      	bne.n	10005708 <main+0x198>
+100056ee:	4b80      	ldr	r3, [pc, #512]	; (100058f0 <main+0x380>)
+100056f0:	681b      	ldr	r3, [r3, #0]
+100056f2:	1e1a      	subs	r2, r3, #0
+100056f4:	4b7f      	ldr	r3, [pc, #508]	; (100058f4 <main+0x384>)
+100056f6:	681b      	ldr	r3, [r3, #0]
+100056f8:	429a      	cmp	r2, r3
+100056fa:	d205      	bcs.n	10005708 <main+0x198>
 					ADC_val_upper_thres_exceed_timestamp = SYSTIMER_GetTime();
-100056e8:	f7fc feba 	bl	10002460 <SYSTIMER_GetTime>
-100056ec:	1c02      	adds	r2, r0, #0
-100056ee:	4b7a      	ldr	r3, [pc, #488]	; (100058d8 <main+0x37c>)
-100056f0:	601a      	str	r2, [r3, #0]
-100056f2:	e00d      	b.n	10005710 <main+0x1b4>
+100056fc:	f7fc feb0 	bl	10002460 <SYSTIMER_GetTime>
+10005700:	1c02      	adds	r2, r0, #0
+10005702:	4b7a      	ldr	r3, [pc, #488]	; (100058ec <main+0x37c>)
+10005704:	601a      	str	r2, [r3, #0]
+10005706:	e00d      	b.n	10005724 <main+0x1b4>
 				}
 				else if(ADC_val_upper_thres_exceed_timestamp != 0 && ADC_val_current < ADC_upper_threshold){
-100056f4:	4b78      	ldr	r3, [pc, #480]	; (100058d8 <main+0x37c>)
-100056f6:	681b      	ldr	r3, [r3, #0]
-100056f8:	2b00      	cmp	r3, #0
-100056fa:	d009      	beq.n	10005710 <main+0x1b4>
-100056fc:	4b77      	ldr	r3, [pc, #476]	; (100058dc <main+0x380>)
-100056fe:	681b      	ldr	r3, [r3, #0]
-10005700:	1e1a      	subs	r2, r3, #0
-10005702:	4b77      	ldr	r3, [pc, #476]	; (100058e0 <main+0x384>)
-10005704:	681b      	ldr	r3, [r3, #0]
-10005706:	429a      	cmp	r2, r3
-10005708:	d902      	bls.n	10005710 <main+0x1b4>
+10005708:	4b78      	ldr	r3, [pc, #480]	; (100058ec <main+0x37c>)
+1000570a:	681b      	ldr	r3, [r3, #0]
+1000570c:	2b00      	cmp	r3, #0
+1000570e:	d009      	beq.n	10005724 <main+0x1b4>
+10005710:	4b77      	ldr	r3, [pc, #476]	; (100058f0 <main+0x380>)
+10005712:	681b      	ldr	r3, [r3, #0]
+10005714:	1e1a      	subs	r2, r3, #0
+10005716:	4b77      	ldr	r3, [pc, #476]	; (100058f4 <main+0x384>)
+10005718:	681b      	ldr	r3, [r3, #0]
+1000571a:	429a      	cmp	r2, r3
+1000571c:	d902      	bls.n	10005724 <main+0x1b4>
 					ADC_val_upper_thres_exceed_timestamp = 0;
-1000570a:	4b73      	ldr	r3, [pc, #460]	; (100058d8 <main+0x37c>)
-1000570c:	2200      	movs	r2, #0
-1000570e:	601a      	str	r2, [r3, #0]
+1000571e:	4b73      	ldr	r3, [pc, #460]	; (100058ec <main+0x37c>)
+10005720:	2200      	movs	r2, #0
+10005722:	601a      	str	r2, [r3, #0]
 				}
 
 				// Transition statement
 				// Check if threshold are exceeded long enough to trigger a switch
 				if(ADC_val_upper_thres_exceed_timestamp != 0){
-10005710:	4b71      	ldr	r3, [pc, #452]	; (100058d8 <main+0x37c>)
-10005712:	681b      	ldr	r3, [r3, #0]
-10005714:	2b00      	cmp	r3, #0
-10005716:	d027      	beq.n	10005768 <main+0x20c>
+10005724:	4b71      	ldr	r3, [pc, #452]	; (100058ec <main+0x37c>)
+10005726:	681b      	ldr	r3, [r3, #0]
+10005728:	2b00      	cmp	r3, #0
+1000572a:	d027      	beq.n	1000577c <main+0x20c>
 					uint16_t upperThresholdExceedDuration = (SYSTIMER_GetTime() - ADC_val_upper_thres_exceed_timestamp)/1000;
-10005718:	f7fc fea2 	bl	10002460 <SYSTIMER_GetTime>
-1000571c:	1c02      	adds	r2, r0, #0
-1000571e:	4b6e      	ldr	r3, [pc, #440]	; (100058d8 <main+0x37c>)
-10005720:	681b      	ldr	r3, [r3, #0]
-10005722:	1ad3      	subs	r3, r2, r3
-10005724:	1c18      	adds	r0, r3, #0
-10005726:	23fa      	movs	r3, #250	; 0xfa
-10005728:	0099      	lsls	r1, r3, #2
-1000572a:	f000 fa5b 	bl	10005be4 <__aeabi_uidiv>
-1000572e:	1c03      	adds	r3, r0, #0
-10005730:	1c1a      	adds	r2, r3, #0
-10005732:	2308      	movs	r3, #8
-10005734:	18fb      	adds	r3, r7, r3
-10005736:	801a      	strh	r2, [r3, #0]
+1000572c:	f7fc fe98 	bl	10002460 <SYSTIMER_GetTime>
+10005730:	1c02      	adds	r2, r0, #0
+10005732:	4b6e      	ldr	r3, [pc, #440]	; (100058ec <main+0x37c>)
+10005734:	681b      	ldr	r3, [r3, #0]
+10005736:	1ad3      	subs	r3, r2, r3
+10005738:	1c18      	adds	r0, r3, #0
+1000573a:	23fa      	movs	r3, #250	; 0xfa
+1000573c:	0099      	lsls	r1, r3, #2
+1000573e:	f000 fa59 	bl	10005bf4 <__aeabi_uidiv>
+10005742:	1c03      	adds	r3, r0, #0
+10005744:	1c1a      	adds	r2, r3, #0
+10005746:	2308      	movs	r3, #8
+10005748:	18fb      	adds	r3, r7, r3
+1000574a:	801a      	strh	r2, [r3, #0]
 					if(upperThresholdExceedDuration > relay_threshold_latchtime){
-10005738:	2308      	movs	r3, #8
-1000573a:	18fb      	adds	r3, r7, r3
-1000573c:	881a      	ldrh	r2, [r3, #0]
-1000573e:	4b69      	ldr	r3, [pc, #420]	; (100058e4 <main+0x388>)
-10005740:	681b      	ldr	r3, [r3, #0]
-10005742:	429a      	cmp	r2, r3
-10005744:	dd10      	ble.n	10005768 <main+0x20c>
+1000574c:	2308      	movs	r3, #8
+1000574e:	18fb      	adds	r3, r7, r3
+10005750:	881a      	ldrh	r2, [r3, #0]
+10005752:	4b69      	ldr	r3, [pc, #420]	; (100058f8 <main+0x388>)
+10005754:	681b      	ldr	r3, [r3, #0]
+10005756:	429a      	cmp	r2, r3
+10005758:	dd10      	ble.n	1000577c <main+0x20c>
 						relay_state = RELAY_HIGH;
-10005746:	4b63      	ldr	r3, [pc, #396]	; (100058d4 <main+0x378>)
-10005748:	2200      	movs	r2, #0
-1000574a:	701a      	strb	r2, [r3, #0]
+1000575a:	4b63      	ldr	r3, [pc, #396]	; (100058e8 <main+0x378>)
+1000575c:	2200      	movs	r2, #0
+1000575e:	701a      	strb	r2, [r3, #0]
 						DIGITAL_IO_SetOutputHigh(&IO_RELAY);
-1000574c:	4b5c      	ldr	r3, [pc, #368]	; (100058c0 <main+0x364>)
-1000574e:	1c18      	adds	r0, r3, #0
-10005750:	f7ff fa1e 	bl	10004b90 <DIGITAL_IO_SetOutputHigh>
+10005760:	4b5c      	ldr	r3, [pc, #368]	; (100058d4 <main+0x364>)
+10005762:	1c18      	adds	r0, r3, #0
+10005764:	f7ff fa14 	bl	10004b90 <DIGITAL_IO_SetOutputHigh>
 						ADC_val_upper_thres_exceed_timestamp = 0;
-10005754:	4b60      	ldr	r3, [pc, #384]	; (100058d8 <main+0x37c>)
-10005756:	2200      	movs	r2, #0
-10005758:	601a      	str	r2, [r3, #0]
+10005768:	4b60      	ldr	r3, [pc, #384]	; (100058ec <main+0x37c>)
+1000576a:	2200      	movs	r2, #0
+1000576c:	601a      	str	r2, [r3, #0]
 						if(setup_state == SETUP_IDLE)
-1000575a:	4b63      	ldr	r3, [pc, #396]	; (100058e8 <main+0x38c>)
-1000575c:	781b      	ldrb	r3, [r3, #0]
-1000575e:	2b00      	cmp	r3, #0
-10005760:	d102      	bne.n	10005768 <main+0x20c>
+1000576e:	4b63      	ldr	r3, [pc, #396]	; (100058fc <main+0x38c>)
+10005770:	781b      	ldrb	r3, [r3, #0]
+10005772:	2b00      	cmp	r3, #0
+10005774:	d102      	bne.n	1000577c <main+0x20c>
 							reset_status_led_to_relay_state();
-10005762:	f7ff fa5f 	bl	10004c24 <reset_status_led_to_relay_state>
+10005776:	f7ff fa55 	bl	10004c24 <reset_status_led_to_relay_state>
 					}
 				}
 				break;
-10005766:	e04a      	b.n	100057fe <main+0x2a2>
-10005768:	e049      	b.n	100057fe <main+0x2a2>
+1000577a:	e04a      	b.n	10005812 <main+0x2a2>
+1000577c:	e049      	b.n	10005812 <main+0x2a2>
 			case RELAY_HIGH:
 				// State code
 				// Check if lower threshold is exceeded. If it is and timestamp is not already set - save timestamp. If timestamp is already saved and threshold is not exceeded anymore reset timestamp
 				if(ADC_val_lower_thres_exceed_timestamp == 0 && ADC_val_current < ADC_lower_threshold){
-1000576a:	4b60      	ldr	r3, [pc, #384]	; (100058ec <main+0x390>)
-1000576c:	681b      	ldr	r3, [r3, #0]
-1000576e:	2b00      	cmp	r3, #0
-10005770:	d10c      	bne.n	1000578c <main+0x230>
-10005772:	4b5f      	ldr	r3, [pc, #380]	; (100058f0 <main+0x394>)
-10005774:	681b      	ldr	r3, [r3, #0]
-10005776:	1e1a      	subs	r2, r3, #0
-10005778:	4b59      	ldr	r3, [pc, #356]	; (100058e0 <main+0x384>)
-1000577a:	681b      	ldr	r3, [r3, #0]
-1000577c:	429a      	cmp	r2, r3
-1000577e:	d905      	bls.n	1000578c <main+0x230>
+1000577e:	4b60      	ldr	r3, [pc, #384]	; (10005900 <main+0x390>)
+10005780:	681b      	ldr	r3, [r3, #0]
+10005782:	2b00      	cmp	r3, #0
+10005784:	d10c      	bne.n	100057a0 <main+0x230>
+10005786:	4b5f      	ldr	r3, [pc, #380]	; (10005904 <main+0x394>)
+10005788:	681b      	ldr	r3, [r3, #0]
+1000578a:	1e1a      	subs	r2, r3, #0
+1000578c:	4b59      	ldr	r3, [pc, #356]	; (100058f4 <main+0x384>)
+1000578e:	681b      	ldr	r3, [r3, #0]
+10005790:	429a      	cmp	r2, r3
+10005792:	d905      	bls.n	100057a0 <main+0x230>
 					ADC_val_lower_thres_exceed_timestamp = SYSTIMER_GetTime();
-10005780:	f7fc fe6e 	bl	10002460 <SYSTIMER_GetTime>
-10005784:	1c02      	adds	r2, r0, #0
-10005786:	4b59      	ldr	r3, [pc, #356]	; (100058ec <main+0x390>)
-10005788:	601a      	str	r2, [r3, #0]
-1000578a:	e00d      	b.n	100057a8 <main+0x24c>
+10005794:	f7fc fe64 	bl	10002460 <SYSTIMER_GetTime>
+10005798:	1c02      	adds	r2, r0, #0
+1000579a:	4b59      	ldr	r3, [pc, #356]	; (10005900 <main+0x390>)
+1000579c:	601a      	str	r2, [r3, #0]
+1000579e:	e00d      	b.n	100057bc <main+0x24c>
 				}
 				else if(ADC_val_lower_thres_exceed_timestamp != 0 && ADC_val_current > ADC_lower_threshold){
-1000578c:	4b57      	ldr	r3, [pc, #348]	; (100058ec <main+0x390>)
-1000578e:	681b      	ldr	r3, [r3, #0]
-10005790:	2b00      	cmp	r3, #0
-10005792:	d009      	beq.n	100057a8 <main+0x24c>
-10005794:	4b56      	ldr	r3, [pc, #344]	; (100058f0 <main+0x394>)
-10005796:	681b      	ldr	r3, [r3, #0]
-10005798:	1e1a      	subs	r2, r3, #0
-1000579a:	4b51      	ldr	r3, [pc, #324]	; (100058e0 <main+0x384>)
-1000579c:	681b      	ldr	r3, [r3, #0]
-1000579e:	429a      	cmp	r2, r3
-100057a0:	d202      	bcs.n	100057a8 <main+0x24c>
+100057a0:	4b57      	ldr	r3, [pc, #348]	; (10005900 <main+0x390>)
+100057a2:	681b      	ldr	r3, [r3, #0]
+100057a4:	2b00      	cmp	r3, #0
+100057a6:	d009      	beq.n	100057bc <main+0x24c>
+100057a8:	4b56      	ldr	r3, [pc, #344]	; (10005904 <main+0x394>)
+100057aa:	681b      	ldr	r3, [r3, #0]
+100057ac:	1e1a      	subs	r2, r3, #0
+100057ae:	4b51      	ldr	r3, [pc, #324]	; (100058f4 <main+0x384>)
+100057b0:	681b      	ldr	r3, [r3, #0]
+100057b2:	429a      	cmp	r2, r3
+100057b4:	d202      	bcs.n	100057bc <main+0x24c>
 					ADC_val_lower_thres_exceed_timestamp = 0;
-100057a2:	4b52      	ldr	r3, [pc, #328]	; (100058ec <main+0x390>)
-100057a4:	2200      	movs	r2, #0
-100057a6:	601a      	str	r2, [r3, #0]
+100057b6:	4b52      	ldr	r3, [pc, #328]	; (10005900 <main+0x390>)
+100057b8:	2200      	movs	r2, #0
+100057ba:	601a      	str	r2, [r3, #0]
 				}
 
 				// Transition statement
 				// Check if threshold are exceeded long enough to trigger a switch
 				if(ADC_val_lower_thres_exceed_timestamp != 0){
-100057a8:	4b50      	ldr	r3, [pc, #320]	; (100058ec <main+0x390>)
-100057aa:	681b      	ldr	r3, [r3, #0]
-100057ac:	2b00      	cmp	r3, #0
-100057ae:	d025      	beq.n	100057fc <main+0x2a0>
+100057bc:	4b50      	ldr	r3, [pc, #320]	; (10005900 <main+0x390>)
+100057be:	681b      	ldr	r3, [r3, #0]
+100057c0:	2b00      	cmp	r3, #0
+100057c2:	d025      	beq.n	10005810 <main+0x2a0>
 					uint16_t lowerThresholdExceedDuration = (SYSTIMER_GetTime() - ADC_val_lower_thres_exceed_timestamp)/1000;
-100057b0:	f7fc fe56 	bl	10002460 <SYSTIMER_GetTime>
-100057b4:	1c02      	adds	r2, r0, #0
-100057b6:	4b4d      	ldr	r3, [pc, #308]	; (100058ec <main+0x390>)
-100057b8:	681b      	ldr	r3, [r3, #0]
-100057ba:	1ad3      	subs	r3, r2, r3
-100057bc:	1c18      	adds	r0, r3, #0
-100057be:	23fa      	movs	r3, #250	; 0xfa
-100057c0:	0099      	lsls	r1, r3, #2
-100057c2:	f000 fa0f 	bl	10005be4 <__aeabi_uidiv>
-100057c6:	1c03      	adds	r3, r0, #0
-100057c8:	1c1a      	adds	r2, r3, #0
-100057ca:	1dbb      	adds	r3, r7, #6
-100057cc:	801a      	strh	r2, [r3, #0]
+100057c4:	f7fc fe4c 	bl	10002460 <SYSTIMER_GetTime>
+100057c8:	1c02      	adds	r2, r0, #0
+100057ca:	4b4d      	ldr	r3, [pc, #308]	; (10005900 <main+0x390>)
+100057cc:	681b      	ldr	r3, [r3, #0]
+100057ce:	1ad3      	subs	r3, r2, r3
+100057d0:	1c18      	adds	r0, r3, #0
+100057d2:	23fa      	movs	r3, #250	; 0xfa
+100057d4:	0099      	lsls	r1, r3, #2
+100057d6:	f000 fa0d 	bl	10005bf4 <__aeabi_uidiv>
+100057da:	1c03      	adds	r3, r0, #0
+100057dc:	1c1a      	adds	r2, r3, #0
+100057de:	1dbb      	adds	r3, r7, #6
+100057e0:	801a      	strh	r2, [r3, #0]
 					if(lowerThresholdExceedDuration > relay_threshold_latchtime){
-100057ce:	1dbb      	adds	r3, r7, #6
-100057d0:	881a      	ldrh	r2, [r3, #0]
-100057d2:	4b44      	ldr	r3, [pc, #272]	; (100058e4 <main+0x388>)
-100057d4:	681b      	ldr	r3, [r3, #0]
-100057d6:	429a      	cmp	r2, r3
-100057d8:	dd10      	ble.n	100057fc <main+0x2a0>
+100057e2:	1dbb      	adds	r3, r7, #6
+100057e4:	881a      	ldrh	r2, [r3, #0]
+100057e6:	4b44      	ldr	r3, [pc, #272]	; (100058f8 <main+0x388>)
+100057e8:	681b      	ldr	r3, [r3, #0]
+100057ea:	429a      	cmp	r2, r3
+100057ec:	dd10      	ble.n	10005810 <main+0x2a0>
 						relay_state = RELAY_LOW;
-100057da:	4b3e      	ldr	r3, [pc, #248]	; (100058d4 <main+0x378>)
-100057dc:	2201      	movs	r2, #1
-100057de:	701a      	strb	r2, [r3, #0]
+100057ee:	4b3e      	ldr	r3, [pc, #248]	; (100058e8 <main+0x378>)
+100057f0:	2201      	movs	r2, #1
+100057f2:	701a      	strb	r2, [r3, #0]
 						DIGITAL_IO_SetOutputLow(&IO_RELAY);
-100057e0:	4b37      	ldr	r3, [pc, #220]	; (100058c0 <main+0x364>)
-100057e2:	1c18      	adds	r0, r3, #0
-100057e4:	f7ff f9e4 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
+100057f4:	4b37      	ldr	r3, [pc, #220]	; (100058d4 <main+0x364>)
+100057f6:	1c18      	adds	r0, r3, #0
+100057f8:	f7ff f9da 	bl	10004bb0 <DIGITAL_IO_SetOutputLow>
 						ADC_val_lower_thres_exceed_timestamp = 0;
-100057e8:	4b40      	ldr	r3, [pc, #256]	; (100058ec <main+0x390>)
-100057ea:	2200      	movs	r2, #0
-100057ec:	601a      	str	r2, [r3, #0]
+100057fc:	4b40      	ldr	r3, [pc, #256]	; (10005900 <main+0x390>)
+100057fe:	2200      	movs	r2, #0
+10005800:	601a      	str	r2, [r3, #0]
 						if(setup_state == SETUP_IDLE)
-100057ee:	4b3e      	ldr	r3, [pc, #248]	; (100058e8 <main+0x38c>)
-100057f0:	781b      	ldrb	r3, [r3, #0]
-100057f2:	2b00      	cmp	r3, #0
-100057f4:	d102      	bne.n	100057fc <main+0x2a0>
+10005802:	4b3e      	ldr	r3, [pc, #248]	; (100058fc <main+0x38c>)
+10005804:	781b      	ldrb	r3, [r3, #0]
+10005806:	2b00      	cmp	r3, #0
+10005808:	d102      	bne.n	10005810 <main+0x2a0>
 							reset_status_led_to_relay_state();
-100057f6:	f7ff fa15 	bl	10004c24 <reset_status_led_to_relay_state>
+1000580a:	f7ff fa0b 	bl	10004c24 <reset_status_led_to_relay_state>
 					}
 				}
 				break;
-100057fa:	e7ff      	b.n	100057fc <main+0x2a0>
-100057fc:	46c0      	nop			; (mov r8, r8)
+1000580e:	e7ff      	b.n	10005810 <main+0x2a0>
+10005810:	46c0      	nop			; (mov r8, r8)
 		}
 		// Init next value conversion
 		ADC_MEASUREMENT_StartConversion(&ADC_SENSOR);
-100057fe:	4b31      	ldr	r3, [pc, #196]	; (100058c4 <main+0x368>)
-10005800:	1c18      	adds	r0, r3, #0
-10005802:	f7ff f88d 	bl	10004920 <ADC_MEASUREMENT_StartConversion>
+10005812:	4b31      	ldr	r3, [pc, #196]	; (100058d8 <main+0x368>)
+10005814:	1c18      	adds	r0, r3, #0
+10005816:	f7ff f883 	bl	10004920 <ADC_MEASUREMENT_StartConversion>
 
 		/// - Relay settings handling - Todo auto exit menus after time?, led signal when reaching max?, upper threshold cant be lower than lower threshold?
 		switch(setup_state){
-10005806:	4b38      	ldr	r3, [pc, #224]	; (100058e8 <main+0x38c>)
-10005808:	781b      	ldrb	r3, [r3, #0]
-1000580a:	2b01      	cmp	r3, #1
-1000580c:	d033      	beq.n	10005876 <main+0x31a>
-1000580e:	dc02      	bgt.n	10005816 <main+0x2ba>
-10005810:	2b00      	cmp	r3, #0
-10005812:	d007      	beq.n	10005824 <main+0x2c8>
-10005814:	e19a      	b.n	10005b4c <main+0x5f0>
-10005816:	2b02      	cmp	r3, #2
-10005818:	d100      	bne.n	1000581c <main+0x2c0>
-1000581a:	e0d0      	b.n	100059be <main+0x462>
-1000581c:	2b03      	cmp	r3, #3
-1000581e:	d100      	bne.n	10005822 <main+0x2c6>
-10005820:	e13f      	b.n	10005aa2 <main+0x546>
-10005822:	e193      	b.n	10005b4c <main+0x5f0>
+1000581a:	4b38      	ldr	r3, [pc, #224]	; (100058fc <main+0x38c>)
+1000581c:	781b      	ldrb	r3, [r3, #0]
+1000581e:	2b01      	cmp	r3, #1
+10005820:	d033      	beq.n	1000588a <main+0x31a>
+10005822:	dc02      	bgt.n	1000582a <main+0x2ba>
+10005824:	2b00      	cmp	r3, #0
+10005826:	d007      	beq.n	10005838 <main+0x2c8>
+10005828:	e198      	b.n	10005b5c <main+0x5ec>
+1000582a:	2b02      	cmp	r3, #2
+1000582c:	d100      	bne.n	10005830 <main+0x2c0>
+1000582e:	e0d0      	b.n	100059d2 <main+0x462>
+10005830:	2b03      	cmp	r3, #3
+10005832:	d100      	bne.n	10005836 <main+0x2c6>
+10005834:	e13f      	b.n	10005ab6 <main+0x546>
+10005836:	e191      	b.n	10005b5c <main+0x5ec>
 			case SETUP_IDLE:
 				/// Interpret button press and change to according setup sub-menu (state)
 				// A long  press of up or down brings system in time setup menu
 				// A short press of up         brings system in upper threshold setup menu
 				// A short press of down       brings system in lower threshold setup menu
 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
-10005824:	4b33      	ldr	r3, [pc, #204]	; (100058f4 <main+0x398>)
-10005826:	781b      	ldrb	r3, [r3, #0]
-10005828:	2b02      	cmp	r3, #2
-1000582a:	d003      	beq.n	10005834 <main+0x2d8>
-1000582c:	4b32      	ldr	r3, [pc, #200]	; (100058f8 <main+0x39c>)
-1000582e:	781b      	ldrb	r3, [r3, #0]
-10005830:	2b02      	cmp	r3, #2
-10005832:	d109      	bne.n	10005848 <main+0x2ec>
+10005838:	4b33      	ldr	r3, [pc, #204]	; (10005908 <main+0x398>)
+1000583a:	781b      	ldrb	r3, [r3, #0]
+1000583c:	2b02      	cmp	r3, #2
+1000583e:	d003      	beq.n	10005848 <main+0x2d8>
+10005840:	4b32      	ldr	r3, [pc, #200]	; (1000590c <main+0x39c>)
+10005842:	781b      	ldrb	r3, [r3, #0]
+10005844:	2b02      	cmp	r3, #2
+10005846:	d109      	bne.n	1000585c <main+0x2ec>
 					setup_state = SETUP_TIME_TH;
-10005834:	4b2c      	ldr	r3, [pc, #176]	; (100058e8 <main+0x38c>)
-10005836:	2203      	movs	r2, #3
-10005838:	701a      	strb	r2, [r3, #0]
+10005848:	4b2c      	ldr	r3, [pc, #176]	; (100058fc <main+0x38c>)
+1000584a:	2203      	movs	r2, #3
+1000584c:	701a      	strb	r2, [r3, #0]
 					led_status_pattern = LED_NUMBER;
-1000583a:	4b30      	ldr	r3, [pc, #192]	; (100058fc <main+0x3a0>)
-1000583c:	2202      	movs	r2, #2
-1000583e:	701a      	strb	r2, [r3, #0]
+1000584e:	4b30      	ldr	r3, [pc, #192]	; (10005910 <main+0x3a0>)
+10005850:	2202      	movs	r2, #2
+10005852:	701a      	strb	r2, [r3, #0]
 					led_number_continuous = 1;
-10005840:	4b2f      	ldr	r3, [pc, #188]	; (10005900 <main+0x3a4>)
-10005842:	2201      	movs	r2, #1
-10005844:	801a      	strh	r2, [r3, #0]
-10005846:	e015      	b.n	10005874 <main+0x318>
+10005854:	4b2f      	ldr	r3, [pc, #188]	; (10005914 <main+0x3a4>)
+10005856:	2201      	movs	r2, #1
+10005858:	801a      	strh	r2, [r3, #0]
+1000585a:	e015      	b.n	10005888 <main+0x318>
 				}
 				else if(buttonpress_up == BTNPRESS_STD){
-10005848:	4b2a      	ldr	r3, [pc, #168]	; (100058f4 <main+0x398>)
-1000584a:	781b      	ldrb	r3, [r3, #0]
-1000584c:	2b01      	cmp	r3, #1
-1000584e:	d106      	bne.n	1000585e <main+0x302>
+1000585c:	4b2a      	ldr	r3, [pc, #168]	; (10005908 <main+0x398>)
+1000585e:	781b      	ldrb	r3, [r3, #0]
+10005860:	2b01      	cmp	r3, #1
+10005862:	d106      	bne.n	10005872 <main+0x302>
 					setup_state = SETUP_UPPER_TH;
-10005850:	4b25      	ldr	r3, [pc, #148]	; (100058e8 <main+0x38c>)
-10005852:	2201      	movs	r2, #1
-10005854:	701a      	strb	r2, [r3, #0]
+10005864:	4b25      	ldr	r3, [pc, #148]	; (100058fc <main+0x38c>)
+10005866:	2201      	movs	r2, #1
+10005868:	701a      	strb	r2, [r3, #0]
 					led_status_pattern = LED_FADE_UP;
-10005856:	4b29      	ldr	r3, [pc, #164]	; (100058fc <main+0x3a0>)
-10005858:	2204      	movs	r2, #4
-1000585a:	701a      	strb	r2, [r3, #0]
-1000585c:	e00a      	b.n	10005874 <main+0x318>
+1000586a:	4b29      	ldr	r3, [pc, #164]	; (10005910 <main+0x3a0>)
+1000586c:	2204      	movs	r2, #4
+1000586e:	701a      	strb	r2, [r3, #0]
+10005870:	e00a      	b.n	10005888 <main+0x318>
 					//led_status_pattern = LED_NUMBER;
 					//led_number_continuous = 5;
 				}
 				else if(buttonpress_down == BTNPRESS_STD){
-1000585e:	4b26      	ldr	r3, [pc, #152]	; (100058f8 <main+0x39c>)
-10005860:	781b      	ldrb	r3, [r3, #0]
-10005862:	2b01      	cmp	r3, #1
-10005864:	d106      	bne.n	10005874 <main+0x318>
+10005872:	4b26      	ldr	r3, [pc, #152]	; (1000590c <main+0x39c>)
+10005874:	781b      	ldrb	r3, [r3, #0]
+10005876:	2b01      	cmp	r3, #1
+10005878:	d106      	bne.n	10005888 <main+0x318>
 					setup_state = SETUP_LOWER_TH;
-10005866:	4b20      	ldr	r3, [pc, #128]	; (100058e8 <main+0x38c>)
-10005868:	2202      	movs	r2, #2
-1000586a:	701a      	strb	r2, [r3, #0]
+1000587a:	4b20      	ldr	r3, [pc, #128]	; (100058fc <main+0x38c>)
+1000587c:	2202      	movs	r2, #2
+1000587e:	701a      	strb	r2, [r3, #0]
 					led_status_pattern = LED_FADE_DOWN;
-1000586c:	4b23      	ldr	r3, [pc, #140]	; (100058fc <main+0x3a0>)
-1000586e:	2203      	movs	r2, #3
-10005870:	701a      	strb	r2, [r3, #0]
+10005880:	4b23      	ldr	r3, [pc, #140]	; (10005910 <main+0x3a0>)
+10005882:	2203      	movs	r2, #3
+10005884:	701a      	strb	r2, [r3, #0]
 					//led_status_pattern = LED_NUMBER;
 					//led_number_continuous = 3;
 				}
 				break;
-10005872:	e16b      	b.n	10005b4c <main+0x5f0>
-10005874:	e16a      	b.n	10005b4c <main+0x5f0>
+10005886:	e169      	b.n	10005b5c <main+0x5ec>
+10005888:	e168      	b.n	10005b5c <main+0x5ec>
 				/// Interpret button press:
 				// A long  press of up or down brings system back to setup idle
 				// A short press of up         increases the upper threshold value
 				// A short press of down       decreases the upper threshold value
 				// A longest press of up saves the current ADC value as threshold
 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
-10005876:	4b1f      	ldr	r3, [pc, #124]	; (100058f4 <main+0x398>)
-10005878:	781b      	ldrb	r3, [r3, #0]
-1000587a:	2b02      	cmp	r3, #2
-1000587c:	d003      	beq.n	10005886 <main+0x32a>
-1000587e:	4b1e      	ldr	r3, [pc, #120]	; (100058f8 <main+0x39c>)
-10005880:	781b      	ldrb	r3, [r3, #0]
-10005882:	2b02      	cmp	r3, #2
-10005884:	d13e      	bne.n	10005904 <main+0x3a8>
+1000588a:	4b1f      	ldr	r3, [pc, #124]	; (10005908 <main+0x398>)
+1000588c:	781b      	ldrb	r3, [r3, #0]
+1000588e:	2b02      	cmp	r3, #2
+10005890:	d003      	beq.n	1000589a <main+0x32a>
+10005892:	4b1e      	ldr	r3, [pc, #120]	; (1000590c <main+0x39c>)
+10005894:	781b      	ldrb	r3, [r3, #0]
+10005896:	2b02      	cmp	r3, #2
+10005898:	d13e      	bne.n	10005918 <main+0x3a8>
 					write_eeprom_setup(EEPROM_UPPER_TH, ADC_upper_threshold);
-10005886:	4b15      	ldr	r3, [pc, #84]	; (100058dc <main+0x380>)
-10005888:	681b      	ldr	r3, [r3, #0]
-1000588a:	2002      	movs	r0, #2
-1000588c:	1c19      	adds	r1, r3, #0
-1000588e:	f7ff fcff 	bl	10005290 <write_eeprom_setup>
+1000589a:	4b15      	ldr	r3, [pc, #84]	; (100058f0 <main+0x380>)
+1000589c:	681b      	ldr	r3, [r3, #0]
+1000589e:	2002      	movs	r0, #2
+100058a0:	1c19      	adds	r1, r3, #0
+100058a2:	f7ff fcfb 	bl	1000529c <write_eeprom_setup>
 					setup_state = SETUP_IDLE;
-10005892:	4b15      	ldr	r3, [pc, #84]	; (100058e8 <main+0x38c>)
-10005894:	2200      	movs	r2, #0
-10005896:	701a      	strb	r2, [r3, #0]
+100058a6:	4b15      	ldr	r3, [pc, #84]	; (100058fc <main+0x38c>)
+100058a8:	2200      	movs	r2, #0
+100058aa:	701a      	strb	r2, [r3, #0]
 					led_status_pattern = LED_MATCH_RELAY_STATE;
-10005898:	4b18      	ldr	r3, [pc, #96]	; (100058fc <main+0x3a0>)
-1000589a:	2205      	movs	r2, #5
-1000589c:	701a      	strb	r2, [r3, #0]
-1000589e:	e08d      	b.n	100059bc <main+0x460>
-100058a0:	10005ed8 	.word	0x10005ed8
-100058a4:	10005ec8 	.word	0x10005ec8
-100058a8:	20000520 	.word	0x20000520
-100058ac:	00002710 	.word	0x00002710
-100058b0:	10005e38 	.word	0x10005e38
-100058b4:	10005e48 	.word	0x10005e48
-100058b8:	10005ea8 	.word	0x10005ea8
-100058bc:	10005e98 	.word	0x10005e98
-100058c0:	10005eb8 	.word	0x10005eb8
-100058c4:	20000588 	.word	0x20000588
-100058c8:	20000608 	.word	0x20000608
-100058cc:	200005d8 	.word	0x200005d8
-100058d0:	200005e2 	.word	0x200005e2
-100058d4:	200005b0 	.word	0x200005b0
-100058d8:	20000600 	.word	0x20000600
-100058dc:	200005a8 	.word	0x200005a8
-100058e0:	200005fc 	.word	0x200005fc
-100058e4:	200005a4 	.word	0x200005a4
-100058e8:	200005d9 	.word	0x200005d9
-100058ec:	20000604 	.word	0x20000604
-100058f0:	200005ac 	.word	0x200005ac
-100058f4:	200005e3 	.word	0x200005e3
-100058f8:	200005e4 	.word	0x200005e4
-100058fc:	200005da 	.word	0x200005da
-10005900:	200005de 	.word	0x200005de
+100058ac:	4b18      	ldr	r3, [pc, #96]	; (10005910 <main+0x3a0>)
+100058ae:	2205      	movs	r2, #5
+100058b0:	701a      	strb	r2, [r3, #0]
+100058b2:	e08d      	b.n	100059d0 <main+0x460>
+100058b4:	10005ee8 	.word	0x10005ee8
+100058b8:	10005ed8 	.word	0x10005ed8
+100058bc:	20000520 	.word	0x20000520
+100058c0:	00002710 	.word	0x00002710
+100058c4:	10005e48 	.word	0x10005e48
+100058c8:	10005e58 	.word	0x10005e58
+100058cc:	10005eb8 	.word	0x10005eb8
+100058d0:	10005ea8 	.word	0x10005ea8
+100058d4:	10005ec8 	.word	0x10005ec8
+100058d8:	20000588 	.word	0x20000588
+100058dc:	20000608 	.word	0x20000608
+100058e0:	200005d8 	.word	0x200005d8
+100058e4:	200005e2 	.word	0x200005e2
+100058e8:	200005b0 	.word	0x200005b0
+100058ec:	20000600 	.word	0x20000600
+100058f0:	200005a8 	.word	0x200005a8
+100058f4:	200005fc 	.word	0x200005fc
+100058f8:	200005a4 	.word	0x200005a4
+100058fc:	200005d9 	.word	0x200005d9
+10005900:	20000604 	.word	0x20000604
+10005904:	200005ac 	.word	0x200005ac
+10005908:	200005e3 	.word	0x200005e3
+1000590c:	200005e4 	.word	0x200005e4
+10005910:	200005da 	.word	0x200005da
+10005914:	200005de 	.word	0x200005de
 				}
 				else if(buttonpress_up == BTNPRESS_STD){ // Increase
-10005904:	4b96      	ldr	r3, [pc, #600]	; (10005b60 <main+0x604>)
-10005906:	781b      	ldrb	r3, [r3, #0]
-10005908:	2b01      	cmp	r3, #1
-1000590a:	d11a      	bne.n	10005942 <main+0x3e6>
+10005918:	4b95      	ldr	r3, [pc, #596]	; (10005b70 <main+0x600>)
+1000591a:	781b      	ldrb	r3, [r3, #0]
+1000591c:	2b01      	cmp	r3, #1
+1000591e:	d11a      	bne.n	10005956 <main+0x3e6>
 					ADC_upper_threshold += ADC_THRESHOLD_INCREMENT;
-1000590c:	4b95      	ldr	r3, [pc, #596]	; (10005b64 <main+0x608>)
-1000590e:	681b      	ldr	r3, [r3, #0]
-10005910:	3375      	adds	r3, #117	; 0x75
-10005912:	1c1a      	adds	r2, r3, #0
-10005914:	4b93      	ldr	r3, [pc, #588]	; (10005b64 <main+0x608>)
-10005916:	601a      	str	r2, [r3, #0]
+10005920:	4b94      	ldr	r3, [pc, #592]	; (10005b74 <main+0x604>)
+10005922:	681b      	ldr	r3, [r3, #0]
+10005924:	3375      	adds	r3, #117	; 0x75
+10005926:	1c1a      	adds	r2, r3, #0
+10005928:	4b92      	ldr	r3, [pc, #584]	; (10005b74 <main+0x604>)
+1000592a:	601a      	str	r2, [r3, #0]
 					// If maximum is reached blink led 2 times, then continue fading
 					if(ADC_upper_threshold > ADC_THRESHOLD_MAX){
-10005918:	4b92      	ldr	r3, [pc, #584]	; (10005b64 <main+0x608>)
-1000591a:	681b      	ldr	r3, [r3, #0]
-1000591c:	4a92      	ldr	r2, [pc, #584]	; (10005b68 <main+0x60c>)
-1000591e:	4293      	cmp	r3, r2
-10005920:	dd4c      	ble.n	100059bc <main+0x460>
+1000592c:	4b91      	ldr	r3, [pc, #580]	; (10005b74 <main+0x604>)
+1000592e:	681b      	ldr	r3, [r3, #0]
+10005930:	4a91      	ldr	r2, [pc, #580]	; (10005b78 <main+0x608>)
+10005932:	4293      	cmp	r3, r2
+10005934:	dd4c      	ble.n	100059d0 <main+0x460>
 						ADC_upper_threshold = ADC_THRESHOLD_MAX;
-10005922:	4b90      	ldr	r3, [pc, #576]	; (10005b64 <main+0x608>)
-10005924:	4a90      	ldr	r2, [pc, #576]	; (10005b68 <main+0x60c>)
-10005926:	601a      	str	r2, [r3, #0]
+10005936:	4b8f      	ldr	r3, [pc, #572]	; (10005b74 <main+0x604>)
+10005938:	4a8f      	ldr	r2, [pc, #572]	; (10005b78 <main+0x608>)
+1000593a:	601a      	str	r2, [r3, #0]
 						led_number_single = 2;
-10005928:	4b90      	ldr	r3, [pc, #576]	; (10005b6c <main+0x610>)
-1000592a:	2202      	movs	r2, #2
-1000592c:	801a      	strh	r2, [r3, #0]
+1000593c:	4b8f      	ldr	r3, [pc, #572]	; (10005b7c <main+0x60c>)
+1000593e:	2202      	movs	r2, #2
+10005940:	801a      	strh	r2, [r3, #0]
 						led_status_pattern = LED_NUMBER;
-1000592e:	4b90      	ldr	r3, [pc, #576]	; (10005b70 <main+0x614>)
-10005930:	2202      	movs	r2, #2
-10005932:	701a      	strb	r2, [r3, #0]
+10005942:	4b8f      	ldr	r3, [pc, #572]	; (10005b80 <main+0x610>)
+10005944:	2202      	movs	r2, #2
+10005946:	701a      	strb	r2, [r3, #0]
 						led_pattern_mode = LED_PATTERN_SINGLE;
-10005934:	4b8f      	ldr	r3, [pc, #572]	; (10005b74 <main+0x618>)
-10005936:	2201      	movs	r2, #1
-10005938:	701a      	strb	r2, [r3, #0]
+10005948:	4b8e      	ldr	r3, [pc, #568]	; (10005b84 <main+0x614>)
+1000594a:	2201      	movs	r2, #1
+1000594c:	701a      	strb	r2, [r3, #0]
 						led_status_pattern_after_single = LED_FADE_UP;
-1000593a:	4b8f      	ldr	r3, [pc, #572]	; (10005b78 <main+0x61c>)
-1000593c:	2204      	movs	r2, #4
-1000593e:	701a      	strb	r2, [r3, #0]
+1000594e:	4b8e      	ldr	r3, [pc, #568]	; (10005b88 <main+0x618>)
+10005950:	2204      	movs	r2, #4
+10005952:	701a      	strb	r2, [r3, #0]
 					led_number_single = 3;
 					led_status_pattern = LED_NUMBER;
 					led_pattern_mode = LED_PATTERN_SINGLE;
 					led_status_pattern_after_single = LED_MATCH_RELAY_STATE;
 				}
 				break;
-10005940:	e104      	b.n	10005b4c <main+0x5f0>
+10005954:	e102      	b.n	10005b5c <main+0x5ec>
 						led_status_pattern = LED_NUMBER;
 						led_pattern_mode = LED_PATTERN_SINGLE;
 						led_status_pattern_after_single = LED_FADE_UP;
 					}
 				}
 				else if(buttonpress_down == BTNPRESS_STD){ // Decrease
-10005942:	4b8e      	ldr	r3, [pc, #568]	; (10005b7c <main+0x620>)
-10005944:	781b      	ldrb	r3, [r3, #0]
-10005946:	2b01      	cmp	r3, #1
-10005948:	d119      	bne.n	1000597e <main+0x422>
+10005956:	4b8d      	ldr	r3, [pc, #564]	; (10005b8c <main+0x61c>)
+10005958:	781b      	ldrb	r3, [r3, #0]
+1000595a:	2b01      	cmp	r3, #1
+1000595c:	d119      	bne.n	10005992 <main+0x422>
 					ADC_upper_threshold -= ADC_THRESHOLD_INCREMENT;
-1000594a:	4b86      	ldr	r3, [pc, #536]	; (10005b64 <main+0x608>)
-1000594c:	681b      	ldr	r3, [r3, #0]
-1000594e:	3b75      	subs	r3, #117	; 0x75
-10005950:	1c1a      	adds	r2, r3, #0
-10005952:	4b84      	ldr	r3, [pc, #528]	; (10005b64 <main+0x608>)
-10005954:	601a      	str	r2, [r3, #0]
+1000595e:	4b85      	ldr	r3, [pc, #532]	; (10005b74 <main+0x604>)
+10005960:	681b      	ldr	r3, [r3, #0]
+10005962:	3b75      	subs	r3, #117	; 0x75
+10005964:	1c1a      	adds	r2, r3, #0
+10005966:	4b83      	ldr	r3, [pc, #524]	; (10005b74 <main+0x604>)
+10005968:	601a      	str	r2, [r3, #0]
 					// If minimum is reached blink led 2 times, then continue fading
 					if(ADC_upper_threshold <= 0){
-10005956:	4b83      	ldr	r3, [pc, #524]	; (10005b64 <main+0x608>)
-10005958:	681b      	ldr	r3, [r3, #0]
-1000595a:	2b00      	cmp	r3, #0
-1000595c:	dc2e      	bgt.n	100059bc <main+0x460>
+1000596a:	4b82      	ldr	r3, [pc, #520]	; (10005b74 <main+0x604>)
+1000596c:	681b      	ldr	r3, [r3, #0]
+1000596e:	2b00      	cmp	r3, #0
+10005970:	dc2e      	bgt.n	100059d0 <main+0x460>
 						ADC_upper_threshold = 0;
-1000595e:	4b81      	ldr	r3, [pc, #516]	; (10005b64 <main+0x608>)
-10005960:	2200      	movs	r2, #0
-10005962:	601a      	str	r2, [r3, #0]
+10005972:	4b80      	ldr	r3, [pc, #512]	; (10005b74 <main+0x604>)
+10005974:	2200      	movs	r2, #0
+10005976:	601a      	str	r2, [r3, #0]
 						led_number_single = 2;
-10005964:	4b81      	ldr	r3, [pc, #516]	; (10005b6c <main+0x610>)
-10005966:	2202      	movs	r2, #2
-10005968:	801a      	strh	r2, [r3, #0]
+10005978:	4b80      	ldr	r3, [pc, #512]	; (10005b7c <main+0x60c>)
+1000597a:	2202      	movs	r2, #2
+1000597c:	801a      	strh	r2, [r3, #0]
 						led_status_pattern = LED_NUMBER;
-1000596a:	4b81      	ldr	r3, [pc, #516]	; (10005b70 <main+0x614>)
-1000596c:	2202      	movs	r2, #2
-1000596e:	701a      	strb	r2, [r3, #0]
+1000597e:	4b80      	ldr	r3, [pc, #512]	; (10005b80 <main+0x610>)
+10005980:	2202      	movs	r2, #2
+10005982:	701a      	strb	r2, [r3, #0]
 						led_pattern_mode = LED_PATTERN_SINGLE;
-10005970:	4b80      	ldr	r3, [pc, #512]	; (10005b74 <main+0x618>)
-10005972:	2201      	movs	r2, #1
-10005974:	701a      	strb	r2, [r3, #0]
+10005984:	4b7f      	ldr	r3, [pc, #508]	; (10005b84 <main+0x614>)
+10005986:	2201      	movs	r2, #1
+10005988:	701a      	strb	r2, [r3, #0]
 						led_status_pattern_after_single = LED_FADE_UP;
-10005976:	4b80      	ldr	r3, [pc, #512]	; (10005b78 <main+0x61c>)
-10005978:	2204      	movs	r2, #4
-1000597a:	701a      	strb	r2, [r3, #0]
+1000598a:	4b7f      	ldr	r3, [pc, #508]	; (10005b88 <main+0x618>)
+1000598c:	2204      	movs	r2, #4
+1000598e:	701a      	strb	r2, [r3, #0]
 					led_number_single = 3;
 					led_status_pattern = LED_NUMBER;
 					led_pattern_mode = LED_PATTERN_SINGLE;
 					led_status_pattern_after_single = LED_MATCH_RELAY_STATE;
 				}
 				break;
-1000597c:	e0e6      	b.n	10005b4c <main+0x5f0>
+10005990:	e0e4      	b.n	10005b5c <main+0x5ec>
 						led_status_pattern_after_single = LED_FADE_UP;
 					}
 					//if(ADC_upper_threshold <= ADC_lower_threshold)
 						//ADC_upper_threshold = ADC_lower_threshold;
 				}
 				else if(buttonpress_up == BTNPRESS_LONGEST){
-1000597e:	4b78      	ldr	r3, [pc, #480]	; (10005b60 <main+0x604>)
-10005980:	781b      	ldrb	r3, [r3, #0]
-10005982:	2b03      	cmp	r3, #3
-10005984:	d11a      	bne.n	100059bc <main+0x460>
+10005992:	4b77      	ldr	r3, [pc, #476]	; (10005b70 <main+0x600>)
+10005994:	781b      	ldrb	r3, [r3, #0]
+10005996:	2b03      	cmp	r3, #3
+10005998:	d11a      	bne.n	100059d0 <main+0x460>
 					// Save current ADC value as threshold and exit setup menu
 					ADC_upper_threshold = ADC_val_current;
-10005986:	4b7e      	ldr	r3, [pc, #504]	; (10005b80 <main+0x624>)
-10005988:	681b      	ldr	r3, [r3, #0]
-1000598a:	1c1a      	adds	r2, r3, #0
-1000598c:	4b75      	ldr	r3, [pc, #468]	; (10005b64 <main+0x608>)
-1000598e:	601a      	str	r2, [r3, #0]
+1000599a:	4b7d      	ldr	r3, [pc, #500]	; (10005b90 <main+0x620>)
+1000599c:	681b      	ldr	r3, [r3, #0]
+1000599e:	1c1a      	adds	r2, r3, #0
+100059a0:	4b74      	ldr	r3, [pc, #464]	; (10005b74 <main+0x604>)
+100059a2:	601a      	str	r2, [r3, #0]
 					write_eeprom_setup(EEPROM_UPPER_TH, ADC_upper_threshold);
-10005990:	4b74      	ldr	r3, [pc, #464]	; (10005b64 <main+0x608>)
-10005992:	681b      	ldr	r3, [r3, #0]
-10005994:	2002      	movs	r0, #2
-10005996:	1c19      	adds	r1, r3, #0
-10005998:	f7ff fc7a 	bl	10005290 <write_eeprom_setup>
+100059a4:	4b73      	ldr	r3, [pc, #460]	; (10005b74 <main+0x604>)
+100059a6:	681b      	ldr	r3, [r3, #0]
+100059a8:	2002      	movs	r0, #2
+100059aa:	1c19      	adds	r1, r3, #0
+100059ac:	f7ff fc76 	bl	1000529c <write_eeprom_setup>
 					setup_state = SETUP_IDLE;
-1000599c:	4b79      	ldr	r3, [pc, #484]	; (10005b84 <main+0x628>)
-1000599e:	2200      	movs	r2, #0
-100059a0:	701a      	strb	r2, [r3, #0]
+100059b0:	4b78      	ldr	r3, [pc, #480]	; (10005b94 <main+0x624>)
+100059b2:	2200      	movs	r2, #0
+100059b4:	701a      	strb	r2, [r3, #0]
 					// Blink LED 3 times (user info) and return to operation where led matches the state of the relay
 					led_number_single = 3;
-100059a2:	4b72      	ldr	r3, [pc, #456]	; (10005b6c <main+0x610>)
-100059a4:	2203      	movs	r2, #3
-100059a6:	801a      	strh	r2, [r3, #0]
+100059b6:	4b71      	ldr	r3, [pc, #452]	; (10005b7c <main+0x60c>)
+100059b8:	2203      	movs	r2, #3
+100059ba:	801a      	strh	r2, [r3, #0]
 					led_status_pattern = LED_NUMBER;
-100059a8:	4b71      	ldr	r3, [pc, #452]	; (10005b70 <main+0x614>)
-100059aa:	2202      	movs	r2, #2
-100059ac:	701a      	strb	r2, [r3, #0]
+100059bc:	4b70      	ldr	r3, [pc, #448]	; (10005b80 <main+0x610>)
+100059be:	2202      	movs	r2, #2
+100059c0:	701a      	strb	r2, [r3, #0]
 					led_pattern_mode = LED_PATTERN_SINGLE;
-100059ae:	4b71      	ldr	r3, [pc, #452]	; (10005b74 <main+0x618>)
-100059b0:	2201      	movs	r2, #1
-100059b2:	701a      	strb	r2, [r3, #0]
+100059c2:	4b70      	ldr	r3, [pc, #448]	; (10005b84 <main+0x614>)
+100059c4:	2201      	movs	r2, #1
+100059c6:	701a      	strb	r2, [r3, #0]
 					led_status_pattern_after_single = LED_MATCH_RELAY_STATE;
-100059b4:	4b70      	ldr	r3, [pc, #448]	; (10005b78 <main+0x61c>)
-100059b6:	2205      	movs	r2, #5
-100059b8:	701a      	strb	r2, [r3, #0]
+100059c8:	4b6f      	ldr	r3, [pc, #444]	; (10005b88 <main+0x618>)
+100059ca:	2205      	movs	r2, #5
+100059cc:	701a      	strb	r2, [r3, #0]
 				}
 				break;
-100059ba:	e0c7      	b.n	10005b4c <main+0x5f0>
-100059bc:	e0c6      	b.n	10005b4c <main+0x5f0>
+100059ce:	e0c5      	b.n	10005b5c <main+0x5ec>
+100059d0:	e0c4      	b.n	10005b5c <main+0x5ec>
 				/// Interpret button press:
 				// A long  press of up or down brings system back to setup idle
 				// A short press of up         increases the lower threshold value
 				// A short press of down       decreases the lower threshold value
 				// A longest press of down saves the current ADC value as threshold
 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
-100059be:	4b68      	ldr	r3, [pc, #416]	; (10005b60 <main+0x604>)
-100059c0:	781b      	ldrb	r3, [r3, #0]
-100059c2:	2b02      	cmp	r3, #2
-100059c4:	d003      	beq.n	100059ce <main+0x472>
-100059c6:	4b6d      	ldr	r3, [pc, #436]	; (10005b7c <main+0x620>)
-100059c8:	781b      	ldrb	r3, [r3, #0]
-100059ca:	2b02      	cmp	r3, #2
-100059cc:	d10c      	bne.n	100059e8 <main+0x48c>
+100059d2:	4b67      	ldr	r3, [pc, #412]	; (10005b70 <main+0x600>)
+100059d4:	781b      	ldrb	r3, [r3, #0]
+100059d6:	2b02      	cmp	r3, #2
+100059d8:	d003      	beq.n	100059e2 <main+0x472>
+100059da:	4b6c      	ldr	r3, [pc, #432]	; (10005b8c <main+0x61c>)
+100059dc:	781b      	ldrb	r3, [r3, #0]
+100059de:	2b02      	cmp	r3, #2
+100059e0:	d10c      	bne.n	100059fc <main+0x48c>
 					write_eeprom_setup(EEPROM_LOWER_TH, ADC_lower_threshold);
-100059ce:	4b6e      	ldr	r3, [pc, #440]	; (10005b88 <main+0x62c>)
-100059d0:	681b      	ldr	r3, [r3, #0]
-100059d2:	2001      	movs	r0, #1
-100059d4:	1c19      	adds	r1, r3, #0
-100059d6:	f7ff fc5b 	bl	10005290 <write_eeprom_setup>
+100059e2:	4b6d      	ldr	r3, [pc, #436]	; (10005b98 <main+0x628>)
+100059e4:	681b      	ldr	r3, [r3, #0]
+100059e6:	2001      	movs	r0, #1
+100059e8:	1c19      	adds	r1, r3, #0
+100059ea:	f7ff fc57 	bl	1000529c <write_eeprom_setup>
 					setup_state = SETUP_IDLE;
-100059da:	4b6a      	ldr	r3, [pc, #424]	; (10005b84 <main+0x628>)
-100059dc:	2200      	movs	r2, #0
-100059de:	701a      	strb	r2, [r3, #0]
+100059ee:	4b69      	ldr	r3, [pc, #420]	; (10005b94 <main+0x624>)
+100059f0:	2200      	movs	r2, #0
+100059f2:	701a      	strb	r2, [r3, #0]
 					led_status_pattern = LED_MATCH_RELAY_STATE;
-100059e0:	4b63      	ldr	r3, [pc, #396]	; (10005b70 <main+0x614>)
-100059e2:	2205      	movs	r2, #5
-100059e4:	701a      	strb	r2, [r3, #0]
-100059e6:	e05b      	b.n	10005aa0 <main+0x544>
+100059f4:	4b62      	ldr	r3, [pc, #392]	; (10005b80 <main+0x610>)
+100059f6:	2205      	movs	r2, #5
+100059f8:	701a      	strb	r2, [r3, #0]
+100059fa:	e05b      	b.n	10005ab4 <main+0x544>
 				}
 				else if(buttonpress_up == BTNPRESS_STD){ // Increase
-100059e8:	4b5d      	ldr	r3, [pc, #372]	; (10005b60 <main+0x604>)
-100059ea:	781b      	ldrb	r3, [r3, #0]
-100059ec:	2b01      	cmp	r3, #1
-100059ee:	d11a      	bne.n	10005a26 <main+0x4ca>
+100059fc:	4b5c      	ldr	r3, [pc, #368]	; (10005b70 <main+0x600>)
+100059fe:	781b      	ldrb	r3, [r3, #0]
+10005a00:	2b01      	cmp	r3, #1
+10005a02:	d11a      	bne.n	10005a3a <main+0x4ca>
 					ADC_lower_threshold += ADC_THRESHOLD_INCREMENT;
-100059f0:	4b65      	ldr	r3, [pc, #404]	; (10005b88 <main+0x62c>)
-100059f2:	681b      	ldr	r3, [r3, #0]
-100059f4:	3375      	adds	r3, #117	; 0x75
-100059f6:	1c1a      	adds	r2, r3, #0
-100059f8:	4b63      	ldr	r3, [pc, #396]	; (10005b88 <main+0x62c>)
-100059fa:	601a      	str	r2, [r3, #0]
+10005a04:	4b64      	ldr	r3, [pc, #400]	; (10005b98 <main+0x628>)
+10005a06:	681b      	ldr	r3, [r3, #0]
+10005a08:	3375      	adds	r3, #117	; 0x75
+10005a0a:	1c1a      	adds	r2, r3, #0
+10005a0c:	4b62      	ldr	r3, [pc, #392]	; (10005b98 <main+0x628>)
+10005a0e:	601a      	str	r2, [r3, #0]
 					// If maximum is reached blink led 2 times, then continue fading
 					if(ADC_lower_threshold > ADC_THRESHOLD_MAX){
-100059fc:	4b62      	ldr	r3, [pc, #392]	; (10005b88 <main+0x62c>)
-100059fe:	681b      	ldr	r3, [r3, #0]
-10005a00:	4a59      	ldr	r2, [pc, #356]	; (10005b68 <main+0x60c>)
-10005a02:	4293      	cmp	r3, r2
-10005a04:	dd4c      	ble.n	10005aa0 <main+0x544>
+10005a10:	4b61      	ldr	r3, [pc, #388]	; (10005b98 <main+0x628>)
+10005a12:	681b      	ldr	r3, [r3, #0]
+10005a14:	4a58      	ldr	r2, [pc, #352]	; (10005b78 <main+0x608>)
+10005a16:	4293      	cmp	r3, r2
+10005a18:	dd4c      	ble.n	10005ab4 <main+0x544>
 						ADC_lower_threshold = ADC_THRESHOLD_MAX;
-10005a06:	4b60      	ldr	r3, [pc, #384]	; (10005b88 <main+0x62c>)
-10005a08:	4a57      	ldr	r2, [pc, #348]	; (10005b68 <main+0x60c>)
-10005a0a:	601a      	str	r2, [r3, #0]
+10005a1a:	4b5f      	ldr	r3, [pc, #380]	; (10005b98 <main+0x628>)
+10005a1c:	4a56      	ldr	r2, [pc, #344]	; (10005b78 <main+0x608>)
+10005a1e:	601a      	str	r2, [r3, #0]
 						led_number_single = 2;
-10005a0c:	4b57      	ldr	r3, [pc, #348]	; (10005b6c <main+0x610>)
-10005a0e:	2202      	movs	r2, #2
-10005a10:	801a      	strh	r2, [r3, #0]
+10005a20:	4b56      	ldr	r3, [pc, #344]	; (10005b7c <main+0x60c>)
+10005a22:	2202      	movs	r2, #2
+10005a24:	801a      	strh	r2, [r3, #0]
 						led_status_pattern = LED_NUMBER;
-10005a12:	4b57      	ldr	r3, [pc, #348]	; (10005b70 <main+0x614>)
-10005a14:	2202      	movs	r2, #2
-10005a16:	701a      	strb	r2, [r3, #0]
+10005a26:	4b56      	ldr	r3, [pc, #344]	; (10005b80 <main+0x610>)
+10005a28:	2202      	movs	r2, #2
+10005a2a:	701a      	strb	r2, [r3, #0]
 						led_pattern_mode = LED_PATTERN_SINGLE;
-10005a18:	4b56      	ldr	r3, [pc, #344]	; (10005b74 <main+0x618>)
-10005a1a:	2201      	movs	r2, #1
-10005a1c:	701a      	strb	r2, [r3, #0]
+10005a2c:	4b55      	ldr	r3, [pc, #340]	; (10005b84 <main+0x614>)
+10005a2e:	2201      	movs	r2, #1
+10005a30:	701a      	strb	r2, [r3, #0]
 						led_status_pattern_after_single = LED_FADE_DOWN;
-10005a1e:	4b56      	ldr	r3, [pc, #344]	; (10005b78 <main+0x61c>)
-10005a20:	2203      	movs	r2, #3
-10005a22:	701a      	strb	r2, [r3, #0]
+10005a32:	4b55      	ldr	r3, [pc, #340]	; (10005b88 <main+0x618>)
+10005a34:	2203      	movs	r2, #3
+10005a36:	701a      	strb	r2, [r3, #0]
 					led_number_single = 3;
 					led_status_pattern = LED_NUMBER;
 					led_pattern_mode = LED_PATTERN_SINGLE;
 					led_status_pattern_after_single = LED_MATCH_RELAY_STATE;
 				}
 				break;
-10005a24:	e092      	b.n	10005b4c <main+0x5f0>
+10005a38:	e090      	b.n	10005b5c <main+0x5ec>
 						led_status_pattern = LED_NUMBER;
 						led_pattern_mode = LED_PATTERN_SINGLE;
 						led_status_pattern_after_single = LED_FADE_DOWN;
 					}
 				}
 				else if(buttonpress_down == BTNPRESS_STD){ // Decrease
-10005a26:	4b55      	ldr	r3, [pc, #340]	; (10005b7c <main+0x620>)
-10005a28:	781b      	ldrb	r3, [r3, #0]
-10005a2a:	2b01      	cmp	r3, #1
-10005a2c:	d119      	bne.n	10005a62 <main+0x506>
+10005a3a:	4b54      	ldr	r3, [pc, #336]	; (10005b8c <main+0x61c>)
+10005a3c:	781b      	ldrb	r3, [r3, #0]
+10005a3e:	2b01      	cmp	r3, #1
+10005a40:	d119      	bne.n	10005a76 <main+0x506>
 					ADC_lower_threshold -= ADC_THRESHOLD_INCREMENT;
-10005a2e:	4b56      	ldr	r3, [pc, #344]	; (10005b88 <main+0x62c>)
-10005a30:	681b      	ldr	r3, [r3, #0]
-10005a32:	3b75      	subs	r3, #117	; 0x75
-10005a34:	1c1a      	adds	r2, r3, #0
-10005a36:	4b54      	ldr	r3, [pc, #336]	; (10005b88 <main+0x62c>)
-10005a38:	601a      	str	r2, [r3, #0]
+10005a42:	4b55      	ldr	r3, [pc, #340]	; (10005b98 <main+0x628>)
+10005a44:	681b      	ldr	r3, [r3, #0]
+10005a46:	3b75      	subs	r3, #117	; 0x75
+10005a48:	1c1a      	adds	r2, r3, #0
+10005a4a:	4b53      	ldr	r3, [pc, #332]	; (10005b98 <main+0x628>)
+10005a4c:	601a      	str	r2, [r3, #0]
 					// If minimum is reached blink led 2 times, then continue fading
 					if(ADC_lower_threshold <= 0){
-10005a3a:	4b53      	ldr	r3, [pc, #332]	; (10005b88 <main+0x62c>)
-10005a3c:	681b      	ldr	r3, [r3, #0]
-10005a3e:	2b00      	cmp	r3, #0
-10005a40:	dc2e      	bgt.n	10005aa0 <main+0x544>
+10005a4e:	4b52      	ldr	r3, [pc, #328]	; (10005b98 <main+0x628>)
+10005a50:	681b      	ldr	r3, [r3, #0]
+10005a52:	2b00      	cmp	r3, #0
+10005a54:	dc2e      	bgt.n	10005ab4 <main+0x544>
 						ADC_lower_threshold = 0;
-10005a42:	4b51      	ldr	r3, [pc, #324]	; (10005b88 <main+0x62c>)
-10005a44:	2200      	movs	r2, #0
-10005a46:	601a      	str	r2, [r3, #0]
+10005a56:	4b50      	ldr	r3, [pc, #320]	; (10005b98 <main+0x628>)
+10005a58:	2200      	movs	r2, #0
+10005a5a:	601a      	str	r2, [r3, #0]
 						led_number_single = 2;
-10005a48:	4b48      	ldr	r3, [pc, #288]	; (10005b6c <main+0x610>)
-10005a4a:	2202      	movs	r2, #2
-10005a4c:	801a      	strh	r2, [r3, #0]
+10005a5c:	4b47      	ldr	r3, [pc, #284]	; (10005b7c <main+0x60c>)
+10005a5e:	2202      	movs	r2, #2
+10005a60:	801a      	strh	r2, [r3, #0]
 						led_status_pattern = LED_NUMBER;
-10005a4e:	4b48      	ldr	r3, [pc, #288]	; (10005b70 <main+0x614>)
-10005a50:	2202      	movs	r2, #2
-10005a52:	701a      	strb	r2, [r3, #0]
+10005a62:	4b47      	ldr	r3, [pc, #284]	; (10005b80 <main+0x610>)
+10005a64:	2202      	movs	r2, #2
+10005a66:	701a      	strb	r2, [r3, #0]
 						led_pattern_mode = LED_PATTERN_SINGLE;
-10005a54:	4b47      	ldr	r3, [pc, #284]	; (10005b74 <main+0x618>)
-10005a56:	2201      	movs	r2, #1
-10005a58:	701a      	strb	r2, [r3, #0]
+10005a68:	4b46      	ldr	r3, [pc, #280]	; (10005b84 <main+0x614>)
+10005a6a:	2201      	movs	r2, #1
+10005a6c:	701a      	strb	r2, [r3, #0]
 						led_status_pattern_after_single = LED_FADE_DOWN;
-10005a5a:	4b47      	ldr	r3, [pc, #284]	; (10005b78 <main+0x61c>)
-10005a5c:	2203      	movs	r2, #3
-10005a5e:	701a      	strb	r2, [r3, #0]
+10005a6e:	4b46      	ldr	r3, [pc, #280]	; (10005b88 <main+0x618>)
+10005a70:	2203      	movs	r2, #3
+10005a72:	701a      	strb	r2, [r3, #0]
 					led_number_single = 3;
 					led_status_pattern = LED_NUMBER;
 					led_pattern_mode = LED_PATTERN_SINGLE;
 					led_status_pattern_after_single = LED_MATCH_RELAY_STATE;
 				}
 				break;
-10005a60:	e074      	b.n	10005b4c <main+0x5f0>
+10005a74:	e072      	b.n	10005b5c <main+0x5ec>
 						led_status_pattern = LED_NUMBER;
 						led_pattern_mode = LED_PATTERN_SINGLE;
 						led_status_pattern_after_single = LED_FADE_DOWN;
 					}
 				}
 				else if(buttonpress_down == BTNPRESS_LONGEST){
-10005a62:	4b46      	ldr	r3, [pc, #280]	; (10005b7c <main+0x620>)
-10005a64:	781b      	ldrb	r3, [r3, #0]
-10005a66:	2b03      	cmp	r3, #3
-10005a68:	d11a      	bne.n	10005aa0 <main+0x544>
+10005a76:	4b45      	ldr	r3, [pc, #276]	; (10005b8c <main+0x61c>)
+10005a78:	781b      	ldrb	r3, [r3, #0]
+10005a7a:	2b03      	cmp	r3, #3
+10005a7c:	d11a      	bne.n	10005ab4 <main+0x544>
 					// Save current ADC value as threshold
 					ADC_lower_threshold = ADC_val_current;
-10005a6a:	4b45      	ldr	r3, [pc, #276]	; (10005b80 <main+0x624>)
-10005a6c:	681b      	ldr	r3, [r3, #0]
-10005a6e:	1c1a      	adds	r2, r3, #0
-10005a70:	4b45      	ldr	r3, [pc, #276]	; (10005b88 <main+0x62c>)
-10005a72:	601a      	str	r2, [r3, #0]
+10005a7e:	4b44      	ldr	r3, [pc, #272]	; (10005b90 <main+0x620>)
+10005a80:	681b      	ldr	r3, [r3, #0]
+10005a82:	1c1a      	adds	r2, r3, #0
+10005a84:	4b44      	ldr	r3, [pc, #272]	; (10005b98 <main+0x628>)
+10005a86:	601a      	str	r2, [r3, #0]
 					write_eeprom_setup(EEPROM_LOWER_TH, ADC_lower_threshold);
-10005a74:	4b44      	ldr	r3, [pc, #272]	; (10005b88 <main+0x62c>)
-10005a76:	681b      	ldr	r3, [r3, #0]
-10005a78:	2001      	movs	r0, #1
-10005a7a:	1c19      	adds	r1, r3, #0
-10005a7c:	f7ff fc08 	bl	10005290 <write_eeprom_setup>
+10005a88:	4b43      	ldr	r3, [pc, #268]	; (10005b98 <main+0x628>)
+10005a8a:	681b      	ldr	r3, [r3, #0]
+10005a8c:	2001      	movs	r0, #1
+10005a8e:	1c19      	adds	r1, r3, #0
+10005a90:	f7ff fc04 	bl	1000529c <write_eeprom_setup>
 					setup_state = SETUP_IDLE;
-10005a80:	4b40      	ldr	r3, [pc, #256]	; (10005b84 <main+0x628>)
-10005a82:	2200      	movs	r2, #0
-10005a84:	701a      	strb	r2, [r3, #0]
+10005a94:	4b3f      	ldr	r3, [pc, #252]	; (10005b94 <main+0x624>)
+10005a96:	2200      	movs	r2, #0
+10005a98:	701a      	strb	r2, [r3, #0]
 					// Blink LED 3 times (user info) and return to operation where led matches the state of the relay
 					led_number_single = 3;
-10005a86:	4b39      	ldr	r3, [pc, #228]	; (10005b6c <main+0x610>)
-10005a88:	2203      	movs	r2, #3
-10005a8a:	801a      	strh	r2, [r3, #0]
+10005a9a:	4b38      	ldr	r3, [pc, #224]	; (10005b7c <main+0x60c>)
+10005a9c:	2203      	movs	r2, #3
+10005a9e:	801a      	strh	r2, [r3, #0]
 					led_status_pattern = LED_NUMBER;
-10005a8c:	4b38      	ldr	r3, [pc, #224]	; (10005b70 <main+0x614>)
-10005a8e:	2202      	movs	r2, #2
-10005a90:	701a      	strb	r2, [r3, #0]
+10005aa0:	4b37      	ldr	r3, [pc, #220]	; (10005b80 <main+0x610>)
+10005aa2:	2202      	movs	r2, #2
+10005aa4:	701a      	strb	r2, [r3, #0]
 					led_pattern_mode = LED_PATTERN_SINGLE;
-10005a92:	4b38      	ldr	r3, [pc, #224]	; (10005b74 <main+0x618>)
-10005a94:	2201      	movs	r2, #1
-10005a96:	701a      	strb	r2, [r3, #0]
+10005aa6:	4b37      	ldr	r3, [pc, #220]	; (10005b84 <main+0x614>)
+10005aa8:	2201      	movs	r2, #1
+10005aaa:	701a      	strb	r2, [r3, #0]
 					led_status_pattern_after_single = LED_MATCH_RELAY_STATE;
-10005a98:	4b37      	ldr	r3, [pc, #220]	; (10005b78 <main+0x61c>)
-10005a9a:	2205      	movs	r2, #5
-10005a9c:	701a      	strb	r2, [r3, #0]
+10005aac:	4b36      	ldr	r3, [pc, #216]	; (10005b88 <main+0x618>)
+10005aae:	2205      	movs	r2, #5
+10005ab0:	701a      	strb	r2, [r3, #0]
 				}
 				break;
-10005a9e:	e055      	b.n	10005b4c <main+0x5f0>
-10005aa0:	e054      	b.n	10005b4c <main+0x5f0>
+10005ab2:	e053      	b.n	10005b5c <main+0x5ec>
+10005ab4:	e052      	b.n	10005b5c <main+0x5ec>
 			case SETUP_TIME_TH:
 				/// Interpret button press:
 				// A long  press of up or down brings system back to setup idle
 				// A short press of up         increases the threshold exceed time
 				// A short press of down       decreases the threshold exceed time
 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
-10005aa2:	4b2f      	ldr	r3, [pc, #188]	; (10005b60 <main+0x604>)
-10005aa4:	781b      	ldrb	r3, [r3, #0]
-10005aa6:	2b02      	cmp	r3, #2
-10005aa8:	d003      	beq.n	10005ab2 <main+0x556>
-10005aaa:	4b34      	ldr	r3, [pc, #208]	; (10005b7c <main+0x620>)
-10005aac:	781b      	ldrb	r3, [r3, #0]
-10005aae:	2b02      	cmp	r3, #2
-10005ab0:	d10c      	bne.n	10005acc <main+0x570>
+10005ab6:	4b2e      	ldr	r3, [pc, #184]	; (10005b70 <main+0x600>)
+10005ab8:	781b      	ldrb	r3, [r3, #0]
+10005aba:	2b02      	cmp	r3, #2
+10005abc:	d003      	beq.n	10005ac6 <main+0x556>
+10005abe:	4b33      	ldr	r3, [pc, #204]	; (10005b8c <main+0x61c>)
+10005ac0:	781b      	ldrb	r3, [r3, #0]
+10005ac2:	2b02      	cmp	r3, #2
+10005ac4:	d10c      	bne.n	10005ae0 <main+0x570>
 					write_eeprom_setup(EEPROM_LATCHTIME, relay_threshold_latchtime);
-10005ab2:	4b36      	ldr	r3, [pc, #216]	; (10005b8c <main+0x630>)
-10005ab4:	681b      	ldr	r3, [r3, #0]
-10005ab6:	2003      	movs	r0, #3
-10005ab8:	1c19      	adds	r1, r3, #0
-10005aba:	f7ff fbe9 	bl	10005290 <write_eeprom_setup>
+10005ac6:	4b35      	ldr	r3, [pc, #212]	; (10005b9c <main+0x62c>)
+10005ac8:	681b      	ldr	r3, [r3, #0]
+10005aca:	2003      	movs	r0, #3
+10005acc:	1c19      	adds	r1, r3, #0
+10005ace:	f7ff fbe5 	bl	1000529c <write_eeprom_setup>
 					setup_state = SETUP_IDLE;
-10005abe:	4b31      	ldr	r3, [pc, #196]	; (10005b84 <main+0x628>)
-10005ac0:	2200      	movs	r2, #0
-10005ac2:	701a      	strb	r2, [r3, #0]
+10005ad2:	4b30      	ldr	r3, [pc, #192]	; (10005b94 <main+0x624>)
+10005ad4:	2200      	movs	r2, #0
+10005ad6:	701a      	strb	r2, [r3, #0]
 					led_status_pattern = LED_MATCH_RELAY_STATE;
-10005ac4:	4b2a      	ldr	r3, [pc, #168]	; (10005b70 <main+0x614>)
-10005ac6:	2205      	movs	r2, #5
-10005ac8:	701a      	strb	r2, [r3, #0]
-10005aca:	e03e      	b.n	10005b4a <main+0x5ee>
+10005ad8:	4b29      	ldr	r3, [pc, #164]	; (10005b80 <main+0x610>)
+10005ada:	2205      	movs	r2, #5
+10005adc:	701a      	strb	r2, [r3, #0]
+10005ade:	e03c      	b.n	10005b5a <main+0x5ea>
 				}
 				else if(buttonpress_up == BTNPRESS_STD){
-10005acc:	4b24      	ldr	r3, [pc, #144]	; (10005b60 <main+0x604>)
-10005ace:	781b      	ldrb	r3, [r3, #0]
-10005ad0:	2b01      	cmp	r3, #1
-10005ad2:	d11b      	bne.n	10005b0c <main+0x5b0>
+10005ae0:	4b23      	ldr	r3, [pc, #140]	; (10005b70 <main+0x600>)
+10005ae2:	781b      	ldrb	r3, [r3, #0]
+10005ae4:	2b01      	cmp	r3, #1
+10005ae6:	d11a      	bne.n	10005b1e <main+0x5ae>
 					relay_threshold_latchtime += RELAY_LATCHTIME_INCREMENT;
-10005ad4:	4b2d      	ldr	r3, [pc, #180]	; (10005b8c <main+0x630>)
-10005ad6:	681b      	ldr	r3, [r3, #0]
-10005ad8:	33f5      	adds	r3, #245	; 0xf5
-10005ada:	33ff      	adds	r3, #255	; 0xff
-10005adc:	1c1a      	adds	r2, r3, #0
-10005ade:	4b2b      	ldr	r3, [pc, #172]	; (10005b8c <main+0x630>)
-10005ae0:	601a      	str	r2, [r3, #0]
+10005ae8:	4b2c      	ldr	r3, [pc, #176]	; (10005b9c <main+0x62c>)
+10005aea:	681b      	ldr	r3, [r3, #0]
+10005aec:	33fa      	adds	r3, #250	; 0xfa
+10005aee:	1c1a      	adds	r2, r3, #0
+10005af0:	4b2a      	ldr	r3, [pc, #168]	; (10005b9c <main+0x62c>)
+10005af2:	601a      	str	r2, [r3, #0]
 					if(relay_threshold_latchtime > RELAY_LATCHTIME_MAX){
-10005ae2:	4b2a      	ldr	r3, [pc, #168]	; (10005b8c <main+0x630>)
-10005ae4:	681b      	ldr	r3, [r3, #0]
-10005ae6:	4a2a      	ldr	r2, [pc, #168]	; (10005b90 <main+0x634>)
-10005ae8:	4293      	cmp	r3, r2
-10005aea:	dd2e      	ble.n	10005b4a <main+0x5ee>
+10005af4:	4b29      	ldr	r3, [pc, #164]	; (10005b9c <main+0x62c>)
+10005af6:	681b      	ldr	r3, [r3, #0]
+10005af8:	4a29      	ldr	r2, [pc, #164]	; (10005ba0 <main+0x630>)
+10005afa:	4293      	cmp	r3, r2
+10005afc:	dd2d      	ble.n	10005b5a <main+0x5ea>
 						relay_threshold_latchtime = RELAY_LATCHTIME_MAX;
-10005aec:	4b27      	ldr	r3, [pc, #156]	; (10005b8c <main+0x630>)
-10005aee:	4a28      	ldr	r2, [pc, #160]	; (10005b90 <main+0x634>)
-10005af0:	601a      	str	r2, [r3, #0]
+10005afe:	4b27      	ldr	r3, [pc, #156]	; (10005b9c <main+0x62c>)
+10005b00:	4a27      	ldr	r2, [pc, #156]	; (10005ba0 <main+0x630>)
+10005b02:	601a      	str	r2, [r3, #0]
 						led_number_single = 2;
-10005af2:	4b1e      	ldr	r3, [pc, #120]	; (10005b6c <main+0x610>)
-10005af4:	2202      	movs	r2, #2
-10005af6:	801a      	strh	r2, [r3, #0]
-						led_status_pattern = LED_NUMBER;
-10005af8:	4b1d      	ldr	r3, [pc, #116]	; (10005b70 <main+0x614>)
-10005afa:	2202      	movs	r2, #2
-10005afc:	701a      	strb	r2, [r3, #0]
-						led_pattern_mode = LED_PATTERN_SINGLE;
-10005afe:	4b1d      	ldr	r3, [pc, #116]	; (10005b74 <main+0x618>)
-10005b00:	2201      	movs	r2, #1
-10005b02:	701a      	strb	r2, [r3, #0]
-						led_status_pattern_after_single = LED_NUMBER;
-10005b04:	4b1c      	ldr	r3, [pc, #112]	; (10005b78 <main+0x61c>)
+10005b04:	4b1d      	ldr	r3, [pc, #116]	; (10005b7c <main+0x60c>)
 10005b06:	2202      	movs	r2, #2
-10005b08:	701a      	strb	r2, [r3, #0]
+10005b08:	801a      	strh	r2, [r3, #0]
+						led_status_pattern = LED_NUMBER;
+10005b0a:	4b1d      	ldr	r3, [pc, #116]	; (10005b80 <main+0x610>)
+10005b0c:	2202      	movs	r2, #2
+10005b0e:	701a      	strb	r2, [r3, #0]
+						led_pattern_mode = LED_PATTERN_SINGLE;
+10005b10:	4b1c      	ldr	r3, [pc, #112]	; (10005b84 <main+0x614>)
+10005b12:	2201      	movs	r2, #1
+10005b14:	701a      	strb	r2, [r3, #0]
+						led_status_pattern_after_single = LED_NUMBER;
+10005b16:	4b1c      	ldr	r3, [pc, #112]	; (10005b88 <main+0x618>)
+10005b18:	2202      	movs	r2, #2
+10005b1a:	701a      	strb	r2, [r3, #0]
 						led_status_pattern = LED_NUMBER;
 						led_pattern_mode = LED_PATTERN_SINGLE;
 						led_status_pattern_after_single = LED_NUMBER;
 					}
 				}
 				break;
-10005b0a:	e01e      	b.n	10005b4a <main+0x5ee>
+10005b1c:	e01d      	b.n	10005b5a <main+0x5ea>
 						led_status_pattern = LED_NUMBER;
 						led_pattern_mode = LED_PATTERN_SINGLE;
 						led_status_pattern_after_single = LED_NUMBER;
 					}
 				}
 				else if(buttonpress_down == BTNPRESS_STD){
-10005b0c:	4b1b      	ldr	r3, [pc, #108]	; (10005b7c <main+0x620>)
-10005b0e:	781b      	ldrb	r3, [r3, #0]
-10005b10:	2b01      	cmp	r3, #1
-10005b12:	d11a      	bne.n	10005b4a <main+0x5ee>
+10005b1e:	4b1b      	ldr	r3, [pc, #108]	; (10005b8c <main+0x61c>)
+10005b20:	781b      	ldrb	r3, [r3, #0]
+10005b22:	2b01      	cmp	r3, #1
+10005b24:	d119      	bne.n	10005b5a <main+0x5ea>
 					relay_threshold_latchtime -= RELAY_LATCHTIME_INCREMENT;
-10005b14:	4b1d      	ldr	r3, [pc, #116]	; (10005b8c <main+0x630>)
-10005b16:	681b      	ldr	r3, [r3, #0]
-10005b18:	3bf5      	subs	r3, #245	; 0xf5
-10005b1a:	3bff      	subs	r3, #255	; 0xff
-10005b1c:	1c1a      	adds	r2, r3, #0
-10005b1e:	4b1b      	ldr	r3, [pc, #108]	; (10005b8c <main+0x630>)
-10005b20:	601a      	str	r2, [r3, #0]
+10005b26:	4b1d      	ldr	r3, [pc, #116]	; (10005b9c <main+0x62c>)
+10005b28:	681b      	ldr	r3, [r3, #0]
+10005b2a:	3bfa      	subs	r3, #250	; 0xfa
+10005b2c:	1c1a      	adds	r2, r3, #0
+10005b2e:	4b1b      	ldr	r3, [pc, #108]	; (10005b9c <main+0x62c>)
+10005b30:	601a      	str	r2, [r3, #0]
 					if(relay_threshold_latchtime <= 0){
-10005b22:	4b1a      	ldr	r3, [pc, #104]	; (10005b8c <main+0x630>)
-10005b24:	681b      	ldr	r3, [r3, #0]
-10005b26:	2b00      	cmp	r3, #0
-10005b28:	dc0f      	bgt.n	10005b4a <main+0x5ee>
+10005b32:	4b1a      	ldr	r3, [pc, #104]	; (10005b9c <main+0x62c>)
+10005b34:	681b      	ldr	r3, [r3, #0]
+10005b36:	2b00      	cmp	r3, #0
+10005b38:	dc0f      	bgt.n	10005b5a <main+0x5ea>
 						relay_threshold_latchtime = 0;
-10005b2a:	4b18      	ldr	r3, [pc, #96]	; (10005b8c <main+0x630>)
-10005b2c:	2200      	movs	r2, #0
-10005b2e:	601a      	str	r2, [r3, #0]
+10005b3a:	4b18      	ldr	r3, [pc, #96]	; (10005b9c <main+0x62c>)
+10005b3c:	2200      	movs	r2, #0
+10005b3e:	601a      	str	r2, [r3, #0]
 						led_number_single = 2;
-10005b30:	4b0e      	ldr	r3, [pc, #56]	; (10005b6c <main+0x610>)
-10005b32:	2202      	movs	r2, #2
-10005b34:	801a      	strh	r2, [r3, #0]
+10005b40:	4b0e      	ldr	r3, [pc, #56]	; (10005b7c <main+0x60c>)
+10005b42:	2202      	movs	r2, #2
+10005b44:	801a      	strh	r2, [r3, #0]
 						led_status_pattern = LED_NUMBER;
-10005b36:	4b0e      	ldr	r3, [pc, #56]	; (10005b70 <main+0x614>)
-10005b38:	2202      	movs	r2, #2
-10005b3a:	701a      	strb	r2, [r3, #0]
+10005b46:	4b0e      	ldr	r3, [pc, #56]	; (10005b80 <main+0x610>)
+10005b48:	2202      	movs	r2, #2
+10005b4a:	701a      	strb	r2, [r3, #0]
 						led_pattern_mode = LED_PATTERN_SINGLE;
-10005b3c:	4b0d      	ldr	r3, [pc, #52]	; (10005b74 <main+0x618>)
-10005b3e:	2201      	movs	r2, #1
-10005b40:	701a      	strb	r2, [r3, #0]
+10005b4c:	4b0d      	ldr	r3, [pc, #52]	; (10005b84 <main+0x614>)
+10005b4e:	2201      	movs	r2, #1
+10005b50:	701a      	strb	r2, [r3, #0]
 						led_status_pattern_after_single = LED_NUMBER;
-10005b42:	4b0d      	ldr	r3, [pc, #52]	; (10005b78 <main+0x61c>)
-10005b44:	2202      	movs	r2, #2
-10005b46:	701a      	strb	r2, [r3, #0]
+10005b52:	4b0d      	ldr	r3, [pc, #52]	; (10005b88 <main+0x618>)
+10005b54:	2202      	movs	r2, #2
+10005b56:	701a      	strb	r2, [r3, #0]
 					}
 				}
 				break;
-10005b48:	e7ff      	b.n	10005b4a <main+0x5ee>
-10005b4a:	46c0      	nop			; (mov r8, r8)
+10005b58:	e7ff      	b.n	10005b5a <main+0x5ea>
+10005b5a:	46c0      	nop			; (mov r8, r8)
 		}
 
 		// Reset all button presses
 		buttonpress_usb = BTNPRESS_NOT;
-10005b4c:	4b11      	ldr	r3, [pc, #68]	; (10005b94 <main+0x638>)
-10005b4e:	2200      	movs	r2, #0
-10005b50:	701a      	strb	r2, [r3, #0]
+10005b5c:	4b11      	ldr	r3, [pc, #68]	; (10005ba4 <main+0x634>)
+10005b5e:	2200      	movs	r2, #0
+10005b60:	701a      	strb	r2, [r3, #0]
 		buttonpress_up = BTNPRESS_NOT;
-10005b52:	4b03      	ldr	r3, [pc, #12]	; (10005b60 <main+0x604>)
-10005b54:	2200      	movs	r2, #0
-10005b56:	701a      	strb	r2, [r3, #0]
+10005b62:	4b03      	ldr	r3, [pc, #12]	; (10005b70 <main+0x600>)
+10005b64:	2200      	movs	r2, #0
+10005b66:	701a      	strb	r2, [r3, #0]
 		buttonpress_down = BTNPRESS_NOT;
-10005b58:	4b08      	ldr	r3, [pc, #32]	; (10005b7c <main+0x620>)
-10005b5a:	2200      	movs	r2, #0
-10005b5c:	701a      	strb	r2, [r3, #0]
+10005b68:	4b08      	ldr	r3, [pc, #32]	; (10005b8c <main+0x61c>)
+10005b6a:	2200      	movs	r2, #0
+10005b6c:	701a      	strb	r2, [r3, #0]
 	}
-10005b5e:	e55b      	b.n	10005618 <main+0xbc>
-10005b60:	200005e3 	.word	0x200005e3
-10005b64:	200005a8 	.word	0x200005a8
-10005b68:	00000fff 	.word	0x00000fff
-10005b6c:	200005e0 	.word	0x200005e0
-10005b70:	200005da 	.word	0x200005da
-10005b74:	200005dc 	.word	0x200005dc
-10005b78:	200005dd 	.word	0x200005dd
-10005b7c:	200005e4 	.word	0x200005e4
-10005b80:	200005fc 	.word	0x200005fc
-10005b84:	200005d9 	.word	0x200005d9
-10005b88:	200005ac 	.word	0x200005ac
-10005b8c:	200005a4 	.word	0x200005a4
-10005b90:	0000ea60 	.word	0x0000ea60
-10005b94:	200005e2 	.word	0x200005e2
+10005b6e:	e55d      	b.n	1000562c <main+0xbc>
+10005b70:	200005e3 	.word	0x200005e3
+10005b74:	200005a8 	.word	0x200005a8
+10005b78:	00000fff 	.word	0x00000fff
+10005b7c:	200005e0 	.word	0x200005e0
+10005b80:	200005da 	.word	0x200005da
+10005b84:	200005dc 	.word	0x200005dc
+10005b88:	200005dd 	.word	0x200005dd
+10005b8c:	200005e4 	.word	0x200005e4
+10005b90:	200005fc 	.word	0x200005fc
+10005b94:	200005d9 	.word	0x200005d9
+10005b98:	200005ac 	.word	0x200005ac
+10005b9c:	200005a4 	.word	0x200005a4
+10005ba0:	0000ea60 	.word	0x0000ea60
+10005ba4:	200005e2 	.word	0x200005e2
 
-10005b98 <VADC0_C0_0_IRQHandler>:
+10005ba8 <VADC0_C0_0_IRQHandler>:
 }
 
 int meas_invalid_count = 0;
 
 void Adc_Measurement_Handler()
 {
-10005b98:	b580      	push	{r7, lr}
-10005b9a:	b082      	sub	sp, #8
-10005b9c:	af00      	add	r7, sp, #0
+10005ba8:	b580      	push	{r7, lr}
+10005baa:	b082      	sub	sp, #8
+10005bac:	af00      	add	r7, sp, #0
 	//uint8_t channel_num;
 	//uint8_t group_num;
 	uint32_t adc_register;
 
 	#if(UC_SERIES == XMC11)
 	adc_register = ADC_MEASUREMENT_GetGlobalDetailedResult();
-10005b9e:	f7fe ffb1 	bl	10004b04 <ADC_MEASUREMENT_GetGlobalDetailedResult>
-10005ba2:	1c03      	adds	r3, r0, #0
-10005ba4:	607b      	str	r3, [r7, #4]
+10005bae:	f7fe ffa9 	bl	10004b04 <ADC_MEASUREMENT_GetGlobalDetailedResult>
+10005bb2:	1c03      	adds	r3, r0, #0
+10005bb4:	607b      	str	r3, [r7, #4]
 	#endif
 
 	if((bool)(adc_register >> VADC_GLOBRES_VF_Pos))
-10005ba6:	687b      	ldr	r3, [r7, #4]
-10005ba8:	2b00      	cmp	r3, #0
-10005baa:	da0d      	bge.n	10005bc8 <VADC0_C0_0_IRQHandler+0x30>
+10005bb6:	687b      	ldr	r3, [r7, #4]
+10005bb8:	2b00      	cmp	r3, #0
+10005bba:	da0d      	bge.n	10005bd8 <VADC0_C0_0_IRQHandler+0x30>
 	{
 		//channel_num = (adc_register & VADC_GLOBRES_CHNR_Msk) >> VADC_GLOBRES_CHNR_Pos;
 		//group_num = ADC_MEASUREMENT_Channel_A.group_index;
 		ADC_val_current = (adc_register & VADC_GLOBRES_RESULT_Msk) >> ((uint32_t)(ADC_SENSOR.iclass_config_handle->conversion_mode_standard) * (uint32_t)2);
-10005bac:	687b      	ldr	r3, [r7, #4]
-10005bae:	041b      	lsls	r3, r3, #16
-10005bb0:	0c1a      	lsrs	r2, r3, #16
-10005bb2:	4b09      	ldr	r3, [pc, #36]	; (10005bd8 <VADC0_C0_0_IRQHandler+0x40>)
-10005bb4:	689b      	ldr	r3, [r3, #8]
-10005bb6:	785b      	ldrb	r3, [r3, #1]
-10005bb8:	075b      	lsls	r3, r3, #29
-10005bba:	0f5b      	lsrs	r3, r3, #29
-10005bbc:	b2db      	uxtb	r3, r3
-10005bbe:	005b      	lsls	r3, r3, #1
-10005bc0:	40da      	lsrs	r2, r3
-10005bc2:	4b06      	ldr	r3, [pc, #24]	; (10005bdc <VADC0_C0_0_IRQHandler+0x44>)
-10005bc4:	601a      	str	r2, [r3, #0]
-10005bc6:	e004      	b.n	10005bd2 <VADC0_C0_0_IRQHandler+0x3a>
+10005bbc:	687b      	ldr	r3, [r7, #4]
+10005bbe:	041b      	lsls	r3, r3, #16
+10005bc0:	0c1a      	lsrs	r2, r3, #16
+10005bc2:	4b09      	ldr	r3, [pc, #36]	; (10005be8 <VADC0_C0_0_IRQHandler+0x40>)
+10005bc4:	689b      	ldr	r3, [r3, #8]
+10005bc6:	785b      	ldrb	r3, [r3, #1]
+10005bc8:	075b      	lsls	r3, r3, #29
+10005bca:	0f5b      	lsrs	r3, r3, #29
+10005bcc:	b2db      	uxtb	r3, r3
+10005bce:	005b      	lsls	r3, r3, #1
+10005bd0:	40da      	lsrs	r2, r3
+10005bd2:	4b06      	ldr	r3, [pc, #24]	; (10005bec <VADC0_C0_0_IRQHandler+0x44>)
+10005bd4:	601a      	str	r2, [r3, #0]
+10005bd6:	e004      	b.n	10005be2 <VADC0_C0_0_IRQHandler+0x3a>
 	}
 	else{
 		meas_invalid_count++;
-10005bc8:	4b05      	ldr	r3, [pc, #20]	; (10005be0 <VADC0_C0_0_IRQHandler+0x48>)
-10005bca:	681b      	ldr	r3, [r3, #0]
-10005bcc:	1c5a      	adds	r2, r3, #1
-10005bce:	4b04      	ldr	r3, [pc, #16]	; (10005be0 <VADC0_C0_0_IRQHandler+0x48>)
-10005bd0:	601a      	str	r2, [r3, #0]
+10005bd8:	4b05      	ldr	r3, [pc, #20]	; (10005bf0 <VADC0_C0_0_IRQHandler+0x48>)
+10005bda:	681b      	ldr	r3, [r3, #0]
+10005bdc:	1c5a      	adds	r2, r3, #1
+10005bde:	4b04      	ldr	r3, [pc, #16]	; (10005bf0 <VADC0_C0_0_IRQHandler+0x48>)
+10005be0:	601a      	str	r2, [r3, #0]
 	}
 
 	//	ADC_val_current = ADC_MEASUREMENT_GetGlobalResult();
 	//	ADC_val_current = ADC_val_current >> ((uint32_t)ADC_SENSOR.iclass_config_handle->conversion_mode_standard * (uint32_t)2);
 }
-10005bd2:	46bd      	mov	sp, r7
-10005bd4:	b002      	add	sp, #8
-10005bd6:	bd80      	pop	{r7, pc}
-10005bd8:	20000588 	.word	0x20000588
-10005bdc:	200005fc 	.word	0x200005fc
-10005be0:	20000618 	.word	0x20000618
+10005be2:	46bd      	mov	sp, r7
+10005be4:	b002      	add	sp, #8
+10005be6:	bd80      	pop	{r7, pc}
+10005be8:	20000588 	.word	0x20000588
+10005bec:	200005fc 	.word	0x200005fc
+10005bf0:	20000618 	.word	0x20000618
 
-10005be4 <__aeabi_uidiv>:
-10005be4:	2200      	movs	r2, #0
-10005be6:	0843      	lsrs	r3, r0, #1
-10005be8:	428b      	cmp	r3, r1
-10005bea:	d374      	bcc.n	10005cd6 <__aeabi_uidiv+0xf2>
-10005bec:	0903      	lsrs	r3, r0, #4
-10005bee:	428b      	cmp	r3, r1
-10005bf0:	d35f      	bcc.n	10005cb2 <__aeabi_uidiv+0xce>
-10005bf2:	0a03      	lsrs	r3, r0, #8
-10005bf4:	428b      	cmp	r3, r1
-10005bf6:	d344      	bcc.n	10005c82 <__aeabi_uidiv+0x9e>
-10005bf8:	0b03      	lsrs	r3, r0, #12
-10005bfa:	428b      	cmp	r3, r1
-10005bfc:	d328      	bcc.n	10005c50 <__aeabi_uidiv+0x6c>
-10005bfe:	0c03      	lsrs	r3, r0, #16
-10005c00:	428b      	cmp	r3, r1
-10005c02:	d30d      	bcc.n	10005c20 <__aeabi_uidiv+0x3c>
-10005c04:	22ff      	movs	r2, #255	; 0xff
-10005c06:	0209      	lsls	r1, r1, #8
-10005c08:	ba12      	rev	r2, r2
-10005c0a:	0c03      	lsrs	r3, r0, #16
-10005c0c:	428b      	cmp	r3, r1
-10005c0e:	d302      	bcc.n	10005c16 <__aeabi_uidiv+0x32>
-10005c10:	1212      	asrs	r2, r2, #8
-10005c12:	0209      	lsls	r1, r1, #8
-10005c14:	d065      	beq.n	10005ce2 <__aeabi_uidiv+0xfe>
-10005c16:	0b03      	lsrs	r3, r0, #12
-10005c18:	428b      	cmp	r3, r1
-10005c1a:	d319      	bcc.n	10005c50 <__aeabi_uidiv+0x6c>
-10005c1c:	e000      	b.n	10005c20 <__aeabi_uidiv+0x3c>
-10005c1e:	0a09      	lsrs	r1, r1, #8
-10005c20:	0bc3      	lsrs	r3, r0, #15
-10005c22:	428b      	cmp	r3, r1
-10005c24:	d301      	bcc.n	10005c2a <__aeabi_uidiv+0x46>
-10005c26:	03cb      	lsls	r3, r1, #15
-10005c28:	1ac0      	subs	r0, r0, r3
-10005c2a:	4152      	adcs	r2, r2
-10005c2c:	0b83      	lsrs	r3, r0, #14
-10005c2e:	428b      	cmp	r3, r1
-10005c30:	d301      	bcc.n	10005c36 <__aeabi_uidiv+0x52>
-10005c32:	038b      	lsls	r3, r1, #14
-10005c34:	1ac0      	subs	r0, r0, r3
-10005c36:	4152      	adcs	r2, r2
-10005c38:	0b43      	lsrs	r3, r0, #13
-10005c3a:	428b      	cmp	r3, r1
-10005c3c:	d301      	bcc.n	10005c42 <__aeabi_uidiv+0x5e>
-10005c3e:	034b      	lsls	r3, r1, #13
-10005c40:	1ac0      	subs	r0, r0, r3
-10005c42:	4152      	adcs	r2, r2
-10005c44:	0b03      	lsrs	r3, r0, #12
-10005c46:	428b      	cmp	r3, r1
-10005c48:	d301      	bcc.n	10005c4e <__aeabi_uidiv+0x6a>
-10005c4a:	030b      	lsls	r3, r1, #12
-10005c4c:	1ac0      	subs	r0, r0, r3
-10005c4e:	4152      	adcs	r2, r2
-10005c50:	0ac3      	lsrs	r3, r0, #11
-10005c52:	428b      	cmp	r3, r1
-10005c54:	d301      	bcc.n	10005c5a <__aeabi_uidiv+0x76>
-10005c56:	02cb      	lsls	r3, r1, #11
-10005c58:	1ac0      	subs	r0, r0, r3
-10005c5a:	4152      	adcs	r2, r2
-10005c5c:	0a83      	lsrs	r3, r0, #10
-10005c5e:	428b      	cmp	r3, r1
-10005c60:	d301      	bcc.n	10005c66 <__aeabi_uidiv+0x82>
-10005c62:	028b      	lsls	r3, r1, #10
-10005c64:	1ac0      	subs	r0, r0, r3
-10005c66:	4152      	adcs	r2, r2
-10005c68:	0a43      	lsrs	r3, r0, #9
-10005c6a:	428b      	cmp	r3, r1
-10005c6c:	d301      	bcc.n	10005c72 <__aeabi_uidiv+0x8e>
-10005c6e:	024b      	lsls	r3, r1, #9
-10005c70:	1ac0      	subs	r0, r0, r3
-10005c72:	4152      	adcs	r2, r2
-10005c74:	0a03      	lsrs	r3, r0, #8
-10005c76:	428b      	cmp	r3, r1
-10005c78:	d301      	bcc.n	10005c7e <__aeabi_uidiv+0x9a>
-10005c7a:	020b      	lsls	r3, r1, #8
-10005c7c:	1ac0      	subs	r0, r0, r3
-10005c7e:	4152      	adcs	r2, r2
-10005c80:	d2cd      	bcs.n	10005c1e <__aeabi_uidiv+0x3a>
-10005c82:	09c3      	lsrs	r3, r0, #7
-10005c84:	428b      	cmp	r3, r1
-10005c86:	d301      	bcc.n	10005c8c <__aeabi_uidiv+0xa8>
-10005c88:	01cb      	lsls	r3, r1, #7
-10005c8a:	1ac0      	subs	r0, r0, r3
-10005c8c:	4152      	adcs	r2, r2
-10005c8e:	0983      	lsrs	r3, r0, #6
-10005c90:	428b      	cmp	r3, r1
-10005c92:	d301      	bcc.n	10005c98 <__aeabi_uidiv+0xb4>
-10005c94:	018b      	lsls	r3, r1, #6
-10005c96:	1ac0      	subs	r0, r0, r3
-10005c98:	4152      	adcs	r2, r2
-10005c9a:	0943      	lsrs	r3, r0, #5
-10005c9c:	428b      	cmp	r3, r1
-10005c9e:	d301      	bcc.n	10005ca4 <__aeabi_uidiv+0xc0>
-10005ca0:	014b      	lsls	r3, r1, #5
-10005ca2:	1ac0      	subs	r0, r0, r3
-10005ca4:	4152      	adcs	r2, r2
-10005ca6:	0903      	lsrs	r3, r0, #4
-10005ca8:	428b      	cmp	r3, r1
-10005caa:	d301      	bcc.n	10005cb0 <__aeabi_uidiv+0xcc>
-10005cac:	010b      	lsls	r3, r1, #4
-10005cae:	1ac0      	subs	r0, r0, r3
-10005cb0:	4152      	adcs	r2, r2
-10005cb2:	08c3      	lsrs	r3, r0, #3
-10005cb4:	428b      	cmp	r3, r1
-10005cb6:	d301      	bcc.n	10005cbc <__aeabi_uidiv+0xd8>
-10005cb8:	00cb      	lsls	r3, r1, #3
-10005cba:	1ac0      	subs	r0, r0, r3
-10005cbc:	4152      	adcs	r2, r2
-10005cbe:	0883      	lsrs	r3, r0, #2
-10005cc0:	428b      	cmp	r3, r1
-10005cc2:	d301      	bcc.n	10005cc8 <__aeabi_uidiv+0xe4>
-10005cc4:	008b      	lsls	r3, r1, #2
-10005cc6:	1ac0      	subs	r0, r0, r3
-10005cc8:	4152      	adcs	r2, r2
-10005cca:	0843      	lsrs	r3, r0, #1
-10005ccc:	428b      	cmp	r3, r1
-10005cce:	d301      	bcc.n	10005cd4 <__aeabi_uidiv+0xf0>
-10005cd0:	004b      	lsls	r3, r1, #1
-10005cd2:	1ac0      	subs	r0, r0, r3
-10005cd4:	4152      	adcs	r2, r2
-10005cd6:	1a41      	subs	r1, r0, r1
-10005cd8:	d200      	bcs.n	10005cdc <__aeabi_uidiv+0xf8>
-10005cda:	4601      	mov	r1, r0
-10005cdc:	4152      	adcs	r2, r2
-10005cde:	4610      	mov	r0, r2
-10005ce0:	4770      	bx	lr
-10005ce2:	e7ff      	b.n	10005ce4 <__aeabi_uidiv+0x100>
-10005ce4:	b501      	push	{r0, lr}
-10005ce6:	2000      	movs	r0, #0
-10005ce8:	f000 f80c 	bl	10005d04 <__aeabi_idiv0>
-10005cec:	bd02      	pop	{r1, pc}
-10005cee:	46c0      	nop			; (mov r8, r8)
+10005bf4 <__aeabi_uidiv>:
+10005bf4:	2200      	movs	r2, #0
+10005bf6:	0843      	lsrs	r3, r0, #1
+10005bf8:	428b      	cmp	r3, r1
+10005bfa:	d374      	bcc.n	10005ce6 <__aeabi_uidiv+0xf2>
+10005bfc:	0903      	lsrs	r3, r0, #4
+10005bfe:	428b      	cmp	r3, r1
+10005c00:	d35f      	bcc.n	10005cc2 <__aeabi_uidiv+0xce>
+10005c02:	0a03      	lsrs	r3, r0, #8
+10005c04:	428b      	cmp	r3, r1
+10005c06:	d344      	bcc.n	10005c92 <__aeabi_uidiv+0x9e>
+10005c08:	0b03      	lsrs	r3, r0, #12
+10005c0a:	428b      	cmp	r3, r1
+10005c0c:	d328      	bcc.n	10005c60 <__aeabi_uidiv+0x6c>
+10005c0e:	0c03      	lsrs	r3, r0, #16
+10005c10:	428b      	cmp	r3, r1
+10005c12:	d30d      	bcc.n	10005c30 <__aeabi_uidiv+0x3c>
+10005c14:	22ff      	movs	r2, #255	; 0xff
+10005c16:	0209      	lsls	r1, r1, #8
+10005c18:	ba12      	rev	r2, r2
+10005c1a:	0c03      	lsrs	r3, r0, #16
+10005c1c:	428b      	cmp	r3, r1
+10005c1e:	d302      	bcc.n	10005c26 <__aeabi_uidiv+0x32>
+10005c20:	1212      	asrs	r2, r2, #8
+10005c22:	0209      	lsls	r1, r1, #8
+10005c24:	d065      	beq.n	10005cf2 <__aeabi_uidiv+0xfe>
+10005c26:	0b03      	lsrs	r3, r0, #12
+10005c28:	428b      	cmp	r3, r1
+10005c2a:	d319      	bcc.n	10005c60 <__aeabi_uidiv+0x6c>
+10005c2c:	e000      	b.n	10005c30 <__aeabi_uidiv+0x3c>
+10005c2e:	0a09      	lsrs	r1, r1, #8
+10005c30:	0bc3      	lsrs	r3, r0, #15
+10005c32:	428b      	cmp	r3, r1
+10005c34:	d301      	bcc.n	10005c3a <__aeabi_uidiv+0x46>
+10005c36:	03cb      	lsls	r3, r1, #15
+10005c38:	1ac0      	subs	r0, r0, r3
+10005c3a:	4152      	adcs	r2, r2
+10005c3c:	0b83      	lsrs	r3, r0, #14
+10005c3e:	428b      	cmp	r3, r1
+10005c40:	d301      	bcc.n	10005c46 <__aeabi_uidiv+0x52>
+10005c42:	038b      	lsls	r3, r1, #14
+10005c44:	1ac0      	subs	r0, r0, r3
+10005c46:	4152      	adcs	r2, r2
+10005c48:	0b43      	lsrs	r3, r0, #13
+10005c4a:	428b      	cmp	r3, r1
+10005c4c:	d301      	bcc.n	10005c52 <__aeabi_uidiv+0x5e>
+10005c4e:	034b      	lsls	r3, r1, #13
+10005c50:	1ac0      	subs	r0, r0, r3
+10005c52:	4152      	adcs	r2, r2
+10005c54:	0b03      	lsrs	r3, r0, #12
+10005c56:	428b      	cmp	r3, r1
+10005c58:	d301      	bcc.n	10005c5e <__aeabi_uidiv+0x6a>
+10005c5a:	030b      	lsls	r3, r1, #12
+10005c5c:	1ac0      	subs	r0, r0, r3
+10005c5e:	4152      	adcs	r2, r2
+10005c60:	0ac3      	lsrs	r3, r0, #11
+10005c62:	428b      	cmp	r3, r1
+10005c64:	d301      	bcc.n	10005c6a <__aeabi_uidiv+0x76>
+10005c66:	02cb      	lsls	r3, r1, #11
+10005c68:	1ac0      	subs	r0, r0, r3
+10005c6a:	4152      	adcs	r2, r2
+10005c6c:	0a83      	lsrs	r3, r0, #10
+10005c6e:	428b      	cmp	r3, r1
+10005c70:	d301      	bcc.n	10005c76 <__aeabi_uidiv+0x82>
+10005c72:	028b      	lsls	r3, r1, #10
+10005c74:	1ac0      	subs	r0, r0, r3
+10005c76:	4152      	adcs	r2, r2
+10005c78:	0a43      	lsrs	r3, r0, #9
+10005c7a:	428b      	cmp	r3, r1
+10005c7c:	d301      	bcc.n	10005c82 <__aeabi_uidiv+0x8e>
+10005c7e:	024b      	lsls	r3, r1, #9
+10005c80:	1ac0      	subs	r0, r0, r3
+10005c82:	4152      	adcs	r2, r2
+10005c84:	0a03      	lsrs	r3, r0, #8
+10005c86:	428b      	cmp	r3, r1
+10005c88:	d301      	bcc.n	10005c8e <__aeabi_uidiv+0x9a>
+10005c8a:	020b      	lsls	r3, r1, #8
+10005c8c:	1ac0      	subs	r0, r0, r3
+10005c8e:	4152      	adcs	r2, r2
+10005c90:	d2cd      	bcs.n	10005c2e <__aeabi_uidiv+0x3a>
+10005c92:	09c3      	lsrs	r3, r0, #7
+10005c94:	428b      	cmp	r3, r1
+10005c96:	d301      	bcc.n	10005c9c <__aeabi_uidiv+0xa8>
+10005c98:	01cb      	lsls	r3, r1, #7
+10005c9a:	1ac0      	subs	r0, r0, r3
+10005c9c:	4152      	adcs	r2, r2
+10005c9e:	0983      	lsrs	r3, r0, #6
+10005ca0:	428b      	cmp	r3, r1
+10005ca2:	d301      	bcc.n	10005ca8 <__aeabi_uidiv+0xb4>
+10005ca4:	018b      	lsls	r3, r1, #6
+10005ca6:	1ac0      	subs	r0, r0, r3
+10005ca8:	4152      	adcs	r2, r2
+10005caa:	0943      	lsrs	r3, r0, #5
+10005cac:	428b      	cmp	r3, r1
+10005cae:	d301      	bcc.n	10005cb4 <__aeabi_uidiv+0xc0>
+10005cb0:	014b      	lsls	r3, r1, #5
+10005cb2:	1ac0      	subs	r0, r0, r3
+10005cb4:	4152      	adcs	r2, r2
+10005cb6:	0903      	lsrs	r3, r0, #4
+10005cb8:	428b      	cmp	r3, r1
+10005cba:	d301      	bcc.n	10005cc0 <__aeabi_uidiv+0xcc>
+10005cbc:	010b      	lsls	r3, r1, #4
+10005cbe:	1ac0      	subs	r0, r0, r3
+10005cc0:	4152      	adcs	r2, r2
+10005cc2:	08c3      	lsrs	r3, r0, #3
+10005cc4:	428b      	cmp	r3, r1
+10005cc6:	d301      	bcc.n	10005ccc <__aeabi_uidiv+0xd8>
+10005cc8:	00cb      	lsls	r3, r1, #3
+10005cca:	1ac0      	subs	r0, r0, r3
+10005ccc:	4152      	adcs	r2, r2
+10005cce:	0883      	lsrs	r3, r0, #2
+10005cd0:	428b      	cmp	r3, r1
+10005cd2:	d301      	bcc.n	10005cd8 <__aeabi_uidiv+0xe4>
+10005cd4:	008b      	lsls	r3, r1, #2
+10005cd6:	1ac0      	subs	r0, r0, r3
+10005cd8:	4152      	adcs	r2, r2
+10005cda:	0843      	lsrs	r3, r0, #1
+10005cdc:	428b      	cmp	r3, r1
+10005cde:	d301      	bcc.n	10005ce4 <__aeabi_uidiv+0xf0>
+10005ce0:	004b      	lsls	r3, r1, #1
+10005ce2:	1ac0      	subs	r0, r0, r3
+10005ce4:	4152      	adcs	r2, r2
+10005ce6:	1a41      	subs	r1, r0, r1
+10005ce8:	d200      	bcs.n	10005cec <__aeabi_uidiv+0xf8>
+10005cea:	4601      	mov	r1, r0
+10005cec:	4152      	adcs	r2, r2
+10005cee:	4610      	mov	r0, r2
+10005cf0:	4770      	bx	lr
+10005cf2:	e7ff      	b.n	10005cf4 <__aeabi_uidiv+0x100>
+10005cf4:	b501      	push	{r0, lr}
+10005cf6:	2000      	movs	r0, #0
+10005cf8:	f000 f80c 	bl	10005d14 <__aeabi_idiv0>
+10005cfc:	bd02      	pop	{r1, pc}
+10005cfe:	46c0      	nop			; (mov r8, r8)
 
-10005cf0 <__aeabi_uidivmod>:
-10005cf0:	2900      	cmp	r1, #0
-10005cf2:	d0f7      	beq.n	10005ce4 <__aeabi_uidiv+0x100>
-10005cf4:	b503      	push	{r0, r1, lr}
-10005cf6:	f7ff ff75 	bl	10005be4 <__aeabi_uidiv>
-10005cfa:	bc0e      	pop	{r1, r2, r3}
-10005cfc:	4342      	muls	r2, r0
-10005cfe:	1a89      	subs	r1, r1, r2
-10005d00:	4718      	bx	r3
-10005d02:	46c0      	nop			; (mov r8, r8)
+10005d00 <__aeabi_uidivmod>:
+10005d00:	2900      	cmp	r1, #0
+10005d02:	d0f7      	beq.n	10005cf4 <__aeabi_uidiv+0x100>
+10005d04:	b503      	push	{r0, r1, lr}
+10005d06:	f7ff ff75 	bl	10005bf4 <__aeabi_uidiv>
+10005d0a:	bc0e      	pop	{r1, r2, r3}
+10005d0c:	4342      	muls	r2, r0
+10005d0e:	1a89      	subs	r1, r1, r2
+10005d10:	4718      	bx	r3
+10005d12:	46c0      	nop			; (mov r8, r8)
 
-10005d04 <__aeabi_idiv0>:
-10005d04:	4770      	bx	lr
-10005d06:	46c0      	nop			; (mov r8, r8)
+10005d14 <__aeabi_idiv0>:
+10005d14:	4770      	bx	lr
+10005d16:	46c0      	nop			; (mov r8, r8)
 
-10005d08 <__libc_init_array>:
-10005d08:	4b0e      	ldr	r3, [pc, #56]	; (10005d44 <__libc_init_array+0x3c>)
-10005d0a:	b570      	push	{r4, r5, r6, lr}
-10005d0c:	2500      	movs	r5, #0
-10005d0e:	1c1e      	adds	r6, r3, #0
-10005d10:	4c0d      	ldr	r4, [pc, #52]	; (10005d48 <__libc_init_array+0x40>)
-10005d12:	1ae4      	subs	r4, r4, r3
-10005d14:	10a4      	asrs	r4, r4, #2
-10005d16:	42a5      	cmp	r5, r4
-10005d18:	d004      	beq.n	10005d24 <__libc_init_array+0x1c>
-10005d1a:	00ab      	lsls	r3, r5, #2
-10005d1c:	58f3      	ldr	r3, [r6, r3]
-10005d1e:	4798      	blx	r3
-10005d20:	3501      	adds	r5, #1
-10005d22:	e7f8      	b.n	10005d16 <__libc_init_array+0xe>
-10005d24:	f7fc f902 	bl	10001f2c <_init>
-10005d28:	4b08      	ldr	r3, [pc, #32]	; (10005d4c <__libc_init_array+0x44>)
-10005d2a:	2500      	movs	r5, #0
-10005d2c:	1c1e      	adds	r6, r3, #0
-10005d2e:	4c08      	ldr	r4, [pc, #32]	; (10005d50 <__libc_init_array+0x48>)
-10005d30:	1ae4      	subs	r4, r4, r3
-10005d32:	10a4      	asrs	r4, r4, #2
-10005d34:	42a5      	cmp	r5, r4
-10005d36:	d004      	beq.n	10005d42 <__libc_init_array+0x3a>
-10005d38:	00ab      	lsls	r3, r5, #2
-10005d3a:	58f3      	ldr	r3, [r6, r3]
-10005d3c:	4798      	blx	r3
-10005d3e:	3501      	adds	r5, #1
-10005d40:	e7f8      	b.n	10005d34 <__libc_init_array+0x2c>
-10005d42:	bd70      	pop	{r4, r5, r6, pc}
-10005d44:	200005b8 	.word	0x200005b8
-10005d48:	200005b8 	.word	0x200005b8
-10005d4c:	200005b8 	.word	0x200005b8
-10005d50:	200005b8 	.word	0x200005b8
-10005d54:	10001ce6 	.word	0x10001ce6
-10005d58:	10001ce6 	.word	0x10001ce6
-10005d5c:	10001cf0 	.word	0x10001cf0
-10005d60:	10001cf0 	.word	0x10001cf0
-10005d64:	10001d1e 	.word	0x10001d1e
-10005d68:	10001d1e 	.word	0x10001d1e
-10005d6c:	10001d1e 	.word	0x10001d1e
-10005d70:	10001d1e 	.word	0x10001d1e
-10005d74:	10001cfa 	.word	0x10001cfa
-10005d78:	10001d06 	.word	0x10001d06
-10005d7c:	10001d12 	.word	0x10001d12
-10005d80:	10001d12 	.word	0x10001d12
+10005d18 <__libc_init_array>:
+10005d18:	4b0e      	ldr	r3, [pc, #56]	; (10005d54 <__libc_init_array+0x3c>)
+10005d1a:	b570      	push	{r4, r5, r6, lr}
+10005d1c:	2500      	movs	r5, #0
+10005d1e:	1c1e      	adds	r6, r3, #0
+10005d20:	4c0d      	ldr	r4, [pc, #52]	; (10005d58 <__libc_init_array+0x40>)
+10005d22:	1ae4      	subs	r4, r4, r3
+10005d24:	10a4      	asrs	r4, r4, #2
+10005d26:	42a5      	cmp	r5, r4
+10005d28:	d004      	beq.n	10005d34 <__libc_init_array+0x1c>
+10005d2a:	00ab      	lsls	r3, r5, #2
+10005d2c:	58f3      	ldr	r3, [r6, r3]
+10005d2e:	4798      	blx	r3
+10005d30:	3501      	adds	r5, #1
+10005d32:	e7f8      	b.n	10005d26 <__libc_init_array+0xe>
+10005d34:	f7fc f8fa 	bl	10001f2c <_init>
+10005d38:	4b08      	ldr	r3, [pc, #32]	; (10005d5c <__libc_init_array+0x44>)
+10005d3a:	2500      	movs	r5, #0
+10005d3c:	1c1e      	adds	r6, r3, #0
+10005d3e:	4c08      	ldr	r4, [pc, #32]	; (10005d60 <__libc_init_array+0x48>)
+10005d40:	1ae4      	subs	r4, r4, r3
+10005d42:	10a4      	asrs	r4, r4, #2
+10005d44:	42a5      	cmp	r5, r4
+10005d46:	d004      	beq.n	10005d52 <__libc_init_array+0x3a>
+10005d48:	00ab      	lsls	r3, r5, #2
+10005d4a:	58f3      	ldr	r3, [r6, r3]
+10005d4c:	4798      	blx	r3
+10005d4e:	3501      	adds	r5, #1
+10005d50:	e7f8      	b.n	10005d44 <__libc_init_array+0x2c>
+10005d52:	bd70      	pop	{r4, r5, r6, pc}
+10005d54:	200005b8 	.word	0x200005b8
+10005d58:	200005b8 	.word	0x200005b8
+10005d5c:	200005b8 	.word	0x200005b8
+10005d60:	200005b8 	.word	0x200005b8
+10005d64:	10001ce6 	.word	0x10001ce6
+10005d68:	10001ce6 	.word	0x10001ce6
+10005d6c:	10001cf0 	.word	0x10001cf0
+10005d70:	10001cf0 	.word	0x10001cf0
+10005d74:	10001d1e 	.word	0x10001d1e
+10005d78:	10001d1e 	.word	0x10001d1e
+10005d7c:	10001d1e 	.word	0x10001d1e
+10005d80:	10001d1e 	.word	0x10001d1e
+10005d84:	10001cfa 	.word	0x10001cfa
+10005d88:	10001d06 	.word	0x10001d06
+10005d8c:	10001d12 	.word	0x10001d12
+10005d90:	10001d12 	.word	0x10001d12
 
-10005d84 <PWM_CCU4_LED_STATUS_timer_handle>:
+10005d94 <PWM_CCU4_LED_STATUS_timer_handle>:
 	...
 
-10005d8c <PWM_CCU4_LED_STATUS_event0_config>:
-10005d8c:	00010000                                ....
+10005d9c <PWM_CCU4_LED_STATUS_event0_config>:
+10005d9c:	00010000                                ....
 
-10005d90 <PWM_CCU4_LED_STATUS_event1_config>:
-10005d90:	00010000                                ....
+10005da0 <PWM_CCU4_LED_STATUS_event1_config>:
+10005da0:	00010000                                ....
 
-10005d94 <PWM_CCU4_LED_STATUS_event2_config>:
-10005d94:	00010000                                ....
+10005da4 <PWM_CCU4_LED_STATUS_event2_config>:
+10005da4:	00010000                                ....
 
-10005d98 <PWM_CCU4_LED_STATUS_config_handle>:
-10005d98:	f9ff0001 00000000 00000000 00000000     ................
-10005da8:	00000000 10005d8c 10005d90 10005d94     .....]...]...]..
+10005da8 <PWM_CCU4_LED_STATUS_config_handle>:
+10005da8:	f9ff0001 00000000 00000000 00000000     ................
+10005db8:	00000000 10005d9c 10005da0 10005da4     .....]...]...]..
 	...
-10005dc4:	01000000 00000000 04000000 10005d84     .............]..
+10005dd4:	01000000 00000000 04000000 10005d94     .............]..
 	...
-10005de4:	20000548                                H.. 
+10005df4:	20000548                                H.. 
 
-10005de8 <global_config>:
+10005df8 <global_config>:
 	...
-10005dfc:	100033c6 10003376 10003382 100033b2     .3..v3...3...3..
-10005e0c:	100033c6 1000337c 100033a2 100033a8     .3..|3...3...3..
-10005e1c:	100033bc                                .3..
+10005e0c:	100033c6 10003376 10003382 100033b2     .3..v3...3...3..
+10005e1c:	100033c6 1000337c 100033a2 100033a8     .3..|3...3...3..
+10005e2c:	100033bc                                .3..
 
-10005e20 <E_EEPROM_XMC1_block_Config>:
-10005e20:	00000001 00000004 00000002 00000004     ................
-10005e30:	00000003 00000004                       ........
+10005e30 <E_EEPROM_XMC1_block_Config>:
+10005e30:	00000001 00000004 00000002 00000004     ................
+10005e40:	00000003 00000004                       ........
 
-10005e38 <IO_USB_SI>:
-10005e38:	40040200 00000080 00010000 00000000     ...@............
+10005e48 <IO_USB_SI>:
+10005e48:	40040200 00000080 00010000 00000000     ...@............
 
-10005e48 <IO_USB_OE>:
-10005e48:	40040000 00000080 00010000 00000009     ...@............
+10005e58 <IO_USB_OE>:
+10005e58:	40040000 00000080 00010000 00000009     ...@............
 
-10005e58 <IO_LED_R_STATUS>:
-10005e58:	40040000 000000a0 00000001 00000006     ...@............
+10005e68 <IO_LED_R_STATUS>:
+10005e68:	40040000 000000a0 00000001 00000006     ...@............
 
-10005e68 <IO_SW_USB>:
-10005e68:	40040000 00000010 00000000 00000008     ...@............
+10005e78 <IO_SW_USB>:
+10005e78:	40040000 00000010 00000000 00000008     ...@............
 
-10005e78 <IO_SW_UP>:
-10005e78:	40040200 00000010 00000000 00000007     ...@............
+10005e88 <IO_SW_UP>:
+10005e88:	40040200 00000010 00000000 00000007     ...@............
 
-10005e88 <IO_SW_DOWN>:
-10005e88:	40040200 00000010 00000000 00000009     ...@............
+10005e98 <IO_SW_DOWN>:
+10005e98:	40040200 00000010 00000000 00000009     ...@............
 
-10005e98 <IO_USBPWR_2>:
-10005e98:	40040000 00000080 00010000 00000005     ...@............
+10005ea8 <IO_USBPWR_2>:
+10005ea8:	40040000 00000080 00010000 00000005     ...@............
 
-10005ea8 <IO_USBPWR_1>:
-10005ea8:	40040200 00000080 00010000 0000000a     ...@............
+10005eb8 <IO_USBPWR_1>:
+10005eb8:	40040200 00000080 00010000 0000000a     ...@............
 
-10005eb8 <IO_RELAY>:
-10005eb8:	40040000 00000080 00010000 00000007     ...@............
+10005ec8 <IO_RELAY>:
+10005ec8:	40040000 00000080 00010000 00000007     ...@............
 
-10005ec8 <IO_LED_USB2>:
-10005ec8:	40040000 00000080 00010000 00000000     ...@............
+10005ed8 <IO_LED_USB2>:
+10005ed8:	40040000 00000080 00010000 00000000     ...@............
 
-10005ed8 <IO_LED_USB1>:
-10005ed8:	40040200 00000080 00010000 0000000b     ...@............
-10005ee8:	00000100 00010000 00000000              ............
+10005ee8 <IO_LED_USB1>:
+10005ee8:	40040200 00000080 00010000 0000000b     ...@............
+10005ef8:	00000100 00010000 00000000              ............
 
-10005ef4 <global_iclass_config>:
-10005ef4:	0000001f                                ....
+10005f04 <global_iclass_config>:
+10005f04:	0000001f                                ....
 
-10005ef8 <global_result_intr_handle>:
-10005ef8:	0000000f 00000003                       ........
+10005f08 <global_result_intr_handle>:
+10005f08:	0000000f 00000003                       ........
 
-10005f00 <backgnd_config>:
-10005f00:	00000005 00000000 00000000 10004ca0     .............L..
-10005f10:	10004cae 10004cba 10004d00 10004d52     .L...L...M..RM..
-10005f20:	10004da6                                .M..
+10005f10 <backgnd_config>:
+10005f10:	00000005 00000000 00000000 10004ca0     .............L..
+10005f20:	10004cae 10004cba 10004d00 10004d52     .L...L...M..RM..
+10005f30:	10004da6                                .M..
 
 Disassembly of section .VENEER_Code:
 
@@ -15405,7 +15422,7 @@ USIC0_5_Veneer:
     .globl VADC0_C0_0_Veneer 
 VADC0_C0_0_Veneer:
     LDR R0, =VADC0_C0_0_IRQHandler
-20000104:	10005b99 	.word	0x10005b99
+20000104:	10005ba9 	.word	0x10005ba9
     MOV PC,R0
 /* ======================================================================== */
     .globl VADC0_C0_1_Veneer

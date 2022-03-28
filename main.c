@@ -17,7 +17,7 @@
 #define ADC_TH_UPPER_DEFAULT		3510						// Default upper threshold
 #define ADC_TH_LOWER_DEFAULT		585							// Default lower threshold
 #define RELAY_LATCHTIME_MAX			60000						// Maximum configurable time that the threshold must be exceeded to trigger a state change of the relay
-#define RELAY_LATCHTIME_INCREMENT	500							// Value added/subtracted when adjusting time
+#define RELAY_LATCHTIME_INCREMENT	250							// Value added/subtracted when adjusting time
 #define RELAY_LATCHTIME_DEFAULT		500							// Default lower threshold exceed time
 #define LED_PULSE_SHORT				200							// In ms. Duration of a short led pulse used for led pattern "number"
 #define LED_PULSE_LONG				1100						// In ms. Duration of a long led pulse used for led pattern "number"
@@ -257,12 +257,11 @@ void manage_status_led(){
 //****************************************************************************
 // read_eeprom_setup -
 //****************************************************************************
-uint8_t ReadBuffer_LTH[4];
-uint8_t ReadBuffer_UTH[4];
-uint8_t ReadBuffer_LT[4];
-
-uint8_t EEPROM_WriteBuffer[4];
 void read_eeprom_setup(void){
+	uint8_t ReadBuffer_LTH[4];
+	uint8_t ReadBuffer_UTH[4];
+	uint8_t ReadBuffer_LT[4];
+
 	// Read from EEPROM and interpret value
 	E_EEPROM_XMC1_Read(EEPROM_LOWER_TH, 0, ReadBuffer_LTH, 4U);
 	E_EEPROM_XMC1_Read(EEPROM_UPPER_TH, 0U, ReadBuffer_UTH, 4U);
@@ -342,6 +341,8 @@ void read_eeprom_setup(void){
 }
 
 void write_eeprom_setup(uint8_t block_number, int32_t value){
+	uint8_t EEPROM_WriteBuffer[4];
+
 	EEPROM_WriteBuffer[0] = (uint8_t)value;
 	EEPROM_WriteBuffer[1] = (uint8_t)(value >> 8);
 	EEPROM_WriteBuffer[2] = (uint8_t)(value >> 16);
