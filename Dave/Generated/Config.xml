@@ -57,6 +57,16 @@
                 <Type>C File</Type>
             </Source_File>
             <Source_File>
+                <File_Name>e_eeprom_xmc1.c</File_Name>
+                <Path>\Dave\Generated\E_EEPROM_XMC1\e_eeprom_xmc1.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>e_eeprom_xmc1_conf.c</File_Name>
+                <Path>\Dave\Generated\E_EEPROM_XMC1\e_eeprom_xmc1_conf.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
                 <File_Name>global_adc.c</File_Name>
                 <Path>\Dave\Generated\GLOBAL_ADC\global_adc.c</Path>
                 <Type>C File</Type>
@@ -166,6 +176,21 @@
             <Header_File>
                 <File_Name>digital_io_extern.h</File_Name>
                 <Path>\Dave\Generated\DIGITAL_IO\digital_io_extern.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>e_eeprom_xmc1.h</File_Name>
+                <Path>\Dave\Generated\E_EEPROM_XMC1\e_eeprom_xmc1.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>e_eeprom_xmc1_conf.h</File_Name>
+                <Path>\Dave\Generated\E_EEPROM_XMC1\e_eeprom_xmc1_conf.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>e_eeprom_xmc1_extern.h</File_Name>
+                <Path>\Dave\Generated\E_EEPROM_XMC1\e_eeprom_xmc1_extern.h</Path>
                 <Type>H File</Type>
             </Header_File>
             <Header_File>

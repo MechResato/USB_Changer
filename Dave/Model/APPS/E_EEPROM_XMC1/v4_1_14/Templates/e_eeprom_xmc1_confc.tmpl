@@ -1,0 +1,141 @@
+package Model.APPS.E_EEPROM_XMC1.v4_1_14.Templates;
+
+import Model.APPS.E_EEPROM_XMC1.v4_1_14.E_EEPROM_XMC1
+
+out.print("""
+/**
+ * @cond
+ ***********************************************************************************************************************
+ *
+ * Copyright (c) 2015-2020, Infineon Technologies AG
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the
+ * following conditions are met:
+ *
+ *   Redistributions of source code must retain the above copyright notice, this list of conditions and the  following
+ *   disclaimer.
+ *
+ *   Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
+ *   following disclaimer in the documentation and/or other materials provided with the distribution.
+ *
+ *   Neither the name of the copyright holders nor the names of its contributors may be used to endorse or promote
+ *   products derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT  OF THE
+ * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * To improve the quality of the software, users are encouraged to share modifications, enhancements or bug fixes
+ * with Infineon Technologies AG (dave@infineon.com).
+ ***********************************************************************************************************************
+ *
+ * Change History
+ * --------------
+ *
+ * 2015-02-16:
+ *     - Initial version<br>
+ *
+ * 2015-04-24:
+ *     - Updated for guideline adherence related changes.<br>
+ *
+ * 2016-07-08:
+ *     - Fixed incorrect case for an included header.<br>
+ *
+ * @endcond
+ *
+ */
+/***********************************************************************************************************************
+ * HEADER FILES
+ **********************************************************************************************************************/
+
+#include "e_eeprom_xmc1.h"
+
+/**********************************************************************************************************************
+* DATA STRUCTURES
+**********************************************************************************************************************/
+""");
+def appInst = null;
+for (Object Instance : appInstancesList ) {
+ appInst = Instance.getInstanceLabel()
+
+	block_names = [Instance.gstring_block1_name.value,Instance.gstring_block2_name.value,
+		           Instance.gstring_block3_name.value,Instance.gstring_block4_name.value,
+		           Instance.gstring_block5_name.value,Instance.gstring_block6_name.value,
+		           Instance.gstring_block7_name.value,Instance.gstring_block8_name.value,
+		           Instance.gstring_block9_name.value,Instance.gstring_block10_name.value]
+	
+    block_sizes =  [Instance.gint_block1_size.value,Instance.gint_block2_size.value,
+		            Instance.gint_block3_size.value,Instance.gint_block4_size.value,
+		            Instance.gint_block5_size.value,Instance.gint_block6_size.value,
+		            Instance.gint_block7_size.value,Instance.gint_block8_size.value,
+		            Instance.gint_block9_size.value,Instance.gint_block10_size.value]
+out.print("""
+/* EMULATED EEPROM Global State Data type structure declaration */
+E_EEPROM_XMC1_DATA_t  E_EEPROM_XMC1_data;
+
+/**
+ *  User defined Data Block configurations 
+ */ 
+const E_EEPROM_XMC1_BLOCK_t E_EEPROM_XMC1_block_Config[] =
+{ """);
+for(i=0;i< Instance.gint_max_blocks.value;i++){
+    out.print(""" 
+    /** Block ${i+1} Configuration */    
+    {                 
+     ${block_names[i]},    
+     ${block_sizes[i]}U 
+    """);
+    if( i == (Instance.gint_max_blocks.value - 1) )    
+    {
+      out.print(""" } """);
+    }
+    else
+    {
+      out.print(""" },""");
+    }     
+}
+out.print(""" 
+};
+
+/*
+*  EMULATED_EEPROM handle structure definition
+*/
+E_EEPROM_XMC1_t ${appInst} =
+{
+ .block_config_ptr        = (E_EEPROM_XMC1_BLOCK_t *)(void*)E_EEPROM_XMC1_block_Config,
+
+ .data_ptr                = &E_EEPROM_XMC1_data,
+
+#ifdef E_EEPROM_XMC1_CRC_SW_ENABLED
+""");
+if(Instance.gcheck_data_block_crc.value)    
+{
+out.print(""" 
+ .crc_handle_ptr          = (CRC_SW_t *)(void*)&${Instance.appres_sw_crc.getInstanceLabel()}, """);
+}
+else
+{
+out.print("""
+ .crc_handle_ptr          = null""");
+}
+out.print("""
+#endif
+
+ .state                   = E_EEPROM_XMC1_STATUS_UNINITIALIZED,
+
+ .block_count             = E_EEPROM_XMC1_MAX_BLOCK_COUNT,
+
+ .erase_all_auto_recovery = ${((Instance.gcheck_auto_recovery.value)?1:0)}U,
+
+ .data_block_crc          = ${((Instance.gcheck_data_block_crc.value)?1:0)}U,
+
+ .garbage_collection      = ${((Instance.gcheck_garbage_collection.value)?1:0)}U
+};
+
+""");
+}

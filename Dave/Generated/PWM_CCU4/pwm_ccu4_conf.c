@@ -109,7 +109,7 @@
     {
       .start_control                       = true,      
       .period_value                        = 63999U,
-      .compare_value                       = 58880U,
+      .compare_value                       = 0U,
 
       .int_per_match                       = false,
       .int_cmp_match_up                    = false,
@@ -194,7 +194,7 @@
       .prescaler_shadow_txfr_msk           = (uint32_t)XMC_CCU4_SHADOW_TRANSFER_PRESCALER_SLICE_0,
 
       .state                               = PWM_CCU4_STATE_UNINITIALIZED,
-      .sym_duty                            = 800U,
+      .sym_duty                            = 10000U,
 
     };
 

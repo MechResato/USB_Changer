@@ -12,10 +12,13 @@
 #define BTN_STD_PRESS_DURATION		60							// The minimum duration of a button press that will be registered as such (debouncing)
 #define BTN_LONG_PRESS_DURATION		1000						// The minimum duration of a long button press that will be registered as such (debouncing)
 #define BTN_LONGEST_PRESS_DURATION	4000						// The maximum duration of a button press
-#define ADC_THRESHOLD_MAX			4095						// Maximum ADC value. Note: 1023 can be divided by 1, 3, 11, 31, 33, 93, 341 without decimals
-#define ADC_THRESHOLD_INCREMENT		(ADC_THRESHOLD_MAX / 33)	// Value added/subtracted when adjusting threshold. 33 means there are 33 steps for setting thresholds
+#define ADC_THRESHOLD_MAX			4095						// Maximum ADC value. Note: 4095 can be divided by 1, 3, 5, 7, 9, 13, 15, 21, 35, 39, 45, 63, 65, 91, 105, 117, 195, 273, 315, 455, 585, 819, 1365 without decimals
+#define ADC_THRESHOLD_INCREMENT		(ADC_THRESHOLD_MAX / 35)	// Value added/subtracted when adjusting threshold. 35 means there are 35 steps for setting thresholds
+#define ADC_TH_UPPER_DEFAULT		3510						// Default upper threshold
+#define ADC_TH_LOWER_DEFAULT		585							// Default lower threshold
 #define RELAY_LATCHTIME_MAX			60000						// Maximum configurable time that the threshold must be exceeded to trigger a state change of the relay
 #define RELAY_LATCHTIME_INCREMENT	500							// Value added/subtracted when adjusting time
+#define RELAY_LATCHTIME_DEFAULT		500							// Default lower threshold exceed time
 #define LED_PULSE_SHORT				200							// In ms. Duration of a short led pulse used for led pattern "number"
 #define LED_PULSE_LONG				1100						// In ms. Duration of a long led pulse used for led pattern "number"
 #define PWM_FULL_ON					PWM_CCU4_SYM_DUTY_MIN		// Integer that represents the lowest possible duty cycle of PWM
@@ -23,25 +26,26 @@
 #define TIMESTAMP_DEACTIVATED		UINT32_MAX
 
 // Dynamic settings (can be changed by user)
-uint16_t relay_threshold_latchtime = 500; // Time in ms that the threshold must stay exceeded in order to trigger a state change (=basically a filter)
-int32_t ADC_upper_threshold = 3000;    // Upper threshold that the ADC value must be exceed to trigger a state change (must be held exceeded for relay_threshold_latchtime)
-int32_t ADC_lower_threshold = 2500;    // Upper threshold that the ADC value must be exceed to trigger a state change (must be held exceeded for relay_threshold_latchtime)
+int32_t relay_threshold_latchtime = 500; // Time in ms that the threshold must stay exceeded in order to trigger a state change (=basically a filter)
+int32_t ADC_upper_threshold = 3393;    // Upper threshold that the ADC value must be exceed to trigger a state change (must be held exceeded for relay_threshold_latchtime)
+int32_t ADC_lower_threshold = 702;    // Upper threshold that the ADC value must be exceed to trigger a state change (must be held exceeded for relay_threshold_latchtime)
 
 
 // State machines
 typedef enum {USB_1_active, USB_2_active, USB_inactive} USB_states;
 typedef enum {RELAY_HIGH, RELAY_LOW} relay_states;
 typedef enum {SETUP_IDLE, SETUP_UPPER_TH, SETUP_LOWER_TH, SETUP_TIME_TH} setup_states;
-USB_states USB_state;
-relay_states relay_state;
-setup_states setup_state;
+USB_states USB_state = USB_1_active;
+relay_states relay_state = RELAY_LOW;
+setup_states setup_state = SETUP_IDLE;
 typedef enum {LED_OFF, LED_ON, LED_NUMBER, LED_FADE_DOWN, LED_FADE_UP, LED_MATCH_RELAY_STATE} LED_patterns;
 LED_patterns led_status_pattern = LED_OFF;
 LED_patterns led_status_pattern_last = LED_OFF;
 typedef enum {LED_PATTERN_CONTINUOUS, LED_PATTERN_SINGLE} LED_pattern_modes;
 LED_pattern_modes led_pattern_mode = LED_PATTERN_CONTINUOUS;
 LED_patterns led_status_pattern_after_single = LED_OFF; 	// Defines to what pattern will be switched after a LED_PATTERN_SINGLE execution
-uint16_t led_number = 0;
+uint16_t led_number_continuous = 0;
+uint16_t led_number_single = 0;
 uint16_t led_fadetime = 1500; // Time of one fade from one extreme to the other
 uint16_t led_fadesteps = 1000; // Number of steps used to fade led
 
@@ -66,6 +70,10 @@ uint32_t ADC_val_lower_thres_exceed_timestamp = 0;
 
 // Debug
 int systime_debug = 0;
+int32_t eeprom_latchtime = 0;
+int32_t eeprom_upper = 0;
+int32_t eeprom_lower = 0;
+
 
 
 
@@ -113,7 +121,7 @@ void manage_status_led(){
 				PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
 				break;
 			case LED_NUMBER:
-				if(led_number >= 1){
+				if((led_number_continuous >= 1 && led_pattern_mode == LED_PATTERN_CONTINUOUS) || (led_number_single >= 1 && led_pattern_mode == LED_PATTERN_SINGLE)){
 					led_pattern_state_timestamp = SYSTIMER_GetTime();
 					led_pattern_state_length = LED_PULSE_SHORT;
 					PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
@@ -150,6 +158,13 @@ void manage_status_led(){
 		if((SYSTIMER_GetTime() - led_pattern_state_timestamp) / 1000 >= led_pattern_state_length){
 			// Next state
 			led_pattern_state++;
+
+			// Use right pulse number based on current pattern mode
+			uint16_t led_number;
+			if(led_pattern_mode == LED_PATTERN_CONTINUOUS)
+				led_number = led_number_continuous;
+			else
+				led_number = led_number_single;
 
 			// Check if LED must be powered on or off for this state
 			if(led_pattern_state % 2)
@@ -240,7 +255,103 @@ void manage_status_led(){
 }
 
 //****************************************************************************
-// main - function to manage, debounce and interpret button presses
+// read_eeprom_setup -
+//****************************************************************************
+uint8_t ReadBuffer_LTH[4];
+uint8_t ReadBuffer_UTH[4];
+uint8_t ReadBuffer_LT[4];
+
+uint8_t EEPROM_WriteBuffer[4];
+void read_eeprom_setup(void){
+	// Read from EEPROM and interpret value
+	E_EEPROM_XMC1_Read(EEPROM_LOWER_TH, 0, ReadBuffer_LTH, 4U);
+	E_EEPROM_XMC1_Read(EEPROM_UPPER_TH, 0U, ReadBuffer_UTH, 4U);
+	E_EEPROM_XMC1_Read(EEPROM_LATCHTIME, 0U, ReadBuffer_LT, 4U);
+	eeprom_lower = ReadBuffer_LTH[0] + (ReadBuffer_LTH[1] << 8) + (ReadBuffer_LTH[2] << 16) + (ReadBuffer_LTH[3] << 24);
+	eeprom_upper = ReadBuffer_UTH[0] + (ReadBuffer_UTH[1] << 8) + (ReadBuffer_UTH[2] << 16) + (ReadBuffer_UTH[3] << 24);
+	eeprom_latchtime = ReadBuffer_LT[0] + (ReadBuffer_LT[1] << 8) + (ReadBuffer_LT[2] << 16) + (ReadBuffer_LT[3] << 24);
+
+	// Check if values make sense, else return to default
+	if(eeprom_upper < 0 || eeprom_upper > ADC_THRESHOLD_MAX){
+		ADC_upper_threshold = ADC_TH_UPPER_DEFAULT;
+		// Blink LED for error indication
+		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
+		delay_ms(200);
+		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
+		delay_ms(200);
+		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
+		delay_ms(200);
+		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
+		delay_ms(600);
+	}
+	else{
+		ADC_upper_threshold = eeprom_upper;
+	}
+	if(eeprom_lower < 0 || eeprom_lower > ADC_THRESHOLD_MAX){
+		ADC_lower_threshold = ADC_TH_LOWER_DEFAULT;
+		// Blink LED for error indication
+		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
+		delay_ms(200);
+		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
+		delay_ms(200);
+		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
+		delay_ms(200);
+		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
+		delay_ms(600);
+	}
+	else{
+		ADC_lower_threshold = eeprom_lower;
+	}
+	if(eeprom_latchtime < 0 || eeprom_latchtime > ADC_THRESHOLD_MAX){
+		relay_threshold_latchtime = RELAY_LATCHTIME_DEFAULT;
+		// Blink LED for error indication
+		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
+		delay_ms(200);
+		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
+		delay_ms(200);
+		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
+		delay_ms(200);
+		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
+		delay_ms(300);
+	}
+	else{
+		relay_threshold_latchtime = eeprom_latchtime;
+	}
+
+	//     --    Use this to write a value to e_eeprom for debug purpose   --
+	//int32_t temp = 100001;
+	//EEPROM_WriteBuffer[0] = (uint8_t)temp;
+	//EEPROM_WriteBuffer[1] = (uint8_t)(temp >> 8);
+	//EEPROM_WriteBuffer[2] = (uint8_t)(temp >> 16);
+	//EEPROM_WriteBuffer[3] = (uint8_t)(temp >> 24);
+	//E_EEPROM_XMC1_Write(EEPROM_LOWER_TH, EEPROM_WriteBuffer);
+	//
+	//temp = 100002;
+	//EEPROM_WriteBuffer[0] = (uint8_t)temp;
+	//EEPROM_WriteBuffer[1] = (uint8_t)(temp >> 8);
+	//EEPROM_WriteBuffer[2] = (uint8_t)(temp >> 16);
+	//EEPROM_WriteBuffer[3] = (uint8_t)(temp >> 24);
+	//E_EEPROM_XMC1_Write(EEPROM_UPPER_TH, EEPROM_WriteBuffer);
+	//
+	//temp = 100002;
+	//EEPROM_WriteBuffer[0] = (uint8_t)temp;
+	//EEPROM_WriteBuffer[1] = (uint8_t)(temp >> 8);
+	//EEPROM_WriteBuffer[2] = (uint8_t)(temp >> 16);
+	//EEPROM_WriteBuffer[3] = (uint8_t)(temp >> 24);
+	//E_EEPROM_XMC1_Write(EEPROM_LATCHTIME, EEPROM_WriteBuffer);
+}
+
+void write_eeprom_setup(uint8_t block_number, int32_t value){
+	EEPROM_WriteBuffer[0] = (uint8_t)value;
+	EEPROM_WriteBuffer[1] = (uint8_t)(value >> 8);
+	EEPROM_WriteBuffer[2] = (uint8_t)(value >> 16);
+	EEPROM_WriteBuffer[3] = (uint8_t)(value >> 24);
+	E_EEPROM_XMC1_Write(block_number, EEPROM_WriteBuffer);
+
+}
+
+//****************************************************************************
+// manage_buttons - function to manage, debounce and interpret button presses
 //****************************************************************************
 void manage_buttons(void)
 {
@@ -308,6 +419,7 @@ void manage_buttons(void)
 	}
 }
 
+
 //****************************************************************************
 // main - primary loop function
 //****************************************************************************
@@ -322,11 +434,11 @@ int main(void)
 		while(1U){
 			DIGITAL_IO_SetOutputLow(&IO_LED_USB1);
 			DIGITAL_IO_SetOutputLow(&IO_LED_USB2);
-			DIGITAL_IO_SetOutputLow(&IO_LED_R_STATUS);
+			PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
 			delay_ms(500);
 			DIGITAL_IO_SetOutputHigh(&IO_LED_USB1);
 			DIGITAL_IO_SetOutputHigh(&IO_LED_USB2);
-			DIGITAL_IO_SetOutputHigh(&IO_LED_R_STATUS);
+			PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
 			delay_ms(500);
 		}
 	}
@@ -346,6 +458,9 @@ int main(void)
 	PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
 	// Initialize next value conversion
 	ADC_MEASUREMENT_StartConversion(&ADC_SENSOR);
+
+	/// - Read setup from emulated EEPROM
+	read_eeprom_setup();
 
 	int main_loop_count = 0;
 
@@ -460,19 +575,19 @@ int main(void)
 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
 					setup_state = SETUP_TIME_TH;
 					led_status_pattern = LED_NUMBER;
-					led_number = 1;
+					led_number_continuous = 1;
 				}
 				else if(buttonpress_up == BTNPRESS_STD){
 					setup_state = SETUP_UPPER_TH;
 					led_status_pattern = LED_FADE_UP;
 					//led_status_pattern = LED_NUMBER;
-					//led_number = 5;
+					//led_number_continuous = 5;
 				}
 				else if(buttonpress_down == BTNPRESS_STD){
 					setup_state = SETUP_LOWER_TH;
 					led_status_pattern = LED_FADE_DOWN;
 					//led_status_pattern = LED_NUMBER;
-					//led_number = 3;
+					//led_number_continuous = 3;
 				}
 				break;
 			case SETUP_UPPER_TH:
@@ -484,6 +599,7 @@ int main(void)
 				// A short press of down       decreases the upper threshold value
 				// A longest press of up saves the current ADC value as threshold
 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
+					write_eeprom_setup(EEPROM_UPPER_TH, ADC_upper_threshold);
 					setup_state = SETUP_IDLE;
 					led_status_pattern = LED_MATCH_RELAY_STATE;
 				}
@@ -492,7 +608,7 @@ int main(void)
 					// If maximum is reached blink led 2 times, then continue fading
 					if(ADC_upper_threshold > ADC_THRESHOLD_MAX){
 						ADC_upper_threshold = ADC_THRESHOLD_MAX;
-						led_number = 2;
+						led_number_single = 2;
 						led_status_pattern = LED_NUMBER;
 						led_pattern_mode = LED_PATTERN_SINGLE;
 						led_status_pattern_after_single = LED_FADE_UP;
@@ -503,7 +619,7 @@ int main(void)
 					// If minimum is reached blink led 2 times, then continue fading
 					if(ADC_upper_threshold <= 0){
 						ADC_upper_threshold = 0;
-						led_number = 2;
+						led_number_single = 2;
 						led_status_pattern = LED_NUMBER;
 						led_pattern_mode = LED_PATTERN_SINGLE;
 						led_status_pattern_after_single = LED_FADE_UP;
@@ -514,9 +630,10 @@ int main(void)
 				else if(buttonpress_up == BTNPRESS_LONGEST){
 					// Save current ADC value as threshold and exit setup menu
 					ADC_upper_threshold = ADC_val_current;
+					write_eeprom_setup(EEPROM_UPPER_TH, ADC_upper_threshold);
 					setup_state = SETUP_IDLE;
 					// Blink LED 3 times (user info) and return to operation where led matches the state of the relay
-					led_number = 3;
+					led_number_single = 3;
 					led_status_pattern = LED_NUMBER;
 					led_pattern_mode = LED_PATTERN_SINGLE;
 					led_status_pattern_after_single = LED_MATCH_RELAY_STATE;
@@ -531,6 +648,7 @@ int main(void)
 				// A short press of down       decreases the lower threshold value
 				// A longest press of down saves the current ADC value as threshold
 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
+					write_eeprom_setup(EEPROM_LOWER_TH, ADC_lower_threshold);
 					setup_state = SETUP_IDLE;
 					led_status_pattern = LED_MATCH_RELAY_STATE;
 				}
@@ -539,7 +657,7 @@ int main(void)
 					// If maximum is reached blink led 2 times, then continue fading
 					if(ADC_lower_threshold > ADC_THRESHOLD_MAX){
 						ADC_lower_threshold = ADC_THRESHOLD_MAX;
-						led_number = 2;
+						led_number_single = 2;
 						led_status_pattern = LED_NUMBER;
 						led_pattern_mode = LED_PATTERN_SINGLE;
 						led_status_pattern_after_single = LED_FADE_DOWN;
@@ -550,7 +668,7 @@ int main(void)
 					// If minimum is reached blink led 2 times, then continue fading
 					if(ADC_lower_threshold <= 0){
 						ADC_lower_threshold = 0;
-						led_number = 2;
+						led_number_single = 2;
 						led_status_pattern = LED_NUMBER;
 						led_pattern_mode = LED_PATTERN_SINGLE;
 						led_status_pattern_after_single = LED_FADE_DOWN;
@@ -559,9 +677,10 @@ int main(void)
 				else if(buttonpress_down == BTNPRESS_LONGEST){
 					// Save current ADC value as threshold
 					ADC_lower_threshold = ADC_val_current;
+					write_eeprom_setup(EEPROM_LOWER_TH, ADC_lower_threshold);
 					setup_state = SETUP_IDLE;
 					// Blink LED 3 times (user info) and return to operation where led matches the state of the relay
-					led_number = 3;
+					led_number_single = 3;
 					led_status_pattern = LED_NUMBER;
 					led_pattern_mode = LED_PATTERN_SINGLE;
 					led_status_pattern_after_single = LED_MATCH_RELAY_STATE;
@@ -573,6 +692,7 @@ int main(void)
 				// A short press of up         increases the threshold exceed time
 				// A short press of down       decreases the threshold exceed time
 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
+					write_eeprom_setup(EEPROM_LATCHTIME, relay_threshold_latchtime);
 					setup_state = SETUP_IDLE;
 					led_status_pattern = LED_MATCH_RELAY_STATE;
 				}
@@ -580,20 +700,20 @@ int main(void)
 					relay_threshold_latchtime += RELAY_LATCHTIME_INCREMENT;
 					if(relay_threshold_latchtime > RELAY_LATCHTIME_MAX){
 						relay_threshold_latchtime = RELAY_LATCHTIME_MAX;
-						led_number = 2;
+						led_number_single = 2;
 						led_status_pattern = LED_NUMBER;
 						led_pattern_mode = LED_PATTERN_SINGLE;
-						led_status_pattern_after_single = LED_FADE_DOWN;
+						led_status_pattern_after_single = LED_NUMBER;
 					}
 				}
 				else if(buttonpress_down == BTNPRESS_STD){
 					relay_threshold_latchtime -= RELAY_LATCHTIME_INCREMENT;
 					if(relay_threshold_latchtime <= 0){
 						relay_threshold_latchtime = 0;
-						led_number = 2;
+						led_number_single = 2;
 						led_status_pattern = LED_NUMBER;
 						led_pattern_mode = LED_PATTERN_SINGLE;
-						led_status_pattern_after_single = LED_FADE_DOWN;
+						led_status_pattern_after_single = LED_NUMBER;
 					}
 				}
 				break;
@@ -605,16 +725,6 @@ int main(void)
 		buttonpress_down = BTNPRESS_NOT;
 	}
 }
-
-
-
-//void Adc_Measurement_Handler()
-//{
-////	#if(UC_SERIES == XMC11)
-////		ADC_val_current = ADC_MEASUREMENT_GetGlobalResult();
-////		ADC_val_current = ADC_val_current >> ((uint32_t)ADC_SENSOR.iclass_config_handle->conversion_mode_standard * (uint32_t)2);
-////	#endif
-//}
 
 int meas_invalid_count = 0;
 
@@ -638,5 +748,7 @@ void Adc_Measurement_Handler()
 		meas_invalid_count++;
 	}
 
+	//	ADC_val_current = ADC_MEASUREMENT_GetGlobalResult();
+	//	ADC_val_current = ADC_val_current >> ((uint32_t)ADC_SENSOR.iclass_config_handle->conversion_mode_standard * (uint32_t)2);
 }
 

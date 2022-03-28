@@ -141,6 +141,11 @@ __WEAK DAVE_STATUS_t DAVE_Init(void)
   {
 	 /**  Initialization of PWM_CCU4 APP instance PWM_CCU4_LED_STATUS */
 	 init_status = (DAVE_STATUS_t)PWM_CCU4_Init(&PWM_CCU4_LED_STATUS); 
+   } 
+  if (init_status == DAVE_STATUS_SUCCESS)
+  {
+	 /**  Initialization of E_EEPROM_XMC1 APP instance E_EEPROM_XMC1_0 */
+	 init_status = (DAVE_STATUS_t)E_EEPROM_XMC1_Init(&E_EEPROM_XMC1_0); 
    }  
   return init_status;
 } /**  End of function DAVE_Init */

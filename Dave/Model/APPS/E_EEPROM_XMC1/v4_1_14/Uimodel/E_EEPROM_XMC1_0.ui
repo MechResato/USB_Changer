@@ -1,0 +1,261 @@
+<p1:Tab  xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" xmlns:p1="clr-namespace:com.ifx.davex.ui.controls.app" x:Class="e" layout="{x:Null}">
+	<p1:TabFolder bounds="5, 5, 530, 650">
+		<p1:GTab text="General Settings" widgetName="gtab_emulation_config" visible="true" enabled="true" manifestObj="true" description="This tab helps to configure the required flash memory for EEPROM emulation.&#13;&#10;It displays the starting and end address of configured memory banks.&#13;&#10;It also allows to configure the special emulation features. ">
+			<p1:GTab.control>
+				<p1:Tab layout="{x:Null}">
+					<p1:GGroup text="Memory Settings" manifestObj="true" widgetName="ggroup_emulated_size_space" bounds="7, 4, 502, 502" layout="{x:Null}">
+						<p1:GLabel text="Desired eeprom size [Bytes]: " visible="true" manifestObj="true" widgetName="glabel_required_size" bounds="11, 23, 154, 15" toolTipText="Allocate the neccessary size at the bottom of the flash for emulation."/>
+						<p1:GInteger x:Style="NONE" minValue="256" maxValue="50944" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="gint_required_size" value="1700" bounds="170, 19, 82, 23" toolTipText="Set the EEPROM size to store data blocks" description="&lt;OL&gt;&#13;&#10;&lt;LI&gt;Configure the required memory size to store the data blocks.&lt;/LI&gt;&#13;&#10;&lt;LI&gt;The minimum allowed configuration for emulation is 256 bytes.&lt;/LI&gt;&#13;&#10;&lt;LI&gt;The maximum configurable size is limited to the 512 bytes lesser than the quater of available flash size.&lt;/LI&gt;&#13;&#10; &lt;UL style=&quot;list-style-type:disc&quot;&gt;&#13;&#10; &lt;LI&gt; eg: If the flash size is 200KBytes, the maximum emulation data size = ( 50KBytes - 512 Bytes ).&lt;/LI&gt;&#13;&#10;&lt;/UL&gt;&#13;&#10;&lt;/OL&gt;"/>
+						<p1:GImage visible="true" manifestObj="true" x:Style="BORDER" widgetName="gimage_eeprom" bounds="11, 50, 480, 428" path="doc/Emulation_Algorithm.jpg">
+							<p1:GLabel text="Bank0 size:" visible="true" manifestObj="true" widgetName="glabel_bank0_size" toolTipText="The consumed flash size is divided into two equal size memory banks (Bank 0 and Bank 1)" bounds="284, 80, 59, 14"/>
+							<CLabel text="Marker size" visible="true" toolTipText="Stores information about the current active bank where the data is available." background="COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT" font="Segoe UI,9" bounds="134, 263, 66, 16"/>
+							<CLabel text="Marker size" foreground="COLOR_BLACK" toolTipText="Stores information about the current active bank where the data is available." font="Segoe UI,9" background="COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT" bounds="134, 42, 66, 16"/>
+							<p1:GLabel manifestObj="true" text="Start address:" widgetName="glabel_bank0_start_address" bounds="43, 13, 75, 15"/>
+							<p1:GLabel manifestObj="true" text="Start address:" widgetName="glabel_bank1_start_address" bounds="43, 235, 75, 15"/>
+							<p1:GLabel manifestObj="true" text="End address:" widgetName="glabel_bank1_end_address" bounds="43, 375, 70, 15"/>
+							<p1:GLabel manifestObj="true" text="End address:" widgetName="glabel_bank0_end_address" bounds="43, 153, 69, 15"/>
+							<p1:GLabel manifestObj="true" text="Bank1 size:" widgetName="glabel_bank1_size" toolTipText="The consumed flash size is divided into two equal size memory banks (Bank 0 and Bank 1)" bounds="284, 302, 56, 15"/>
+							<p1:GInteger enabled="false" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" maxValue="51200" minValue="512" value="" widgetName="gint_bank0_size" toolTipText="" description="Bank 0 Size in bytes.&#13;&#10;&lt;BR&gt;&#13;&#10;The value is represented as a macro, &lt;b&gt;&quot;E_EEPROM_XMC1_FLASH_BANK_SIZE&quot;&lt;/b&gt; in E_EEPROM_XMC1_Conf.h file." bounds="284, 98, 59, 23"/>
+							<p1:GInteger x:Style="NONE" minValue="256" maxValue="50944" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="gint_actual_bank_size" enabled="false" toolTipText="For data integrity and endurance the actual consumed size is as shown here. " description="&lt;OL&gt;&#13;&#10;&lt;LI&gt;This field shows the actual eeprom size consumed for storing data blocks.&lt;/LI&gt;&#13;&#10;&lt;LI&gt;The actual eeprom size is calculated as per the steps mentioned below.&lt;/LI&gt;&#13;&#10;&lt;UL style=&quot;list-style-type:disc&quot;&gt;&#13;&#10;&lt;LI&gt;Check whether desired size configured is in multiples of 256 bytes pages.&lt;/LI&gt;&#13;&#10;&lt;LI&gt;If extra bytes comes after division, add neccessary extra bytes to make it exactly divisible by 256 bytes.&#13;&#10;(For example ,at a worst case scenario, if the desired size is 257 bytes , the actual consumed size becomes 512 bytes (257 bytes + 255 bytes) .)&lt;/LI&gt;&#13;&#10;&lt;/UL&gt;&#13;&#10;&lt;/OL&gt;" bounds="137, 140, 59, 23" value=""/>
+							<p1:GLabel manifestObj="true" text="Emulated size: " toolTipText="" widgetName="glabel_total_eeprom_size" bounds="398, 189, 76, 15"/>
+							<p1:GInteger description="&lt;OL&gt;&#13;&#10;&lt;LI&gt;This field shows the total flash size consumed for the EEPROM emulation.&lt;/LI&gt;&#13;&#10;&lt;LI&gt;The consumed size is calculated as per the steps mentioned below.&lt;/LI&gt;&#13;&#10;&lt;UL style=&quot;list-style-type:disc&quot;&gt;&#13;&#10;&lt;LI&gt;From the &quot;Eeprom size&quot; calculated for Bank0, it adds an equal number of bytes for   Bank1 called &quot;Reserved size&quot;. &lt;/LI&gt;&#13;&#10;&lt;LI&gt;It also reserves 1 flash page (256 bytes) for state markers on both the banks.&#13;&#10;(Example: If actual data size = 1024, The total eeprom emulated size = 2560 (1024 bytes data size * 2 banks) +( 256 bytes marker * 2 banks ) &lt;/LI&gt;&#13;&#10;&lt;/UL&gt;&#13;&#10;&lt;/OL&gt;&lt;BR&gt;&#13;&#10;The calculated value is represented as a macro, &lt;b&gt;&quot;E_EEPROM_XMC1_FLASH_TOTAL_SIZE&quot;&lt;/b&gt; in E_EEPROM_XMC1_Conf.h file." enabled="false" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" maxValue="1024000" minValue="1024" toolTipText="For data integrity and endurance the actual consumed size is as shown here. " widgetName="gint_total_eeprom_size" bounds="398, 207, 59, 23"/>
+							<p1:GInteger x:Style="NONE" minValue="0x10001000" maxValue="0x10033000" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).HEX" manifestObj="true" widgetName="gint_bank0_start_address" value="0x10033000" enabled="false" toolTipText="This value depicts the physical starting address of bank 0 in flash.  " description="It indicates the starting address of EEPROM area.&#13;&#10;Restrict the code memory section to this address through DAVE memory settings, to avoid flash and EEPROM area overlap.&#13;&#10;It also indicates the physical starting address of Bank0.&lt;BR&gt; &#13;&#10;The value is represented as a macro, &lt;b&gt;&quot;E_EEPROM_XMC1_FLASH_BANK0_BASE&quot;&lt;/b&gt; in E_EEPROM_XMC1_Conf.h file." bounds="43, 29, 71, 23"/>
+							<p1:GInteger enabled="false" format="(com.ifx.davex.ui.controls.util.AppUiConstants).HEX" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" maxValue="0x10033000" minValue="0x10001000" value="" widgetName="gint_bank1_start_address" toolTipText="This value depicts the physical starting address of bank 1 in flash." description="This value indicates the physical starting address of Bank1. &lt;BR&gt; &#13;&#10;The value is represented as a macro, &lt;b&gt;&quot;E_EEPROM_XMC1_FLASH_BANK1_BASE&quot;&lt;/b&gt; in E_EEPROM_XMC1_Conf.h file." bounds="43, 250, 71, 23"/>
+							<p1:GInteger enabled="false" format="(com.ifx.davex.ui.controls.util.AppUiConstants).HEX" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" maxValue="0x10033000" minValue="0x10001000" value="" widgetName="gint_bank0_end_address" toolTipText="This value depicts the physical end address of bank 0 in flash." description="This value indicates the physical end address of Bank0.&lt;BR&gt; &#13;&#10;The value is represented as a macro, &lt;b&gt;&quot;E_EEPROM_XMC1_FLASH_BANK0_END&quot;&lt;/b&gt; in E_EEPROM_XMC1_Conf.h file." bounds="43, 169, 71, 23"/>
+							<p1:GInteger enabled="false" format="(com.ifx.davex.ui.controls.util.AppUiConstants).HEX" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" maxValue="0x10033000" minValue="0x10001000" value="" widgetName="gint_bank1_end_address" toolTipText="This value depicts the physical end address of bank 1 in flash." description="It indicates the end address of EEPROM area.&#13;&#10;This value indicates the physical end address of bank1.&lt;BR&gt; &#13;&#10;The value is represented as a macro, &lt;b&gt;&quot;E_EEPROM_XMC1_FLASH_BANK1_END&quot;&lt;/b&gt; in E_EEPROM_XMC1_Conf.h file." bounds="43, 392, 71, 23"/>
+							<p1:GInteger enabled="false" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" maxValue="51200" minValue="512" value="" widgetName="gint_bank1_size" toolTipText="" description="Bank 1 Size in bytes.&#13;&#10;&lt;BR&gt;&#13;&#10;The value is represented as a macro, &lt;b&gt;&quot;E_EEPROM_XMC1_FLASH_BANK_SIZE&quot;&lt;/b&gt; in E_EEPROM_XMC1_Conf.h file." bounds="284, 321, 59, 23"/>
+							<p1:GInteger bounds="137, 362, 59, 23" description="&lt;OL&gt;&#13;&#10;&lt;LI&gt;This field shows the reserved size allocated for storing the latest data blocks.&lt;/LI&gt;&#13;&#10;&lt;LI&gt;The latest data blocks get copied to this reserved area when the other bank is filled completely.&lt;/LI&gt;&#13;&#10;&lt;LI&gt;This process continues from one bank to other. Hence it reserves the same amount of memory declared in eeprom size.&lt;/LI&gt;&#13;&#10;&lt;/UL&gt;&#13;&#10;&lt;/OL&gt;" enabled="false" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" maxValue="50944" minValue="256" toolTipText="For data integrity and endurance the actual consumed size is as shown here. " widgetName="gint_actual_bank1_size"/>
+							<p1:GInteger bounds="137, 59, 31, 23" description="&lt;OL&gt;&#13;&#10;&lt;LI&gt;This field shows the marker size reserved for bank0.&lt;/LI&gt;&#13;&#10;&lt;LI&gt;It reserves a fixed 256 byte page at the starting of bank.&lt;/LI&gt;&#13;&#10;&lt;LI&gt;This overhead of 256 bytes is used for effective execution of EEPROM algorithm.&lt;/LI&gt;&#13;&#10;&lt;/OL&gt;" enabled="false" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" maxValue="256" minValue="256" toolTipText="For data integrity and endurance the actual consumed size is as shown here. " widgetName="gint_marker0_size" value="256"/>
+							<p1:GInteger bounds="137, 280, 31, 23" description="&lt;OL&gt;&#13;&#10;&lt;LI&gt;This field shows the marker size reserved for bank1.&lt;/LI&gt;&#13;&#10;&lt;LI&gt;It reserves a fixed 256 byte page at the starting of bank.&lt;/LI&gt;&#13;&#10;&lt;LI&gt;This overhead of 256 bytes is used for effective execution of EEPROM algorithm.&lt;/LI&gt;&#13;&#10;&lt;/OL&gt;" enabled="false" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" maxValue="256" minValue="256" toolTipText="For data integrity and endurance the actual consumed size is as shown here. " widgetName="gint_marker1_size" value="256"/>
+							<CLabel bounds="134, 121, 70, 16" background="RoyalBlue" font="Segoe UI,9" foreground="COLOR_WHITE" text="Eeprom size" toolTipText="Stores information about the current active bank where the data is available."/>
+							<CLabel bounds="134, 343, 77, 16" background="RoyalBlue" font="Segoe UI,9" foreground="COLOR_WHITE" text="Reserved size" toolTipText="Stores information about the current active bank where the data is available."/>
+							<p1:GLabel bounds="146, 8, 46, 15" manifestObj="true" text="BANK 0" widgetName="glabel_bank0"/>
+							<p1:GLabel bounds="146, 228, 46, 15" manifestObj="true" text="BANK 1" widgetName="glabel_bank1"/>
+						</p1:GImage>
+					</p1:GGroup>
+					<p1:GGroup text="Emulation Settings" manifestObj="true" widgetName="ggroup_emulation_features" bounds="7, 508, 502, 102">
+						<p1:GGroup.layout>
+							<GridLayout/>
+						</p1:GGroup.layout>
+						<p1:GCheck text="Erase all and recover" manifestObj="true" widgetName="gcheck_auto_recovery" toolTipText="Erase both banks and recover to default state, if both bank headers are corrupted." description="&lt;b&gt;Enabled:&lt;/b&gt;&lt;br&gt;&#13;&#10;App erases the complete emulation area and recovers back to default initialized state. &lt;br&gt;&#13;&#10;This happens when the app results in illegal state due to header marker corruptions.&lt;br&gt;&#13;&#10;&lt;b&gt;Disabled:&lt;/b&gt;&lt;br&gt;&#13;&#10;App wont allow to do any operations, when an illegal state is encountered due to header marker corruptions.&lt;br&gt; &#13;&#10;&lt;b&gt;Note:&lt;/b&gt;&lt;br&gt;&#13;&#10;If both the state header markers are corrupted and non recoverable the app enters to an illegal state.&lt;br&gt;&#13;&#10;Enabling this option will help in recovery process. But it will delete the complete stored data during this recovery process.&lt;BR&gt;&#13;&#10;Updates the &lt;b&gt;E_EEPROM_XMC1_Handle_t&lt;/b&gt; structure variable &lt;b&gt;erase_all_auto_recovery&lt;/b&gt;."/>
+						<p1:GCheck text="Garbage collection" manifestObj="true" widgetName="gcheck_garbage_collection" value="true" toolTipText="Copy latest blocks from one bank to other, when bank is full." description="&lt;b&gt;Enabled:&lt;/b&gt;&lt;br&gt;&#13;&#10;Automatically garbage collection starts when a bank is full and new data request is in place.&lt;br&gt;&#13;&#10;&lt;b&gt;Disabled:&lt;/b&gt;&lt;br&gt;&#13;&#10;Explicit garbage collection need to be done using the E_EEEPROM_GarbageCollection() API to continue when a bank is full.&lt;br&gt;&#13;&#10;&lt;b&gt;Note:&lt;/b&gt;&lt;br&gt;&#13;&#10;By default this option will be enabled.&lt;br&gt;&#13;&#10;Updates the &lt;b&gt;E_EEPROM_XMC1_Handle_t&lt;/b&gt; structure variable &lt;b&gt;garbage_collection&lt;/b&gt;."/>
+						<p1:GCheck text="Data block crc" manifestObj="true" widgetName="gcheck_data_block_crc" toolTipText="Calculates crc checksum for each user data block. " description="For every data block, 16 bit crc shall be calculated and stored in the flash.&lt;br&gt;&#13;&#10;It consumes CRC_SW app for checksum calculation. &lt;br&gt;&#13;&#10;Updates the &lt;b&gt;E_EEPROM_XMC1_Handle_t&lt;/b&gt; structure variable &lt;b&gt;data_block_crc&lt;/b&gt;.&#13;&#10;"/>
+					</p1:GGroup>
+				</p1:Tab>
+			</p1:GTab.control>
+		</p1:GTab>
+		<p1:GTab text="Block Settings" visible="true" enabled="true" manifestObj="true" widgetName="gtab_block_config" description="This tab helps to configure the data block related functionalities.&#13;&#10;It supports a block table of 10 user data block structures.  ">
+			<p1:GTab.control>
+				<p1:Tab widgetName="composite13">
+					<p1:Tab.layout>
+						<GridLayout numColumns="2" verticalSpacing="10" horizontalSpacing="10"/>
+					</p1:Tab.layout>
+					<p1:GLabel text="Number of blocks:" visible="true" manifestObj="true" widgetName="glabel_no_of_blocks"/>
+					<p1:GCombo mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" widgetName="gcombo_no_of_blocks" options="1&#13;&#10;2&#13;&#10;3&#13;&#10;4&#13;&#10;5&#13;&#10;6&#13;&#10;7&#13;&#10;8&#13;&#10;9&#13;&#10;10" value="3" toolTipText="Select the maximum number of data blocks that need to be stored." description="Decides the number of user blocks needs non volatile memory storage.&lt;BR&gt;&#13;&#10;min = 1 , max = 10 &lt;BR&gt;&#13;&#10;It stores the configured value into &lt;b&gt;E_EEPROM_XMC1_Handle_t&lt;/b&gt; structure variable &lt;b&gt;block_count&lt;/b&gt;.">
+						<p1:GCombo.layoutData>
+							<GridData widthHint="187"/>
+						</p1:GCombo.layoutData>
+					</p1:GCombo>
+					<p1:GGroup text="Block Table" manifestObj="true" widgetName="ggroup_block_table">
+						<p1:GGroup.layoutData>
+							<GridData horizontalSpan="2" grabExcessHorizontalSpace="true" horizontalAlignment="FILL"/>
+						</p1:GGroup.layoutData>
+						<p1:GGroup.layout>
+							<GridLayout numColumns="4" verticalSpacing="10" marginBottom="5" marginLeft="5" marginRight="5" marginTop="5"/>
+						</p1:GGroup.layout>
+						<Label/>
+						<p1:GLabel text="Names" visible="true" manifestObj="true" widgetName="glabel_names"/>
+						<Label/>
+						<p1:GLabel manifestObj="true" text="Size [Bytes]" visible="true" widgetName="glabel_size"/>
+						<p1:GLabel text="Block 1:" visible="true" manifestObj="true" widgetName="glabel_block1_name"/>
+						<p1:GString x:Style="BORDER" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" widgetName="gstring_block1_name" value="USER_BLOCK1" toolTipText="Set the required name for Block1 (Name shall be in c-style convention)" description="Input a name for first block in the block table&lt;br&gt;&#13;&#10;&lt;b&gt;Note:&lt;/b&gt;&lt;br&gt;&#13;&#10;This name gets generated as macro definition in Conf.h file (C-Style convention is mandatory)&lt;BR&gt;&#13;&#10;It stores the configured value into &lt;b&gt;E_EEPROM_XMC1_BLOCK_t&lt;/b&gt; structure array variable &lt;b&gt;block_number&lt;/b&gt;.&#13;&#10;">
+							<p1:GString.layoutData>
+								<GridData widthHint="218" horizontalAlignment="FILL"/>
+							</p1:GString.layoutData>
+						</p1:GString>
+						<p1:GImage visible="true" manifestObj="true" widgetName="gimage_block1" path="doc/Error_Image.JPG">
+							<p1:GImage.layoutData>
+								<GridData heightHint="8" widthHint="8"/>
+							</p1:GImage.layoutData>
+						</p1:GImage>
+						<p1:GInteger x:Style="NONE" minValue="1" maxValue="32768" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="gint_block1_size" value="12" toolTipText="Set the size for block1" description="Set the size needed for user block1.&lt;BR&gt;&#13;&#10;It stores the configured value into &lt;b&gt;E_EEPROM_XMC1_BLOCK_t&lt;/b&gt; structure array variable &lt;b&gt;size&lt;/b&gt;.">
+							<p1:GInteger.layoutData>
+								<GridData widthHint="95"/>
+							</p1:GInteger.layoutData>
+						</p1:GInteger>
+						<p1:GLabel manifestObj="true" text="Block 2:" visible="true" widgetName="glabel_block2_name" enabled="false"/>
+						<p1:GString mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" value="USER_BLOCK2" widgetName="gstring_block2_name" x:Style="BORDER" enabled="false" toolTipText="Set the required name for Block2 (Name shall be in c-style convention)" description="Input a name for second block in the block table&lt;br&gt;&#13;&#10;&lt;b&gt;Note:&lt;/b&gt;&lt;br&gt;&#13;&#10;This name gets generated as macro definition in Conf.h file (C-Style convention is mandatory)&lt;br&gt;">
+							<p1:GString.layoutData>
+								<GridData horizontalAlignment="FILL"/>
+							</p1:GString.layoutData>
+						</p1:GString>
+						<p1:GImage manifestObj="true" path="doc/Error_Image.JPG" widgetName="gimage_block2">
+							<p1:GImage.layoutData>
+								<GridData widthHint="8" heightHint="8"/>
+							</p1:GImage.layoutData>
+						</p1:GImage>
+						<p1:GInteger format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" maxValue="32768" minValue="1" value="32" widgetName="gint_block2_size" enabled="false" toolTipText="Set the size for block2" description="Set the size needed for user block2">
+							<p1:GInteger.layoutData>
+								<GridData horizontalAlignment="FILL"/>
+							</p1:GInteger.layoutData>
+						</p1:GInteger>
+						<p1:GLabel manifestObj="true" text="Block 3:" visible="true" widgetName="glabel_block3_name" enabled="false"/>
+						<p1:GString mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" value="USER_BLOCK3" widgetName="gstring_block3_name" x:Style="BORDER" enabled="false" toolTipText="Set the required name for Block3 (Name shall be in c-style convention)" description="Input a name for third block in the block table&lt;br&gt;&#13;&#10;&lt;b&gt;Note:&lt;/b&gt;&lt;br&gt;&#13;&#10;This name gets generated as macro definition in Conf.h file (C-Style convention is mandatory)&lt;br&gt;">
+							<p1:GString.layoutData>
+								<GridData horizontalAlignment="FILL"/>
+							</p1:GString.layoutData>
+						</p1:GString>
+						<p1:GImage manifestObj="true" path="doc/Error_Image.JPG" widgetName="gimage_block3">
+							<p1:GImage.layoutData>
+								<GridData widthHint="8" heightHint="8"/>
+							</p1:GImage.layoutData>
+						</p1:GImage>
+						<p1:GInteger format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" maxValue="32768" minValue="1" value="100" widgetName="gint_block3_size" enabled="false" toolTipText="Set the size for block3" description="Set the size needed for user block3">
+							<p1:GInteger.layoutData>
+								<GridData horizontalAlignment="FILL"/>
+							</p1:GInteger.layoutData>
+						</p1:GInteger>
+						<p1:GLabel manifestObj="true" text="Block 4:" visible="true" widgetName="glabel_block4_name" enabled="false"/>
+						<p1:GString mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" value="USER_BLOCK4" widgetName="gstring_block4_name" x:Style="BORDER" enabled="false" toolTipText="Set the required name for Block4 (Name shall be in c-style convention)" description="Input a name for fourth block in the block table&lt;br&gt;&#13;&#10;&lt;b&gt;Note:&lt;/b&gt;&lt;br&gt;&#13;&#10;This name gets generated as macro definition in Conf.h file (C-Style convention is mandatory)&lt;br&gt;">
+							<p1:GString.layoutData>
+								<GridData horizontalAlignment="FILL"/>
+							</p1:GString.layoutData>
+						</p1:GString>
+						<p1:GImage manifestObj="true" path="doc/Error_Image.JPG" widgetName="gimage_block4">
+							<p1:GImage.layoutData>
+								<GridData widthHint="8" heightHint="8"/>
+							</p1:GImage.layoutData>
+						</p1:GImage>
+						<p1:GInteger format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" maxValue="32768" minValue="1" value="12" widgetName="gint_block4_size" enabled="false" toolTipText="Set the size for block4" description="Set the size needed for user block4">
+							<p1:GInteger.layoutData>
+								<GridData horizontalAlignment="FILL"/>
+							</p1:GInteger.layoutData>
+						</p1:GInteger>
+						<p1:GLabel manifestObj="true" text="Block 5:" visible="true" widgetName="glabel_block5_name" enabled="false"/>
+						<p1:GString mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" value="USER_BLOCK5" widgetName="gstring_block5_name" x:Style="BORDER" enabled="false" toolTipText="Set the required name for Block5 (Name shall be in c-style convention)" description="Input a name for fifth block in the block table&lt;br&gt;&#13;&#10;&lt;b&gt;Note:&lt;/b&gt;&lt;br&gt;&#13;&#10;This name gets generated as macro definition in Conf.h file (C-Style convention is mandatory)&lt;br&gt;">
+							<p1:GString.layoutData>
+								<GridData horizontalAlignment="FILL"/>
+							</p1:GString.layoutData>
+						</p1:GString>
+						<p1:GImage manifestObj="true" path="doc/Error_Image.JPG" widgetName="gimage_block5">
+							<p1:GImage.layoutData>
+								<GridData widthHint="8" heightHint="8"/>
+							</p1:GImage.layoutData>
+						</p1:GImage>
+						<p1:GInteger format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" maxValue="32768" minValue="1" value="12" widgetName="gint_block5_size" enabled="false" toolTipText="Set the size for block5" description="Set the size needed for user block5">
+							<p1:GInteger.layoutData>
+								<GridData horizontalAlignment="FILL"/>
+							</p1:GInteger.layoutData>
+						</p1:GInteger>
+						<p1:GLabel manifestObj="true" text="Block 6:" visible="true" widgetName="glabel_block6_name" enabled="false"/>
+						<p1:GString mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" value="USER_BLOCK6" widgetName="gstring_block6_name" x:Style="BORDER" enabled="false" toolTipText="Set the required name for Block6 (Name shall be in c-style convention)" description="Input a name for sixth block in the block table&lt;br&gt;&#13;&#10;&lt;b&gt;Note:&lt;/b&gt;&lt;br&gt;&#13;&#10;This name gets generated as macro definition in Conf.h file (C-Style convention is mandatory)&lt;br&gt;">
+							<p1:GString.layoutData>
+								<GridData horizontalAlignment="FILL"/>
+							</p1:GString.layoutData>
+						</p1:GString>
+						<p1:GImage manifestObj="true" path="doc/Error_Image.JPG" widgetName="gimage_block6">
+							<p1:GImage.layoutData>
+								<GridData heightHint="8" widthHint="8"/>
+							</p1:GImage.layoutData>
+						</p1:GImage>
+						<p1:GInteger format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" maxValue="32768" minValue="1" value="12" widgetName="gint_block6_size" enabled="false" toolTipText="Set the size for block6" description="Set the size needed for user block6">
+							<p1:GInteger.layoutData>
+								<GridData horizontalAlignment="FILL"/>
+							</p1:GInteger.layoutData>
+						</p1:GInteger>
+						<p1:GLabel manifestObj="true" text="Block 7:" visible="true" widgetName="glabel_block7_name" enabled="false"/>
+						<p1:GString mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" value="USER_BLOCK7" widgetName="gstring_block7_name" x:Style="BORDER" enabled="false" toolTipText="Set the required name for Block7 (Name shall be in c-style convention)" description="Input a name for seventh block in the block table&lt;br&gt;&#13;&#10;&lt;b&gt;Note:&lt;/b&gt;&lt;br&gt;&#13;&#10;This name gets generated as macro definition in Conf.h file (C-Style convention is mandatory)&lt;br&gt;">
+							<p1:GString.layoutData>
+								<GridData horizontalAlignment="FILL"/>
+							</p1:GString.layoutData>
+						</p1:GString>
+						<p1:GImage manifestObj="true" path="doc/Error_Image.JPG" widgetName="gimage_block7">
+							<p1:GImage.layoutData>
+								<GridData heightHint="8" widthHint="8"/>
+							</p1:GImage.layoutData>
+						</p1:GImage>
+						<p1:GInteger format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" maxValue="32768" minValue="1" value="12" widgetName="gint_block7_size" enabled="false" toolTipText="Set the size for block7" description="Set the size needed for user block7">
+							<p1:GInteger.layoutData>
+								<GridData horizontalAlignment="FILL"/>
+							</p1:GInteger.layoutData>
+						</p1:GInteger>
+						<p1:GLabel manifestObj="true" text="Block 8:" visible="true" widgetName="glabel_block8_name" enabled="false"/>
+						<p1:GString mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" value="USER_BLOCK8" widgetName="gstring_block8_name" x:Style="BORDER" enabled="false" toolTipText="Set the required name for Block8 (Name shall be in c-style convention)" description="Input a name for eighth block in the block table&lt;br&gt;&#13;&#10;&lt;b&gt;Note:&lt;/b&gt;&lt;br&gt;&#13;&#10;This name gets generated as macro definition in Conf.h file (C-Style convention is mandatory)&lt;br&gt;">
+							<p1:GString.layoutData>
+								<GridData horizontalAlignment="FILL"/>
+							</p1:GString.layoutData>
+						</p1:GString>
+						<p1:GImage manifestObj="true" path="doc/Error_Image.JPG" widgetName="gimage_block8">
+							<p1:GImage.layoutData>
+								<GridData heightHint="8" widthHint="8"/>
+							</p1:GImage.layoutData>
+						</p1:GImage>
+						<p1:GInteger format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" maxValue="32768" minValue="1" value="12" widgetName="gint_block8_size" enabled="false" toolTipText="Set the size for block8" description="Set the size needed for user block8">
+							<p1:GInteger.layoutData>
+								<GridData horizontalAlignment="FILL"/>
+							</p1:GInteger.layoutData>
+						</p1:GInteger>
+						<p1:GLabel manifestObj="true" text="Block 9:" visible="true" widgetName="glabel_block9_name" enabled="false"/>
+						<p1:GString mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" value="USER_BLOCK9" widgetName="gstring_block9_name" x:Style="BORDER" enabled="false" toolTipText="Set the required name for Block9 (Name shall be in c-style convention)" description="Input a name for ninth block in the block table&lt;br&gt;&#13;&#10;&lt;b&gt;Note:&lt;/b&gt;&lt;br&gt;&#13;&#10;This name gets generated as macro definition in Conf.h file (C-Style convention is mandatory)&lt;br&gt;">
+							<p1:GString.layoutData>
+								<GridData horizontalAlignment="FILL"/>
+							</p1:GString.layoutData>
+						</p1:GString>
+						<p1:GImage manifestObj="true" path="doc/Error_Image.JPG" widgetName="gimage_block9">
+							<p1:GImage.layoutData>
+								<GridData widthHint="8" heightHint="8"/>
+							</p1:GImage.layoutData>
+						</p1:GImage>
+						<p1:GInteger format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" maxValue="32768" minValue="1" value="12" widgetName="gint_block9_size" enabled="false" toolTipText="Set the size for block9" description="Set the size needed for user block9">
+							<p1:GInteger.layoutData>
+								<GridData horizontalAlignment="FILL"/>
+							</p1:GInteger.layoutData>
+						</p1:GInteger>
+						<p1:GLabel manifestObj="true" text="Block 10:" visible="true" widgetName="glabel_block10_name" enabled="false"/>
+						<p1:GString mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" value="USER_BLOCK10" widgetName="gstring_block10_name" x:Style="BORDER" enabled="false" toolTipText="Set the required name for Block10 (Name shall be in c-style convention)" description="Input a name for tenth block in the block table&lt;br&gt;&#13;&#10;&lt;b&gt;Note:&lt;/b&gt;&lt;br&gt;&#13;&#10;This name gets generated as macro definition in Conf.h file (C-Style convention is mandatory)&lt;br&gt;">
+							<p1:GString.layoutData>
+								<GridData horizontalAlignment="FILL"/>
+							</p1:GString.layoutData>
+						</p1:GString>
+						<p1:GImage manifestObj="true" path="doc/Error_Image.JPG" widgetName="gimage_block10">
+							<p1:GImage.layoutData>
+								<GridData heightHint="8" widthHint="8"/>
+							</p1:GImage.layoutData>
+						</p1:GImage>
+						<p1:GInteger format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" maxValue="32768" minValue="1" value="12" widgetName="gint_block10_size" enabled="false" toolTipText="Set the size for block10" description="Set the size needed for user block10">
+							<p1:GInteger.layoutData>
+								<GridData horizontalAlignment="FILL"/>
+							</p1:GInteger.layoutData>
+						</p1:GInteger>
+					</p1:GGroup>
+					<p1:GMessage text="Block name is not a valid macro or multiple blocks shares same name !!!" manifestObj="true" isError="true" widgetName="gmessage_name_clash" visible="false">
+						<p1:GMessage.layoutData>
+							<GridData grabExcessHorizontalSpace="true" horizontalSpan="2" widthHint="438"/>
+						</p1:GMessage.layoutData>
+					</p1:GMessage>
+				</p1:Tab>
+			</p1:GTab.control>
+		</p1:GTab>
+		<p1:GTab text="New Tab" visible="true" enabled="true" manifestObj="true" widgetName="gtab_dummy">
+			<p1:GTab.control>
+				<p1:Tab widgetName="composite_4">
+					<p1:GLabel text="Block1 size" visible="true" manifestObj="true" widgetName="glabel_block1_size" bounds="246, 48, 112, 15"/>
+					<p1:GLabel bounds="245, 92, 112, 15" manifestObj="true" text="Block2 size" widgetName="glabel_block2_size"/>
+					<p1:GLabel bounds="247, 145, 112, 15" manifestObj="true" text="Block3 size" widgetName="glabel_block3_size"/>
+					<p1:GLabel bounds="243, 182, 112, 15" manifestObj="true" text="Block4 size" widgetName="glabel_block4_size"/>
+					<p1:GLabel bounds="241, 214, 112, 15" manifestObj="true" text="Block5 size" widgetName="glabel_block5_size"/>
+					<p1:GLabel bounds="238, 251, 112, 15" manifestObj="true" text="Block6 size" widgetName="glabel_block6_size"/>
+					<p1:GLabel bounds="233, 289, 112, 15" manifestObj="true" text="Block7 size" widgetName="glabel_block7_size"/>
+					<p1:GLabel bounds="234, 326, 112, 15" manifestObj="true" text="Block8 size" widgetName="glabel_block8_size"/>
+					<p1:GLabel bounds="235, 369, 112, 15" manifestObj="true" text="Block9 size" widgetName="glabel_block9_size"/>
+					<p1:GLabel bounds="235, 402, 112, 15" manifestObj="true" text="Block10 size" widgetName="glabel_block10_size"/>
+					<p1:GLabel text="Marker1 size" visible="true" manifestObj="true" widgetName="glabel_marker1_size" bounds="65, 59, 97, 15"/>
+					<p1:GLabel bounds="64, 88, 97, 15" manifestObj="true" text="Marker0 size" widgetName="glabel_marker0_size"/>
+					<p1:GLabel bounds="63, 122, 97, 15" manifestObj="true" text="Eeprom size" widgetName="glabel_actual_bank_size"/>
+					<p1:GLabel bounds="60, 157, 97, 15" manifestObj="true" text="Reserved size" widgetName="glabel_actual_bank1_size"/>
+				</p1:Tab>
+			</p1:GTab.control>
+		</p1:GTab>
+	</p1:TabFolder>
+</p1:Tab>
+

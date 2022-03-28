@@ -1,0 +1,198 @@
+package Model.APPS.E_EEPROM_XMC1.v4_1_14;
+
+// Import statements
+import ifx.davex.app.manifest.*
+
+abstract class E_EEPROM_XMC1_GUI extends AppManifest {
+	/* Begin : UI variable section */
+	 public GTab gtab_emulation_config;
+	 public GTab gtab_block_config;
+	 public GTab gtab_dummy;
+	 public GImage gimage_eeprom;
+	 public GImage gimage_block1;
+	 public GImage gimage_block2;
+	 public GImage gimage_block3;
+	 public GImage gimage_block4;
+	 public GImage gimage_block5;
+	 public GImage gimage_block6;
+	 public GImage gimage_block7;
+	 public GImage gimage_block8;
+	 public GImage gimage_block9;
+	 public GImage gimage_block10;
+	 public GInteger gint_required_size;
+	 public GInteger gint_bank0_size;
+	 public GInteger gint_actual_bank_size;
+	 public GInteger gint_total_eeprom_size;
+	 public GInteger gint_bank0_start_address;
+	 public GInteger gint_bank1_start_address;
+	 public GInteger gint_bank0_end_address;
+	 public GInteger gint_bank1_end_address;
+	 public GInteger gint_bank1_size;
+	 public GInteger gint_actual_bank1_size;
+	 public GInteger gint_marker0_size;
+	 public GInteger gint_marker1_size;
+	 public GInteger gint_block1_size;
+	 public GInteger gint_block2_size;
+	 public GInteger gint_block3_size;
+	 public GInteger gint_block4_size;
+	 public GInteger gint_block5_size;
+	 public GInteger gint_block6_size;
+	 public GInteger gint_block7_size;
+	 public GInteger gint_block8_size;
+	 public GInteger gint_block9_size;
+	 public GInteger gint_block10_size;
+	 public GCombo gcombo_no_of_blocks;
+	 public GString gstring_block1_name;
+	 public GString gstring_block2_name;
+	 public GString gstring_block3_name;
+	 public GString gstring_block4_name;
+	 public GString gstring_block5_name;
+	 public GString gstring_block6_name;
+	 public GString gstring_block7_name;
+	 public GString gstring_block8_name;
+	 public GString gstring_block9_name;
+	 public GString gstring_block10_name;
+	 public GCheck gcheck_auto_recovery;
+	 public GCheck gcheck_garbage_collection;
+	 public GCheck gcheck_data_block_crc;
+	 public GLabel glabel_required_size;
+	 public GLabel glabel_bank0_size;
+	 public GLabel glabel_bank0_start_address;
+	 public GLabel glabel_bank1_start_address;
+	 public GLabel glabel_bank1_end_address;
+	 public GLabel glabel_bank0_end_address;
+	 public GLabel glabel_bank1_size;
+	 public GLabel glabel_total_eeprom_size;
+	 public GLabel glabel_bank0;
+	 public GLabel glabel_bank1;
+	 public GLabel glabel_no_of_blocks;
+	 public GLabel glabel_names;
+	 public GLabel glabel_size;
+	 public GLabel glabel_block1_name;
+	 public GLabel glabel_block2_name;
+	 public GLabel glabel_block3_name;
+	 public GLabel glabel_block4_name;
+	 public GLabel glabel_block5_name;
+	 public GLabel glabel_block6_name;
+	 public GLabel glabel_block7_name;
+	 public GLabel glabel_block8_name;
+	 public GLabel glabel_block9_name;
+	 public GLabel glabel_block10_name;
+	 public GLabel glabel_block1_size;
+	 public GLabel glabel_block2_size;
+	 public GLabel glabel_block3_size;
+	 public GLabel glabel_block4_size;
+	 public GLabel glabel_block5_size;
+	 public GLabel glabel_block6_size;
+	 public GLabel glabel_block7_size;
+	 public GLabel glabel_block8_size;
+	 public GLabel glabel_block9_size;
+	 public GLabel glabel_block10_size;
+	 public GLabel glabel_marker1_size;
+	 public GLabel glabel_marker0_size;
+	 public GLabel glabel_actual_bank_size;
+	 public GLabel glabel_actual_bank1_size;
+	 public GGroup ggroup_emulated_size_space;
+	 public GGroup ggroup_emulation_features;
+	 public GGroup ggroup_block_table;
+	 public GMessage gmessage_name_clash;
+
+	 public E_EEPROM_XMC1_GUI(DaveEnv daveEnv){
+
+	 gtab_emulation_config = GTab(widgetName:"gtab_emulation_config", text:"General Settings", enabled:true, visible:true)
+	 gtab_block_config = GTab(widgetName:"gtab_block_config", text:"Block Settings", enabled:true, visible:true)
+	 gtab_dummy = GTab(widgetName:"gtab_dummy", text:"New Tab", enabled:true, visible:true)
+	 gimage_eeprom = GImage(widgetName:"gimage_eeprom", path: "doc/Emulation_Algorithm.jpg", enabled:true, visible:true)
+	 gimage_block1 = GImage(widgetName:"gimage_block1", path: "doc/Error_Image.JPG", enabled:true, visible:true)
+	 gimage_block2 = GImage(widgetName:"gimage_block2", path: "doc/Error_Image.JPG", enabled:true, visible:true)
+	 gimage_block3 = GImage(widgetName:"gimage_block3", path: "doc/Error_Image.JPG", enabled:true, visible:true)
+	 gimage_block4 = GImage(widgetName:"gimage_block4", path: "doc/Error_Image.JPG", enabled:true, visible:true)
+	 gimage_block5 = GImage(widgetName:"gimage_block5", path: "doc/Error_Image.JPG", enabled:true, visible:true)
+	 gimage_block6 = GImage(widgetName:"gimage_block6", path: "doc/Error_Image.JPG", enabled:true, visible:true)
+	 gimage_block7 = GImage(widgetName:"gimage_block7", path: "doc/Error_Image.JPG", enabled:true, visible:true)
+	 gimage_block8 = GImage(widgetName:"gimage_block8", path: "doc/Error_Image.JPG", enabled:true, visible:true)
+	 gimage_block9 = GImage(widgetName:"gimage_block9", path: "doc/Error_Image.JPG", enabled:true, visible:true)
+	 gimage_block10 = GImage(widgetName:"gimage_block10", path: "doc/Error_Image.JPG", enabled:true, visible:true)
+	 gint_required_size = GInteger(widgetName:"gint_required_size", value:1700, minValue:256, maxValue:50944, enabled:true, visible:true, isMandatoryValue:false)
+	 gint_bank0_size = GInteger(widgetName:"gint_bank0_size", value:0, minValue:512, maxValue:51200, enabled:false, visible:true, isMandatoryValue:false)
+	 gint_actual_bank_size = GInteger(widgetName:"gint_actual_bank_size", value:0, minValue:256, maxValue:50944, enabled:false, visible:true, isMandatoryValue:false)
+	 gint_total_eeprom_size = GInteger(widgetName:"gint_total_eeprom_size", value:0, minValue:1024, maxValue:1024000, enabled:false, visible:true, isMandatoryValue:false)
+	 gint_bank0_start_address = GInteger(widgetName:"gint_bank0_start_address", value:268644352, minValue:0x10001000, maxValue:0x10033000, enabled:false, visible:true, isMandatoryValue:false)
+	 gint_bank1_start_address = GInteger(widgetName:"gint_bank1_start_address", value:0, minValue:0x10001000, maxValue:0x10033000, enabled:false, visible:true, isMandatoryValue:false)
+	 gint_bank0_end_address = GInteger(widgetName:"gint_bank0_end_address", value:0, minValue:0x10001000, maxValue:0x10033000, enabled:false, visible:true, isMandatoryValue:false)
+	 gint_bank1_end_address = GInteger(widgetName:"gint_bank1_end_address", value:0, minValue:0x10001000, maxValue:0x10033000, enabled:false, visible:true, isMandatoryValue:false)
+	 gint_bank1_size = GInteger(widgetName:"gint_bank1_size", value:0, minValue:512, maxValue:51200, enabled:false, visible:true, isMandatoryValue:false)
+	 gint_actual_bank1_size = GInteger(widgetName:"gint_actual_bank1_size", value:0, minValue:256, maxValue:50944, enabled:false, visible:true, isMandatoryValue:false)
+	 gint_marker0_size = GInteger(widgetName:"gint_marker0_size", value:256, minValue:256, maxValue:256, enabled:false, visible:true, isMandatoryValue:false)
+	 gint_marker1_size = GInteger(widgetName:"gint_marker1_size", value:256, minValue:256, maxValue:256, enabled:false, visible:true, isMandatoryValue:false)
+	 gint_block1_size = GInteger(widgetName:"gint_block1_size", value:12, minValue:1, maxValue:32768, enabled:true, visible:true, isMandatoryValue:false)
+	 gint_block2_size = GInteger(widgetName:"gint_block2_size", value:32, minValue:1, maxValue:32768, enabled:false, visible:true, isMandatoryValue:false)
+	 gint_block3_size = GInteger(widgetName:"gint_block3_size", value:100, minValue:1, maxValue:32768, enabled:false, visible:true, isMandatoryValue:false)
+	 gint_block4_size = GInteger(widgetName:"gint_block4_size", value:12, minValue:1, maxValue:32768, enabled:false, visible:true, isMandatoryValue:false)
+	 gint_block5_size = GInteger(widgetName:"gint_block5_size", value:12, minValue:1, maxValue:32768, enabled:false, visible:true, isMandatoryValue:false)
+	 gint_block6_size = GInteger(widgetName:"gint_block6_size", value:12, minValue:1, maxValue:32768, enabled:false, visible:true, isMandatoryValue:false)
+	 gint_block7_size = GInteger(widgetName:"gint_block7_size", value:12, minValue:1, maxValue:32768, enabled:false, visible:true, isMandatoryValue:false)
+	 gint_block8_size = GInteger(widgetName:"gint_block8_size", value:12, minValue:1, maxValue:32768, enabled:false, visible:true, isMandatoryValue:false)
+	 gint_block9_size = GInteger(widgetName:"gint_block9_size", value:12, minValue:1, maxValue:32768, enabled:false, visible:true, isMandatoryValue:false)
+	 gint_block10_size = GInteger(widgetName:"gint_block10_size", value:12, minValue:1, maxValue:32768, enabled:false, visible:true, isMandatoryValue:false)
+	 gcombo_no_of_blocks = GCombo(widgetName:"gcombo_no_of_blocks", options:["1","2","3","4","5","6","7","8","9","10"], value:"3", enabled:true, visible:true, isMandatoryValue:false)
+	 gstring_block1_name = GString(widgetName:"gstring_block1_name", value:"USER_BLOCK1", enabled:true, visible:true, isMandatoryValue:false)
+	 gstring_block2_name = GString(widgetName:"gstring_block2_name", value:"USER_BLOCK2", enabled:false, visible:true, isMandatoryValue:false)
+	 gstring_block3_name = GString(widgetName:"gstring_block3_name", value:"USER_BLOCK3", enabled:false, visible:true, isMandatoryValue:false)
+	 gstring_block4_name = GString(widgetName:"gstring_block4_name", value:"USER_BLOCK4", enabled:false, visible:true, isMandatoryValue:false)
+	 gstring_block5_name = GString(widgetName:"gstring_block5_name", value:"USER_BLOCK5", enabled:false, visible:true, isMandatoryValue:false)
+	 gstring_block6_name = GString(widgetName:"gstring_block6_name", value:"USER_BLOCK6", enabled:false, visible:true, isMandatoryValue:false)
+	 gstring_block7_name = GString(widgetName:"gstring_block7_name", value:"USER_BLOCK7", enabled:false, visible:true, isMandatoryValue:false)
+	 gstring_block8_name = GString(widgetName:"gstring_block8_name", value:"USER_BLOCK8", enabled:false, visible:true, isMandatoryValue:false)
+	 gstring_block9_name = GString(widgetName:"gstring_block9_name", value:"USER_BLOCK9", enabled:false, visible:true, isMandatoryValue:false)
+	 gstring_block10_name = GString(widgetName:"gstring_block10_name", value:"USER_BLOCK10", enabled:false, visible:true, isMandatoryValue:false)
+	 gcheck_auto_recovery = GCheck(widgetName:"gcheck_auto_recovery", value:false, enabled:true, visible:true)
+	 gcheck_garbage_collection = GCheck(widgetName:"gcheck_garbage_collection", value:true, enabled:true, visible:true)
+	 gcheck_data_block_crc = GCheck(widgetName:"gcheck_data_block_crc", value:false, enabled:true, visible:true)
+	 glabel_required_size = GLabel(widgetName:"glabel_required_size", text:"Desired eeprom size [Bytes]: ", enabled:true, visible:true)
+	 glabel_bank0_size = GLabel(widgetName:"glabel_bank0_size", text:"Bank0 size:", enabled:true, visible:true)
+	 glabel_bank0_start_address = GLabel(widgetName:"glabel_bank0_start_address", text:"Start address:", enabled:true, visible:true)
+	 glabel_bank1_start_address = GLabel(widgetName:"glabel_bank1_start_address", text:"Start address:", enabled:true, visible:true)
+	 glabel_bank1_end_address = GLabel(widgetName:"glabel_bank1_end_address", text:"End address:", enabled:true, visible:true)
+	 glabel_bank0_end_address = GLabel(widgetName:"glabel_bank0_end_address", text:"End address:", enabled:true, visible:true)
+	 glabel_bank1_size = GLabel(widgetName:"glabel_bank1_size", text:"Bank1 size:", enabled:true, visible:true)
+	 glabel_total_eeprom_size = GLabel(widgetName:"glabel_total_eeprom_size", text:"Emulated size: ", enabled:true, visible:true)
+	 glabel_bank0 = GLabel(widgetName:"glabel_bank0", text:"BANK 0", enabled:true, visible:true)
+	 glabel_bank1 = GLabel(widgetName:"glabel_bank1", text:"BANK 1", enabled:true, visible:true)
+	 glabel_no_of_blocks = GLabel(widgetName:"glabel_no_of_blocks", text:"Number of blocks:", enabled:true, visible:true)
+	 glabel_names = GLabel(widgetName:"glabel_names", text:"Names", enabled:true, visible:true)
+	 glabel_size = GLabel(widgetName:"glabel_size", text:"Size [Bytes]", enabled:true, visible:true)
+	 glabel_block1_name = GLabel(widgetName:"glabel_block1_name", text:"Block 1:", enabled:true, visible:true)
+	 glabel_block2_name = GLabel(widgetName:"glabel_block2_name", text:"Block 2:", enabled:false, visible:true)
+	 glabel_block3_name = GLabel(widgetName:"glabel_block3_name", text:"Block 3:", enabled:false, visible:true)
+	 glabel_block4_name = GLabel(widgetName:"glabel_block4_name", text:"Block 4:", enabled:false, visible:true)
+	 glabel_block5_name = GLabel(widgetName:"glabel_block5_name", text:"Block 5:", enabled:false, visible:true)
+	 glabel_block6_name = GLabel(widgetName:"glabel_block6_name", text:"Block 6:", enabled:false, visible:true)
+	 glabel_block7_name = GLabel(widgetName:"glabel_block7_name", text:"Block 7:", enabled:false, visible:true)
+	 glabel_block8_name = GLabel(widgetName:"glabel_block8_name", text:"Block 8:", enabled:false, visible:true)
+	 glabel_block9_name = GLabel(widgetName:"glabel_block9_name", text:"Block 9:", enabled:false, visible:true)
+	 glabel_block10_name = GLabel(widgetName:"glabel_block10_name", text:"Block 10:", enabled:false, visible:true)
+	 glabel_block1_size = GLabel(widgetName:"glabel_block1_size", text:"Block1 size", enabled:true, visible:true)
+	 glabel_block2_size = GLabel(widgetName:"glabel_block2_size", text:"Block2 size", enabled:true, visible:true)
+	 glabel_block3_size = GLabel(widgetName:"glabel_block3_size", text:"Block3 size", enabled:true, visible:true)
+	 glabel_block4_size = GLabel(widgetName:"glabel_block4_size", text:"Block4 size", enabled:true, visible:true)
+	 glabel_block5_size = GLabel(widgetName:"glabel_block5_size", text:"Block5 size", enabled:true, visible:true)
+	 glabel_block6_size = GLabel(widgetName:"glabel_block6_size", text:"Block6 size", enabled:true, visible:true)
+	 glabel_block7_size = GLabel(widgetName:"glabel_block7_size", text:"Block7 size", enabled:true, visible:true)
+	 glabel_block8_size = GLabel(widgetName:"glabel_block8_size", text:"Block8 size", enabled:true, visible:true)
+	 glabel_block9_size = GLabel(widgetName:"glabel_block9_size", text:"Block9 size", enabled:true, visible:true)
+	 glabel_block10_size = GLabel(widgetName:"glabel_block10_size", text:"Block10 size", enabled:true, visible:true)
+	 glabel_marker1_size = GLabel(widgetName:"glabel_marker1_size", text:"Marker1 size", enabled:true, visible:true)
+	 glabel_marker0_size = GLabel(widgetName:"glabel_marker0_size", text:"Marker0 size", enabled:true, visible:true)
+	 glabel_actual_bank_size = GLabel(widgetName:"glabel_actual_bank_size", text:"Eeprom size", enabled:true, visible:true)
+	 glabel_actual_bank1_size = GLabel(widgetName:"glabel_actual_bank1_size", text:"Reserved size", enabled:true, visible:true)
+	 ggroup_emulated_size_space = GGroup(widgetName:"ggroup_emulated_size_space", text:"Memory Settings", enabled:true, visible:true)
+	 ggroup_emulation_features = GGroup(widgetName:"ggroup_emulation_features", text:"Emulation Settings", enabled:true, visible:true)
+	 ggroup_block_table = GGroup(widgetName:"ggroup_block_table", text:"Block Table", enabled:true, visible:true)
+	 gmessage_name_clash = GMessage(widgetName:"gmessage_name_clash", text:"Block name is not a valid macro or multiple blocks shares same name !!!", isError:true, visible:false)
+
+
+	 }
+	/* End : UI variable section */
+}
+

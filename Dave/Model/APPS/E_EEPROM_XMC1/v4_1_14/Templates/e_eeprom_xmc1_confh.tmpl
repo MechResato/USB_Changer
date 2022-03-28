@@ -1,0 +1,145 @@
+package Model.APPS.E_EEPROM_XMC1.v4_1_14.Templates;
+
+import Model.APPS.E_EEPROM_XMC1.v4_1_14.E_EEPROM_XMC1
+
+out.print("""
+/**
+ * @cond
+ ***********************************************************************************************************************
+ *
+ * Copyright (c) 2015-2020, Infineon Technologies AG
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the
+ * following conditions are met:
+ *
+ *   Redistributions of source code must retain the above copyright notice, this list of conditions and the  following
+ *   disclaimer.
+ *
+ *   Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
+ *   following disclaimer in the documentation and/or other materials provided with the distribution.
+ *
+ *   Neither the name of the copyright holders nor the names of its contributors may be used to endorse or promote
+ *   products derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT  OF THE
+ * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * To improve the quality of the software, users are encouraged to share modifications, enhancements or bug fixes
+ * with Infineon Technologies AG (dave@infineon.com).
+ ***********************************************************************************************************************
+ *
+ * Change History
+ * --------------
+ *
+ * 2015-05-13:
+ *     - Initial version<br>
+ *
+ * 2015-04-24:
+ *     - Updated for guideline adherence related changes.<br>
+ *
+ * 2016-07-08:
+ *     - Fixed incorrect case for an included header.<br>
+ *
+ * @endcond
+ *
+ */
+
+#ifndef E_EEPROM_XMC1_CONF_H
+#define E_EEPROM_XMC1_CONF_H
+
+
+/***********************************************************************************************************************
+ * HEADER FILES
+ **********************************************************************************************************************/
+ 
+/**********************************************************************************************************************
+ * MACROS
+ **********************************************************************************************************************/
+""");
+def appInst = null;
+
+for (Object Instance : appInstancesList ) {
+ appInst = Instance.getInstanceLabel()
+
+int bank0_st_add  = Instance.gint_bank0_start_address.value;
+int bank0_end_add = Instance.gint_bank0_end_address.value;
+int bank1_st_add  = Instance.gint_bank1_start_address.value;
+int bank1_end_add = Instance.gint_bank1_end_address.value;
+
+block_names = [Instance.gstring_block1_name.value,Instance.gstring_block2_name.value,
+	           Instance.gstring_block3_name.value,Instance.gstring_block4_name.value,
+	           Instance.gstring_block5_name.value,Instance.gstring_block6_name.value,
+	           Instance.gstring_block7_name.value,Instance.gstring_block8_name.value,
+	           Instance.gstring_block9_name.value,Instance.gstring_block10_name.value]
+
+out.print("""
+/** 
+*  Emulation app version information
+*/
+#define E_EEPROM_XMC1_MAJOR_VERSION ((uint8_t)(${E_EEPROM_XMC1.version.split("\\.")[0]}))
+#define E_EEPROM_XMC1_MINOR_VERSION ((uint8_t)(${E_EEPROM_XMC1.version.split("\\.")[1]}))
+#define E_EEPROM_XMC1_PATCH_VERSION ((uint8_t)(${E_EEPROM_XMC1.version.split("\\.")[2]}))
+""")
+	
+
+if(Instance.gcheck_data_block_crc.value)
+{
+out.print("""
+/** 
+*  Data Block CRC feature is enabled for Emulation app
+*/
+#define E_EEPROM_XMC1_CRC_SW_ENABLED
+""")
+}	 
+out.print("""
+/* 
+ *  Emulation app handle pointer
+ */
+#define E_EEPROM_XMC1_HANDLE_PTR  (&${appInst})
+
+/* 
+ *  Flash address and Size informations as per user configuration
+ */
+#define E_EEPROM_XMC1_FLASH_TOTAL_SIZE     (${(Instance.gint_total_eeprom_size.value)}U)
+#define E_EEPROM_XMC1_FLASH_BANK_SIZE      (${(Integer)((Instance.gint_total_eeprom_size.value)/2)}U)
+
+/* 
+ *  EMULATED_EEPROM Bank, start and end addresses
+ */
+#define E_EEPROM_XMC1_FLASH_BANK0_BASE     (0x${(Integer.toHexString(bank0_st_add))}U)
+#define E_EEPROM_XMC1_FLASH_BANK0_END      (0x${(Integer.toHexString(bank0_end_add))}U)
+#define E_EEPROM_XMC1_FLASH_BANK1_BASE     (0x${(Integer.toHexString(bank1_st_add))}U)
+#define E_EEPROM_XMC1_FLASH_BANK1_END      (0x${(Integer.toHexString(bank1_end_add))}U)
+
+/* Total number of configured Data blocks */
+#define E_EEPROM_XMC1_MAX_BLOCK_COUNT      (${(Instance.gint_max_blocks.value)}U)
+
+/* 
+ *  Total number of pages per bank, resulting after division of banks
+ *  i.e. E_EEPROM_XMC1_BANK_PAGES = (E_EEPROM_XMC1_FLASH_TOTAL_SIZE in Bytes / ((256 Bytes * 2 Banks)) 
+ */
+#define E_EEPROM_XMC1_BANK_PAGES           (${(Integer)((Instance.gint_total_eeprom_size.value)/512)}U)
+
+/* 
+ *  Block Names generated as per user configured in GUI 
+ */
+""");
+for(i=0;i< Instance.gint_max_blocks.value;i++)
+{
+out.print("""
+/**  Block ${(i+1)} */
+#define ${block_names[i]}  (${(i+1)}U)
+""");
+}
+ 
+}
+out.print("""
+#endif
+
+""");

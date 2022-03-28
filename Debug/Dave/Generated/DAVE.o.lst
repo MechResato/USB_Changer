@@ -20,7 +20,7 @@
   20              	 .code 16
   21              	 .thumb_func
   23              	DAVE_Init:
-  24              	.LFB153:
+  24              	.LFB160:
   25              	 .file 1 "../Dave/Generated/DAVE.c"
    1:../Dave/Generated/DAVE.c **** 
    2:../Dave/Generated/DAVE.c **** /**
@@ -115,7 +115,7 @@
   73:../Dave/Generated/DAVE.c ****      init_status = (DAVE_STATUS_t)CLOCK_XMC1_Init(&CLOCK_XMC1_0);
   44              	 .loc 1 73 0
   45 000c FC1D     	 add r4,r7,#7
-  46 000e 534B     	 ldr r3,.L17
+  46 000e 584B     	 ldr r3,.L18
   47 0010 181C     	 mov r0,r3
   48 0012 FFF7FEFF 	 bl CLOCK_XMC1_Init
   49 0016 031C     	 mov r3,r0
@@ -132,7 +132,7 @@
   78:../Dave/Generated/DAVE.c **** 	 init_status = (DAVE_STATUS_t)ADC_MEASUREMENT_Init(&ADC_SENSOR); 
   56              	 .loc 1 78 0
   57 0022 FC1D     	 add r4,r7,#7
-  58 0024 4E4B     	 ldr r3,.L17+4
+  58 0024 534B     	 ldr r3,.L18+4
   59 0026 181C     	 mov r0,r3
   60 0028 FFF7FEFF 	 bl ADC_MEASUREMENT_Init
   61 002c 031C     	 mov r3,r0
@@ -150,7 +150,7 @@
   83:../Dave/Generated/DAVE.c **** 	 init_status = (DAVE_STATUS_t)DIGITAL_IO_Init(&IO_USB_SI); 
   69              	 .loc 1 83 0
   70 0038 FC1D     	 add r4,r7,#7
-  71 003a 4A4B     	 ldr r3,.L17+8
+  71 003a 4F4B     	 ldr r3,.L18+8
   72 003c 181C     	 mov r0,r3
   73 003e FFF7FEFF 	 bl DIGITAL_IO_Init
   74 0042 031C     	 mov r3,r0
@@ -168,7 +168,7 @@
   88:../Dave/Generated/DAVE.c **** 	 init_status = (DAVE_STATUS_t)DIGITAL_IO_Init(&IO_USB_OE); 
   82              	 .loc 1 88 0
   83 004e FC1D     	 add r4,r7,#7
-  84 0050 454B     	 ldr r3,.L17+12
+  84 0050 4A4B     	 ldr r3,.L18+12
   85 0052 181C     	 mov r0,r3
   86 0054 FFF7FEFF 	 bl DIGITAL_IO_Init
   87 0058 031C     	 mov r3,r0
@@ -186,7 +186,7 @@
   93:../Dave/Generated/DAVE.c **** 	 init_status = (DAVE_STATUS_t)DIGITAL_IO_Init(&IO_LED_R_STATUS); 
   95              	 .loc 1 93 0
   96 0064 FC1D     	 add r4,r7,#7
-  97 0066 414B     	 ldr r3,.L17+16
+  97 0066 464B     	 ldr r3,.L18+16
   98 0068 181C     	 mov r0,r3
   99 006a FFF7FEFF 	 bl DIGITAL_IO_Init
  100 006e 031C     	 mov r3,r0
@@ -204,7 +204,7 @@
   98:../Dave/Generated/DAVE.c **** 	 init_status = (DAVE_STATUS_t)DIGITAL_IO_Init(&IO_SW_USB); 
  108              	 .loc 1 98 0
  109 007a FC1D     	 add r4,r7,#7
- 110 007c 3C4B     	 ldr r3,.L17+20
+ 110 007c 414B     	 ldr r3,.L18+20
  111 007e 181C     	 mov r0,r3
  112 0080 FFF7FEFF 	 bl DIGITAL_IO_Init
  113 0084 031C     	 mov r3,r0
@@ -222,7 +222,7 @@
  103:../Dave/Generated/DAVE.c **** 	 init_status = (DAVE_STATUS_t)DIGITAL_IO_Init(&IO_SW_UP); 
  121              	 .loc 1 103 0
  122 0090 FC1D     	 add r4,r7,#7
- 123 0092 384B     	 ldr r3,.L17+24
+ 123 0092 3D4B     	 ldr r3,.L18+24
  124 0094 181C     	 mov r0,r3
  125 0096 FFF7FEFF 	 bl DIGITAL_IO_Init
  126 009a 031C     	 mov r3,r0
@@ -240,7 +240,7 @@
  108:../Dave/Generated/DAVE.c **** 	 init_status = (DAVE_STATUS_t)DIGITAL_IO_Init(&IO_SW_DOWN); 
  134              	 .loc 1 108 0
  135 00a6 FC1D     	 add r4,r7,#7
- 136 00a8 334B     	 ldr r3,.L17+28
+ 136 00a8 384B     	 ldr r3,.L18+28
  137 00aa 181C     	 mov r0,r3
  138 00ac FFF7FEFF 	 bl DIGITAL_IO_Init
  139 00b0 031C     	 mov r3,r0
@@ -258,7 +258,7 @@
  113:../Dave/Generated/DAVE.c **** 	 init_status = (DAVE_STATUS_t)DIGITAL_IO_Init(&IO_USBPWR_2); 
  147              	 .loc 1 113 0
  148 00bc FC1D     	 add r4,r7,#7
- 149 00be 2F4B     	 ldr r3,.L17+32
+ 149 00be 344B     	 ldr r3,.L18+32
  150 00c0 181C     	 mov r0,r3
  151 00c2 FFF7FEFF 	 bl DIGITAL_IO_Init
  152 00c6 031C     	 mov r3,r0
@@ -276,7 +276,7 @@
  118:../Dave/Generated/DAVE.c **** 	 init_status = (DAVE_STATUS_t)DIGITAL_IO_Init(&IO_USBPWR_1); 
  160              	 .loc 1 118 0
  161 00d2 FC1D     	 add r4,r7,#7
- 162 00d4 2A4B     	 ldr r3,.L17+36
+ 162 00d4 2F4B     	 ldr r3,.L18+36
  163 00d6 181C     	 mov r0,r3
  164 00d8 FFF7FEFF 	 bl DIGITAL_IO_Init
  165 00dc 031C     	 mov r3,r0
@@ -294,7 +294,7 @@
  123:../Dave/Generated/DAVE.c **** 	 init_status = (DAVE_STATUS_t)DIGITAL_IO_Init(&IO_RELAY); 
  173              	 .loc 1 123 0
  174 00e8 FC1D     	 add r4,r7,#7
- 175 00ea 264B     	 ldr r3,.L17+40
+ 175 00ea 2B4B     	 ldr r3,.L18+40
  176 00ec 181C     	 mov r0,r3
  177 00ee FFF7FEFF 	 bl DIGITAL_IO_Init
  178 00f2 031C     	 mov r3,r0
@@ -312,7 +312,7 @@
  128:../Dave/Generated/DAVE.c **** 	 init_status = (DAVE_STATUS_t)DIGITAL_IO_Init(&IO_LED_USB2); 
  186              	 .loc 1 128 0
  187 00fe FC1D     	 add r4,r7,#7
- 188 0100 214B     	 ldr r3,.L17+44
+ 188 0100 264B     	 ldr r3,.L18+44
  189 0102 181C     	 mov r0,r3
  190 0104 FFF7FEFF 	 bl DIGITAL_IO_Init
  191 0108 031C     	 mov r3,r0
@@ -330,7 +330,7 @@
  133:../Dave/Generated/DAVE.c **** 	 init_status = (DAVE_STATUS_t)DIGITAL_IO_Init(&IO_LED_USB1); 
  199              	 .loc 1 133 0
  200 0114 FC1D     	 add r4,r7,#7
- 201 0116 1D4B     	 ldr r3,.L17+48
+ 201 0116 224B     	 ldr r3,.L18+48
  202 0118 181C     	 mov r0,r3
  203 011a FFF7FEFF 	 bl DIGITAL_IO_Init
  204 011e 031C     	 mov r3,r0
@@ -348,7 +348,7 @@
  138:../Dave/Generated/DAVE.c **** 	 init_status = (DAVE_STATUS_t)SYSTIMER_Init(&SYSTIMER_0); 
  212              	 .loc 1 138 0
  213 012a FC1D     	 add r4,r7,#7
- 214 012c 184B     	 ldr r3,.L17+52
+ 214 012c 1D4B     	 ldr r3,.L18+52
  215 012e 181C     	 mov r0,r3
  216 0130 FFF7FEFF 	 bl SYSTIMER_Init
  217 0134 031C     	 mov r3,r0
@@ -366,74 +366,95 @@
  143:../Dave/Generated/DAVE.c **** 	 init_status = (DAVE_STATUS_t)PWM_CCU4_Init(&PWM_CCU4_LED_STATUS); 
  225              	 .loc 1 143 0
  226 0140 FC1D     	 add r4,r7,#7
- 227 0142 144B     	 ldr r3,.L17+56
+ 227 0142 194B     	 ldr r3,.L18+56
  228 0144 181C     	 mov r0,r3
  229 0146 FFF7FEFF 	 bl PWM_CCU4_Init
  230 014a 031C     	 mov r3,r0
  231 014c 2370     	 strb r3,[r4]
  232              	.L15:
- 144:../Dave/Generated/DAVE.c ****    }  
- 145:../Dave/Generated/DAVE.c ****   return init_status;
+ 144:../Dave/Generated/DAVE.c ****    } 
+ 145:../Dave/Generated/DAVE.c ****   if (init_status == DAVE_STATUS_SUCCESS)
  233              	 .loc 1 145 0
  234 014e FB1D     	 add r3,r7,#7
  235 0150 1B78     	 ldrb r3,[r3]
- 146:../Dave/Generated/DAVE.c **** } /**  End of function DAVE_Init */
- 236              	 .loc 1 146 0
- 237 0152 181C     	 mov r0,r3
- 238 0154 BD46     	 mov sp,r7
- 239 0156 03B0     	 add sp,sp,#12
- 240              	 
- 241 0158 90BD     	 pop {r4,r7,pc}
- 242              	.L18:
- 243 015a C046     	 .align 2
- 244              	.L17:
- 245 015c 00000000 	 .word CLOCK_XMC1_0
- 246 0160 00000000 	 .word ADC_SENSOR
- 247 0164 00000000 	 .word IO_USB_SI
- 248 0168 00000000 	 .word IO_USB_OE
- 249 016c 00000000 	 .word IO_LED_R_STATUS
- 250 0170 00000000 	 .word IO_SW_USB
- 251 0174 00000000 	 .word IO_SW_UP
- 252 0178 00000000 	 .word IO_SW_DOWN
- 253 017c 00000000 	 .word IO_USBPWR_2
- 254 0180 00000000 	 .word IO_USBPWR_1
- 255 0184 00000000 	 .word IO_RELAY
- 256 0188 00000000 	 .word IO_LED_USB2
- 257 018c 00000000 	 .word IO_LED_USB1
- 258 0190 00000000 	 .word SYSTIMER_0
- 259 0194 00000000 	 .word PWM_CCU4_LED_STATUS
- 260              	 .cfi_endproc
- 261              	.LFE153:
- 263              	 .text
- 264              	.Letext0:
- 265              	 .file 2 "c:\\workspaces\\4.5.0\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
- 266              	 .file 3 "c:\\workspaces\\4.5.0\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
- 267              	 .file 4 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Infineon/XMC1100_series/Include/XMC1100.h"
- 268              	 .file 5 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc1_scu.h"
- 269              	 .file 6 "../Dave/Generated/CLOCK_XMC1/clock_xmc1.h"
- 270              	 .file 7 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc_vadc.h"
- 271              	 .file 8 "../Dave/Generated/GLOBAL_ADC/global_adc.h"
- 272              	 .file 9 "../Dave/Generated/ADC_MEASUREMENT/adc_measurement.h"
- 273              	 .file 10 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc_gpio.h"
- 274              	 .file 11 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc1_gpio.h"
- 275              	 .file 12 "../Dave/Generated/DIGITAL_IO/digital_io.h"
- 276              	 .file 13 "../Dave/Generated/SYSTIMER/systimer.h"
- 277              	 .file 14 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc_ccu4.h"
- 278              	 .file 15 "../Dave/Generated/GLOBAL_CCU4/global_ccu4.h"
- 279              	 .file 16 "../Dave/Generated/PWM_CCU4/pwm_ccu4.h"
- 280              	 .file 17 "../Dave/Generated/DAVE.h"
- 281              	 .file 18 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Include/cmsis_gcc.h"
- 282              	 .file 19 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Infineon/XMC1100_series/Include/system_XMC1100.h"
- 283              	 .file 20 "../Dave/Generated/CLOCK_XMC1/clock_xmc1_extern.h"
- 284              	 .file 21 "../Dave/Generated/ADC_MEASUREMENT/adc_measurement_extern.h"
- 285              	 .file 22 "../Dave/Generated/DIGITAL_IO/digital_io_extern.h"
- 286              	 .file 23 "../Dave/Generated/SYSTIMER/systimer_extern.h"
- 287              	 .file 24 "../Dave/Generated/PWM_CCU4/pwm_ccu4_extern.h"
+ 236 0152 002B     	 cmp r3,#0
+ 237 0154 06D1     	 bne .L16
+ 146:../Dave/Generated/DAVE.c ****   {
+ 147:../Dave/Generated/DAVE.c **** 	 /**  Initialization of E_EEPROM_XMC1 APP instance E_EEPROM_XMC1_0 */
+ 148:../Dave/Generated/DAVE.c **** 	 init_status = (DAVE_STATUS_t)E_EEPROM_XMC1_Init(&E_EEPROM_XMC1_0); 
+ 238              	 .loc 1 148 0
+ 239 0156 FC1D     	 add r4,r7,#7
+ 240 0158 144B     	 ldr r3,.L18+60
+ 241 015a 181C     	 mov r0,r3
+ 242 015c FFF7FEFF 	 bl E_EEPROM_XMC1_Init
+ 243 0160 031C     	 mov r3,r0
+ 244 0162 2370     	 strb r3,[r4]
+ 245              	.L16:
+ 149:../Dave/Generated/DAVE.c ****    }  
+ 150:../Dave/Generated/DAVE.c ****   return init_status;
+ 246              	 .loc 1 150 0
+ 247 0164 FB1D     	 add r3,r7,#7
+ 248 0166 1B78     	 ldrb r3,[r3]
+ 151:../Dave/Generated/DAVE.c **** } /**  End of function DAVE_Init */
+ 249              	 .loc 1 151 0
+ 250 0168 181C     	 mov r0,r3
+ 251 016a BD46     	 mov sp,r7
+ 252 016c 03B0     	 add sp,sp,#12
+ 253              	 
+ 254 016e 90BD     	 pop {r4,r7,pc}
+ 255              	.L19:
+ 256              	 .align 2
+ 257              	.L18:
+ 258 0170 00000000 	 .word CLOCK_XMC1_0
+ 259 0174 00000000 	 .word ADC_SENSOR
+ 260 0178 00000000 	 .word IO_USB_SI
+ 261 017c 00000000 	 .word IO_USB_OE
+ 262 0180 00000000 	 .word IO_LED_R_STATUS
+ 263 0184 00000000 	 .word IO_SW_USB
+ 264 0188 00000000 	 .word IO_SW_UP
+ 265 018c 00000000 	 .word IO_SW_DOWN
+ 266 0190 00000000 	 .word IO_USBPWR_2
+ 267 0194 00000000 	 .word IO_USBPWR_1
+ 268 0198 00000000 	 .word IO_RELAY
+ 269 019c 00000000 	 .word IO_LED_USB2
+ 270 01a0 00000000 	 .word IO_LED_USB1
+ 271 01a4 00000000 	 .word SYSTIMER_0
+ 272 01a8 00000000 	 .word PWM_CCU4_LED_STATUS
+ 273 01ac 00000000 	 .word E_EEPROM_XMC1_0
+ 274              	 .cfi_endproc
+ 275              	.LFE160:
+ 277              	 .text
+ 278              	.Letext0:
+ 279              	 .file 2 "c:\\workspaces\\4.5.0\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 280              	 .file 3 "c:\\workspaces\\4.5.0\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 281              	 .file 4 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Infineon/XMC1100_series/Include/XMC1100.h"
+ 282              	 .file 5 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc1_scu.h"
+ 283              	 .file 6 "../Dave/Generated/CLOCK_XMC1/clock_xmc1.h"
+ 284              	 .file 7 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc_vadc.h"
+ 285              	 .file 8 "../Dave/Generated/GLOBAL_ADC/global_adc.h"
+ 286              	 .file 9 "../Dave/Generated/ADC_MEASUREMENT/adc_measurement.h"
+ 287              	 .file 10 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc_gpio.h"
+ 288              	 .file 11 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc1_gpio.h"
+ 289              	 .file 12 "../Dave/Generated/DIGITAL_IO/digital_io.h"
+ 290              	 .file 13 "../Dave/Generated/SYSTIMER/systimer.h"
+ 291              	 .file 14 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/XMCLib/inc/xmc_ccu4.h"
+ 292              	 .file 15 "../Dave/Generated/GLOBAL_CCU4/global_ccu4.h"
+ 293              	 .file 16 "../Dave/Generated/PWM_CCU4/pwm_ccu4.h"
+ 294              	 .file 17 "../Dave/Generated/E_EEPROM_XMC1/e_eeprom_xmc1.h"
+ 295              	 .file 18 "../Dave/Generated/DAVE.h"
+ 296              	 .file 19 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Include/cmsis_gcc.h"
+ 297              	 .file 20 "C:/Workspaces/DAVE_WS/USB_Changer/Libraries/CMSIS/Infineon/XMC1100_series/Include/system_XMC1100.h"
+ 298              	 .file 21 "../Dave/Generated/CLOCK_XMC1/clock_xmc1_extern.h"
+ 299              	 .file 22 "../Dave/Generated/ADC_MEASUREMENT/adc_measurement_extern.h"
+ 300              	 .file 23 "../Dave/Generated/DIGITAL_IO/digital_io_extern.h"
+ 301              	 .file 24 "../Dave/Generated/SYSTIMER/systimer_extern.h"
+ 302              	 .file 25 "../Dave/Generated/PWM_CCU4/pwm_ccu4_extern.h"
+ 303              	 .file 26 "../Dave/Generated/E_EEPROM_XMC1/e_eeprom_xmc1_extern.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 DAVE.c
     {standard input}:18     .text.DAVE_Init:00000000 $t
     {standard input}:23     .text.DAVE_Init:00000000 DAVE_Init
-    {standard input}:245    .text.DAVE_Init:0000015c $d
+    {standard input}:258    .text.DAVE_Init:00000170 $d
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS
@@ -442,6 +463,7 @@ ADC_MEASUREMENT_Init
 DIGITAL_IO_Init
 SYSTIMER_Init
 PWM_CCU4_Init
+E_EEPROM_XMC1_Init
 CLOCK_XMC1_0
 ADC_SENSOR
 IO_USB_SI
@@ -457,3 +479,4 @@ IO_LED_USB2
 IO_LED_USB1
 SYSTIMER_0
 PWM_CCU4_LED_STATUS
+E_EEPROM_XMC1_0

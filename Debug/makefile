@@ -15,6 +15,7 @@ RM := rm -rf
 -include Dave/Generated/PWM_CCU4/subdir.mk
 -include Dave/Generated/GLOBAL_CCU4/subdir.mk
 -include Dave/Generated/GLOBAL_ADC/subdir.mk
+-include Dave/Generated/E_EEPROM_XMC1/subdir.mk
 -include Dave/Generated/DIGITAL_IO/subdir.mk
 -include Dave/Generated/CPU_CTRL_XMC1/subdir.mk
 -include Dave/Generated/CLOCK_XMC1/subdir.mk
@@ -62,7 +63,7 @@ USB_Changer.elf: $(OBJS) ../linker_script.ld $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM-GCC C Linker'
 	$(file >objects.rsp,$(OBJS))
-	"$(TOOLCHAIN_ROOT)/bin/arm-none-eabi-gcc" -T"../linker_script.ld" -nostartfiles -Xlinker --gc-sections -specs=nano.specs -specs=nosys.specs -u _printf_float -Wl,-Map,$(MAP_FILE) -mcpu=cortex-m0 -mthumb -g -gdwarf-2 -o "USB_Changer.elf" "@objects.rsp" $(USER_OBJS) $(LIBS)
+	"$(TOOLCHAIN_ROOT)/bin/arm-none-eabi-gcc" -T"../linker_script.ld" -nostartfiles -Xlinker --gc-sections -specs=nano.specs -specs=nosys.specs -Wl,-Map,$(MAP_FILE) -mcpu=cortex-m0 -mthumb -g -gdwarf-2 -o "USB_Changer.elf" "@objects.rsp" $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo.
 USB_Changer.hex: USB_Changer.elf
