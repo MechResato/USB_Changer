@@ -9,19 +9,21 @@
 
 
 // Constant settings (must be set hard-coded)
-#define BTN_STD_PRESS_DURATION    60						// The minimum duration of a button press that will be registered as such (debouncing)
-#define BTN_LONG_PRESS_DURATION   1000						// The minimum duration of a long button press that will be registered as such (debouncing)
-#define ADC_THRESHOLD_MAX         4095						// Maximum ADC value. Note: 1023 can be divided by 1, 3, 11, 31, 33, 93, 341 without decimals
-#define ADC_THRESHOLD_INCREMENT   (ADC_THRESHOLD_MAX / 33)	// Value added/subtracted when adjusting threshold. 33 means there are 33 steps for setting thresholds
-#define RELAY_LATCHTIME_MAX       60000						// Maximum configurable time that the threshold must be exceeded to trigger a state change of the relay
-#define RELAY_LATCHTIME_INCREMENT 500						// Value added/subtracted when adjusting time
-#define LED_PULSE_SHORT			  300						//
-#define LED_PULSE_LONG			  1100						//
-#define PWM_FULL_ON				  PWM_CCU4_SYM_DUTY_MIN
-#define PWM_FULL_OFF			  PWM_CCU4_SYM_DUTY_MAX
+#define BTN_STD_PRESS_DURATION		60							// The minimum duration of a button press that will be registered as such (debouncing)
+#define BTN_LONG_PRESS_DURATION		1000						// The minimum duration of a long button press that will be registered as such (debouncing)
+#define BTN_LONGEST_PRESS_DURATION	4000						// The maximum duration of a button press
+#define ADC_THRESHOLD_MAX			4095						// Maximum ADC value. Note: 1023 can be divided by 1, 3, 11, 31, 33, 93, 341 without decimals
+#define ADC_THRESHOLD_INCREMENT		(ADC_THRESHOLD_MAX / 33)	// Value added/subtracted when adjusting threshold. 33 means there are 33 steps for setting thresholds
+#define RELAY_LATCHTIME_MAX			60000						// Maximum configurable time that the threshold must be exceeded to trigger a state change of the relay
+#define RELAY_LATCHTIME_INCREMENT	500							// Value added/subtracted when adjusting time
+#define LED_PULSE_SHORT				200							// In ms. Duration of a short led pulse used for led pattern "number"
+#define LED_PULSE_LONG				1100						// In ms. Duration of a long led pulse used for led pattern "number"
+#define PWM_FULL_ON					PWM_CCU4_SYM_DUTY_MIN		// Integer that represents the lowest possible duty cycle of PWM
+#define PWM_FULL_OFF				PWM_CCU4_SYM_DUTY_MAX		// Integer that represents the highest possible duty cycle of PWM
+#define TIMESTAMP_DEACTIVATED		UINT32_MAX
 
 // Dynamic settings (can be changed by user)
-uint16_t relay_threshold_latchtime = 50; // Time in ms that the threshold must stay exceeded in order to trigger a state change (=basically a filter)
+uint16_t relay_threshold_latchtime = 500; // Time in ms that the threshold must stay exceeded in order to trigger a state change (=basically a filter)
 int32_t ADC_upper_threshold = 3000;    // Upper threshold that the ADC value must be exceed to trigger a state change (must be held exceeded for relay_threshold_latchtime)
 int32_t ADC_lower_threshold = 2500;    // Upper threshold that the ADC value must be exceed to trigger a state change (must be held exceeded for relay_threshold_latchtime)
 
@@ -33,16 +35,18 @@ typedef enum {SETUP_IDLE, SETUP_UPPER_TH, SETUP_LOWER_TH, SETUP_TIME_TH} setup_s
 USB_states USB_state;
 relay_states relay_state;
 setup_states setup_state;
-typedef enum {LED_OFF, LED_ON, LED_NUMBER, LED_FADE_DOWN, LED_FADE_UP} LED_patterns;
+typedef enum {LED_OFF, LED_ON, LED_NUMBER, LED_FADE_DOWN, LED_FADE_UP, LED_MATCH_RELAY_STATE} LED_patterns;
 LED_patterns led_status_pattern = LED_OFF;
 LED_patterns led_status_pattern_last = LED_OFF;
+typedef enum {LED_PATTERN_CONTINUOUS, LED_PATTERN_SINGLE} LED_pattern_modes;
+LED_pattern_modes led_pattern_mode = LED_PATTERN_CONTINUOUS;
+LED_patterns led_status_pattern_after_single = LED_OFF; 	// Defines to what pattern will be switched after a LED_PATTERN_SINGLE execution
 uint16_t led_number = 0;
-uint16_t led_fadetime = 1000;
-uint16_t led_fadesteps = 100;
-//ToDo: implement led_status_pattern and number. After setup return to current relay state.
+uint16_t led_fadetime = 1500; // Time of one fade from one extreme to the other
+uint16_t led_fadesteps = 1000; // Number of steps used to fade led
 
 // Buttons
-typedef enum {BTNPRESS_NOT, BTNPRESS_STD, BTNPRESS_LONG} button_press_states;
+typedef enum {BTNPRESS_NOT, BTNPRESS_STD, BTNPRESS_LONG, BTNPRESS_LONGEST} button_press_states;
 button_press_states buttonpress_usb = BTNPRESS_NOT;
 button_press_states buttonpress_up = BTNPRESS_NOT;
 button_press_states buttonpress_down = BTNPRESS_NOT;
@@ -61,8 +65,6 @@ uint32_t ADC_val_upper_thres_exceed_timestamp = 0; // If this is 0 the threshold
 uint32_t ADC_val_lower_thres_exceed_timestamp = 0;
 
 // Debug
-int button_usb_pressed_debug = 0;
-int button_usb_pressed_long_debug = 0;
 int systime_debug = 0;
 
 
@@ -92,9 +94,8 @@ void reset_status_led_to_relay_state(){
 }
 
 //****************************************************************************
-// manage_leds -
+// manage_status_led - blink the status led according to the given pattern and (user interface)
 //****************************************************************************
-
 void manage_status_led(){
 	static uint16_t led_pattern_state;
 	static uint32_t led_pattern_state_timestamp;
@@ -137,6 +138,9 @@ void manage_status_led(){
 					led_pattern_state = 0;
 				}
 				break;
+			case LED_MATCH_RELAY_STATE:
+				reset_status_led_to_relay_state();
+				break;
 		}
 		led_status_pattern_last = led_status_pattern;
 	}
@@ -154,7 +158,7 @@ void manage_status_led(){
 				PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
 
 			// Detect last low phase and make it longer
-			if(led_pattern_state == (led_number*2))
+			if(led_pattern_state == (led_number*2) && led_pattern_mode == LED_PATTERN_CONTINUOUS)
 				led_pattern_state_length = LED_PULSE_LONG;
 			else
 				led_pattern_state_length = LED_PULSE_SHORT;
@@ -164,16 +168,20 @@ void manage_status_led(){
 
 			// Check if LED pattern is finished
 			if(led_pattern_state > led_number*2){
-				//led_status_pattern = LED_OFF;
-				led_pattern_state = 1;
+				if(led_pattern_mode == LED_PATTERN_CONTINUOUS) // Repeat pattern
+					led_pattern_state = 1;
+				else if(led_pattern_mode == LED_PATTERN_SINGLE){ // Reset led and pattern mode
+					led_pattern_mode = LED_PATTERN_CONTINUOUS;
+					led_status_pattern = led_status_pattern_after_single;
+				}
 			}
 		}
 	}
 
-	// Handle LED_FADE pattern
-	if(led_status_pattern == LED_FADE_DOWN){
+	// Handle LED_FADE_UP pattern
+	else if(led_status_pattern == LED_FADE_DOWN){
 		if((SYSTIMER_GetTime() - led_pattern_state_timestamp) / 1000 >= led_pattern_state_length){
-			//
+			// Set intensity of led to a level based on maximum value and current step
 			PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, (led_pattern_state*fade_duty_step) + PWM_FULL_ON);
 
 			// Store current time
@@ -182,15 +190,28 @@ void manage_status_led(){
 			// Next state
 			led_pattern_state++;
 
+			// Make last state longer
+			if(led_pattern_state == led_fadesteps-1)
+				led_pattern_state_length = led_pattern_state_length + 400;
+
 			// Check if LED pattern is finished
 			if(led_pattern_state >= led_fadesteps){
-				led_pattern_state = 0;
+				if(led_pattern_mode == LED_PATTERN_CONTINUOUS){ // Repeat pattern
+					led_pattern_state_length = led_pattern_state_length - 400;
+					led_pattern_state = 0;
+				}
+				else if(led_pattern_mode == LED_PATTERN_SINGLE){ // Reset led and pattern mode
+					led_pattern_mode = LED_PATTERN_CONTINUOUS;
+					led_status_pattern = led_status_pattern_after_single;
+				}
 			}
 		}
 	}
-	if(led_status_pattern == LED_FADE_UP){ //Todo
+
+	// Handle LED_FADE_DOWN pattern
+	else if(led_status_pattern == LED_FADE_UP){
 		if((SYSTIMER_GetTime() - led_pattern_state_timestamp) / 1000 >= led_pattern_state_length){
-			//
+			// Set intensity of led to a level based on maximum value and current step
 			PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF - (led_pattern_state*fade_duty_step) );
 
 			// Store current time
@@ -199,11 +220,91 @@ void manage_status_led(){
 			// Next state
 			led_pattern_state++;
 
+			// Make last state longer
+			if(led_pattern_state == led_fadesteps-1)
+				led_pattern_state_length = led_pattern_state_length + 400;
+
 			// Check if LED pattern is finished
 			if(led_pattern_state >= led_fadesteps){
-				led_pattern_state = 0;
+				if(led_pattern_mode == LED_PATTERN_CONTINUOUS){ // Repeat pattern
+					led_pattern_state_length = led_pattern_state_length - 400;
+					led_pattern_state = 0;
+				}
+				else if(led_pattern_mode == LED_PATTERN_SINGLE){ // Reset led and pattern mode
+					led_pattern_mode = LED_PATTERN_CONTINUOUS;
+					led_status_pattern = led_status_pattern_after_single;
+				}
 			}
 		}
+	}
+}
+
+//****************************************************************************
+// main - function to manage, debounce and interpret button presses
+//****************************************************************************
+void manage_buttons(void)
+{
+	/// Detect start of press and save current system time
+	if(button_usb_pressed_timestamp == 0 && DIGITAL_IO_GetInput(&IO_SW_USB) == SW_ON)
+		button_usb_pressed_timestamp = SYSTIMER_GetTime();
+	if(button_up_pressed_timestamp == 0 && DIGITAL_IO_GetInput(&IO_SW_UP) == SW_ON)
+		button_up_pressed_timestamp = SYSTIMER_GetTime();
+	if(button_down_pressed_timestamp == 0 && DIGITAL_IO_GetInput(&IO_SW_DOWN) == SW_ON)
+		button_down_pressed_timestamp = SYSTIMER_GetTime();
+
+	// USB BUTTON: If a press in ongoing and release is detected, calculate time difference
+	if(button_usb_pressed_timestamp != 0 && DIGITAL_IO_GetInput(&IO_SW_USB) == SW_OFF){
+		button_usb_pressed_duration = (SYSTIMER_GetTime() - button_usb_pressed_timestamp) / 1000; // convert us to ms
+		button_usb_pressed_timestamp = 0;
+		// Interpret button press and activate "button pressed" marker
+		if(button_usb_pressed_duration >= BTN_LONGEST_PRESS_DURATION)
+			buttonpress_usb = BTNPRESS_NOT; // In this case the press is already handled
+		else if(button_usb_pressed_duration >= BTN_LONG_PRESS_DURATION)
+			buttonpress_usb = BTNPRESS_LONG;
+		else if(button_usb_pressed_duration >= BTN_STD_PRESS_DURATION)
+			buttonpress_usb = BTNPRESS_STD;
+	}
+	// USB BUTTON: If press is to long reset (simulate that press ended)
+	else if(button_usb_pressed_timestamp != 0 && button_usb_pressed_timestamp != TIMESTAMP_DEACTIVATED && ((SYSTIMER_GetTime() - button_usb_pressed_timestamp) / 1000) > BTN_LONGEST_PRESS_DURATION){
+		button_usb_pressed_timestamp = TIMESTAMP_DEACTIVATED; // deactivate timestamp till button is released
+		buttonpress_usb = BTNPRESS_LONGEST;
+	}
+
+	// UP BUTTON: If a press in ongoing and release is detected, calculate time difference
+	if(button_up_pressed_timestamp != 0 && DIGITAL_IO_GetInput(&IO_SW_UP) == SW_OFF){
+		button_up_pressed_duration = (SYSTIMER_GetTime() - button_up_pressed_timestamp) / 1000; // convert us to ms
+		button_up_pressed_timestamp = 0;
+		// Interpret button press and activate "button pressed" marker
+		if(button_up_pressed_duration >= BTN_LONGEST_PRESS_DURATION)
+			buttonpress_up = BTNPRESS_NOT; // In this case the press is already handled
+		else if(button_up_pressed_duration >= BTN_LONG_PRESS_DURATION)
+			buttonpress_up = BTNPRESS_LONG;
+		else if(button_up_pressed_duration >= BTN_STD_PRESS_DURATION)
+			buttonpress_up = BTNPRESS_STD;
+
+	}
+	// UP BUTTON: If press is to long reset (simulate that press ended)
+	else if(button_up_pressed_timestamp != 0 && button_up_pressed_timestamp != TIMESTAMP_DEACTIVATED && ((SYSTIMER_GetTime() - button_up_pressed_timestamp) / 1000) > BTN_LONGEST_PRESS_DURATION){
+		button_up_pressed_timestamp = TIMESTAMP_DEACTIVATED;
+		buttonpress_up = BTNPRESS_LONGEST;
+	}
+
+	// DOWN BUTTON: If a press in ongoing and release is detected, calculate time difference
+	if(button_down_pressed_timestamp != 0 && DIGITAL_IO_GetInput(&IO_SW_DOWN) == SW_OFF){
+		button_down_pressed_duration = (SYSTIMER_GetTime() - button_down_pressed_timestamp) / 1000; // convert us to ms
+		button_down_pressed_timestamp = 0;
+		// Interpret button press and activate "button pressed" marker. The code that is reacting to it must reset it afterwards!
+		if(button_down_pressed_duration >= BTN_LONGEST_PRESS_DURATION)
+			buttonpress_down = BTNPRESS_NOT; // In this case the press is already handled
+		else if(button_down_pressed_duration >= BTN_LONG_PRESS_DURATION)
+			buttonpress_down = BTNPRESS_LONG;
+		else if(button_down_pressed_duration >= BTN_STD_PRESS_DURATION)
+			buttonpress_down = BTNPRESS_STD;
+	}
+	// DOWN BUTTON: If press is to long reset (simulate that press ended)
+	else if(button_down_pressed_timestamp != 0 && button_down_pressed_timestamp != TIMESTAMP_DEACTIVATED && ((SYSTIMER_GetTime() - button_down_pressed_timestamp) / 1000) > BTN_LONGEST_PRESS_DURATION){
+		button_down_pressed_timestamp = TIMESTAMP_DEACTIVATED;
+		buttonpress_down = BTNPRESS_LONGEST;
 	}
 }
 
@@ -219,6 +320,14 @@ int main(void)
 	// Error routine
 	if (status != DAVE_STATUS_SUCCESS) {
 		while(1U){
+			DIGITAL_IO_SetOutputLow(&IO_LED_USB1);
+			DIGITAL_IO_SetOutputLow(&IO_LED_USB2);
+			DIGITAL_IO_SetOutputLow(&IO_LED_R_STATUS);
+			delay_ms(500);
+			DIGITAL_IO_SetOutputHigh(&IO_LED_USB1);
+			DIGITAL_IO_SetOutputHigh(&IO_LED_USB2);
+			DIGITAL_IO_SetOutputHigh(&IO_LED_R_STATUS);
+			delay_ms(500);
 		}
 	}
 
@@ -248,49 +357,8 @@ int main(void)
 		main_loop_count++;
 		systime_debug = SYSTIMER_GetTime();
 
-		/// - Button handling -
-		// Detect press and save current system time
-		if(button_usb_pressed_timestamp == 0 && DIGITAL_IO_GetInput(&IO_SW_USB) == SW_ON)
-			button_usb_pressed_timestamp = SYSTIMER_GetTime();
-		if(button_up_pressed_timestamp == 0 && DIGITAL_IO_GetInput(&IO_SW_UP) == SW_ON)
-			button_up_pressed_timestamp = SYSTIMER_GetTime();
-		if(button_down_pressed_timestamp == 0 && DIGITAL_IO_GetInput(&IO_SW_DOWN) == SW_ON)
-			button_down_pressed_timestamp = SYSTIMER_GetTime();
-		// If a press in ongoing and release is detected, calculate time difference
-		if(button_usb_pressed_timestamp != 0 && DIGITAL_IO_GetInput(&IO_SW_USB) == SW_OFF){
-			button_usb_pressed_duration = (SYSTIMER_GetTime() - button_usb_pressed_timestamp) / 1000; // convert us to ms
-			button_usb_pressed_timestamp = 0;
-			// Interpret button press and activate "button pressed" marker
-			if(button_usb_pressed_duration >= BTN_LONG_PRESS_DURATION)
-				buttonpress_usb = BTNPRESS_LONG;
-			else if(button_usb_pressed_duration >= BTN_STD_PRESS_DURATION)
-				buttonpress_usb = BTNPRESS_STD;
-
-
-		}
-		if(button_up_pressed_timestamp != 0 && DIGITAL_IO_GetInput(&IO_SW_UP) == SW_OFF){
-			button_up_pressed_duration = (SYSTIMER_GetTime() - button_up_pressed_timestamp) / 1000; // convert us to ms
-			button_up_pressed_timestamp = 0;
-			// Interpret button press and activate "button pressed" marker
-			if(button_up_pressed_duration >= BTN_LONG_PRESS_DURATION){
-				buttonpress_up = BTNPRESS_LONG;
-				button_usb_pressed_long_debug++;
-			}
-			else if(button_up_pressed_duration >= BTN_STD_PRESS_DURATION){
-				buttonpress_up = BTNPRESS_STD;
-				button_usb_pressed_debug++;
-			}
-
-		}
-		if(button_down_pressed_timestamp != 0 && DIGITAL_IO_GetInput(&IO_SW_DOWN) == SW_OFF){
-			button_down_pressed_duration = (SYSTIMER_GetTime() - button_down_pressed_timestamp) / 1000; // convert us to ms
-			button_down_pressed_timestamp = 0;
-			// Interpret button press and activate "button pressed" marker. The code that is reacting to it must reset it afterwards!
-			if(button_down_pressed_duration >= BTN_LONG_PRESS_DURATION)
-				buttonpress_down = BTNPRESS_LONG;
-			else if(button_down_pressed_duration >= BTN_STD_PRESS_DURATION)
-				buttonpress_down = BTNPRESS_STD;
-		}
+		//// - Button handling -
+		manage_buttons();
 
 		/// - USB Channel handling -
 		switch (USB_state){
@@ -328,6 +396,7 @@ int main(void)
 				// Currently not implemented!
 				break;
 		}
+
 		/// - Relay handling -
 		// Check for state change triggers based on current state
 		switch (relay_state){
@@ -348,8 +417,9 @@ int main(void)
 					if(upperThresholdExceedDuration > relay_threshold_latchtime){
 						relay_state = RELAY_HIGH;
 						DIGITAL_IO_SetOutputHigh(&IO_RELAY);
-						reset_status_led_to_relay_state();
 						ADC_val_upper_thres_exceed_timestamp = 0;
+						if(setup_state == SETUP_IDLE)
+							reset_status_led_to_relay_state();
 					}
 				}
 				break;
@@ -370,8 +440,9 @@ int main(void)
 					if(lowerThresholdExceedDuration > relay_threshold_latchtime){
 						relay_state = RELAY_LOW;
 						DIGITAL_IO_SetOutputLow(&IO_RELAY);
-						reset_status_led_to_relay_state();
 						ADC_val_lower_thres_exceed_timestamp = 0;
+						if(setup_state == SETUP_IDLE)
+							reset_status_led_to_relay_state();
 					}
 				}
 				break;
@@ -393,15 +464,15 @@ int main(void)
 				}
 				else if(buttonpress_up == BTNPRESS_STD){
 					setup_state = SETUP_UPPER_TH;
+					led_status_pattern = LED_FADE_UP;
 					//led_status_pattern = LED_NUMBER;
 					//led_number = 5;
-					led_status_pattern = LED_FADE_UP;
 				}
 				else if(buttonpress_down == BTNPRESS_STD){
 					setup_state = SETUP_LOWER_TH;
+					led_status_pattern = LED_FADE_DOWN;
 					//led_status_pattern = LED_NUMBER;
 					//led_number = 3;
-					led_status_pattern = LED_FADE_DOWN;
 				}
 				break;
 			case SETUP_UPPER_TH:
@@ -411,21 +482,44 @@ int main(void)
 				// A long  press of up or down brings system back to setup idle
 				// A short press of up         increases the upper threshold value
 				// A short press of down       decreases the upper threshold value
+				// A longest press of up saves the current ADC value as threshold
 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
 					setup_state = SETUP_IDLE;
-					reset_status_led_to_relay_state();
+					led_status_pattern = LED_MATCH_RELAY_STATE;
 				}
-				else if(buttonpress_up == BTNPRESS_STD){
+				else if(buttonpress_up == BTNPRESS_STD){ // Increase
 					ADC_upper_threshold += ADC_THRESHOLD_INCREMENT;
-					if(ADC_upper_threshold > ADC_THRESHOLD_MAX)
+					// If maximum is reached blink led 2 times, then continue fading
+					if(ADC_upper_threshold > ADC_THRESHOLD_MAX){
 						ADC_upper_threshold = ADC_THRESHOLD_MAX;
+						led_number = 2;
+						led_status_pattern = LED_NUMBER;
+						led_pattern_mode = LED_PATTERN_SINGLE;
+						led_status_pattern_after_single = LED_FADE_UP;
+					}
 				}
-				else if(buttonpress_down == BTNPRESS_STD){
+				else if(buttonpress_down == BTNPRESS_STD){ // Decrease
 					ADC_upper_threshold -= ADC_THRESHOLD_INCREMENT;
-					if(ADC_upper_threshold <= 0)
+					// If minimum is reached blink led 2 times, then continue fading
+					if(ADC_upper_threshold <= 0){
 						ADC_upper_threshold = 0;
+						led_number = 2;
+						led_status_pattern = LED_NUMBER;
+						led_pattern_mode = LED_PATTERN_SINGLE;
+						led_status_pattern_after_single = LED_FADE_UP;
+					}
 					//if(ADC_upper_threshold <= ADC_lower_threshold)
 						//ADC_upper_threshold = ADC_lower_threshold;
+				}
+				else if(buttonpress_up == BTNPRESS_LONGEST){
+					// Save current ADC value as threshold and exit setup menu
+					ADC_upper_threshold = ADC_val_current;
+					setup_state = SETUP_IDLE;
+					// Blink LED 3 times (user info) and return to operation where led matches the state of the relay
+					led_number = 3;
+					led_status_pattern = LED_NUMBER;
+					led_pattern_mode = LED_PATTERN_SINGLE;
+					led_status_pattern_after_single = LED_MATCH_RELAY_STATE;
 				}
 				break;
 			case SETUP_LOWER_TH:
@@ -435,19 +529,42 @@ int main(void)
 				// A long  press of up or down brings system back to setup idle
 				// A short press of up         increases the lower threshold value
 				// A short press of down       decreases the lower threshold value
+				// A longest press of down saves the current ADC value as threshold
 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
 					setup_state = SETUP_IDLE;
-					reset_status_led_to_relay_state();
+					led_status_pattern = LED_MATCH_RELAY_STATE;
 				}
-				else if(buttonpress_up == BTNPRESS_STD){
+				else if(buttonpress_up == BTNPRESS_STD){ // Increase
 					ADC_lower_threshold += ADC_THRESHOLD_INCREMENT;
-					if(ADC_lower_threshold > ADC_THRESHOLD_MAX)
+					// If maximum is reached blink led 2 times, then continue fading
+					if(ADC_lower_threshold > ADC_THRESHOLD_MAX){
 						ADC_lower_threshold = ADC_THRESHOLD_MAX;
+						led_number = 2;
+						led_status_pattern = LED_NUMBER;
+						led_pattern_mode = LED_PATTERN_SINGLE;
+						led_status_pattern_after_single = LED_FADE_DOWN;
+					}
 				}
-				else if(buttonpress_down == BTNPRESS_STD){
+				else if(buttonpress_down == BTNPRESS_STD){ // Decrease
 					ADC_lower_threshold -= ADC_THRESHOLD_INCREMENT;
-					if(ADC_lower_threshold <= 0)
+					// If minimum is reached blink led 2 times, then continue fading
+					if(ADC_lower_threshold <= 0){
 						ADC_lower_threshold = 0;
+						led_number = 2;
+						led_status_pattern = LED_NUMBER;
+						led_pattern_mode = LED_PATTERN_SINGLE;
+						led_status_pattern_after_single = LED_FADE_DOWN;
+					}
+				}
+				else if(buttonpress_down == BTNPRESS_LONGEST){
+					// Save current ADC value as threshold
+					ADC_lower_threshold = ADC_val_current;
+					setup_state = SETUP_IDLE;
+					// Blink LED 3 times (user info) and return to operation where led matches the state of the relay
+					led_number = 3;
+					led_status_pattern = LED_NUMBER;
+					led_pattern_mode = LED_PATTERN_SINGLE;
+					led_status_pattern_after_single = LED_MATCH_RELAY_STATE;
 				}
 				break;
 			case SETUP_TIME_TH:
@@ -457,17 +574,27 @@ int main(void)
 				// A short press of down       decreases the threshold exceed time
 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
 					setup_state = SETUP_IDLE;
-					reset_status_led_to_relay_state();
+					led_status_pattern = LED_MATCH_RELAY_STATE;
 				}
 				else if(buttonpress_up == BTNPRESS_STD){
 					relay_threshold_latchtime += RELAY_LATCHTIME_INCREMENT;
-					if(relay_threshold_latchtime > RELAY_LATCHTIME_MAX)
+					if(relay_threshold_latchtime > RELAY_LATCHTIME_MAX){
 						relay_threshold_latchtime = RELAY_LATCHTIME_MAX;
+						led_number = 2;
+						led_status_pattern = LED_NUMBER;
+						led_pattern_mode = LED_PATTERN_SINGLE;
+						led_status_pattern_after_single = LED_FADE_DOWN;
+					}
 				}
 				else if(buttonpress_down == BTNPRESS_STD){
 					relay_threshold_latchtime -= RELAY_LATCHTIME_INCREMENT;
-					if(relay_threshold_latchtime <= 0)
+					if(relay_threshold_latchtime <= 0){
 						relay_threshold_latchtime = 0;
+						led_number = 2;
+						led_status_pattern = LED_NUMBER;
+						led_pattern_mode = LED_PATTERN_SINGLE;
+						led_status_pattern_after_single = LED_FADE_DOWN;
+					}
 				}
 				break;
 		}
