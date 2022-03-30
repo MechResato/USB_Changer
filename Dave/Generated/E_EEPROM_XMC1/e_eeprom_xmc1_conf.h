@@ -91,7 +91,7 @@
 #define E_EEPROM_XMC1_FLASH_BANK1_END      (0x10008fffU)
 
 /* Total number of configured Data blocks */
-#define E_EEPROM_XMC1_MAX_BLOCK_COUNT      (3U)
+#define E_EEPROM_XMC1_MAX_BLOCK_COUNT      (4U)
 
 /* 
  *  Total number of pages per bank, resulting after division of banks
@@ -111,6 +111,9 @@
 
 /**  Block 3 */
 #define EEPROM_LATCHTIME  (3U)
+
+/**  Block 4 */
+#define EEPROM_USB_STATE  (4U)
 
 #endif
 

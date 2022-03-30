@@ -83,6 +83,11 @@ const E_EEPROM_XMC1_BLOCK_t E_EEPROM_XMC1_block_Config[] =
     {                 
      EEPROM_LATCHTIME,    
      4U 
+     }, 
+    /** Block 4 Configuration */    
+    {                 
+     EEPROM_USB_STATE,    
+     4U 
      }  
 };
 

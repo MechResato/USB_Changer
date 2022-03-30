@@ -165,7 +165,7 @@ const DIGITAL_IO_t IO_LED_USB2 =
   .gpio_pin = 0U,
   .gpio_config = {
     .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL,
-    .output_level = XMC_GPIO_OUTPUT_LEVEL_LOW,
+    .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
 
   },
   .hwctrl = XMC_GPIO_HWCTRL_DISABLED
@@ -177,7 +177,7 @@ const DIGITAL_IO_t IO_LED_USB1 =
   .gpio_pin = 11U,
   .gpio_config = {
     .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL,
-    .output_level = XMC_GPIO_OUTPUT_LEVEL_LOW,
+    .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
 
   },
   .hwctrl = XMC_GPIO_HWCTRL_DISABLED

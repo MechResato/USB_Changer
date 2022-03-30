@@ -1,5 +1,15 @@
 /*
- * main.c
+ * USB-Changer main.c
+ *
+ * A Infineon XMC1100 powered system used to switch between 2 USB Devices and to control a relay based on a sensor input with configurable hysteresis.
+ *
+ * Features: 	- Switching between 2 USB ports on button press
+ * 				- Relay controlled by an ADC input with hysteresis and pulse filter
+ * 				- Setup menu to configure Hysteresis (different threshold for off an on) and filter (threshold must be exceed for a certain time period)
+ * 				- User interface with a status LED (blinking & fading patterns) and buttons (up, down, usb switch)
+ * 				- Setup stored on emulated EEPROM
+ * 					- USB state is stored after 10sec continuous state in order to prevent fast FLASH degeneration
+ * 					- Thresholds and filter latch time is stored immediately
  *
  *  Created on: 2022 Mar 03 16:13:51
  *  Author: RNSANTELER
@@ -9,23 +19,25 @@
 
 
 // Constant settings (must be set hard-coded)
-#define BTN_STD_PRESS_DURATION		60							// The minimum duration of a button press that will be registered as such (debouncing)
-#define BTN_LONG_PRESS_DURATION		1000						// The minimum duration of a long button press that will be registered as such (debouncing)
-#define BTN_LONGEST_PRESS_DURATION	4000						// The maximum duration of a button press
-#define ADC_THRESHOLD_MAX			4095						// Maximum ADC value. Note: 4095 can be divided by 1, 3, 5, 7, 9, 13, 15, 21, 35, 39, 45, 63, 65, 91, 105, 117, 195, 273, 315, 455, 585, 819, 1365 without decimals
-#define ADC_THRESHOLD_INCREMENT		(ADC_THRESHOLD_MAX / 35)	// Value added/subtracted when adjusting threshold. 35 means there are 35 steps for setting thresholds
-#define ADC_TH_UPPER_DEFAULT		3510						// Default upper threshold
-#define ADC_TH_LOWER_DEFAULT		585							// Default lower threshold
-#define RELAY_LATCHTIME_MAX			60000						// Maximum configurable time that the threshold must be exceeded to trigger a state change of the relay
-#define RELAY_LATCHTIME_INCREMENT	250							// Value added/subtracted when adjusting time
-#define RELAY_LATCHTIME_DEFAULT		500							// Default lower threshold exceed time
-#define LED_PULSE_SHORT				200							// In ms. Duration of a short led pulse used for led pattern "number"
-#define LED_PULSE_LONG				1100						// In ms. Duration of a long led pulse used for led pattern "number"
-#define PWM_FULL_ON					PWM_CCU4_SYM_DUTY_MIN		// Integer that represents the lowest possible duty cycle of PWM
-#define PWM_FULL_OFF				PWM_CCU4_SYM_DUTY_MAX		// Integer that represents the highest possible duty cycle of PWM
-#define TIMESTAMP_DEACTIVATED		UINT32_MAX
+#define USB_STORE_STATE_EEPROM		 1						// Determines if USB state shall be written to EEPROM
+#define USB_STORE_STATE_EEPROM_DELAY 5000						// After a change of USB state it will be saved to EEPROM after this delay (reduce FLASH degeneration)
+#define BTN_STD_PRESS_DURATION		 60							// The minimum duration of a button press that will be registered as such (debouncing)
+#define BTN_LONG_PRESS_DURATION		 1000						// The minimum duration of a long button press that will be registered as such (debouncing)
+#define BTN_LONGEST_PRESS_DURATION	 4000						// The maximum duration of a button press
+#define ADC_THRESHOLD_MAX			 4095						// Maximum ADC value. Note: 4095 can be divided by 1, 3, 5, 7, 9, 13, 15, 21, 35, 39, 45, 63, 65, 91, 105, 117, 195, 273, 315, 455, 585, 819, 1365 without decimals
+#define ADC_THRESHOLD_INCREMENT		 (ADC_THRESHOLD_MAX / 35)	// Value added/subtracted when adjusting threshold. 35 means there are 35 steps for setting thresholds
+#define ADC_TH_UPPER_DEFAULT		 3510						// Default upper threshold
+#define ADC_TH_LOWER_DEFAULT		 585							// Default lower threshold
+#define RELAY_LATCHTIME_MAX			 60000						// Maximum configurable time that the threshold must be exceeded to trigger a state change of the relay
+#define RELAY_LATCHTIME_INCREMENT	 250							// Value added/subtracted when adjusting time
+#define RELAY_LATCHTIME_DEFAULT		 500							// Default lower threshold exceed time
+#define LED_PULSE_SHORT				 200							// In ms. Duration of a short led pulse used for led pattern "number"
+#define LED_PULSE_LONG				 1100						// In ms. Duration of a long led pulse used for led pattern "number"
+#define PWM_FULL_ON					 PWM_CCU4_SYM_DUTY_MIN		// Integer that represents the lowest possible duty cycle of PWM
+#define PWM_FULL_OFF				 PWM_CCU4_SYM_DUTY_MAX		// Integer that represents the highest possible duty cycle of PWM
+#define TIMESTAMP_DEACTIVATED		 UINT32_MAX
 
-// Dynamic settings (can be changed by user)
+// Dynamic settings (can be changed by user - the here defined values are reset/default values)
 int32_t relay_threshold_latchtime = 500; // Time in ms that the threshold must stay exceeded in order to trigger a state change (=basically a filter)
 int32_t ADC_upper_threshold = 3393;    // Upper threshold that the ADC value must be exceed to trigger a state change (must be held exceeded for relay_threshold_latchtime)
 int32_t ADC_lower_threshold = 702;    // Upper threshold that the ADC value must be exceed to trigger a state change (must be held exceeded for relay_threshold_latchtime)
@@ -38,6 +50,7 @@ typedef enum {SETUP_IDLE, SETUP_UPPER_TH, SETUP_LOWER_TH, SETUP_TIME_TH} setup_s
 USB_states USB_state = USB_1_active;
 relay_states relay_state = RELAY_LOW;
 setup_states setup_state = SETUP_IDLE;
+uint32_t usb_changed_timestamp = 0;
 typedef enum {LED_OFF, LED_ON, LED_NUMBER, LED_FADE_DOWN, LED_FADE_UP, LED_MATCH_RELAY_STATE} LED_patterns;
 LED_patterns led_status_pattern = LED_OFF;
 LED_patterns led_status_pattern_last = LED_OFF;
@@ -73,7 +86,7 @@ int systime_debug = 0;
 int32_t eeprom_latchtime = 0;
 int32_t eeprom_upper = 0;
 int32_t eeprom_lower = 0;
-
+int32_t eeprom_usb_state = 0;
 
 
 
@@ -261,61 +274,71 @@ void read_eeprom_setup(void){
 	uint8_t ReadBuffer_LTH[4];
 	uint8_t ReadBuffer_UTH[4];
 	uint8_t ReadBuffer_LT[4];
+	uint8_t ReadBuffer_USB[4];
 
 	// Read from EEPROM and interpret value
 	E_EEPROM_XMC1_Read(EEPROM_LOWER_TH, 0, ReadBuffer_LTH, 4U);
 	E_EEPROM_XMC1_Read(EEPROM_UPPER_TH, 0U, ReadBuffer_UTH, 4U);
 	E_EEPROM_XMC1_Read(EEPROM_LATCHTIME, 0U, ReadBuffer_LT, 4U);
+	E_EEPROM_XMC1_Read(EEPROM_USB_STATE, 0U, ReadBuffer_USB, 4U);
 	eeprom_lower = ReadBuffer_LTH[0] + (ReadBuffer_LTH[1] << 8) + (ReadBuffer_LTH[2] << 16) + (ReadBuffer_LTH[3] << 24);
 	eeprom_upper = ReadBuffer_UTH[0] + (ReadBuffer_UTH[1] << 8) + (ReadBuffer_UTH[2] << 16) + (ReadBuffer_UTH[3] << 24);
 	eeprom_latchtime = ReadBuffer_LT[0] + (ReadBuffer_LT[1] << 8) + (ReadBuffer_LT[2] << 16) + (ReadBuffer_LT[3] << 24);
+	eeprom_usb_state = ReadBuffer_USB[0] + (ReadBuffer_USB[1] << 8) + (ReadBuffer_USB[2] << 16) + (ReadBuffer_USB[3] << 24);
 
-	// Check if values make sense, else return to default
+	/// Check if values make sense, else return to default
+	// Restore upper threshold from EEPROM or blink on error
 	if(eeprom_upper < 0 || eeprom_upper > ADC_THRESHOLD_MAX){
 		ADC_upper_threshold = ADC_TH_UPPER_DEFAULT;
 		// Blink LED for error indication
 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
-		delay_ms(200);
+		delay_ms(150);
 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
 		delay_ms(200);
 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
-		delay_ms(200);
+		delay_ms(150);
 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
-		delay_ms(600);
+		delay_ms(500);
 	}
 	else{
 		ADC_upper_threshold = eeprom_upper;
 	}
+	// Restore lower threshold from EEPROM or blink on error
 	if(eeprom_lower < 0 || eeprom_lower > ADC_THRESHOLD_MAX){
 		ADC_lower_threshold = ADC_TH_LOWER_DEFAULT;
 		// Blink LED for error indication
 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
-		delay_ms(200);
+		delay_ms(150);
 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
 		delay_ms(200);
 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
-		delay_ms(200);
+		delay_ms(150);
 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
-		delay_ms(600);
+		delay_ms(500);
 	}
 	else{
 		ADC_lower_threshold = eeprom_lower;
 	}
+	// Restore latchtime from EEPROM or blink on error
 	if(eeprom_latchtime < 0 || eeprom_latchtime > ADC_THRESHOLD_MAX){
 		relay_threshold_latchtime = RELAY_LATCHTIME_DEFAULT;
 		// Blink LED for error indication
 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
-		delay_ms(200);
+		delay_ms(150);
 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
 		delay_ms(200);
 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_ON);
-		delay_ms(200);
+		delay_ms(150);
 		PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
-		delay_ms(300);
 	}
 	else{
 		relay_threshold_latchtime = eeprom_latchtime;
 	}
+	// Restore USB state from EEPROM or reset to USB1 on error
+	if(eeprom_usb_state < 0 || eeprom_usb_state > USB_inactive)
+		USB_state = USB_1_active;
+	else
+		USB_state = (USB_states)eeprom_usb_state;
 
 	//     --    Use this to write a value to e_eeprom for debug purpose   --
 	//int32_t temp = 100001;
@@ -340,15 +363,21 @@ void read_eeprom_setup(void){
 	//E_EEPROM_XMC1_Write(EEPROM_LATCHTIME, EEPROM_WriteBuffer);
 }
 
-void write_eeprom_setup(uint8_t block_number, int32_t value){
+//****************************************************************************
+// write_eeprom - writes up to 4 byte to a given EEPROM block
+//****************************************************************************
+void write_eeprom(uint8_t block_number, int32_t value, uint8_t size){
 	uint8_t EEPROM_WriteBuffer[4];
 
 	EEPROM_WriteBuffer[0] = (uint8_t)value;
-	EEPROM_WriteBuffer[1] = (uint8_t)(value >> 8);
-	EEPROM_WriteBuffer[2] = (uint8_t)(value >> 16);
-	EEPROM_WriteBuffer[3] = (uint8_t)(value >> 24);
+	for(int i = 1; i < size; i++){
+		EEPROM_WriteBuffer[i] = (uint8_t)(value >> (i*8));
+	}
 	E_EEPROM_XMC1_Write(block_number, EEPROM_WriteBuffer);
 
+	//EEPROM_WriteBuffer[1] = (uint8_t)(value >> 8);
+	//EEPROM_WriteBuffer[2] = (uint8_t)(value >> 16);
+	//EEPROM_WriteBuffer[3] = (uint8_t)(value >> 24);
 }
 
 //****************************************************************************
@@ -420,6 +449,27 @@ void manage_buttons(void)
 	}
 }
 
+//****************************************************************************
+// switchUSB -
+//****************************************************************************
+int switchUSB(USB_states state)
+{
+	if(state == USB_1_active){
+		DIGITAL_IO_SetOutputLow(&IO_USBPWR_2);
+		DIGITAL_IO_SetOutputLow(&IO_USB_SI);
+		DIGITAL_IO_SetOutputLow(&IO_LED_USB1);
+		DIGITAL_IO_SetOutputHigh(&IO_LED_USB2);
+		DIGITAL_IO_SetOutputHigh(&IO_USBPWR_1);
+	}
+	else if(state == USB_2_active){
+		DIGITAL_IO_SetOutputLow(&IO_USBPWR_1);
+		DIGITAL_IO_SetOutputHigh(&IO_USB_SI);
+		DIGITAL_IO_SetOutputLow(&IO_LED_USB2);
+		DIGITAL_IO_SetOutputHigh(&IO_LED_USB1);
+		DIGITAL_IO_SetOutputHigh(&IO_USBPWR_2);
+	}
+}
+
 
 //****************************************************************************
 // main - primary loop function
@@ -444,24 +494,18 @@ int main(void)
 		}
 	}
 
+	/// - Read setup from emulated EEPROM
+	read_eeprom_setup();
+
 	/// - Set initial state -
-	// Enable USB chip and switch to USB1
-	DIGITAL_IO_SetOutputLow(&IO_USB_SI);
+	// Enable USB chip and switch to USB1, disable USB2
 	DIGITAL_IO_SetOutputLow(&IO_USB_OE);
-	// Enable USB1
-	DIGITAL_IO_SetOutputHigh(&IO_USBPWR_1);
-	DIGITAL_IO_SetOutputLow(&IO_LED_USB1);
-	// Disable USB2
-	DIGITAL_IO_SetOutputLow(&IO_USBPWR_2);
-	DIGITAL_IO_SetOutputHigh(&IO_LED_USB2);
+	switchUSB(USB_state);
 	// Disable Relay and set LED off
 	DIGITAL_IO_SetOutputLow(&IO_RELAY);
 	PWM_CCU4_SetDutyCycle(&PWM_CCU4_LED_STATUS, PWM_FULL_OFF);
 	// Initialize next value conversion
 	ADC_MEASUREMENT_StartConversion(&ADC_SENSOR);
-
-	/// - Read setup from emulated EEPROM
-	read_eeprom_setup();
 
 	int main_loop_count = 0;
 
@@ -477,20 +521,23 @@ int main(void)
 		manage_buttons();
 
 		/// - USB Channel handling -
+		// Save state of USB if necessary (Enabled and timeout since state change happened)
+		if(usb_changed_timestamp != 0 && ((SYSTIMER_GetTime() - usb_changed_timestamp)/1000) > USB_STORE_STATE_EEPROM_DELAY){
+			usb_changed_timestamp = 0;
+			if(USB_STORE_STATE_EEPROM)
+				write_eeprom(EEPROM_USB_STATE, (uint32_t)USB_state, 4);
+		}
+		// USB state machine
 		switch (USB_state){
 			case USB_1_active:
 				// State code - none atm
 
 				// Transition statement
 				if(buttonpress_usb == BTNPRESS_STD){
-					DIGITAL_IO_SetOutputLow(&IO_USBPWR_1);
-					DIGITAL_IO_SetOutputHigh(&IO_USB_SI);
-					DIGITAL_IO_SetOutputLow(&IO_LED_USB2);
-					DIGITAL_IO_SetOutputHigh(&IO_LED_USB1);
-					DIGITAL_IO_SetOutputHigh(&IO_USBPWR_2);
-					buttonpress_usb = BTNPRESS_NOT;
-
 					USB_state = USB_2_active;
+					switchUSB(USB_state);
+					buttonpress_usb = BTNPRESS_NOT;
+					usb_changed_timestamp = SYSTIMER_GetTime();
 				}
 				break;
 			case USB_2_active:
@@ -498,14 +545,10 @@ int main(void)
 
 				// Transition statement
 				if(buttonpress_usb == BTNPRESS_STD){
-					DIGITAL_IO_SetOutputLow(&IO_USBPWR_2);
-					DIGITAL_IO_SetOutputLow(&IO_USB_SI);
-					DIGITAL_IO_SetOutputLow(&IO_LED_USB1);
-					DIGITAL_IO_SetOutputHigh(&IO_LED_USB2);
-					DIGITAL_IO_SetOutputHigh(&IO_USBPWR_1);
-					buttonpress_usb = BTNPRESS_NOT;
-
 					USB_state = USB_1_active;
+					switchUSB(USB_state);
+					buttonpress_usb = BTNPRESS_NOT;
+					usb_changed_timestamp = SYSTIMER_GetTime();
 				}
 				break;
 			case USB_inactive:
@@ -600,7 +643,7 @@ int main(void)
 				// A short press of down       decreases the upper threshold value
 				// A longest press of up saves the current ADC value as threshold
 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
-					write_eeprom_setup(EEPROM_UPPER_TH, ADC_upper_threshold);
+					write_eeprom(EEPROM_UPPER_TH, ADC_upper_threshold, 4);
 					setup_state = SETUP_IDLE;
 					led_status_pattern = LED_MATCH_RELAY_STATE;
 				}
@@ -631,7 +674,7 @@ int main(void)
 				else if(buttonpress_up == BTNPRESS_LONGEST){
 					// Save current ADC value as threshold and exit setup menu
 					ADC_upper_threshold = ADC_val_current;
-					write_eeprom_setup(EEPROM_UPPER_TH, ADC_upper_threshold);
+					write_eeprom(EEPROM_UPPER_TH, ADC_upper_threshold, 4);
 					setup_state = SETUP_IDLE;
 					// Blink LED 3 times (user info) and return to operation where led matches the state of the relay
 					led_number_single = 3;
@@ -649,7 +692,7 @@ int main(void)
 				// A short press of down       decreases the lower threshold value
 				// A longest press of down saves the current ADC value as threshold
 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
-					write_eeprom_setup(EEPROM_LOWER_TH, ADC_lower_threshold);
+					write_eeprom(EEPROM_LOWER_TH, ADC_lower_threshold, 4);
 					setup_state = SETUP_IDLE;
 					led_status_pattern = LED_MATCH_RELAY_STATE;
 				}
@@ -678,7 +721,7 @@ int main(void)
 				else if(buttonpress_down == BTNPRESS_LONGEST){
 					// Save current ADC value as threshold
 					ADC_lower_threshold = ADC_val_current;
-					write_eeprom_setup(EEPROM_LOWER_TH, ADC_lower_threshold);
+					write_eeprom(EEPROM_LOWER_TH, ADC_lower_threshold, 4);
 					setup_state = SETUP_IDLE;
 					// Blink LED 3 times (user info) and return to operation where led matches the state of the relay
 					led_number_single = 3;
@@ -693,7 +736,7 @@ int main(void)
 				// A short press of up         increases the threshold exceed time
 				// A short press of down       decreases the threshold exceed time
 				if(buttonpress_up == BTNPRESS_LONG || buttonpress_down == BTNPRESS_LONG){
-					write_eeprom_setup(EEPROM_LATCHTIME, relay_threshold_latchtime);
+					write_eeprom(EEPROM_LATCHTIME, relay_threshold_latchtime, 4);
 					setup_state = SETUP_IDLE;
 					led_status_pattern = LED_MATCH_RELAY_STATE;
 				}
